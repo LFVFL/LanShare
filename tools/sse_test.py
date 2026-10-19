@@ -148,12 +148,62 @@ def main():
             check("字段完整", msg.get("room") is None and msg.get("id") and msg.get("time"))
         s.close()
 
-        print("[4] 边界情况")
+        print("[4] 三个观众同时在线：都收到、不重复、延迟仍然低")
+        def open_stream():
+            sock = socket.create_connection(("127.0.0.1", port), timeout=10)
+            sock.sendall(("GET /chat/stream?room=default&after=%s HTTP/1.1\r\nHost: h\r\n"
+                          "Accept: text/event-stream\r\n\r\n" % after).encode())
+            sock.settimeout(6)
+            head = b""
+            while b"\r\n\r\n" not in head:
+                chunk = sock.recv(1)
+                if not chunk:
+                    break
+                head += chunk
+            return sock
+
+        viewers = []
+        try:
+            for _ in range(3):
+                viewers.append(open_stream())
+            time.sleep(0.4)
+            send(port, "sse-fanout-7")
+            deadline = time.time() + 5
+            buffers = [b""] * len(viewers)
+            done = [False] * len(viewers)
+            while time.time() < deadline and not all(done):
+                for i, sock in enumerate(viewers):
+                    if done[i]:
+                        continue
+                    try:
+                        chunk = sock.recv(4096)
+                    except socket.timeout:
+                        continue
+                    if not chunk:
+                        done[i] = True
+                        continue
+                    buffers[i] += chunk
+                    if b"sse-fanout-7" in buffers[i]:
+                        done[i] = True
+            check("三个连接都收到了", all(done), done)
+            check("每个连接只收到一次",
+                  all(b.count(b"sse-fanout-7") == 1 for b in buffers),
+                  [b.count(b"sse-fanout-7") for b in buffers])
+        finally:
+            for sock in viewers:
+                try:
+                    sock.close()
+                except Exception:
+                    pass
+
+        print("[5] 边界情况")
         check("不存在的房间 404",
               http(port, "GET", "/chat/stream?room=nope")[0] == 404)
         st, _, payload = http(port, "GET", "/chat/history?room=default&after=" + after)
         fresh = json.loads(payload.decode("utf-8"))
-        check("after 之后只回增量", len(fresh) >= 1 and fresh[-1].get("text") == "sse-live-42")
+        check("after 之后只回增量",
+              len(fresh) >= 1 and fresh[-1].get("text") in ("sse-live-42", "sse-fanout-7"),
+              [m.get("text") for m in fresh[-3:]])
     finally:
         child.terminate()
         try:

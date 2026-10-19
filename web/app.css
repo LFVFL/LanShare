@@ -1782,3 +1782,10 @@ body[data-dragging="true"] .dropzone { display: flex; }
 @media (max-width: 900px) {
   .files-foot-hint { display: none; }
 }
+
+/* 超大目录的分页按钮（放在列表和页脚之间） */
+.load-more{
+  display:block;width:100%;margin:10px 0 4px;padding:10px;border-radius:var(--r-sm);
+  font-size:13px;color:var(--text-3);
+}
+.load-more[hidden]{display:none}

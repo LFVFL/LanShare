@@ -38,10 +38,18 @@ class RoutesMixin:
     # ── 读接口 ──────────────────────────────────────────────────────────
     def api_list(self):
         dir_path = self.q('path', self.shared_path)
-        listing = self.build_listing(urllib.parse.unquote(dir_path))
+        # limit/offset 可选：不传就是整份（老行为），传了就分页
+        listing = self.build_listing(
+            urllib.parse.unquote(dir_path),
+            limit=self.q('limit', '0'),
+            offset=self.q('offset', '0'),
+        )
         self.send_json_response({
             'path': listing['path'],
             'entries': listing['entries'],
+            'total': listing.get('total', len(listing['entries'])),
+            'offset': listing.get('offset', 0),
+            'hasMore': bool(listing.get('hasMore')),
         })
 
     def api_upload_unique(self):

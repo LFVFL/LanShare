@@ -24,7 +24,8 @@
     };
     var fsState = {
       path: '', entries: [], sortKey: 'name', sortDir: 'asc',
-      view: 'list', query: '', sel: new Set()
+      view: 'list', query: '', sel: new Set(),
+      total: 0, hasMore: false
     };
 
     /* 共享内搜索（服务端递归）的状态。和上面的 query 不是一回事：
@@ -271,16 +272,37 @@
       return 'path=' + encodeURIComponent(fsState.path) + extra;
     }
 
+    /* 分页拉取：超大目录（几万项）一次性塞进 DOM 会把手机卡死，
+       所以服务端按 limit 切片，前端只保留"已加载"的部分。 */
+    var PAGE_SIZE = 400;
+
+    function loadPage(offset, append) {
+      var url = '/api/list?path=' + encodeURIComponent(fsState.path) +
+        '&limit=' + PAGE_SIZE + '&offset=' + offset;
+      return apiFetch(url).then(jsonOf).then(function (d) {
+        if (!d || !d.entries) return null;
+        fsState.entries = append ? fsState.entries.concat(d.entries) : d.entries;
+        fsState.total = d.total || fsState.entries.length;
+        fsState.hasMore = !!d.hasMore;
+        renderFiles();
+        updateLoadMore();
+        return d;
+      });
+    }
+
+    function updateLoadMore() {
+      var bar = document.querySelector('[data-load-more]');
+      if (!bar) return;
+      var rest = (fsState.total || 0) - fsState.entries.length;
+      bar.hidden = !(fsState.hasMore && rest > 0);
+      var label = bar.querySelector('[data-load-more-text]');
+      if (label) label.textContent = '还有 ' + rest + ' 项，点这里继续加载';
+    }
+
     function refreshFiles() {
-      return apiFetch('/api/list?path=' + encodeURIComponent(fsState.path))
-        .then(jsonOf)
-        .then(function (d) {
-          if (d && d.entries) {
-            fsState.entries = d.entries;
-            renderFiles();
-          }
-        })
-        .catch(function () { toast('刷新列表失败', 'err'); });
+      return loadPage(0, false).catch(function () {
+        toast('刷新列表失败', 'err');
+      });
     }
 
     function doZip(names) {
@@ -522,6 +544,17 @@
           renderFiles();
         });
       });
+
+      var more = document.querySelector('[data-load-more]');
+      if (more) {
+        more.addEventListener('click', function () {
+          more.hidden = true;
+          loadPage(fsState.entries.length, true).catch(function () {
+            toast('加载更多失败', 'err');
+            updateLoadMore();
+          });
+        });
+      }
 
       var bar = document.querySelector('[data-selbar]');
       if (bar) {

@@ -5,6 +5,7 @@
 """
 import json
 import mimetypes
+import queue
 import shutil
 import threading
 import time
@@ -21,15 +22,75 @@ from .paths import _password_ok
 from .storage import _upload_key
 
 
+# ══════════════════════════════════════════════════════════════════════════
+# SSE 广播：所有连接挂在同一张订阅表上，由一个线程统一扫描房间
+# ══════════════════════════════════════════════════════════════════════════
+_subscribers = {}                  # sub_id -> {'queue': Queue, 'room': str, 'after': str}
+_sub_lock = threading.Lock()
+_broadcaster_started = False
+_broadcaster_guard = threading.Lock()
+
+
+def _ensure_broadcaster():
+    """第一次有人连流时启动广播线程（全局只有一个）。"""
+    global _broadcaster_started
+    with _broadcaster_guard:
+        if _broadcaster_started:
+            return
+        _broadcaster_started = True
+        threading.Thread(target=_broadcast_loop, daemon=True,
+                         name="sse-broadcast").start()
+
+
+def _broadcast_loop():
+    """等 chat_event（有人发消息）或超时，然后把新消息分发给各自的队列。"""
+    while True:
+        try:
+            with chat_event:
+                chat_event.wait(0.5)
+        except Exception:
+            time.sleep(0.5)
+
+        with _sub_lock:
+            subs = list(_subscribers.items())
+        if not subs:
+            continue
+
+        rooms = {}
+        with chat_lock:
+            for sub_id, sub in subs:
+                room_id = sub['room']
+                if room_id not in rooms:
+                    rooms[room_id] = CHAT_ROOMS.get(room_id, {}).get('messages', [])[:]
+                msgs = rooms[room_id]
+
+                after = sub['after']
+                fresh = []
+                if after:
+                    idx = next((i for i, m in enumerate(msgs)
+                                if m.get('id') == after), None)
+                    if idx is not None:
+                        fresh = msgs[idx + 1:]
+                if not fresh:
+                    continue
+                sub['after'] = fresh[-1].get('id') or after
+                for msg in fresh:
+                    try:
+                        sub['queue'].put_nowait(msg)
+                    except queue.Full:
+                        # 客户端读得太慢：丢连接，让它重连（重连会带 after 补齐）
+                        _subscribers.pop(sub_id, None)
+                        break
+
+
 class ChatApiMixin:
     """聊天相关路由的处理函数，鉴权方式与原实现逐条对齐。"""
-
     # ── SSE 推送的限额 ──────────────────────────────────────────────────
     # 每条流会占住一个处理线程，所以既限条数也限寿命：
     # 满了回 503、到点主动断，前端两种情况都会自动退回轮询。
     STREAM_MAX = 8
     STREAM_LIFETIME = 25.0      # 秒；到期让浏览器重连，顺便回收线程
-    STREAM_TICK = 0.3           # 秒；服务端内部的检查间隔（不走网络）
+    STREAM_TICK = 0.5           # 秒；队列取不到消息时的等待上限（不走网络）
     STREAM_BEAT = 10.0          # 秒；没消息时的心跳，用来探活
     _stream_slots = threading.BoundedSemaphore(STREAM_MAX)
 
@@ -149,6 +210,10 @@ class ChatApiMixin:
 
         只推 after 之后的新消息；客户端按 id 去重，所以断线重连不会重复上屏。
         没有 Content-Length —— 流式响应靠关连接结束，所以显式 Connection: close。
+
+        实现上不再让每条连接自己扫房间：所有连接挂到一个订阅表上，
+        由一个广播线程统一扫描、把新消息塞进各自的队列。N 个观众只有 1 份扫描，
+        而且新消息仍然由 `chat_event` 立刻叫醒，延迟不变。
         """
         if not self.check_auth():
             self.send_error(403, "Forbidden")
@@ -170,6 +235,12 @@ class ChatApiMixin:
             self.send_error(503, "Too many streams")
             return
 
+        sub_id = uuid.uuid4().hex
+        inbox = queue.Queue(maxsize=256)
+        with _sub_lock:
+            _subscribers[sub_id] = {'queue': inbox, 'room': room_id, 'after': after}
+        _ensure_broadcaster()
+
         try:
             self.send_response(200)
             self.send_header('Content-Type', 'text/event-stream; charset=utf-8')
@@ -185,34 +256,23 @@ class ChatApiMixin:
             deadline = time.time() + self.STREAM_LIFETIME
             last_beat = time.time()
             while time.time() < deadline:
-                with chat_lock:
-                    msgs = CHAT_ROOMS.get(room_id, {}).get('messages', [])[:]
-                fresh = []
-                if after:
-                    idx = next((i for i, m in enumerate(msgs)
-                                if m.get('id') == after), None)
-                    if idx is not None:
-                        fresh = msgs[idx + 1:]
-                elif msgs:
-                    fresh = msgs[:]
-
-                for m in fresh:
-                    after = m.get('id') or after
+                try:
+                    msg = inbox.get(timeout=self.STREAM_TICK)
+                except queue.Empty:
+                    msg = None
+                if msg is not None:
                     self._sse_send('data: ' +
-                                   json.dumps(m, ensure_ascii=False) + '\n\n')
+                                   json.dumps(msg, ensure_ascii=False) + '\n\n')
 
                 if time.time() - last_beat >= self.STREAM_BEAT:
                     # 心跳顺便探活：对端没了，这里就会抛
                     self._sse_send(': ping\n\n')
                     last_beat = time.time()
-
-                # 平时在这里等，最多 STREAM_TICK；有人发消息会立刻被叫醒，
-                # 所以空闲时几乎不占 CPU，新消息也不用等下一个轮询周期
-                with chat_event:
-                    chat_event.wait(self.STREAM_TICK)
         except (BrokenPipeError, ConnectionResetError, OSError):
             pass                          # 浏览器关页面 / 断网，正常收场
         finally:
+            with _sub_lock:
+                _subscribers.pop(sub_id, None)
             self._stream_slots.release()
 
     # ── 写接口 ──────────────────────────────────────────────────────────

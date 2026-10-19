@@ -54,8 +54,12 @@ class ListingMixin:
                 return kind
         return 'other'
 
-    def build_listing(self, current_path):
-        """返回一份目录清单，HTML 页面与 /api/list 共用"""
+    def build_listing(self, current_path, limit=0, offset=0):
+        """返回一份目录清单，HTML 页面与 /api/list 共用。
+
+        limit>0 时只返回这一页（按名字排序后切片），并告诉前端总条数与是否还有下一页；
+        默认不传就是全部，老调用方行为不变。
+        """
         shared_path = Path(self.shared_path).resolve()
         current_path = Path(current_path).resolve()
         if not is_path_within(current_path, shared_path):
@@ -85,10 +89,20 @@ class ListingMixin:
             pass
 
         entries.sort(key=lambda e: e['name'].lower())
+        total = len(entries)
+        try:
+            limit = int(limit or 0)
+            offset = max(0, int(offset or 0))
+        except (TypeError, ValueError):
+            limit, offset = 0, 0
+        page = entries[offset:offset + limit] if limit > 0 else entries[offset:]
         return {
             'path': str(current_path),
-            'entries': entries,
+            'entries': page,
             'breadcrumb': self.get_breadcrumb(current_path),
+            'total': total,
+            'offset': offset,
+            'hasMore': offset + len(page) < total,
         }
 
     def get_breadcrumb(self, current_path):
