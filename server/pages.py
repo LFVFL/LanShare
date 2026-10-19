@@ -65,6 +65,7 @@ def _asset_version():
     digest = hashlib.sha1()
     digest.update((webassets.CSS or "").encode("utf-8"))
     digest.update((webassets.JS or "").encode("utf-8"))
+    digest.update((getattr(webassets, "THEME_BOOT", "") or "").encode("utf-8"))
     return digest.hexdigest()[:10]
 
 

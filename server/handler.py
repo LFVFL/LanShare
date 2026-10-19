@@ -38,6 +38,7 @@ GET_ROUTES = (
     ('/favicon.ico',     'serve_icon',         AUTH_PUBLIC,   None),
     ('/static/app.css',  'serve_asset',        AUTH_PUBLIC,   '/static/app.css'),
     ('/static/app.js',   'serve_asset',        AUTH_PUBLIC,   '/static/app.js'),
+    ('/static/theme-boot.js', 'serve_asset',   AUTH_PUBLIC,   '/static/theme-boot.js'),
     ('/chat',            'page_chat_list',     AUTH_PUBLIC,   None),
     ('/chat/room',       'page_chat_room',     AUTH_PUBLIC,   None),
     ('/chat/rooms',      'api_chat_rooms',     AUTH_PUBLIC,   None),

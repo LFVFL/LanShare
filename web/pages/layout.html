@@ -4,23 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{TITLE}}</title>
-<!-- 首屏之前就把明暗/配色定下来：app.js 要等 DOMContentLoaded 才跑，
-     晚一步就是深色模式下每次进子目录都先闪一下白（刺眼） -->
-<script>
-(function () {
-  try {
-    var d = document.documentElement, s = window.localStorage;
-    var theme = s.getItem('lanshare.theme') || 'light';
-    if (theme === 'auto') {
-      theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ? 'dark' : 'light';
-    }
-    d.setAttribute('data-theme', theme);
-    d.setAttribute('data-palette', s.getItem('lanshare.palette') || 'mint');
-    d.setAttribute('data-glass', s.getItem('lanshare.glass') || 'normal');
-  } catch (e) { }
-})();
-</script>
+<!-- 首屏之前就把明暗/配色定下来。放在独立文件里是为了能开严格 CSP
+     （内联脚本得算哈希，改一个空格就得跟着改；外链脚本 CSP 直接放行）。 -->
+<script src="/static/theme-boot.js?v={{ASSET_V}}"></script>
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/static/app.css?v={{ASSET_V}}">
 </head>

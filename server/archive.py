@@ -272,6 +272,11 @@ class ArchiveMixin:
             # 可续传模式：确保缓存文件在，然后按 Range 发
             if not info.get('path') or not Path(info['path']).is_file():
                 info['path'] = str(self._build_zip_file(info['entries']))
+                # 生成完立刻看一次总容量，别等后台线程（10 分钟太久）
+                info['used'] = time.time()
+                enforce_zip_cache(keep_path=info['path'])
+            else:
+                info['used'] = time.time()
 
             size = os.path.getsize(info['path'])
             range_header = self.headers.get('Range') or ''

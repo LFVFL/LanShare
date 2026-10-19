@@ -44,6 +44,39 @@ MODES = {
 }
 DEFAULT_MODE = "light"
 
+
+def system_is_dark():
+    """Windows 现在是不是深色模式。
+
+    优先读注册表（`AppsUseLightTheme=0` 就是深色）；读不到再退化成看系统调色板。
+    """
+    try:
+        import winreg
+
+        key = r"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, key) as handle:
+            value, _ = winreg.QueryValueEx(handle, "AppsUseLightTheme")
+        return int(value) == 0
+    except Exception:
+        pass
+    try:
+        from PyQt5.QtGui import QPalette
+        from PyQt5.QtWidgets import QApplication
+
+        app = QApplication.instance()
+        if app is None:
+            return False
+        return app.palette().color(QPalette.Window).lightness() < 128
+    except Exception:
+        return False
+
+
+def resolve_mode(mode):
+    """'auto' 表示跟随系统；其它值原样返回（不认识就回默认）。"""
+    if mode == "auto":
+        return "dark" if system_is_dark() else "light"
+    return mode if mode in MODES else DEFAULT_MODE
+
 # ── 字号档位（乘在基准 px 上）──────────────────────────────────────
 SIZES = {"中": 1.0, "大": 1.15, "特大": 1.32}
 DEFAULT_SIZE = "大"
@@ -67,7 +100,7 @@ TONE_TONES = {
 
 
 def tone_colors(mode="light"):
-    return TONE_TONES.get(mode, TONE_TONES["light"])
+    return TONE_TONES.get(resolve_mode(mode), TONE_TONES["light"])
 
 
 def px(key, scale=DEFAULT_SIZE):
@@ -76,7 +109,7 @@ def px(key, scale=DEFAULT_SIZE):
 
 
 def tokens(palette=DEFAULT_PALETTE, mode=DEFAULT_MODE, scale=DEFAULT_SIZE):
-    tok = dict(MODES.get(mode, MODES[DEFAULT_MODE]))
+    tok = dict(MODES.get(resolve_mode(mode), MODES[DEFAULT_MODE]))
     pal = PALETTES.get(palette, PALETTES[DEFAULT_PALETTE])
     tok["brand"] = pal["brand"]
     tok["brand_dark"] = pal["brand_dark"]

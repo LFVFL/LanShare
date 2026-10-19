@@ -50,6 +50,7 @@ else:
 class FileShareGUI(QMainWindow):
     status_updated = pyqtSignal(str, bool)
     start_completed = pyqtSignal(bool, object)
+    system_checks_ready = pyqtSignal(bool, bool)   # (开机自启, 右键菜单)
 
     def __init__(self, initial_path=None, initial_port=None, auto_start=True):
         super().__init__()
@@ -71,6 +72,9 @@ class FileShareGUI(QMainWindow):
         self.qr_items = []
         self.qr_primary = None
         self.selected_qr_index = None
+        # 这两个状态要跑 schtasks / 读注册表，启动时先留空，后台查完再回填
+        self._startup_enabled = None
+        self._menu_installed = None
 
         # 外观（配色 / 明暗 / 字号）先读出来，建控件前就要用
         self.palette = self.settings.value("theme/palette", style.DEFAULT_PALETTE)
@@ -78,7 +82,7 @@ class FileShareGUI(QMainWindow):
         self.size = self.settings.value("theme/size", style.DEFAULT_SIZE)
         if self.palette not in style.PALETTES:
             self.palette = style.DEFAULT_PALETTE
-        if self.mode not in style.MODES:
+        if self.mode not in ("light", "dark", "auto"):
             self.mode = style.DEFAULT_MODE
         if self.size not in style.SIZES:
             self.size = style.DEFAULT_SIZE
@@ -93,6 +97,8 @@ class FileShareGUI(QMainWindow):
         self.update_menu_btn_text()
         self.update_startup_btn_text()
         self.update_status("已停止", False)
+        # 窗口先显示出来，再在后台查那两个系统开关（schtasks 要几百毫秒）
+        self.refresh_system_checks()
         if self.auto_start:
             QTimer.singleShot(100, self.auto_start_share)
 
@@ -111,9 +117,9 @@ class FileShareGUI(QMainWindow):
         self.settings.setValue("theme/mode", self.mode)
         self.settings.setValue("theme/size", self.size)
         self.apply_modern_style()
+        mode_text = {"auto": "跟随系统", "dark": "暗色"}.get(self.mode, "明亮")
         self._flash("外观已更新：%s · %s · 字号%s"
-                    % (style.PALETTES[self.palette]["name"],
-                       "暗色" if self.mode == "dark" else "明亮", self.size))
+                    % (style.PALETTES[self.palette]["name"], mode_text, self.size))
 
     def set_window_icon(self):
         icon = get_app_icon()
@@ -322,7 +328,8 @@ class FileShareGUI(QMainWindow):
 
         mode_menu = menu.addMenu("明暗")
         self._mode_actions = {}
-        for key, label in (("light", "明亮"), ("dark", "暗色")):
+        for key, label in (("light", "明亮"), ("dark", "暗色"),
+                           ("auto", "跟随系统")):
             act = QAction(label, self, checkable=True)
             act.setChecked(key == self.mode)
             act.triggered.connect(lambda _=False, k=key: self._pick_mode(k))
@@ -507,6 +514,7 @@ class FileShareGUI(QMainWindow):
         self.sharer.set_status_callback(self.update_status)
         self.status_updated.connect(self.on_status_updated)
         self.start_completed.connect(self.on_start_completed)
+        self.system_checks_ready.connect(self.on_system_checks_ready)
         self.log_timer.timeout.connect(self.update_log)
 
     # ── 地址列表与二维码 ──────────────────────────────────────────
@@ -849,6 +857,7 @@ class FileShareGUI(QMainWindow):
             self.remove_context_menu()
         else:
             self.add_context_menu()
+        self._menu_installed = self.is_context_menu_installed()
         self.update_menu_btn_text()
 
     def is_context_menu_installed(self):
@@ -897,22 +906,61 @@ class FileShareGUI(QMainWindow):
         except Exception as e:
             QMessageBox.critical(self, "失败", "移除右键菜单失败: {}".format(str(e)))
 
-    def update_menu_btn_text(self):
-        enabled = self.is_context_menu_installed()
-        self.menu_btn.setText("已添加到右键菜单" if enabled else "添加到右键菜单")
-        self.menu_btn.setToolTip("在文件夹空白处右键即可把该文件夹设为共享目录"
-                                 if enabled else "在资源管理器里加一条右键菜单")
-        self._set_toggle_state(self.menu_btn, enabled)
-
     def update_startup_btn_text(self):
-        enabled = self.is_startup_enabled()
+        """把按钮文案更新成当前状态。
 
+        注意：`is_startup_enabled()` 要跑一次 `schtasks /query`（200~500ms），
+        启动时不能同步调用——窗口会晚出来半秒。走 `refresh_system_checks()`
+        在后台线程里查，查完用信号回到 UI 线程。
+        """
+        enabled = self._startup_enabled
+        if enabled is None:                 # 还没查出来，先显示"检测中…"
+            self.startup_btn.setText("检测自启状态…")
+            self.startup_btn.setEnabled(False)
+            return
+        self.startup_btn.setEnabled(True)
         self.startup_btn.blockSignals(True)
         self.startup_btn.setText("已开启开机自启" if enabled else "开机自启")
         self.startup_btn.setToolTip("已在计划任务里注册，可再次点击关闭" if enabled
                                     else "登录 Windows 后自动在托盘启动共享")
         self.startup_btn.blockSignals(False)
         self._set_toggle_state(self.startup_btn, enabled)
+
+    def refresh_system_checks(self):
+        """后台查「右键菜单 / 开机自启」两个开关的真实状态，不阻塞窗口显示。"""
+        def worker():
+            startup = False
+            menu = False
+            try:
+                startup = self.is_startup_enabled()
+            except Exception as exc:
+                print("[启动自检] 查询计划任务失败:", exc)
+            try:
+                menu = self.is_context_menu_installed()
+            except Exception as exc:
+                print("[启动自检] 查询右键菜单失败:", exc)
+            self.system_checks_ready.emit(startup, menu)
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def on_system_checks_ready(self, startup, menu):
+        self._startup_enabled = startup
+        self._menu_installed = menu
+        self.update_startup_btn_text()
+        self.menu_btn.setText("已添加到右键菜单" if menu else "添加到右键菜单")
+        self.menu_btn.setToolTip("在文件夹空白处右键即可把该文件夹设为共享目录"
+                                 if menu else "在资源管理器里加一条右键菜单")
+        self._set_toggle_state(self.menu_btn, menu)
+
+    def update_menu_btn_text(self):
+        menu = self._menu_installed
+        if menu is None:
+            self.menu_btn.setText("检测右键菜单…")
+            return
+        self.menu_btn.setText("已添加到右键菜单" if menu else "添加到右键菜单")
+        self.menu_btn.setToolTip("在文件夹空白处右键即可把该文件夹设为共享目录"
+                                 if menu else "在资源管理器里加一条右键菜单")
+        self._set_toggle_state(self.menu_btn, menu)
 
     @staticmethod
     def _set_toggle_state(btn, enabled):
@@ -935,6 +983,7 @@ class FileShareGUI(QMainWindow):
             else:
                 self.enable_startup()
         finally:
+            self._startup_enabled = self.is_startup_enabled()
             self.update_startup_btn_text()
             self.startup_btn.setEnabled(True)
             self._startup_toggling = False

@@ -75,6 +75,7 @@ def pack(text: str) -> str:
 def main():
     css = read(WEB / "tokens.css") + "\n" + read(WEB / "app.css")
     js = js_source()
+    theme_boot = read(WEB / "theme-boot.js")
 
     # 图标也一起打包：单文件 exe 旁边没有 icon.ico 时还能显示应用图标
     icon_path = ROOT / "icon.ico"
@@ -88,6 +89,8 @@ def main():
         "CSS = " + pack(css),
         "",
         "JS = " + pack(js),
+        "",
+        "THEME_BOOT = " + pack(theme_boot),
         "",
         "ICON_ICO_B64 = " + repr(icon_b64),
         "",

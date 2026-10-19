@@ -4,22 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>身份验证 · 局域网共享</title>
-<!-- 同 layout.html：首屏前定明暗，避免深色模式下闪白 -->
-<script>
-(function () {
-  try {
-    var d = document.documentElement, s = window.localStorage;
-    var theme = s.getItem('lanshare.theme') || 'light';
-    if (theme === 'auto') {
-      theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ? 'dark' : 'light';
-    }
-    d.setAttribute('data-theme', theme);
-    d.setAttribute('data-palette', s.getItem('lanshare.palette') || 'mint');
-    d.setAttribute('data-glass', s.getItem('lanshare.glass') || 'normal');
-  } catch (e) { }
-})();
-</script>
+<!-- 同 layout.html：首屏前定明暗（外链，方便开严格 CSP） -->
+<script src="/static/theme-boot.js?v={{ASSET_V}}"></script>
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/static/app.css?v={{ASSET_V}}">
 </head>

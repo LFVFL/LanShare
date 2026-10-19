@@ -197,6 +197,8 @@ class HttpUtilMixin:
         self.send_header('Content-Type', 'text/html; charset=utf-8')
         self.send_header('Content-Length', str(len(payload)))
         self.send_header('Cache-Control', cache)
+        # 页面才需要的 CSP：脚本全同源、不允许内联、不许被外站嵌
+        self.send_header('Content-Security-Policy', PAGE_CSP)
         for k, v in extra:
             self.send_header(k, v)
         self.end_headers()
@@ -253,7 +255,12 @@ class HttpUtilMixin:
         if webassets is None:
             self.send_error(500, "webassets missing")
             return
-        text = webassets.CSS if path.endswith('.css') else webassets.JS
+        if path.endswith('theme-boot.js'):
+            text = getattr(webassets, 'THEME_BOOT', '') or ''
+        elif path.endswith('.css'):
+            text = webassets.CSS
+        else:
+            text = webassets.JS
         body = text.encode('utf-8')
         # ETag 用未压缩内容的摘要：同一份源码无论压不压都是同一个版本号
         etag = '"' + hashlib.sha1(body).hexdigest()[:16] + '"'

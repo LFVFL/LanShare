@@ -9,6 +9,7 @@ DEFAULT_SHARE_PATH = str(Path.home() / "Downloads")
 # 会话与临时文件
 SESSION_TTL = 86400          # 会话有效期：24 小时
 ZIP_EXPIRE_SECONDS = 600     # ZIP 临时文件过期：10 分钟
+ZIP_CACHE_MAX_BYTES = 2 * 1024 ** 3   # 打包缓存总量上限（超了按最久没用淘汰）
 
 # 聊天
 MAX_CHAT_LEN = 500                     # 每个房间保留条数
@@ -49,6 +50,22 @@ SECURITY_HEADERS = (
     ('X-Frame-Options', 'SAMEORIGIN'),
     ('Referrer-Policy', 'no-referrer'),
     ('Permissions-Policy', 'geolocation=(), microphone=(), camera=()'),
+)
+
+# 页面专用的 CSP：脚本全部同源（首屏那段明暗脚本也拆成了 /static/theme-boot.js，
+# 所以不需要 'unsafe-inline'）；样式还留着 'unsafe-inline'，因为模板里有 style="" 属性
+PAGE_CSP = (
+    "default-src 'self'; "
+    "script-src 'self'; "
+    "style-src 'self' 'unsafe-inline'; "
+    "img-src 'self' data: blob:; "
+    "media-src 'self' blob:; "
+    "connect-src 'self'; "
+    "font-src 'self'; "
+    "frame-ancestors 'self'; "
+    "base-uri 'none'; "
+    "form-action 'self'; "
+    "object-src 'none'"
 )
 
 # 预览时允许内联展示的类型；其余一律强制下载，避免 .html/.svg 在同源执行脚本

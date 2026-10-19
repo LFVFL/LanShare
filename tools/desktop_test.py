@@ -162,7 +162,7 @@ def main():
     check("外观按钮在", hasattr(gui, "theme_btn"), "")
     check("6 套配色都在菜单里", len(gui._palette_actions) == 6,
           len(gui._palette_actions))
-    check("明暗两项", len(gui._mode_actions) == 2, len(gui._mode_actions))
+    check("明暗三项（含跟随系统）", len(gui._mode_actions) == 3, len(gui._mode_actions))
     check("字号三档", len(gui._size_actions) == 3, len(gui._size_actions))
 
     for name, pal in style.PALETTES.items():
@@ -182,7 +182,27 @@ def main():
     gui.set_theme(*original)
     check("能切回原样", gui.styleSheet() == style.build_qss(*original), "")
 
-    print("\n[10] 日志行数上限")
+    print("\n[10] 跟随系统暗色（auto）")
+    check("明暗菜单有三项", len(gui._mode_actions) == 3, len(gui._mode_actions))
+    check("菜单里有「跟随系统」", "auto" in gui._mode_actions,
+          list(gui._mode_actions))
+    real_is_dark = style.system_is_dark
+    try:
+        style.system_is_dark = lambda: True
+        gui.set_theme(mode="auto")
+        check("系统是暗色时 auto 变暗", style.MODES["dark"]["bg"] in gui.styleSheet(), "")
+        check("auto 的日志色跟着暗色",
+              gui._log_format("ok").foreground().color().name()
+              == style.TONE_TONES["dark"]["ok"],
+              gui._log_format("ok").foreground().color().name())
+        style.system_is_dark = lambda: False
+        gui.set_theme(mode="auto")
+        check("系统是浅色时 auto 变浅", style.MODES["light"]["bg"] in gui.styleSheet(), "")
+    finally:
+        style.system_is_dark = real_is_dark
+    gui.set_theme(*original)
+
+    print("\n[11] 日志行数上限")
     gui.log_queue = __import__("queue").Queue()
     for i in range(2100):
         gui.log_queue.put(("10:00:%02d" % (i % 60), "1.1.1.1", "第 %d 条" % i, 200))

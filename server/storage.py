@@ -1,9 +1,10 @@
 """运行期状态：会话、上传锁与偏移、ZIP 临时文件。"""
+import os
 import threading
 import time
 from pathlib import Path
 
-from .config import SESSION_TTL, ZIP_EXPIRE_SECONDS
+from .config import SESSION_TTL, ZIP_CACHE_MAX_BYTES, ZIP_EXPIRE_SECONDS
 
 SESSIONS_STORE = {}
 UPLOAD_LOCKS = {}
@@ -15,6 +16,7 @@ UPLOAD_STATE_LOCK = threading.Lock()
 UPLOAD_STATE_MAX = 500
 
 ZIP_DOWNLOAD_STORE = {}
+ZIP_STORE_LOCK = threading.Lock()
 
 # 聊天数据结构的读写锁（房间字典本身在 chat_store 里）
 chat_lock = threading.Lock()
@@ -76,12 +78,66 @@ def cleanup_zip_store():
             ZIP_DOWNLOAD_STORE.pop(zid, None)
 
 
+def enforce_zip_cache(keep_path=None, max_bytes=None):
+    """打包缓存的总容量上限。
+
+    只按时间过期是不够的：十个人同时各打一个 5 GB 的包，10 分钟内就能把磁盘写满。
+    这里按"最久没用过的先删"淘汰，正在生成/正在下载的那份（keep_path）不动。
+
+    返回释放的字节数。
+    """
+    limit = ZIP_CACHE_MAX_BYTES if max_bytes is None else max_bytes
+    if limit <= 0:
+        return 0
+    keep = os.path.abspath(keep_path) if keep_path else None
+
+    with ZIP_STORE_LOCK:
+        entries = []
+        total = 0
+        for zid, info in list(ZIP_DOWNLOAD_STORE.items()):
+            path = info.get('path')
+            if not path:
+                continue
+            try:
+                size = os.path.getsize(path)
+            except OSError:
+                info['path'] = None          # 文件已经不在了，清掉引用
+                continue
+            entries.append((info.get('used') or info.get('time', 0), zid, path, size))
+            total += size
+
+        if total <= limit:
+            return 0
+
+        entries.sort()
+        freed = 0
+        for _stamp, zid, path, size in entries:
+            if total - freed <= limit:
+                break
+            if keep and os.path.abspath(path) == keep:
+                continue
+            try:
+                os.unlink(path)
+            except OSError:
+                continue
+            info = ZIP_DOWNLOAD_STORE.get(zid)
+            if info:
+                info['path'] = None
+            freed += size
+
+    if freed:
+        print("[ZIP] 缓存超过 %.0f MB 上限，淘汰了 %.1f MB"
+              % (limit / 1024 / 1024, freed / 1024 / 1024))
+    return freed
+
+
 def start_zip_cleanup_thread():
     """启动 ZIP 临时文件后台清理线程"""
     def loop():
         while True:
             time.sleep(300)
             cleanup_zip_store()
+            enforce_zip_cache()
 
     t = threading.Thread(target=loop, daemon=True)
     t.start()

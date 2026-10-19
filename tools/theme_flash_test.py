@@ -86,20 +86,29 @@ def main():
         check("页面是深色", cdp.js("document.documentElement.dataset.theme") == "dark",
               cdp.js("document.documentElement.dataset.theme"))
 
-        print("\n[2] 服务端下发的 HTML：预置脚本必须在样式表之前")
-        # 这才是"深色不闪白"的机制保证：脚本同步跑在 <head> 里、且在样式表之前，
-        # 首帧的样式就已经是深色。浏览器探针只能看到"某一次 rAF"，测不出闪没闪。
+        print("\n[2] 服务端下发的 HTML：theme-boot.js 必须在样式表之前")
+        # 这才是"深色不闪白"的机制保证：同步脚本在 <head> 里、且排在样式表之前。
+        # 脚本内容单独成文件（为了能开严格 CSP），所以两处都要断言。
         import urllib.request
+
+        with urllib.request.urlopen(
+                "http://127.0.0.1:%d/static/theme-boot.js" % PORT, timeout=5) as resp:
+            boot_js = resp.read().decode("utf-8")
+            boot_status = resp.status
+        check("theme-boot.js 能取到", boot_status == 200, boot_status)
+        check("theme-boot.js 里读的是 lanshare.theme", "lanshare.theme" in boot_js, "")
+        check("theme-boot.js 设置了三个属性",
+              all(k in boot_js for k in ("data-theme", "data-palette", "data-glass")), "")
 
         for path in ("/", "/dir?path=docs", "/chat", "/login"):
             with urllib.request.urlopen(
                     "http://127.0.0.1:%d%s" % (PORT, path), timeout=5) as resp:
                 html = resp.read().decode("utf-8")
-            has_script = "lanshare.theme" in html
-            before_css = has_script and html.index("lanshare.theme") < html.index("app.css")
+            has_script = "theme-boot.js" in html
+            before_css = has_script and html.index("theme-boot.js") < html.index("app.css")
             label = path.split("?")[0]
-            check("%s 有预置脚本" % label, has_script, "")
-            check("%s 脚本排在样式表之前" % label, before_css, "")
+            check("%s 引了 theme-boot.js" % label, has_script, "")
+            check("%s 它排在样式表之前" % label, before_css, "")
 
         print("\n[3] 进子目录：页面主题和背景都必须是深色")
         for target in ("/dir?path=docs", "/?path=", "/chat"):

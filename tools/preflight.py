@@ -231,6 +231,46 @@ def check_undeclared_calls(frags):
             line(BAD, item)
     else:
         line(OK, '分片里没有「用了但没声明」的函数调用')
+    check_alias_targets(frags)
+
+
+# 每个跨分片符号应该来自哪个命名空间（写错对象时静态也能发现）
+_ALIAS_EXPECT = {
+    'icon': 'Lan.icons.', 'hydrateIcons': 'Lan.icons.', 'injectSprite': 'Lan.icons.',
+    'toast': 'Lan.ui.', 'openModal': 'Lan.ui.', 'closeModal': 'Lan.ui.',
+    'openMenu': 'Lan.ui.', 'closeMenu': 'Lan.ui.',
+    'esc': 'Lan.util.', 'copyText': 'Lan.util.', 'downloadUrl': 'Lan.util.',
+    'readJson': 'Lan.util.', 'legacyCopy': 'Lan.util.',
+    'apiFetch': 'Lan.api.', 'jsonOf': 'Lan.api.', 'writeFetch': 'Lan.api.',
+    'ensureAdmin': 'Lan.api.', 'askAdmin': 'Lan.api.',
+    'refreshFiles': 'Lan.files.', 'renderFiles': 'Lan.files.', 'fsState': 'Lan.files.',
+    'q': 'Lan.files.',
+    'initUploads': 'Lan.upload.', 'initNewFolder': 'Lan.upload.',
+    'openLightbox': 'Lan.lightbox.',
+}
+
+
+def check_alias_targets(frags):
+    """检查 `var x = Lan.a.b;` 里的命名空间有没有写错。
+
+    "用了但没声明"能挡住漏写别名，但挡不住 `var toast = Lan.api.toast` 这种
+    指错对象的写法——它不报错，只是运行时行为诡异。这里按一张名字→命名空间的
+    对照表校验；表里没有的名字跳过（新符号自己记得补表）。
+    """
+    import re
+
+    pattern = re.compile(r'var\s+([A-Za-z_$][\w$]*)\s*=\s*(Lan\.[\w.$]+)\s*;')
+    bad = []
+    for f in frags:
+        for name, target in pattern.findall(f.read_text(encoding="utf-8")):
+            want = _ALIAS_EXPECT.get(name)
+            if want and not target.startswith(want):
+                bad.append("%s: %s = %s（应该来自 %s）" % (f.name, name, target, want))
+    if bad:
+        for item in bad:
+            line(BAD, "别名指错命名空间：" + item)
+    else:
+        line(OK, "分片别名都指向正确的命名空间")
 
 
 def check_disk():
