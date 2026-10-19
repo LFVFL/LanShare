@@ -19,13 +19,21 @@
   box-shadow: var(--sh-2);
 }
 
-/* 图标占位容器（hydration 之后里面是 svg） */
+/* 图标占位容器：注水前是 [data-icon]，注水后 .icon-box（属性会被摘掉，靠 class 续命） */
 [data-icon],
-[data-theme-icon] {
+[data-theme-icon],
+.icon-box {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex: none;
+  line-height: 0;          /* 去掉行盒的 baseline 余量，图标才能像素级居中 */
+}
+
+.icon-box > .icon,
+[data-theme-icon] > .icon,
+[data-icon] > .icon {
+  display: block;          /* svg 默认 inline，会吃到 baseline 偏移 */
 }
 
 /* ═══════════════ 1. 应用外壳 ═══════════════ */
@@ -389,6 +397,9 @@
 
 .mobile-search { display: none; }
 
+/* 手机端排序条：桌面隐藏，手机上替代表头 */
+.mobile-sort { display: none; }
+
 /* ── 表头 ── */
 .list-head,
 .row {
@@ -408,8 +419,10 @@
   font-weight: 600;
   color: var(--text-3);
   background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  /* 四角都圆：只圆上半部分会和下面的透明行形成"被切断"的观感；
+     吸顶滚动时四角圆也不违和 */
+  border-radius: var(--r-lg);
+  box-shadow: 0 1px 0 var(--border), inset 0 1px 0 var(--hi);
   -webkit-backdrop-filter: var(--glass-filter);
   backdrop-filter: var(--glass-filter);
 }
@@ -430,6 +443,41 @@
 .list-head .col[data-dir] .sort-arrow { color: var(--brand); opacity: 1; }
 .sort-arrow { opacity: .2; transition: transform var(--t-fast) var(--ease); }
 .list-head .col[data-dir="asc"] .sort-arrow { transform: rotate(180deg); }
+
+/* 手机端排序条 */
+.mobile-sort {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 0 0 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.mobile-sort::-webkit-scrollbar { display: none; }
+.mobile-sort-label { font-size: 12px; color: var(--text-4); flex: none; }
+.mobile-sort .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex: none;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-3);
+  font-size: 12px;
+  font-weight: 550;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.mobile-sort .chip[data-dir] {
+  background: var(--brand-soft);
+  border-color: rgb(var(--p1) / .35);
+  color: var(--brand);
+}
+.mobile-sort .chip[data-dir] .sort-arrow { color: var(--brand); opacity: 1; }
+.mobile-sort .chip[data-dir="asc"] .sort-arrow { transform: rotate(180deg); }
 
 .col-name { flex: 1 1 auto; min-width: 0; }
 .col-size { width: 92px; justify-content: flex-end; flex: none; }
@@ -1622,6 +1670,7 @@ body[data-dragging="true"] .dropzone { display: flex; }
   .mobile-search { display: block; padding: 2px 0 10px; }
   .mobile-search .search { flex: 1 1 auto; }
   .search input { height: 38px; }
+  .mobile-sort { display: flex; }
 
   .list-head { display: none; }
   .list { gap: 8px; }

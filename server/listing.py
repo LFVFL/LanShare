@@ -108,8 +108,10 @@ class ListingMixin:
     def get_breadcrumb(self, current_path):
         shared_path = Path(self.shared_path).resolve()
         current_path = Path(current_path).resolve()
+        # 注意：样式全挂在 .crumb / .crumb-sep / .crumb--current 上，
+        # 这里输出的裸 <a> 会完全失去内边距、圆角与 hover 效果
         parts = [
-            '<a href="/dir?path={0}">根目录</a>'.format(
+            '<a class="crumb" href="/dir?path={0}">根目录</a>'.format(
                 urllib.parse.quote(str(shared_path))
             )
         ]
@@ -119,15 +121,23 @@ class ListingMixin:
                 rel_parts = current_path.relative_to(shared_path).parts
                 current_dir = shared_path
 
-                for part in rel_parts:
+                for index, part in enumerate(rel_parts):
                     current_dir = current_dir / part
-                    parts.append('<span>/</span>')
-                    parts.append(
-                        '<a href="/dir?path={0}">{1}</a>'.format(
-                            urllib.parse.quote(str(current_dir)),
-                            html.escape(part)
+                    parts.append('<span class="crumb-sep">/</span>')
+                    # 最后一级是当前目录：不可点、加重显示
+                    if index == len(rel_parts) - 1:
+                        parts.append(
+                            '<span class="crumb crumb--current">{0}</span>'.format(
+                                html.escape(part)
+                            )
                         )
-                    )
+                    else:
+                        parts.append(
+                            '<a class="crumb" href="/dir?path={0}">{1}</a>'.format(
+                                urllib.parse.quote(str(current_dir)),
+                                html.escape(part)
+                            )
+                        )
             except ValueError:
                 pass
 

@@ -1461,7 +1461,131 @@ Web 端：老页面还指着旧目录的绝对路径，`build_listing` 会把越
 | 其余 11 套 | 全绿 |
 
 
-## 三十四、附：第一轮（模块化拆分）对照表
+## 三十四、第二十三轮：界面细节与运行排查
+
+这一轮是"看出来的问题 + 跑出来的问题"，全部靠截图与实测数值定位，不靠猜。
+
+### 34.1 图片按钮看起来比发送按钮高一点
+
+用 `getBoundingClientRect()` 量了一遍：**按钮**中线与发送按钮完全一致（都是 737.5），
+但**图标**的中线在 735.3——整体偏上 **2.2px**。桌面上只是"感觉有点偏"，放大看才明显。
+
+根因在图标注水（hydration）：
+
+```js
+el.innerHTML = icon(...);
+el.removeAttribute('data-icon');   // ← 把居中样式一起摘掉了
+```
+
+居中是挂在 `[data-icon]` 上的 `display:inline-flex; align-items:center`，
+属性一摘，容器退回普通 `block`，里面的 `<svg>` 以 `inline` + `vertical-align:baseline`
+参与行盒排版，被基线挤上去 2.2px。
+
+修法：注水时补一个稳定类名，不依赖那个会被摘掉的属性。
+
+```js
+el.classList.add('icon-box');
+```
+
+```css
+[data-icon], [data-theme-icon], .icon-box {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex: none;
+  line-height: 0;          /* 去掉行盒 baseline 余量 */
+}
+.icon-box > .icon { display: block; }
+```
+
+这是**全站**的问题，不是聊天页独有的：修完之后全站 62 个图标，偏移 0 个。
+
+### 34.2 表头"上圆下方"
+
+`.list-head` 原本是 `border-radius: r-lg r-lg 0 0`，只有上半部分圆。
+而它下面的行是透明底，所以白条下面直接是空白，看起来像被切了一刀。
+
+改成四角都圆（`border-radius: var(--r-lg)`），并把原来的 `border-bottom`
+换成 `box-shadow`，这样吸顶滚动时也不会出现"圆角突然消失"的割裂感。
+
+### 34.3 手机端完全没有排序入口
+
+`.list-head` 在 ≤900px 时是 `display:none`，而排序按钮全在表头里，
+所以手机上三个排序（名称/大小/时间）**一个都点不到**。
+
+补了一条移动端专用排序条，放在搜索框下方：
+
+```html
+<div class="mobile-sort" data-mobile-sort>
+  <span class="mobile-sort-label">排序</span>
+  <button class="chip" data-sort="name">名称 <i data-icon="arrow" ...></i></button>
+  ...
+</div>
+```
+
+配套改了两处逻辑：
+
+- 排序监听原来是 `head.addEventListener`，只绑在表头上。改成直接给所有
+  `[data-sort]` 绑定，桌面表头和手机排序条共用一套逻辑；
+- `updateHead()` 原来只同步表头箭头，改成同步**所有** `[data-sort]`，
+  保证两端状态一致（实测 `head=asc / mobile=asc` 同步）。
+
+### 34.4 顺带查出并修掉的两个真 bug
+
+**面包屑完全没有样式。** 服务端输出的是裸 `<a>`：
+
+```python
+parts.append('<a href="/dir?path={0}">{1}</a>'.format(...))
+```
+
+而 CSS 里定义的全是 `.crumb` / `.crumb-sep` / `.crumb--current`。
+结果就是面包屑没有内边距、没有圆角、没有 hover 效果，当前目录也没有加重。
+实测 `.crumb` 元素数为 **0**。现在按类名输出，并让最后一级用 `<span>` 而非链接。
+
+**`POST /delete` 缺 `file` 参数时不返回任何响应。** 原来的写法：
+
+```python
+def post_delete(self):
+    filename = self.q('file')
+    if filename:                       # 为空时什么都不做 → 函数直接结束
+        self.delete_file(...)
+```
+
+函数结束不带响应，连接被关掉，客户端表现为"请求一直挂着"，
+`RemoteDisconnected`，日志里也看不出原因。改成明确回 400。
+
+三种情况（无 body / 有 body / 缺参数）现在都稳定返回
+`400 {"success": false, "message": "缺少 file 参数"}`。
+
+### 34.5 全量运行排查
+
+除了上面这些，还把 29 个异常输入（非法 offset、路径越界、畸形 JSON、Range 溢出、
+超长消息……）和 14 个写接口的参数缺失都跑了一遍：
+
+- 没有 5xx，没有把服务打挂的输入；
+- 管理密码校验正确：空密码 / 错密码 / 未登录一律拒绝，只有正确密码通过；
+- 全站 3 个页面 62 个图标零偏移、零 `data-icon` 残留；
+- 选择/全选/搜索/进入子目录/明暗切换状态机全部符合预期，无 JS 异常。
+
+> 排查过程中有两次是我自己的测试脚本写错导致的误报（把中文路径直接塞进
+> HTTP 请求行触发 `UnicodeEncodeError`；以及断言的排序方向写反），
+> 都已在确认后排除，没有据此改动产品代码。
+
+### 34.6 验证
+
+新增 `tools/ui_detail_test.py`（21 项），专门守住这几条：
+
+| 断言 | 内容 |
+|---|---|
+| 图标居中 | 桌面/手机下 `svg` 中线与发送按钮误差 < 0.6px |
+| 无残留 | 三个页面 `[data-icon]` 数量为 0，`.icon-box` 全部居中 |
+| 表头圆角 | 四角值一致且非 0 |
+| 手机排序 | 排序条可见、3 个按钮都有宽度 |
+| 排序生效 | 降序后文件顺序为 `c.zip,b.pdf,a.txt`，且两端状态同步 |
+| 面包屑 | 有 `.crumb` / `.crumb--current` / `.crumb-sep`，当前项不是链接 |
+| 删除缺参 | 返回 400 且响应体提到 file，不是断连 |
+
+17 套测试全绿。
+
+## 三十五、附：第一轮（模块化拆分）对照表
 
 `lanshare.py` 从 3400 行拆成 `server/`（服务端，不依赖 Qt）+ `ui/`（界面），入口只留启动逻辑。
 目录职责与依赖方向见 **`docs/ARCHITECTURE.md`**。

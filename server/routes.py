@@ -180,8 +180,12 @@ class RoutesMixin:
 
     def post_delete(self):
         filename = self.q('file')
-        if filename:
-            self.delete_file(filename, self.q('path', self.shared_path))
+        if not filename:
+            # 不能什么都不返回：分支直接结束会让连接被关掉而不带响应，
+            # 浏览器那边表现为"请求一直挂着"，后端日志也看不到原因
+            self.send_api_error("缺少 file 参数", 400)
+            return
+        self.delete_file(filename, self.q('path', self.shared_path))
 
     def post_mkdir(self):
         dirname = self.q('name')

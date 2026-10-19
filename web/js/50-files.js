@@ -235,9 +235,8 @@
     }
 
     function updateHead() {
-      var head = document.querySelector('[data-files-head]');
-      if (!head) return;
-      head.querySelectorAll('[data-sort]').forEach(function (btn) {
+      // 表头（桌面）与排序条（手机）都要同步当前排序状态
+      document.querySelectorAll('[data-sort]').forEach(function (btn) {
         if (btn.getAttribute('data-sort') === fsState.sortKey) {
           btn.setAttribute('data-dir', fsState.sortDir);
         } else {
@@ -492,11 +491,9 @@
     }
 
     function bindToolbar() {
-      var head = document.querySelector('[data-files-head]');
-      if (head) {
-        head.addEventListener('click', function (e) {
-          var btn = e.target.closest('[data-sort]');
-          if (!btn) return;
+      // 排序：表头（桌面）和排序条（手机）共用一套 data-sort，用文档级委托统一处理
+      document.querySelectorAll('[data-sort]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
           var key = btn.getAttribute('data-sort');
           if (fsState.sortKey === key) {
             fsState.sortDir = fsState.sortDir === 'asc' ? 'desc' : 'asc';
@@ -506,7 +503,7 @@
           }
           renderFiles();
         });
-      }
+      });
 
       var all = document.querySelector('[data-select-all]');
       if (all) {

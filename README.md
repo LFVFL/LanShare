@@ -121,6 +121,7 @@ python tools\admin_flow_test.py      :: 管理密码全流程：上传 / 清空 
 python tools\origin_test.py          :: 同源校验（含只发 Origin 的老浏览器）
 python tools\desktop_test.py         :: 桌面端界面与网卡排序（offscreen）
 python tools\theme_flash_test.py     :: 深色模式首屏不闪白
+python tools\ui_detail_test.py       :: 界面细节：图标居中 / 表头圆角 / 手机排序 / 面包屑
 python tools\preflight.py            :: 打包前自检（含分片别名检查）
 python tools\screenshots.py          :: 重新生成上面那些界面截图（假数据）
 ```

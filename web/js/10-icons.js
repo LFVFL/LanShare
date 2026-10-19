@@ -62,6 +62,9 @@
       (root || document).querySelectorAll('[data-icon]').forEach(function (el) {
         el.innerHTML = icon(el.getAttribute('data-icon'), el.getAttribute('data-icon-cls') || '');
         el.removeAttribute('data-icon');
+        // data-icon 被摘掉了，但居中样式原本挂在它身上：补一个稳定的 class，
+        // 否则容器退回普通 block，<svg> 以 inline+baseline 排版，图标会整体偏上约 2px
+        el.classList.add('icon-box');
       });
     }
 

@@ -37,6 +37,20 @@
       </div>
     </div>
 
+    <!-- 手机端没有表头，排序入口单独给一条（和表头共用 data-sort 逻辑） -->
+    <div class="mobile-sort" data-mobile-sort>
+      <span class="mobile-sort-label">排序</span>
+      <button class="chip" data-sort="name" type="button">
+        名称 <i data-icon="arrow" data-icon-cls="icon--sm sort-arrow"></i>
+      </button>
+      <button class="chip" data-sort="size" type="button">
+        大小 <i data-icon="arrow" data-icon-cls="icon--sm sort-arrow"></i>
+      </button>
+      <button class="chip" data-sort="mtime" type="button">
+        时间 <i data-icon="arrow" data-icon-cls="icon--sm sort-arrow"></i>
+      </button>
+    </div>
+
     <div class="list-head" data-files-head>
       <span style="width:18px;height:18px;flex:none;display:flex;align-items:center">
         <input type="checkbox" class="cbx" data-select-all aria-label="全选">
