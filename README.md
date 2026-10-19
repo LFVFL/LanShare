@@ -15,8 +15,34 @@
 | 批量 | 打包下载（可续传，也可选流式）、移动 / 复制、共享内递归搜索、行内「直接下载」按钮 |
 | 聊天 | 多房间、SSE 实时推送、图片（自动缩略图）、消息搜索、删除 / 清空 |
 | 传输层 | HTTP/1.1 长连接、gzip / br 压缩、带版本号的长缓存、并发闸门（503 保护） |
-| 界面 | Web 端玻璃拟态（6 套配色 × 明暗 × 3 档玻璃，深色首屏不闪白）；桌面端 6 套配色 + 明暗 + 3 档字号 |
+| 界面 | Web 端玻璃拟态（6 套配色 × 明暗 × 3 档玻璃，默认「翠绿」+ 浅色，深色首屏不闪白）；桌面端 6 套配色 + 明暗 + 3 档字号 |
 | 安全 | 访问密码（Cookie 会话）、管理密码（写操作二次校验）、同源校验、安全响应头 |
+
+## 界面
+
+Web 端（浅色 / 深色，默认翠绿配色）：
+
+<p align="center">
+  <img src="docs/images/web-files-light.png" width="49%" alt="Web 端文件列表（浅色）">
+  <img src="docs/images/web-files-dark.png" width="49%" alt="Web 端文件列表（深色）">
+</p>
+
+群聊（SSE 实时推送）与手机端：
+
+<p align="center">
+  <img src="docs/images/web-chat.png" width="64%" alt="群聊">
+  <img src="docs/images/mobile-files.png" width="26%" alt="手机端文件列表">
+</p>
+
+桌面端（浅色 / 深色，右上角「外观 ▾」可切 6 套配色、明暗、字号）：
+
+<p align="center">
+  <img src="docs/images/desktop-light.png" width="49%" alt="桌面端（浅色）">
+  <img src="docs/images/desktop-dark.png" width="49%" alt="桌面端（深色）">
+</p>
+
+> 截图是 `python tools\screenshots.py` 用假数据生成的（网卡地址、目录、日志都是编的），
+> 所以仓库里不会带上任何本机信息。
 
 ## 快速开始
 
@@ -95,6 +121,7 @@ python tools\origin_test.py          :: 同源校验（含只发 Origin 的老�
 python tools\desktop_test.py         :: 桌面端界面与网卡排序（offscreen）
 python tools\theme_flash_test.py     :: 深色模式首屏不闪白
 python tools\preflight.py            :: 打包前自检（含分片别名检查）
+python tools\screenshots.py          :: 重新生成上面那些界面截图（假数据）
 ```
 
 还有 `auth_matrix_test` / `sse_test` / `thumb_test` / `zip_test` / `search_test` /
@@ -105,7 +132,8 @@ python tools\preflight.py            :: 打包前自检（含分片别名检查�
 
 - 服务只监听本机，数据只在局域网内传输，**不向任何外部服务器发送内容**；
 - 聊天记录与图片保存在程序同级目录 `chat_data/`，删掉即可清空；
-- 仓库里不包含聊天数据、截图、构建产物，也不包含作者的个人路径与邮箱。
+- 仓库里不包含聊天数据、构建产物，也不包含作者的个人路径、内网地址与邮箱；
+  文档和截图里的 IP、目录、日志都是编的。
 
 ## 许可
 

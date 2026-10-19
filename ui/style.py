@@ -17,7 +17,7 @@ PALETTES = {
     "amber": {"name": "琥珀", "brand": "#d97706", "brand_dark": "#b45309"},
     "violet": {"name": "紫罗兰", "brand": "#7c3aed", "brand_dark": "#6d28d9"},
 }
-DEFAULT_PALETTE = "indigo"
+DEFAULT_PALETTE = "emerald"
 
 # ── 明 / 暗 ──────────────────────────────────────────────────────────
 MODES = {

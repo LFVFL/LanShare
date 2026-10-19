@@ -16,7 +16,7 @@
       { id: 'berry', name: '莓紫' }, { id: 'graphite', name: '石墨' }
     ];
 
-    var appearance = { theme: 'light', palette: 'indigo', glass: 'normal' };
+    var appearance = { theme: 'light', palette: 'mint', glass: 'normal' };
 
     function prefDark() {
       return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
@@ -142,7 +142,7 @@
 
     function initAppearance() {
       appearance.theme = storeGet(STORE.theme) || 'light';
-      appearance.palette = storeGet(STORE.palette) || 'indigo';
+      appearance.palette = storeGet(STORE.palette) || 'mint';
       appearance.glass = storeGet(STORE.glass) || 'normal';
       applyAppearance();
 
