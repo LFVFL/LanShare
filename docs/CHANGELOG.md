@@ -1263,7 +1263,7 @@ python tools\admin_flow_test.py
   `截图/`、`样稿/`（含本机网卡地址）、`__pycache__`、`lan6-*/`、构建目录；
 - 新增 `.gitattributes`：统一 LF，避免 Windows/Linux 互相改整份文件；
 - 新增 `README.md`（功能、快速开始、目录结构、测试清单、隐私说明）和 `LICENSE`（MIT）；
-- **脱敏**：文档和测试里的真实内网地址（`192.168.0.101` 等）换成通用示例；
+- **脱敏**：文档和测试里的本机真实内网地址统一换成通用示例（`192.168.1.x` 段）；
   仓库里不含作者个人路径、QQ 邮箱；
 - git 提交身份用 `LFVFL <LFVFL@users.noreply.github.com>`（noreply 地址），
   不动本机全局配置里的私人邮箱。

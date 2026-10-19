@@ -46,7 +46,12 @@ Web 端（浅色 / 深色，默认翠绿配色）：
 
 ## 快速开始
 
-### 1. 直接运行（源码）
+### 1. 直接用 exe（推荐）
+
+去 [Releases](https://github.com/LFVFL/LanShare/releases/latest) 下载最新的 `lanshare.exe`，
+双击运行即可，不需要安装 Python。
+
+### 2. 直接运行（源码）
 
 ```bat
 pip install -r requirements.txt
@@ -58,7 +63,7 @@ python lanshare.py               :: 或者：python lanshare.py D:\要共享的�
 
 > `webassets.py` 是构建产物（不提交进仓库），所以第一次跑必须先执行 `build_assets.py`。
 
-### 2. 打包成单个 exe
+### 3. 自己打包成单个 exe
 
 ```bat
 python tools\build_exe.py
@@ -140,3 +145,8 @@ python tools\screenshots.py          :: 重新生成上面那些界面截图（�
 ## 许可
 
 MIT，见 [LICENSE](LICENSE)。
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=LFVFL%2FLanShare&type=Date)](https://www.star-history.com/#LFVFL/LanShare&Date)
+
