@@ -107,6 +107,7 @@ docs/                文档（变更记录 / 架构 / 重构 / 桌面端改版�
 - [docs/CHANGELOG.md](docs/CHANGELOG.md) —— 每一轮改了什么、为什么、怎么验证的
 - [docs/REFACTOR.md](docs/REFACTOR.md) —— 最初的拆分方案
 - [docs/DESKTOP-UI.md](docs/DESKTOP-UI.md) —— 桌面端改版（P1–P5）
+- [docs/ROADMAP.md](docs/ROADMAP.md) —— 代码审查结论与优化路线（P0/P1/P2）
 
 ## 测试
 
