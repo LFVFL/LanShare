@@ -76,6 +76,19 @@ class FileSharer:
         self.status_callback = None
         self.log_queue = queue.Queue()
 
+    def set_shared_path(self, path):
+        """运行中切换共享目录：改全局值，下一次请求立刻生效。
+
+        不需要重启服务——handler 每次请求都会重新读 SHARE_STATE。
+        """
+        target = Path(path).resolve() if path else None
+        if not target or not target.is_dir():
+            return False, "目录不存在或不是文件夹"
+        self.shared_path = str(target)
+        SHARE_STATE['path'] = self.shared_path
+        print("[Share] 共享目录切换为 %s" % self.shared_path)
+        return True, self.shared_path
+
     def set_status_callback(self, callback):
         self.status_callback = callback
 
@@ -115,6 +128,7 @@ class FileSharer:
             return False, "服务已在运行中。"
         self.update_status("正在启动...", True)
         self.shared_path = path if path and Path(path).exists() else DEFAULT_SHARE_PATH
+        SHARE_STATE['path'] = self.shared_path
         self.port = port if port and isinstance(port, int) and 1 <= port <= 65535 else DEFAULT_PORT
         self.password = password if password else None
         self.admin_password = admin_password if admin_password else None

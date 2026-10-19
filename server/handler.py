@@ -106,14 +106,27 @@ class FileShareHandler(HttpUtilMixin, AuthMixin, ChatApiMixin, RoutesMixin,
     timeout = 60
 
     def __init__(self, *args, **kwargs):
-        self.shared_path = kwargs.pop('shared_path', None)
-        self.current_path = kwargs.pop('current_path', None) or self.shared_path
+        self._shared_path = kwargs.pop('shared_path', None)
+        self.current_path = kwargs.pop('current_path', None) or self._shared_path
         self.access_logger = kwargs.pop('access_logger', None)
         self.password = kwargs.pop('password', None)
         self.admin_password = kwargs.pop('admin_password', None)
         self._sec_headers_sent = False
         self._query = {}
         super().__init__(*args, **kwargs)
+
+    @property
+    def shared_path(self):
+        """始终读全局值：运行中在桌面端换共享目录，下一次请求就该生效。
+
+        长连接（HTTP/1.1 keep-alive）会让同一个 handler 实例服务很多个请求，
+        所以不能只在构造时取一次——那正是"换了目录得重启才好使"的原因。
+        """
+        return SHARE_STATE.get('path') or self._shared_path
+
+    @shared_path.setter
+    def shared_path(self, value):
+        self._shared_path = value
 
     # ── 分发 ────────────────────────────────────────────────────────────
     def _pass_auth(self, mode):

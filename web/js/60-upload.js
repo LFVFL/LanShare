@@ -245,20 +245,39 @@
         });
       });
 
-      /* 选文件必须在用户点击的同一个"用户激活"里完成：
-         一旦先 await 一个网络请求（比如去弹管理密码），浏览器就认为
-         已经脱离手势，input.click() 会被静默忽略——表现就是"点了没反应"。
-         所以这里同步打开选择框，等真的选了文件再要管理密码。 */
+      /* 流程：先要管理密码 → 用户点「解锁」时同步打开选择框 → 选完文件再上传。
+         点「解锁」那一下仍然算用户激活，所以 input.click() 不会被浏览器拦；
+         而验证请求和选文件是并行的，选完时通常已经验证好了（没验证好就等它）。 */
+      var authPromise = null;
+
       function pickFiles(input) {
         if (!input) { toast('这个浏览器不支持选择文件', 'err'); return; }
-        input.click();
+
+        if (Lan.api.ctx.isAdmin) {
+          input.click();
+          return;
+        }
+        authPromise = Lan.api.askAdmin(
+          '上传需要管理密码，验证后本次会话有效。',
+          function () { input.click(); }
+        );
       }
 
       function onPicked(e) {
         var picked = Array.prototype.slice.call(e.target.files || []);
         e.target.value = '';
         if (!picked.length) return;
-        ensureAdmin(function () { addUploads(picked); });
+
+        if (Lan.api.ctx.isAdmin) {
+          addUploads(picked);
+          return;
+        }
+        var pending = authPromise || Promise.resolve(false);
+        authPromise = null;
+        pending.then(function (ok) {
+          if (ok) addUploads(picked);
+          else toast('需要管理密码，这些文件没有上传', 'err');
+        });
       }
 
       if (fileInput) fileInput.addEventListener('change', onPicked);

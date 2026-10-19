@@ -281,6 +281,13 @@
         '&limit=' + PAGE_SIZE + '&offset=' + offset;
       return apiFetch(url).then(jsonOf).then(function (d) {
         if (!d || !d.entries) return null;
+        // 桌面端可能在运行中换了共享目录：服务端会把越界的 path 归到新根，
+        // 这里跟着回到新目录，别让页面一直指着一个已经不存在的旧路径
+        if (!append && d.path && d.path !== fsState.path) {
+          fsState.path = d.path;
+          fsState.sel.clear();
+          toast('共享目录已变更，已回到新目录', 'info');
+        }
         fsState.entries = append ? fsState.entries.concat(d.entries) : d.entries;
         fsState.total = d.total || fsState.entries.length;
         fsState.hasMore = !!d.hasMore;

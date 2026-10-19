@@ -87,7 +87,7 @@ def main():
     check("胶囊变绿", gui.pill.property("tone") == "ok", gui.pill.property("tone"))
     check("胶囊带端口", "6445" in gui.pill.text(), gui.pill.text())
     check("浏览器按钮可用", gui.browser_btn.isEnabled())
-    check("路径框只读", gui.path_entry.isReadOnly())
+    check("运行中路径框仍可改（换目录立刻生效）", not gui.path_entry.isReadOnly())
     check("统计文案有地址数", "地址" in gui.stat_label.text(), gui.stat_label.text())
 
     print("\n[4] 切换二维码地址")
@@ -123,7 +123,23 @@ def main():
     check("暗色也有 5 档", len(style.tone_colors("dark")) == 5,
           len(style.tone_colors("dark")))
 
-    print("\n[6] 停止后回到初始态")
+    print("\n[6] 运行中切换共享目录（不重启服务）")
+    other = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-desk-b-"))
+    (other / "another.txt").write_text("b", encoding="utf-8")
+    before = gui.path_entry.text()
+    gui.apply_share_path(str(other))
+    check("输入框跟着变", gui.path_entry.text() == str(other), gui.path_entry.text())
+    check("服务端的共享路径也变了",
+          Path(gui.sharer.shared_path) == other.resolve(), gui.sharer.shared_path)
+    check("还在运行（没有重启服务）", gui.sharer.is_running)
+    gui.apply_share_path(str(share))
+    check("能切回去", Path(gui.sharer.shared_path) == share.resolve(), gui.sharer.shared_path)
+    check("路径框运行中也可编辑", not gui.path_entry.isReadOnly())
+    check("浏览按钮运行中可用", gui.select_path_btn.isEnabled())
+    shutil.rmtree(other, ignore_errors=True)
+    check("原路径还在", bool(before), before)
+
+    print("\n[7] 停止后回到初始态")
     gui.stop_share()
     check("按钮回到「启动服务」", gui.toggle_share_btn.text() == "启动服务",
           gui.toggle_share_btn.text())

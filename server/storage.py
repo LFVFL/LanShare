@@ -18,6 +18,10 @@ UPLOAD_STATE_MAX = 500
 ZIP_DOWNLOAD_STORE = {}
 ZIP_STORE_LOCK = threading.Lock()
 
+# 当前共享目录：换成"全局可改"的值，handler 每次请求都读它，
+# 这样运行中切换目录立刻生效（不用重启服务）。
+SHARE_STATE = {'path': None}
+
 # 聊天数据结构的读写锁（房间字典本身在 chat_store 里）
 chat_lock = threading.Lock()
 

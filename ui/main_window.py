@@ -644,7 +644,37 @@ class FileShareGUI(QMainWindow):
         current = self.path_entry.text() or str(Path.home())
         folder = QFileDialog.getExistingDirectory(self, "选择共享文件夹", current)
         if folder:
-            self.path_entry.setText(folder)
+            self.apply_share_path(folder)
+
+    def apply_share_path(self, path_text, quiet=False):
+        """改共享目录：运行中也立刻生效，不需要重启服务。"""
+        path_text = (path_text or "").strip()
+        if not path_text:
+            return False
+        target = Path(path_text)
+        if not target.is_dir():
+            if not quiet:
+                QMessageBox.warning(self, "路径无效", "这个路径不存在或不是文件夹：\n%s" % path_text)
+            return False
+
+        self.path_entry.setText(str(target))
+        if not self.sharer.is_running:
+            self._flash("共享目录：%s（启动服务后生效）" % target)
+            return True
+
+        ok, result = self.sharer.set_shared_path(str(target))
+        if not ok:
+            if not quiet:
+                QMessageBox.warning(self, "切换失败", str(result))
+            return False
+
+        # 日志里留一行，方便对照"到底切没切"
+        if self.log_queue:
+            self.log_queue.put((datetime.now().strftime('%H:%M:%S'), '系统',
+                                '共享目录已切换为 %s' % target, None))
+        self.stat_label.setText("共享目录：%s" % target)
+        self._flash("共享目录已切换：%s" % target)
+        return True
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
@@ -655,7 +685,7 @@ class FileShareGUI(QMainWindow):
         if urls:
             path = urls[0].toLocalFile()
             if Path(path).is_dir():
-                self.path_entry.setText(path)
+                self.apply_share_path(path)
 
     def toggle_share(self):
         if self.sharer.is_running:
@@ -699,11 +729,12 @@ class FileShareGUI(QMainWindow):
 
     def _apply_running_state(self, running, result=None):
         """服务起停时统一改按钮、胶囊、输入框可编辑性、地址与二维码。"""
-        self.path_entry.setReadOnly(running)
+        # 共享目录允许运行中直接改（handler 每次请求都读全局值，立刻生效）
+        self.path_entry.setReadOnly(False)
+        self.select_path_btn.setEnabled(True)
         self.port_entry.setReadOnly(running)
         self.password_entry.setReadOnly(running)
         self.admin_password_entry.setReadOnly(running)
-        self.select_path_btn.setEnabled(not running)
         self.browser_btn.setEnabled(running)
         self.toggle_share_btn.setText("停止服务" if running else "启动服务")
         self.toggle_share_btn.setObjectName("danger" if running else "primary")

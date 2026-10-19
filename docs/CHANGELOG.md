@@ -1359,7 +1359,89 @@ python tools\admin_flow_test.py
 | 构建产物 | core 28.4 / files 35.1 / chat 25.1 / login 1.4 KB |
 
 
-## 三十三、附：第一轮（模块化拆分）对照表
+## 三十三、第二十二轮：换共享目录立刻生效、上传改成"先密码后选文件"
+
+### 33.1 换共享目录为什么要重启才生效
+
+`FileSharer.start()` 把 `shared_path` 当参数塞进 `handler_factory` 的闭包里：
+
+```python
+shared_path = self.shared_path
+def handler_factory(*args, **kwargs):
+    kwargs['shared_path'] = shared_path      # ← 启动那一刻的值，之后再也不变
+```
+
+所以运行中改 `self.shared_path`（或者改桌面端输入框）对已经跑起来的服务毫无影响。
+再加上 HTTP/1.1 是长连接，一个 handler 实例会服务很多个请求，
+就算把 `shared_path` 改成属性、在构造时读一次，老连接照样是旧值。
+
+修法：把"当前共享目录"提到全局 `storage.SHARE_STATE`，
+`FileShareHandler.shared_path` 改成**每次读取都看全局值**的属性：
+
+```python
+@property
+def shared_path(self):
+    return SHARE_STATE.get('path') or self._shared_path
+```
+
+`FileSharer.set_shared_path(path)` 负责校验 + 改全局值，下一次请求立刻生效。
+
+桌面端配套改动：
+
+- 运行中不再把路径框设成只读、浏览按钮也不禁用（端口/密码仍然只读）；
+- 浏览选择一个目录、或者把文件夹拖进窗口，都会走 `apply_share_path()`：
+  校验 → 调 `set_shared_path` → 日志里记一行「共享目录已切换为 …」→ 底部提示一下；
+- 传一个不存在的目录会弹错误框，并且保持原目录不变。
+
+Web 端：老页面还指着旧目录的绝对路径，`build_listing` 会把越界路径归到新根，
+`loadPage` 发现返回的 `path` 变了就跟着切过去并提示「共享目录已变更，已回到新目录」，
+不会满屏 404。
+
+### 33.2 上传：先输管理密码，再选文件
+
+上一轮为了绕开"用户激活"限制，把顺序改成了"先选文件、选完再要密码"。
+用户反馈这不合理——确实是，先要权限再动手才符合直觉。
+
+问题在于：打开文件选择框必须发生在用户手势里，而验证密码是网络请求（异步），
+等它回来手势已经过期，`input.click()` 会被浏览器静默忽略。
+
+解法是把两者放进**同一个手势**里：
+
+1. 点「上传文件」→ 先弹管理密码框（不发文件选择框）；
+2. 用户点「解锁」那一下——仍然是用户激活——同步 `input.click()` 打开选择框，
+   同时并行发 `/verify_admin`；
+3. 选完文件时验证通常已经回来了：
+   - 通过 → 直接开始上传；
+   - 没通过（密码错/取消）→ 丢掉这批文件，提示「需要管理密码，这些文件没有上传」。
+
+`askAdmin(desc, onUnlock)` 新增了 `onUnlock` 回调，就是给这个时机用的。
+
+### 33.3 测试
+
+新增 `tools/share_switch_test.py`（14 项）：
+
+- 启动共享 A，切到 B 之后 `/api/list` 立刻看到 B 的内容、A 的消失；
+- 拿 A 的绝对路径去请求，会被归到新根 B，不报错；
+- 下载也跟着走：B 的文件能下，A 的文件 404；
+- 传一个不存在的目录会被拒且保持原样；再切回 A 也正常。
+
+`desktop_test` 补了 6 项（运行中切目录：输入框、服务端路径、仍在运行、
+能切回去、路径框可编辑、浏览按钮可用），现在 90 项。
+
+`admin_flow_test` 的上传流程断言按新顺序重写（30 项）：
+点上传 → 先出密码框且选择框未打开 → 点解锁 → 选择框才打开 → 选文件时不再要密码。
+
+### 33.4 验证
+
+| 检查 | 结果 |
+|---|---|
+| `share_switch_test`（新增） | 14 项 ✓ |
+| `admin_flow_test`（流程重写） | 30 项 ✓ |
+| `desktop_test` | 90 项 ✓ |
+| 其余 11 套 | 全绿 |
+
+
+## 三十四、附：第一轮（模块化拆分）对照表
 
 `lanshare.py` 从 3400 行拆成 `server/`（服务端，不依赖 Qt）+ `ui/`（界面），入口只留启动逻辑。
 目录职责与依赖方向见 **`docs/ARCHITECTURE.md`**。

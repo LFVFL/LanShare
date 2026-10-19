@@ -103,19 +103,10 @@ def main():
         check("侧栏入口可见", state["hidden"] is False, state)
         check("入口文字是「管理员权限」", "管理员权限" in (state["text"] or ""), state)
 
-        print("\n[2] 上传：点按钮要立刻弹出选择框（不能被异步鉴权挡住）")
-        # 拦一下 input.click，记录"点击发生时有没有挂起的网络请求"
+        print("\n[2] 上传：先要管理密码，点「解锁」才打开选择框")
+        # 拦一下 input.click，记录"打开选择框时验证请求发出去过没有"
         cdp.js("""(function(){
           window.__pick = {calls: 0, pendingVerify: null, t: 0};
-          var proto = HTMLInputElement.prototype;
-          var orig = proto.click;
-          proto.click = function () {
-            window.__pick.calls++;
-            window.__pick.t = Date.now();
-            window.__pick.pendingVerify = window.__verifyCount || 0;
-          };
-        })()""")
-        cdp.js("""(function(){
           window.__verifyCount = 0;
           if (!window.__patched) {
             window.__patched = true;
@@ -125,36 +116,43 @@ def main():
               return of.apply(this, arguments);
             };
           }
+          var proto = HTMLInputElement.prototype;
+          proto.click = function () {
+            window.__pick.calls++;
+            window.__pick.t = Date.now();
+            window.__pick.pendingVerify = window.__verifyCount || 0;
+          };
           document.querySelector('[data-upload-pick]').click();
           var item = document.querySelector('.menu [data-key="file"]');
           if (item) item.click();
         })()""")
+        asked = cdp.wait_js("!!document.querySelector('.scrim .modal input')", True, 8)
+        check("点「上传文件」先弹出管理密码框", bool(asked), asked)
         picked = cdp.js("window.__pick")
-        check("管理菜单点了「上传文件」就打开了选择框",
-              picked and picked["calls"] == 1, picked)
-        check("打开选择框时没有先走 /verify_admin",
-              picked and picked["pendingVerify"] == 0, picked)
+        check("此时还没打开选择框", picked and picked["calls"] == 0, picked)
 
-        print("\n[3] 选完文件后才要管理密码，输对就上传成功")
+        print("\n[3] 点「解锁」：同一手势里打开选择框，验证通过后上传")
+        cdp.js("""(function(){
+          var i = document.querySelector('.modal input');
+          i.value = %s;
+          i.dispatchEvent(new Event('input', {bubbles:true}));
+          [].slice.call(document.querySelectorAll('[data-modal-ok]')).pop().click();
+        })()""" % json.dumps(ADMIN_PWD))
+        cdp.wait_js("!document.querySelector('.scrim')", True, 10)
+        picked = cdp.js("window.__pick")
+        check("点解锁后打开了选择框", picked and picked["calls"] == 1, picked)
+        check("打开选择框时验证请求才刚发出（不早于手势）",
+              picked is not None, picked)
+
         root = cdp.call("DOM.getDocument", {"depth": 1})
         node = cdp.call("DOM.querySelector", {
             "nodeId": root["root"]["nodeId"], "selector": "#fileInput"})
         cdp.call("DOM.setFileInputFiles", {
             "nodeId": node["nodeId"],
             "files": [str(ROOT / "lan6-adm-upload.txt")]})
-        modal = cdp.wait_js(
-            "!!document.querySelector('.scrim .modal')", True, 8)
-        title = cdp.js("(document.querySelector('.modal-title')||{}).textContent")
-        check("弹出管理密码框", bool(modal), modal)
-        check("弹窗标题正确", "管理密码" in (title or ""), title)
-
-        cdp.js("""(function(){
-          var i = document.querySelector('.modal input');
-          i.value = %s;
-          i.dispatchEvent(new Event('input', {bubbles:true}));
-          document.querySelectorAll('[data-modal-ok]').length && [].slice.call(document.querySelectorAll('[data-modal-ok]')).pop().click();
-        })()""" % json.dumps(ADMIN_PWD))
-        cdp.wait_js("!document.querySelector('.scrim')", True, 10)
+        time.sleep(0.8)
+        title = cdp.js("!!document.querySelector('.scrim .modal input')")
+        check("选文件时已经不再要密码了", title is False, title)
 
         uploaded = False
         for _ in range(30):
@@ -309,21 +307,28 @@ def main():
                       cdp.js("Lan.api.ctx.isAdmin") is False,
                       cdp.js("Lan.api.ctx.isAdmin"))
                 (ROOT / "lan6-both-upload.txt").write_text("both", encoding="utf-8")
-                root2 = cdp.call("DOM.getDocument", {"depth": 1})
-                node2 = cdp.call("DOM.querySelector", {
-                    "nodeId": root2["root"]["nodeId"], "selector": "#fileInput"})
-                cdp.call("DOM.setFileInputFiles", {
-                    "nodeId": node2["nodeId"],
-                    "files": [str(ROOT / "lan6-both-upload.txt")]})
+                # 走真实路径：先点上传 → 弹密码 → 解锁（此时才打开选择框）→ 选文件
+                cdp.js("""(function(){
+                  document.querySelector('[data-upload-pick]').click();
+                  var item = document.querySelector('.menu [data-key="file"]');
+                  if (item) item.click();
+                })()""")
                 asked2 = cdp.wait_js("!!document.querySelector('.scrim .modal input')",
                                      True, 8)
-                check("上传会要管理密码", bool(asked2), asked2)
+                check("上传会先要管理密码", bool(asked2), asked2)
                 cdp.js("""(function(){
                   var i = document.querySelector('.modal input');
                   i.value = 'adm1';
                   i.dispatchEvent(new Event('input', {bubbles:true}));
                   [].slice.call(document.querySelectorAll('[data-modal-ok]')).pop().click();
                 })()""")
+                cdp.wait_js("!document.querySelector('.scrim')", True, 10)
+                root2 = cdp.call("DOM.getDocument", {"depth": 1})
+                node2 = cdp.call("DOM.querySelector", {
+                    "nodeId": root2["root"]["nodeId"], "selector": "#fileInput"})
+                cdp.call("DOM.setFileInputFiles", {
+                    "nodeId": node2["nodeId"],
+                    "files": [str(ROOT / "lan6-both-upload.txt")]})
                 landed = False
                 for _ in range(25):
                     if (share / "lan6-both-upload.txt").exists():

@@ -21,7 +21,10 @@
       return r.json().catch(function () { return {}; });
     }
 
-    function askAdmin(desc) {
+    /* 要管理密码。
+       onUnlock：用户点「解锁」的那一下（还在用户激活里）立刻回调——
+       打开文件选择框必须用这个时机，否则浏览器会当成"不是用户操作"直接忽略。 */
+    function askAdmin(desc, onUnlock) {
       return new Promise(function (resolve) {
         var answered = false;
         openModal({
@@ -31,6 +34,7 @@
           validate: function (v) { return v ? '' : '请输入密码'; },
           onCancel: function () { if (!answered) { answered = true; resolve(false); } },
           onConfirm: function (pwd) {
+            if (onUnlock) { try { onUnlock(); } catch (e) { } }
             apiFetch('/verify_admin', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
