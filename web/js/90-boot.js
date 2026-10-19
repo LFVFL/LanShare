@@ -31,7 +31,13 @@
             return;
           }
           api.askAdmin().then(function (ok) {
-            if (ok) { refreshAdminUi(); Lan.ui.toast('已验证管理员权限', 'ok'); }
+            if (ok) {
+              // 这里必须同步把状态记下来，否则界面显示"已解锁"、实际还当自己是游客，
+              // 下一次点上传又会弹密码框
+              api.ctx.isAdmin = true;
+              refreshAdminUi();
+              Lan.ui.toast('已验证管理员权限', 'ok');
+            }
           });
         });
       });

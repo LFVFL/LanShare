@@ -131,18 +131,52 @@ def main():
         picked = cdp.js("window.__pick")
         check("此时还没打开选择框", picked and picked["calls"] == 0, picked)
 
-        print("\n[3] 点「解锁」：同一手势里打开选择框，验证通过后上传")
+        print("\n[3] 先输错密码：绝不能打开选择框")
         cdp.js("""(function(){
-          var i = document.querySelector('.modal input');
+          var box = [].slice.call(document.querySelectorAll('.scrim')).pop();
+          var i = box.querySelector('input');
+          i.value = 'wrong-password';
+          i.dispatchEvent(new Event('input', {bubbles:true}));
+          box.querySelector('[data-modal-ok]').click();
+        })()""")
+        time.sleep(1.4)                       # 等弹窗彻底移除（有 200ms 退场动画）
+        picked = cdp.js("window.__pick")
+        check("密码错时没有打开选择框", picked and picked["calls"] == 0, picked)
+        toasts = cdp.js("""(function(){
+          return [].map.call(document.querySelectorAll('.toast'), function(t){
+            return t.textContent.trim();}).join(' | ');
+        })()""")
+        check("提示了密码不对", "不对" in (toasts or ""), toasts)
+        check("弹窗已经关掉", cdp.js("document.querySelectorAll('.scrim').length") == 0,
+              cdp.js("document.querySelectorAll('.scrim').length"))
+
+        print("\n[4] 用管理员入口解锁，然后上传应当直接打开选择框")
+        cdp.js("document.querySelector('.sidebar [data-admin-open]').click()")
+        cdp.wait_js("!!document.querySelector('.scrim .modal input')", True, 8)
+        cdp.js("""(function(){
+          var box = [].slice.call(document.querySelectorAll('.scrim')).pop();
+          var i = box.querySelector('input');
           i.value = %s;
           i.dispatchEvent(new Event('input', {bubbles:true}));
-          [].slice.call(document.querySelectorAll('[data-modal-ok]')).pop().click();
+          box.querySelector('[data-modal-ok]').click();
         })()""" % json.dumps(ADMIN_PWD))
-        cdp.wait_js("!document.querySelector('.scrim')", True, 10)
+        time.sleep(1.0)
+        check("已经解锁", cdp.js("Lan.api.ctx.isAdmin") is True,
+              cdp.js("Lan.api.ctx.isAdmin"))
+
+        # 已解锁 → 点上传应当立刻打开选择框，不再弹密码
+        cdp.js("""(function(){
+          document.querySelector('[data-upload-pick]').click();
+          var item = document.querySelector('.menu [data-key="file"]');
+          if (item) item.click();
+        })()""")
+        time.sleep(0.4)
         picked = cdp.js("window.__pick")
-        check("点解锁后打开了选择框", picked and picked["calls"] == 1, picked)
-        check("打开选择框时验证请求才刚发出（不早于手势）",
-              picked is not None, picked)
+        check("已解锁后点上传直接打开选择框",
+              picked and picked["calls"] == 1, picked)
+        check("没有再弹密码框",
+              cdp.js("document.querySelectorAll('.scrim').length") == 0,
+              cdp.js("document.querySelectorAll('.scrim').length"))
 
         root = cdp.call("DOM.getDocument", {"depth": 1})
         node = cdp.call("DOM.querySelector", {

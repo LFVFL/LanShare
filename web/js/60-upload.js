@@ -245,39 +245,29 @@
         });
       });
 
-      /* 流程：先要管理密码 → 用户点「解锁」时同步打开选择框 → 选完文件再上传。
-         点「解锁」那一下仍然算用户激活，所以 input.click() 不会被浏览器拦；
-         而验证请求和选文件是并行的，选完时通常已经验证好了（没验证好就等它）。 */
-      var authPromise = null;
-
+      /* 流程：先验密码 → 验证通过才给"选择文件"按钮 → 点它才打开选择框。
+         不能像上一版那样"点解锁就顺手打开选择框"：密码错了也会弹出来，
+         用户会一脸问号。而验证是异步的，验证完直接 input.click() 又会因为
+         用户激活过期被浏览器丢掉，所以中间留一个明确的按钮（点击即手势）。 */
       function pickFiles(input) {
         if (!input) { toast('这个浏览器不支持选择文件', 'err'); return; }
+        if (Lan.api.ctx.isAdmin) { input.click(); return; }
 
-        if (Lan.api.ctx.isAdmin) {
-          input.click();
-          return;
-        }
-        authPromise = Lan.api.askAdmin(
-          '上传需要管理密码，验证后本次会话有效。',
-          function () { input.click(); }
-        );
+        Lan.api.askAdmin('上传需要管理密码，验证后本次会话有效。').then(function (ok) {
+          if (!ok) return;                 // 密码错 / 取消：绝不打开选择框
+          openModal({
+            title: '已解锁', icon: 'check', confirmText: '选择文件', cancelText: '取消',
+            desc: '管理密码已验证，点「选择文件」挑要上传的内容。',
+            onConfirm: function () { input.click(); }
+          });
+        });
       }
 
       function onPicked(e) {
         var picked = Array.prototype.slice.call(e.target.files || []);
         e.target.value = '';
         if (!picked.length) return;
-
-        if (Lan.api.ctx.isAdmin) {
-          addUploads(picked);
-          return;
-        }
-        var pending = authPromise || Promise.resolve(false);
-        authPromise = null;
-        pending.then(function (ok) {
-          if (ok) addUploads(picked);
-          else toast('需要管理密码，这些文件没有上传', 'err');
-        });
+        addUploads(picked);
       }
 
       if (fileInput) fileInput.addEventListener('change', onPicked);
