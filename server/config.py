@@ -1,0 +1,59 @@
+"""配置常量：路径、上限、白名单。改动集中在这里。"""
+import sys
+from pathlib import Path
+
+IS_FROZEN = getattr(sys, 'frozen', False) or "__compiled__" in globals()
+DEFAULT_PORT = 5995
+DEFAULT_SHARE_PATH = str(Path.home() / "Downloads")
+
+# 会话与临时文件
+SESSION_TTL = 86400          # 会话有效期：24 小时
+ZIP_EXPIRE_SECONDS = 600     # ZIP 临时文件过期：10 分钟
+
+# 聊天
+MAX_CHAT_LEN = 500                     # 每个房间保留条数
+MAX_CHAT_IMAGE_BASE64_LEN = 7 * 1024 * 1024   # base64 后体积（原图约 5MB）
+MAX_CHAT_THUMB_BASE64_LEN = 200 * 1024        # 缩略图（前端 canvas 生成，最长边 320）
+ALLOWED_CHAT_IMAGE_EXTS = {"png", "jpg", "gif", "webp"}
+
+# 请求体上限
+MAX_JSON_BODY_LEN = 10 * 1024 * 1024
+
+
+def get_app_base_dir():
+    """
+    获取程序所在目录。
+    避免 Path("chat_data") 受当前工作目录影响。
+    """
+    if IS_FROZEN:
+        return Path(sys.executable).resolve().parent
+    # 本文件在 server/ 下，程序目录是它的上一级
+    return Path(__file__).resolve().parent.parent
+
+
+APP_BASE_DIR = get_app_base_dir()
+
+# 聊天数据保存目录
+CHAT_DATA_DIR = APP_BASE_DIR / "chat_data"
+CHAT_IMAGE_DIR = CHAT_DATA_DIR / "images"
+
+# 这里保存的是聊天室集合，不只是单纯 history 列表，所以命名改准确一些
+CHAT_ROOMS_FILE_PATH = CHAT_DATA_DIR / "rooms.json"
+
+CHAT_DATA_DIR.mkdir(parents=True, exist_ok=True)
+CHAT_IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+
+# 统一安全响应头（end_headers 时自动补）
+SECURITY_HEADERS = (
+    ('X-Content-Type-Options', 'nosniff'),
+    ('X-Frame-Options', 'SAMEORIGIN'),
+    ('Referrer-Policy', 'no-referrer'),
+    ('Permissions-Policy', 'geolocation=(), microphone=(), camera=()'),
+)
+
+# 预览时允许内联展示的类型；其余一律强制下载，避免 .html/.svg 在同源执行脚本
+INLINE_PREVIEW_EXTS = {
+    '.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.ico', '.svg',
+    '.pdf', '.txt', '.log', '.md', '.csv',
+    '.mp4', '.webm', '.ogg', '.mp3', '.wav', '.m4a',
+}

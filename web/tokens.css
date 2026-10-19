@@ -1,0 +1,369 @@
+/* ═══════════════════════════════════════════════════════════════
+   设计令牌 · 玻璃拟态（Glassmorphism）
+   三个可以叠加的维度，全部是 <html> 上的 data-* 属性：
+     data-theme   = light | dark
+     data-palette = indigo | ocean | mint | sunset | berry | graphite
+     data-glass   = strong | normal | off
+   组件只读下面派生出的语义变量，不直接写颜色。
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ───────── 1. 配色方案（每套只定义两个主色，其余全部派生） ───────── */
+
+:root,
+:root[data-palette="indigo"] {
+  --p1: 99 102 241;   /* 蓝紫 */
+  --p2: 139 92 246;
+}
+:root[data-palette="ocean"] {
+  --p1: 14 165 233;   /* 青蓝 */
+  --p2: 6 182 212;
+}
+:root[data-palette="mint"] {
+  --p1: 16 185 129;   /* 翠绿 */
+  --p2: 20 184 166;
+}
+:root[data-palette="sunset"] {
+  --p1: 249 115 22;   /* 蜜橙 */
+  --p2: 244 63 94;
+}
+:root[data-palette="berry"] {
+  --p1: 217 70 239;   /* 莓紫 */
+  --p2: 139 92 246;
+}
+:root[data-palette="graphite"] {
+  --p1: 71 85 105;    /* 石墨（低饱和） */
+  --p2: 100 116 139;
+}
+
+/* ───────── 2. 浅色 ───────── */
+
+:root {
+  color-scheme: light;
+
+  /* 背景：玻璃要有东西可透，所以底色是一层柔和的彩色雾 */
+  --bg-base: #e9eef8;
+  --bg-glow-1: .48;
+  --bg-glow-2: .40;
+  --bg-glow-3: .30;
+
+  /* 玻璃体 */
+  --surf-rgb: 255 255 255;
+  --line-rgb: 15 23 42;
+  --hi: rgb(255 255 255 / .85);   /* 顶部高光边 */
+  --glass-a: .58;                 /* 大面板：侧栏 / 顶栏 / 弹窗 */
+  --glass-a-2: .86;               /* 卡片：列表行 / 输入框（近实色，保可读） */
+  --glass-a-3: .34;               /* 底纹：悬停 / 进度槽 / 分隔 */
+  --glass-filter: blur(30px) saturate(190%);
+  --blur-radius: 30px;
+
+  /* 文字 */
+  --text: #0e1626;
+  --text-2: #354052;
+  --text-3: #59677d;
+  --text-4: #8592a6;
+
+  /* 语义色 */
+  --ok: #0e9f6e;
+  --ok-soft: rgb(16 185 129 / .12);
+  --warn: #c2740a;
+  --warn-soft: rgb(245 158 11 / .14);
+  --danger: #dc2f3b;
+  --danger-soft: rgb(239 68 68 / .12);
+
+  /* 文件类型 */
+  --t-folder: #c2740a;
+  --t-folder-soft: rgb(245 158 11 / .14);
+  --t-image: #0b7fa8;
+  --t-image-soft: rgb(14 165 233 / .14);
+  --t-video: #7c3aed;
+  --t-video-soft: rgb(139 92 246 / .14);
+  --t-audio: #db2777;
+  --t-audio-soft: rgb(236 72 153 / .12);
+  --t-archive: #d1521c;
+  --t-archive-soft: rgb(249 115 22 / .14);
+  --t-doc: #2563eb;
+  --t-doc-soft: rgb(59 130 246 / .13);
+  --t-code: #475569;
+  --t-code-soft: rgb(100 116 139 / .14);
+  --t-other: #64748b;
+  --t-other-soft: rgb(100 116 139 / .12);
+
+  /* 阴影（含 1px 内高光，玻璃才有厚度） */
+  --sh-1: 0 1px 2px rgb(15 23 42 / .06), inset 0 1px 0 var(--hi);
+  --sh-2: 0 10px 30px rgb(15 23 42 / .12), inset 0 1px 0 var(--hi);
+  --sh-3: 0 24px 64px rgb(15 23 42 / .22), inset 0 1px 0 var(--hi);
+}
+
+/* ───────── 3. 深色 ───────── */
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-base: #070a11;
+  --bg-glow-1: .34;
+  --bg-glow-2: .26;
+  --bg-glow-3: .15;
+
+  --surf-rgb: 30 36 49;
+  --line-rgb: 255 255 255;
+  --hi: rgb(255 255 255 / .10);
+  --glass-a: .64;
+  --glass-a-2: .80;
+  --glass-a-3: .26;
+  --glass-filter: blur(20px) saturate(150%);
+
+  --text: #e9edf5;
+  --text-2: #b4bfd0;
+  --text-3: #94a1b5;
+  --text-4: #6d7a8e;
+
+  --ok: #34d399;
+  --ok-soft: rgb(52 211 153 / .14);
+  --warn: #fbbf24;
+  --warn-soft: rgb(251 191 36 / .14);
+  --danger: #fb7185;
+  --danger-soft: rgb(251 113 133 / .14);
+
+  --t-folder: #fbbf24;
+  --t-folder-soft: rgb(251 191 36 / .14);
+  --t-image: #38bdf8;
+  --t-image-soft: rgb(56 189 248 / .14);
+  --t-video: #a78bfa;
+  --t-video-soft: rgb(167 139 250 / .14);
+  --t-audio: #f472b6;
+  --t-audio-soft: rgb(244 114 182 / .14);
+  --t-archive: #fb923c;
+  --t-archive-soft: rgb(251 146 60 / .14);
+  --t-doc: #60a5fa;
+  --t-doc-soft: rgb(96 165 250 / .14);
+  --t-code: #94a3b8;
+  --t-code-soft: rgb(148 163 184 / .14);
+  --t-other: #94a3b8;
+  --t-other-soft: rgb(148 163 184 / .12);
+
+  --sh-1: 0 1px 2px rgb(0 0 0 / .40), inset 0 1px 0 var(--hi);
+  --sh-2: 0 12px 36px rgb(0 0 0 / .55), inset 0 1px 0 var(--hi);
+  --sh-3: 0 28px 72px rgb(0 0 0 / .70), inset 0 1px 0 var(--hi);
+}
+
+/* ───────── 4. 玻璃强度（同时也是性能档位） ───────── */
+
+:root[data-glass="strong"] {
+  --glass-a: .52;
+  --glass-a-2: .80;
+  --glass-a-3: .24;
+  --glass-filter: blur(38px) saturate(190%);
+  --blur-radius: 38px;
+}
+
+:root[data-glass="off"] {
+  --glass-a: 1;
+  --glass-a-2: 1;
+  --glass-a-3: 1;
+  --glass-filter: none;
+  --blur-radius: 0px;
+  --glass-off-1: rgb(255 255 255);
+  --glass-off-2: rgb(248 250 253);
+}
+:root[data-theme="dark"][data-glass="off"] {
+  --glass-off-1: rgb(24 29 40);
+  --glass-off-2: rgb(18 22 31);
+}
+
+/* ───────── 5. 派生语义变量 ───────── */
+
+:root {
+  --brand: rgb(var(--p1));
+  --brand-2: rgb(var(--p2));
+  --brand-hover: color-mix(in srgb, rgb(var(--p1)) 84%, black);
+  --brand-soft: rgb(var(--p1) / .12);
+  --brand-soft-2: rgb(var(--p1) / .22);
+  --brand-contrast: #ffffff;
+  --brand-grad: linear-gradient(135deg, rgb(var(--p1)), rgb(var(--p2)));
+
+  --surface: rgb(var(--surf-rgb) / var(--glass-a));
+  --surface-2: rgb(var(--surf-rgb) / var(--glass-a-2));
+  --surface-3: rgb(var(--surf-rgb) / var(--glass-a-3));
+  --surface-solid: rgb(var(--surf-rgb));
+  --surface-hover: rgb(var(--surf-rgb) / calc(var(--glass-a) + .12));
+  --bg-sunken: rgb(var(--surf-rgb) / var(--glass-a-3));
+
+  --border: rgb(var(--line-rgb) / .12);
+  --border-strong: rgb(var(--line-rgb) / .22);
+
+  --row-hover: rgb(var(--surf-rgb) / .55);
+  --row-active: rgb(var(--p1) / .13);
+
+  --bg: var(--bg-base);
+}
+
+:root[data-theme="dark"] {
+  --brand: color-mix(in srgb, rgb(var(--p1)) 74%, white);
+  --brand-2: color-mix(in srgb, rgb(var(--p2)) 74%, white);
+  --brand-hover: color-mix(in srgb, rgb(var(--p1)) 88%, white);
+  --brand-soft: rgb(var(--p1) / .22);
+  --brand-soft-2: rgb(var(--p1) / .34);
+  --brand-contrast: #0a0f18;
+  --brand-grad: linear-gradient(135deg,
+      color-mix(in srgb, rgb(var(--p1)) 74%, white),
+      color-mix(in srgb, rgb(var(--p2)) 74%, white));
+
+  --row-hover: rgb(255 255 255 / .07);
+  --row-active: rgb(var(--p1) / .20);
+}
+
+:root[data-glass="off"] {
+  --surface: var(--glass-off-1);
+  --surface-2: var(--glass-off-2);
+  --surface-3: var(--glass-off-2);
+  --surface-hover: color-mix(in srgb, var(--glass-off-1) 92%, black);
+}
+
+/* ───────── 6. 固定的几何 / 字型令牌 ───────── */
+
+:root {
+  --r-xs: 8px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-pill: 999px;
+
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-15: 15px;
+  --fs-17: 17px;
+  --fs-20: 20px;
+  --fs-24: 24px;
+
+  --t-fast: 120ms;
+  --t: 200ms;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+
+  --sidebar-w: 240px;
+  --topbar-h: 58px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+}
+
+/* ═══════════════ 基础重置 ═══════════════ */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: var(--fs-14);
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background var(--t) var(--ease), color var(--t) var(--ease);
+}
+
+/* 背景：四团彩色雾 + 一层渐变，玻璃透的就是它 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(46% 38% at 26% 14%, rgb(var(--p1) / var(--bg-glow-1)), transparent 70%),
+    radial-gradient(42% 34% at 82% 8%, rgb(var(--p2) / var(--bg-glow-2)), transparent 72%),
+    radial-gradient(52% 44% at 58% 86%, rgb(var(--p1) / var(--bg-glow-3)), transparent 74%),
+    radial-gradient(38% 34% at 92% 58%, rgb(var(--p2) / calc(var(--bg-glow-3) * 1.1)), transparent 76%),
+    linear-gradient(162deg, var(--bg-base), color-mix(in srgb, var(--bg-base) 93%, rgb(var(--p2))));
+  transition: background var(--t) var(--ease);
+}
+
+/* 极轻的颗粒，避免大面积渐变出现色带 */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .45;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+h1, h2, h3, h4, p, figure { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+button, input, textarea, select { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+::selection {
+  background: rgb(var(--p1) / .28);
+  color: var(--text);
+}
+
+/* 细滚动条 */
+* { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--text-4) 55%, transparent);
+  border-radius: var(--r-pill);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--text-4); background-clip: content-box; }
+
+/* ═══════════════ 图标 ═══════════════ */
+
+.icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon--sm { width: 16px; height: 16px; }
+.icon--lg { width: 24px; height: 24px; }
+
+.icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ═══════════════ 原子类 ═══════════════ */
+
+.tnum { font-variant-numeric: tabular-nums; }
+.muted { color: var(--text-3); }
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* 系统要求减少透明度时自动退回实色（无障碍 / 老设备） */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass-a: 1;
+    --glass-a-2: 1;
+    --glass-a-3: 1;
+    --glass-filter: none;
+  }
+}

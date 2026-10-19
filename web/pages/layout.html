@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-palette="indigo" data-glass="normal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<!-- 首屏之前就把明暗/配色定下来：app.js 要等 DOMContentLoaded 才跑，
+     晚一步就是深色模式下每次进子目录都先闪一下白（刺眼） -->
+<script>
+(function () {
+  try {
+    var d = document.documentElement, s = window.localStorage;
+    var theme = s.getItem('lanshare.theme') || 'light';
+    if (theme === 'auto') {
+      theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ? 'dark' : 'light';
+    }
+    d.setAttribute('data-theme', theme);
+    d.setAttribute('data-palette', s.getItem('lanshare.palette') || 'indigo');
+    d.setAttribute('data-glass', s.getItem('lanshare.glass') || 'normal');
+  } catch (e) { }
+})();
+</script>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/static/app.css?v={{ASSET_V}}">
+</head>
+<body data-page="{{PAGE}}"{{BODY_ATTRS}}>
+
+<div class="shell">
+
+  <aside class="sidebar glass">
+    <a class="brand" href="/">
+      <img src="/favicon.ico" alt="">
+      <div>
+        <div class="brand-name">局域网共享</div>
+        <div class="brand-sub">{{HOST}}</div>
+      </div>
+    </a>
+
+    <nav class="nav" aria-label="主导航">
+      <a class="nav-item" href="/"{{NAV_FILES}}><i data-icon="folder"></i><span>文件</span></a>
+      <a class="nav-item" href="/chat"{{NAV_CHAT}}><i data-icon="chat"></i><span>群聊</span></a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <button class="nav-item" data-appearance type="button">
+        <i data-icon="palette"></i><span>外观</span><span class="nav-dot"></span>
+      </button>
+      <button class="nav-item" data-admin-open type="button" hidden>
+        <i data-icon="lock"></i><span>管理员权限</span>
+      </button>
+      <button class="nav-item" data-theme-toggle type="button">
+        <i data-theme-icon></i><span data-theme-label>深色</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+
+    <header class="mobile-bar glass">
+      {{MOBILE_LEFT}}
+      <div class="mobile-bar-title">{{MOBILE_TITLE}}</div>
+      <div class="mobile-bar-actions">
+        <button class="btn btn--icon btn--ghost" data-appearance type="button" aria-label="外观">
+          <i data-icon="palette"></i>
+        </button>
+        <button class="btn btn--icon btn--ghost" data-admin-open type="button"
+                aria-label="管理员权限" title="输入管理密码" hidden>
+          <i data-icon="lock"></i>
+        </button>
+        {{MOBILE_ACTIONS}}
+      </div>
+    </header>
+
+    {{TOPBAR}}
+
+    {{CONTENT}}
+
+    <nav class="tabbar glass" aria-label="主导航">
+      <a class="tab" href="/"{{TAB_FILES}}><i data-icon="folder" data-icon-cls="icon--lg"></i><span>文件</span></a>
+      <a class="tab" href="/chat"{{TAB_CHAT}}><i data-icon="chat" data-icon-cls="icon--lg"></i><span>群聊</span></a>
+    </nav>
+
+  </div>
+</div>
+
+{{EXTRA}}
+
+<div class="toasts"></div>
+<script src="/static/app.js?v={{ASSET_V}}"></script>
+</body>
+</html>

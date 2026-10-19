@@ -1,0 +1,16 @@
+# 统一换行，避免 Windows/Linux 互相改整份文件
+* text=auto eol=lf
+
+*.py    text eol=lf
+*.md    text eol=lf
+*.js    text eol=lf
+*.css   text eol=lf
+*.html  text eol=lf
+*.json  text eol=lf
+*.txt   text eol=lf
+
+# 二进制
+*.ico   binary
+*.png   binary
+*.jpg   binary
+*.exe   binary

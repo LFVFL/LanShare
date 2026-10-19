@@ -1,0 +1,31 @@
+# 生成/运行时产物（不放进仓库）
+chat_data/
+webassets.py
+__pycache__/
+*.py[cod]
+*.spec
+build/
+dist/
+*.egg-info/
+
+# 本地环境
+.venv/
+venv/
+env/
+
+# 设计素材与截图：里面有本机网卡地址等信息，不进公开仓库
+截图/
+样稿/
+
+# 临时目录（测试会建 lan6-* 前缀的目录）
+lan6-*/
+tmp_*.py
+*.log
+*.bak
+
+# 编辑器 / 系统
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-palette="indigo" data-glass="normal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>身份验证 · 局域网共享</title>
+<!-- 同 layout.html：首屏前定明暗，避免深色模式下闪白 -->
+<script>
+(function () {
+  try {
+    var d = document.documentElement, s = window.localStorage;
+    var theme = s.getItem('lanshare.theme') || 'light';
+    if (theme === 'auto') {
+      theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ? 'dark' : 'light';
+    }
+    d.setAttribute('data-theme', theme);
+    d.setAttribute('data-palette', s.getItem('lanshare.palette') || 'indigo');
+    d.setAttribute('data-glass', s.getItem('lanshare.glass') || 'normal');
+  } catch (e) { }
+})();
+</script>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/static/app.css?v={{ASSET_V}}">
+</head>
+<body data-page="login">
+
+<main class="login">
+  <div class="login-card glass">
+    <img class="login-logo" src="/favicon.ico" alt="">
+    <h1 class="login-title">局域网共享</h1>
+    <p class="login-sub">{{HOST}} · 需要访问密码</p>
+
+    <form class="login-form" data-login-form novalidate method="POST" action="/login">
+      <div class="field">
+        <label for="pwd">访问密码</label>
+        <div class="input-wrap">
+          <i data-icon="lock" data-icon-cls="icon--sm"></i>
+          <input class="input" id="pwd" name="password" type="password"
+                 placeholder="请输入访问密码" autocomplete="current-password" autofocus>
+          <button class="input-eye" type="button" data-eye aria-label="显示密码">
+            <i data-icon="eye" data-icon-cls="icon--sm"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="login-error" data-open="{{ERROR_OPEN}}" role="alert">
+        <i data-icon="warning" data-icon-cls="icon--sm"></i>
+        <span>{{ERROR_MSG}}</span>
+      </div>
+
+      <button class="btn btn--primary login-btn" type="submit" data-submit>继续</button>
+    </form>
+
+    <p class="login-foot">
+      密码由共享发起人在桌面端设置，仅用于本次局域网访问。<br>
+      未设置访问密码时不会出现本页。
+    </p>
+  </div>
+</main>
+
+<div class="toasts"></div>
+
+<button class="theme-fab glass" data-appearance type="button" aria-label="外观设置">
+  <i data-icon="palette"></i><span>外观</span>
+</button>
+
+<script src="/static/app.js?v={{ASSET_V}}"></script>
+</body>
+</html>

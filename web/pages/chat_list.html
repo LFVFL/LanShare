@@ -1,0 +1,38 @@
+<header class="topbar glass">
+  <nav class="crumbs" aria-label="路径">
+    <a class="crumb crumb--current" href="/chat"><i data-icon="chat" data-icon-cls="icon--sm"></i>聊天室</a>
+  </nav>
+  <button class="btn btn--primary" data-new-room type="button">
+    <i data-icon="plus" data-icon-cls="icon--sm"></i>新建聊天室
+  </button>
+</header>
+
+<main class="content">
+  <section class="files glass">
+
+    <div class="list-head">
+      <span class="col col-name">聊天室</span>
+      <span class="col col-size">消息</span>
+      <span class="col col-time">创建时间</span>
+      <span class="col-more"></span>
+    </div>
+
+    <div class="list" data-room-list></div>
+
+    <div class="empty" data-room-empty hidden>
+      <div class="empty-art"><i data-icon="chat"></i></div>
+      <div class="empty-title">还没有聊天室</div>
+      <div class="empty-desc">建一个，同一局域网的人就能进来聊</div>
+      <button class="btn btn--primary" data-new-room type="button" style="margin-top:6px">
+        <i data-icon="plus" data-icon-cls="icon--sm"></i>新建聊天室
+      </button>
+    </div>
+
+    <div class="files-foot">
+      <span data-room-count></span>
+      <span class="files-foot-hint">点聊天室进群；删除需要管理员权限</span>
+    </div>
+  </section>
+</main>
+
+<script type="application/json" data-room-json>{{ROOMS_JSON}}</script>

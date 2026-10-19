@@ -1,0 +1,61 @@
+<div class="chat">
+
+  <header class="chat-head glass">
+    <a class="btn btn--outline btn--sm" href="/chat">
+      <i data-icon="chevronLeft" data-icon-cls="icon--sm"></i>列表
+    </a>
+    <div class="chat-title">
+      <i data-icon="chat" data-icon-cls="icon--sm"></i>
+      <span>{{ROOM_NAME}}</span>
+    </div>
+    <span class="chat-meta" data-room-meta>{{ROOM_META}}</span>
+    <div class="chat-head-actions">
+      <label class="chat-search">
+        <i data-icon="search" data-icon-cls="icon--sm"></i>
+        <input type="search" placeholder="搜聊天记录" aria-label="搜聊天记录" data-chat-search>
+      </label>
+      <button class="btn btn--ghost btn--sm" data-chat-clear type="button">
+        <i data-icon="trash" data-icon-cls="icon--sm"></i>清空记录
+      </button>
+    </div>
+  </header>
+
+  <div class="chat-body" data-chat-body></div>
+
+  <button class="jump glass" data-jump data-open="false" type="button">
+    <i data-icon="arrow" data-icon-cls="icon--sm"></i><span>回到底部</span>
+  </button>
+
+  <div class="composer-wrap">
+    <div class="composer glass">
+      <textarea data-chat-input rows="1" placeholder="发消息…"></textarea>
+      <div class="composer-actions">
+        <button class="btn btn--icon btn--ghost" data-chat-image type="button" aria-label="发送图片">
+          <i data-icon="image"></i>
+        </button>
+        <button class="send" data-chat-send type="button" disabled>发送</button>
+      </div>
+    </div>
+    <div class="composer-hint">
+      <span>Enter 发送 · Shift+Enter 换行 · 可直接粘贴图片</span>
+      <span class="tnum" data-online>轮询 2s</span>
+    </div>
+    <input type="file" id="chatImage" accept="image/*" hidden>
+    <div class="preview-slot" data-image-preview hidden></div>
+  </div>
+</div>
+
+<script type="application/json" data-room-json>{{ROOM_JSON}}</script>
+
+<div class="lightbox" data-lightbox data-open="false">
+  <img alt="" src="">
+  <div class="lightbox-bar">
+    <span class="badge" data-lightbox-name style="background:rgba(255,255,255,.16);color:#fff"></span>
+    <button class="btn btn--sm" data-lightbox-download type="button">
+      <i data-icon="download" data-icon-cls="icon--sm"></i>保存
+    </button>
+    <button class="btn btn--sm" data-lightbox-close type="button">
+      <i data-icon="close" data-icon-cls="icon--sm"></i>关闭
+    </button>
+  </div>
+</div>

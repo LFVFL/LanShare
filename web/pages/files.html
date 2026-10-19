@@ -1,0 +1,122 @@
+<header class="topbar glass">
+  <nav class="crumbs" aria-label="路径">{{BREADCRUMB}}</nav>
+
+  <div class="search">
+    <i data-icon="search" data-icon-cls="icon--sm"></i>
+    <input type="search" placeholder="搜索当前目录…（回车搜整个共享）" aria-label="搜索文件" data-files-search>
+    <kbd>/</kbd>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="视图">
+    <button class="btn" data-view="list" aria-pressed="true" title="列表视图">
+      <i data-icon="list" data-icon-cls="icon--sm"></i>
+    </button>
+    <button class="btn" data-view="grid" aria-pressed="false" title="网格视图">
+      <i data-icon="grid" data-icon-cls="icon--sm"></i>
+    </button>
+  </div>
+
+  <button class="btn btn--outline" data-new-folder type="button">
+    <i data-icon="folderPlus" data-icon-cls="icon--sm"></i>新建
+  </button>
+  <button class="btn btn--primary" data-upload-pick type="button">
+    <i data-icon="upload" data-icon-cls="icon--sm"></i>上传
+  </button>
+
+  <input type="file" id="fileInput" multiple hidden>
+  <input type="file" id="folderInput" webkitdirectory hidden>
+</header>
+
+<main class="content">
+  <section class="files glass">
+
+    <div class="mobile-search">
+      <div class="search">
+        <i data-icon="search" data-icon-cls="icon--sm"></i>
+        <input type="search" placeholder="搜索当前目录…" aria-label="搜索文件" data-files-search>
+      </div>
+    </div>
+
+    <div class="list-head" data-files-head>
+      <span style="width:18px;height:18px;flex:none;display:flex;align-items:center">
+        <input type="checkbox" class="cbx" data-select-all aria-label="全选">
+      </span>
+      <button class="col col-name" data-sort="name" type="button">
+        名称 <i data-icon="arrow" data-icon-cls="icon--sm sort-arrow"></i>
+      </button>
+      <button class="col col-size" data-sort="size" type="button">
+        大小 <i data-icon="arrow" data-icon-cls="icon--sm sort-arrow"></i>
+      </button>
+      <button class="col col-time" data-sort="mtime" type="button">
+        修改时间 <i data-icon="arrow" data-icon-cls="icon--sm sort-arrow"></i>
+      </button>
+      <span class="col-more"></span>
+    </div>
+
+    <div class="list" data-files-list></div>
+
+    <div class="empty" data-files-empty{{EMPTY_HIDDEN}}>
+      <div class="empty-art"><i data-icon="folder"></i></div>
+      <div class="empty-title" data-empty-title>这个文件夹是空的</div>
+      <div class="empty-desc" data-empty-desc>把文件拖进这个页面，或点右上角的「上传」</div>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <button class="btn btn--primary" data-upload-pick type="button">
+          <i data-icon="upload" data-icon-cls="icon--sm"></i>上传文件
+        </button>
+        <button class="btn btn--outline" data-empty-clear type="button">清除搜索</button>
+      </div>
+    </div>
+
+    <div class="files-foot">
+      <span data-files-count></span>
+      <span class="files-foot-hint">把文件拖到页面任意位置也可以上传</span>
+    </div>
+  </section>
+</main>
+
+<div class="selbar glass" data-selbar data-open="false" role="region" aria-label="批量操作">
+  <span class="selbar-count">已选 <b>0</b> 项</span>
+  <span class="selbar-sep"></span>
+  <button class="btn btn--sm" data-selbar-zip type="button">
+    <i data-icon="download" data-icon-cls="icon--sm"></i>打包下载
+  </button>
+  <button class="btn btn--sm" data-selbar-move type="button">
+    <i data-icon="folder" data-icon-cls="icon--sm"></i>移动
+  </button>
+  <button class="btn btn--sm" data-selbar-copy type="button">
+    <i data-icon="copy" data-icon-cls="icon--sm"></i>复制
+  </button>
+  <button class="btn btn--sm btn--danger" data-selbar-del type="button">
+    <i data-icon="trash" data-icon-cls="icon--sm"></i>删除
+  </button>
+  <button class="btn btn--sm btn--ghost" data-selbar-clear type="button">取消</button>
+</div>
+
+<div class="uploader glass" data-uploader data-open="false" role="region" aria-label="上传队列">
+  <div class="uploader-head">
+    <i data-icon="upload" data-icon-cls="icon--sm"></i>
+    <span class="uploader-title">上传队列</span>
+    <span class="uploader-sum" data-up-sum>—</span>
+    <button class="btn btn--icon btn--ghost btn--sm" type="button" aria-label="收起" data-up-close>
+      <i data-icon="close" data-icon-cls="icon--sm"></i>
+    </button>
+  </div>
+  <div class="uploader-list" data-up-list></div>
+</div>
+
+<div class="dropzone">松开鼠标即可上传到当前目录</div>
+
+<div class="lightbox" data-lightbox data-open="false">
+  <img alt="" src="">
+  <div class="lightbox-bar">
+    <span class="badge" data-lightbox-name style="background:rgba(255,255,255,.16);color:#fff"></span>
+    <button class="btn btn--sm" data-lightbox-download type="button">
+      <i data-icon="download" data-icon-cls="icon--sm"></i>下载
+    </button>
+    <button class="btn btn--sm" data-lightbox-close type="button">
+      <i data-icon="close" data-icon-cls="icon--sm"></i>关闭
+    </button>
+  </div>
+</div>
+
+<script type="application/json" data-fs-json>{{FILES_JSON}}</script>
