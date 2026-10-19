@@ -1192,7 +1192,96 @@ python tools\admin_flow_test.py
 3. 管理类操作统一走 `writeFetch`，别再出现第四个裸 `apiFetch` 打管理接口。
 
 
-## 三十一、附：第一轮（模块化拆分）对照表
+## 三十一、第二十轮：深色模式闪白、文件改名、仓库整理
+
+### 31.1 深色模式进子目录会闪一下白
+
+现象：暗色主题下点进子文件夹，整屏先白一帧再变深，很刺眼。
+
+原因在模板写死了初始状态：
+
+```html
+<html lang="zh-CN" data-theme="light" data-palette="indigo" data-glass="normal">
+```
+
+`data-theme` 永远是 `light`，真正读 localStorage 的 `applyAppearance()` 要等
+`app.js` 跑到 `DOMContentLoaded` 才执行。于是每次整页跳转都是
+**浅色先画一帧 → JS 再改成深色**，中间那帧就是白闪。
+
+修法是在 `<head>` 里、**样式表之前**放一段同步脚本，首屏之前就把三个属性设好：
+
+```html
+<script>
+(function () {
+  try {
+    var d = document.documentElement, s = window.localStorage;
+    var theme = s.getItem('lanshare.theme') || 'light';
+    if (theme === 'auto') {
+      theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    d.setAttribute('data-theme', theme);
+    d.setAttribute('data-palette', s.getItem('lanshare.palette') || 'indigo');
+    d.setAttribute('data-glass', s.getItem('lanshare.glass') || 'normal');
+  } catch (e) { }
+})();
+</script>
+```
+
+`layout.html` 和 `login.html` 两个外壳都加了。因为脚本在解析 `<head>` 时同步执行，
+浏览器拿到的第一份样式就已经是深色；再加上 `tokens.css` 里
+`:root[data-theme="dark"] { color-scheme: dark; }`，导航期间画布也是深色。
+
+新增 `tools/theme_flash_test.py`（19 项）守住它：
+
+- 结构断言：`/`、`/dir`、`/chat`、`/login` 下发的 HTML 里，那段脚本
+  **必须存在且排在 `app.css` 之前**（这才是"不闪"的机制保证）；
+- 浏览器断言：深色下逐个页面检查 `data-theme`、首帧背景色不是纯白、
+  `color-scheme` 是 dark；切回浅色也必须是浅色。
+
+> 为什么不用"截图看闪没闪"来测：闪白只存在一帧（~16ms），截图大概率抓不到；
+> 而"脚本是否在样式表之前"是可确定判定的。
+
+### 31.2 文件改名：拼音名换掉
+
+| 旧 | 新 |
+|---|---|
+| `juyuwang.py` | `lanshare.py` |
+| `变更说明.md` | `docs/CHANGELOG.md` |
+| `模块说明.md` | `docs/ARCHITECTURE.md` |
+| `重构方案.md` | `docs/REFACTOR.md` |
+| `桌面端改版方案.md` | `docs/DESKTOP-UI.md` |
+
+打包产物也跟着从 `juyuwang.exe` 变成 `lanshare.exe`。
+14 个测试脚本的 `import juyuwang as j` 全部改成 `import lanshare as j`，
+文档里的交叉引用也一起更新（历史记录里当年的 `juyuwang.exe` 保持原样，那是史实）。
+
+### 31.3 仓库整理与脱敏
+
+准备推到 GitHub，先做了这些：
+
+- 新增 `.gitignore`：`chat_data/`（聊天内容）、`webassets.py`（构建产物）、
+  `截图/`、`样稿/`（含本机网卡地址）、`__pycache__`、`lan6-*/`、构建目录；
+- 新增 `.gitattributes`：统一 LF，避免 Windows/Linux 互相改整份文件；
+- 新增 `README.md`（功能、快速开始、目录结构、测试清单、隐私说明）和 `LICENSE`（MIT）；
+- **脱敏**：文档和测试里的真实内网地址（`192.168.0.101` 等）换成通用示例；
+  仓库里不含作者个人路径、QQ 邮箱；
+- git 提交身份用 `LFVFL <LFVFL@users.noreply.github.com>`（noreply 地址），
+  不动本机全局配置里的私人邮箱。
+
+提交内容：72 个文件、约 710 KB，只有源码 + 文档 + 图标。
+
+### 31.4 验证
+
+| 检查 | 结果 |
+|---|---|
+| `theme_flash_test`（本轮新增） | 19 项 ✓ |
+| 其余 13 套（admin_flow / origin / desktop / smoke / protocol / search / fsops / zip / auth_matrix / sse / thumb / limits / ui） | 全绿 |
+| `preflight` | 可以打包 ✓ |
+| 改名后重新打包 | `lanshare.exe` 生成并启动实测 `/login` 200 ✓ |
+| `git ls-files` 复查 | 无 chat_data / 截图 / webassets.py / 缓存 |
+
+
+## 三十二、附：第一轮（模块化拆分）对照表
 
 `lanshare.py` 从 3400 行拆成 `server/`（服务端，不依赖 Qt）+ `ui/`（界面），入口只留启动逻辑。
 目录职责与依赖方向见 **`docs/ARCHITECTURE.md`**。
