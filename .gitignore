@@ -7,8 +7,6 @@ __pycache__/
 build/
 dist/
 *.egg-info/
-# 打包产物：走 GitHub Release，不进 git 历史（45 MB 二进制进去就删不掉）
-*.exe
 
 # 本地环境
 .venv/

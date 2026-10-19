@@ -1,4 +1,4 @@
-  /* ───────────── 模块：聊天室（Lan.chat） ───────────── */
+﻿  /* ───────────── 模块：聊天室（Lan.chat） ───────────── */
 
   (function (Lan) {
     'use strict';
@@ -223,7 +223,14 @@
       chat.es = es;
 
       var failStreak = 0;
-      es.onopen = function () { failStreak = 0; };
+
+      // SSE 一旦重新连上，就把之前为兜底开的轮询停掉。
+      // 服务端每 25 秒主动断一次是正常设计，偶然凑满 3 次失败会启动轮询；
+      // 这里不清的话，SSE 恢复后两条链路会一直并存，消息被拉两遍（流量、耗电都翻倍）。
+      es.onopen = function () {
+        failStreak = 0;
+        if (chat.timer) { clearInterval(chat.timer); chat.timer = null; }
+      };
 
       es.onmessage = function (ev) {
         var m;

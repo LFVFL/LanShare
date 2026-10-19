@@ -40,7 +40,9 @@ class TransferMixin:
                 return
 
             file_size = file_path.stat().st_size
-            content_type, encoding = mimetypes.guess_type(str(file_path))
+            # 第二项（原文件自身编码，如 .gz → gzip）这里用不到：
+            # 我们要发的是原样字节，绝不能拿它当 Content-Encoding 响应头。
+            content_type, _file_encoding = mimetypes.guess_type(str(file_path))
             if not content_type:
                 content_type = 'application/octet-stream'
 
@@ -102,8 +104,11 @@ class TransferMixin:
                 "style-src 'unsafe-inline'"
             )
 
-            if encoding:
-                self.send_header('Content-Encoding', encoding)
+            # 注意：mimetypes.guess_type() 的第二项（encoding）描述的是"这个文件
+            # 本身是什么编码"（.gz → gzip），不是"本次响应做过压缩"。把它当
+            # Content-Encoding 发出去，浏览器会把已经是 gzip 的字节再解压一遍，
+            # 用户下到的 backup.tar.gz 其实是解压后的明文——压缩包直接打不开。
+            # 所以这里什么都不发；真要压缩响应，得像 _encode_body 那样真去压。
 
             self.end_headers()
 

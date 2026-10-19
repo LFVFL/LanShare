@@ -65,6 +65,13 @@ class FsOpsMixin:
             if not is_path_within(target, self.shared_path):
                 self.send_error(403)
                 return
+            # 共享根本不参与"删除"：`.` 或空名字解析出来就是根自己，
+            # is_path_within(根, 根) 是成立的，会直接把整个共享目录 rmtree 掉。
+            # 父级同理（`foo/..`）。这里显式挡掉，别让它走到下面的 rmtree。
+            root = Path(self.shared_path).resolve()
+            if target == root or target == root.parent:
+                self.send_api_error("不能删除共享根目录", 400)
+                return
             if not target.exists():
                 self.send_error(404)
                 return
