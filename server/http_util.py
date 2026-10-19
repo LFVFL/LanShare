@@ -259,6 +259,12 @@ class HttpUtilMixin:
             text = getattr(webassets, 'THEME_BOOT', '') or ''
         elif path.endswith('.css'):
             text = webassets.CSS
+        elif path.endswith('app-files.js'):
+            text = getattr(webassets, 'JS_FILES', '') or ''
+        elif path.endswith('app-chat.js'):
+            text = getattr(webassets, 'JS_CHAT', '') or ''
+        elif path.endswith('app-login.js'):
+            text = getattr(webassets, 'JS_LOGIN', '') or ''
         else:
             text = webassets.JS
         body = text.encode('utf-8')

@@ -383,14 +383,28 @@ def main():
         check("下载按钮仍在", cdp.js("document.querySelectorAll('a.row-dl').length") > 0)
         cdp.call("Emulation.clearDeviceMetricsOverride")
 
-        print("\n[7] 对外命名空间 window.Lan")
+        print("\n[7] 对外命名空间 window.Lan（按页拆包后，分包里的东西只在本页有）")
         check("Lan 存在", cdp.js("typeof window.Lan === 'object'"))
-        check("有 files/api/chat/util/upload/appearance", cdp.js(
-            "['files','api','chat','util','upload','appearance'].every(function(k){"
+        check("核心包有 util/api/icons/ui/appearance", cdp.js(
+            "['util','api','icons','ui','appearance'].every(function(k){"
+            "return window.Lan[k] && typeof window.Lan[k] === 'object';})"))
+        check("文件页有 files/upload 命名空间", cdp.js(
+            "['files','upload'].every(function(k){"
             "return window.Lan[k] && typeof window.Lan[k] === 'object';})"))
         check("Lan.util.esc 可用", cdp.js("window.Lan.util.esc('<b>')") == "&lt;b&gt;")
-        check("Lan.chat.state 是对象", cdp.js("typeof window.Lan.chat.state === 'object'"))
         check("Lan.files.render 是函数", cdp.js("typeof window.Lan.files.render === 'function'"))
+        check("文件页不加载聊天包（省流量）",
+              cdp.js("typeof window.Lan.chat.state === 'undefined'"))
+
+        print("\n[7b] 聊天页才加载聊天包")
+        cdp.call("Page.navigate", {"url": "http://127.0.0.1:%d/chat/room?id=%s" % (port, room_id)})
+        time.sleep(1.2)
+        check("聊天页有 Lan.chat.state",
+              cdp.js("typeof window.Lan.chat.state === 'object'"))
+        check("聊天页也能用灯箱",
+              cdp.js("typeof window.Lan.lightbox.open === 'function'"))
+        check("聊天页不加载文件页的包",
+              cdp.js("typeof window.Lan.upload.render === 'undefined'"))
 
         print("\n[8] 没有前端报错")
         errors = [e for e in cdp.events

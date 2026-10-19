@@ -1,17 +1,10 @@
-  /* ───────────── 模块：灯箱与文件页启动（Lan.lightbox / Lan.pages.files） ───────────── */
+  /* ───────────── 模块：灯箱（Lan.lightbox，文件页与聊天页共用） ───────────── */
 
   (function (Lan) {
     'use strict';
 
     /* 依赖：显式从命名空间取，缺一个就报 ReferenceError */
     var downloadUrl = Lan.util.downloadUrl;
-    var readJson = Lan.util.readJson;
-    var fsState = Lan.files.state;
-    var renderFiles = Lan.files.render;
-    var bindFilesList = Lan.files.bindList;
-    var bindToolbar = Lan.files.bindToolbar;
-    var initUploads = Lan.upload.init;
-    var initNewFolder = Lan.upload.initFolder;
 
     /* ───────────── 灯箱（文件预览与聊天图片共用） ───────────── */
 
@@ -44,31 +37,7 @@
       });
     }
 
-    function initFilesPage() {
-      var data = readJson('[data-fs-json]');
-      fsState.path = (data && data.path) || '';
-      fsState.entries = (data && data.entries) || [];
-
-      bindFilesList();
-      bindToolbar();
-      initUploads();
-      initNewFolder();
-
-      var clear = document.querySelector('[data-empty-clear]');
-      if (clear) {
-        clear.addEventListener('click', function () {
-          fsState.query = '';
-          document.querySelectorAll('[data-files-search]').forEach(function (i) { i.value = ''; });
-          renderFiles();
-        });
-      }
-
-      renderFiles();
-    }
-
-
     /* 对外只暴露这些 */
     Lan.lightbox.open = openLightbox;
     Lan.lightbox.init = initLightbox;
-    Lan.pages.files = initFilesPage;
   })(window.Lan = window.Lan || {});

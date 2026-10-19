@@ -79,6 +79,19 @@ def render_template(template, **ctx):
     return _PLACEHOLDER_RE.sub("", out)
 
 
+# 页面 → 额外要加载的包（核心包 app.js 每个页面都有，见 layout.html）
+PAGE_BUNDLES = {"files": "files", "chatlist": "chat", "chatroom": "chat"}
+
+
+def page_script(page):
+    """这个页面除了核心包还需要哪个包。"""
+    bundle = PAGE_BUNDLES.get(page)
+    if not bundle:
+        return ""
+    return ('<script src="/static/app-%s.js?v=%s"></script>'
+            % (bundle, ASSET_VERSION))
+
+
 def page_shell(page, title, host, content, topbar="", extra="",
                mobile_title="", mobile_actions="", mobile_left=None,
                active="files", body_attrs=""):
@@ -104,6 +117,7 @@ def page_shell(page, title, host, content, topbar="", extra="",
         TOPBAR=topbar,
         CONTENT=content,
         EXTRA=extra,
+        PAGE_JS=page_script(page),
         ASSET_V=ASSET_VERSION,
     )
 

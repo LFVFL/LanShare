@@ -38,29 +38,38 @@ PAGES = WEB / "pages"
 JS_DIR = WEB / "js"
 OUT = ROOT / "webassets.py"
 
+# 按页拆包：核心包所有页面都要（含灯箱与启动编排），其余按需加载。
+# 名字 → 分片前缀，顺序即拼接顺序。
+JS_BUNDLES = {
+    "core": ("00-", "10-", "20-", "30-", "40-", "70-", "90-"),
+    "files": ("50-", "60-", "72-"),
+    "chat": ("80-", "85-"),
+    "login": ("88-",),
+}
+
 
 def read(name: Path) -> str:
     with io.open(name, "r", encoding="utf-8") as f:
         return f.read()
 
 
-def js_source() -> str:
-    """把 web/js/*.js 按文件名顺序原样拼接。
-
-    每个分片文件都以换行结尾（含结尾的空行），所以这里直接 ''.join 即可，
-    不要在拼接时再补/去换行——补了会出现双空行，去了会把分片之间的空行吃掉。
-    文件名前缀就是拼接顺序（00-、10- … 90-）。
-
-    不再外套公用 IIFE：每个分片自己就是 IIFE，只在 window.Lan 上相遇。
-    """
-    files = sorted(JS_DIR.glob("*.js"))
+def js_bundle(name: str) -> str:
+    """按 JS_BUNDLES 里配的前缀挑分片，按文件名顺序原样拼接。"""
+    prefixes = JS_BUNDLES[name]
+    files = [f for f in sorted(JS_DIR.glob("*.js")) if f.name.startswith(prefixes)]
     if not files:
-        raise SystemExit("web/js/ 下没有 .js 文件")
+        raise SystemExit("web/js/ 下找不到 %s 包的分片（前缀 %s）" % (name, prefixes))
 
-    head = ("/* 局域网共享 · 前端（原生 JS，无依赖）\n"
+    head = ("/* 局域网共享 · 前端 %s 包（原生 JS，无依赖）\n"
             "   分片各自独立（自己的 IIFE），只通过 window.Lan 互相调用；\n"
-            "   由 tools/build_assets.py 按文件名顺序拼成这一份并打包进 webassets.py */\n\n")
+            "   由 tools/build_assets.py 按文件名顺序拼成这一份并打包进 webassets.py */\n\n"
+            % name)
     return head + "".join(read(f) for f in files)
+
+
+def js_source() -> str:
+    """兼容旧接口：等于核心包。"""
+    return js_bundle("core")
 
 
 def pack(text: str) -> str:
@@ -74,8 +83,9 @@ def pack(text: str) -> str:
 
 def main():
     css = read(WEB / "tokens.css") + "\n" + read(WEB / "app.css")
-    js = js_source()
+    js = js_bundle("core")
     theme_boot = read(WEB / "theme-boot.js")
+    bundles = {name: js_bundle(name) for name in JS_BUNDLES}
 
     # 图标也一起打包：单文件 exe 旁边没有 icon.ico 时还能显示应用图标
     icon_path = ROOT / "icon.ico"
@@ -88,13 +98,18 @@ def main():
         "",
         "CSS = " + pack(css),
         "",
-        "JS = " + pack(js),
+        "JS = " + pack(js),          # 兼容旧名字：等于核心包
         "",
         "THEME_BOOT = " + pack(theme_boot),
         "",
         "ICON_ICO_B64 = " + repr(icon_b64),
         "",
     ]
+
+    # 每个包一个常量：JS_BUNDLES 里的 files/chat/login
+    for name in ("files", "chat", "login"):
+        parts.append("JS_" + name.upper() + " = " + pack(bundles[name]))
+        parts.append("")
 
     for page, const in [
         ("layout.html", "LAYOUT"),
@@ -111,8 +126,10 @@ def main():
 
     size = OUT.stat().st_size
     print("wrote %s (%.1f KB)" % (OUT.name, size / 1024))
-    print("  css %.1f KB / js %.1f KB / icon %.1f KB" % (
-        len(css) / 1024, len(js) / 1024, len(icon_b64) / 1024))
+    print("  css %.1f KB / icon %.1f KB" % (
+        len(css) / 1024, len(icon_b64) / 1024))
+    for name, text in bundles.items():
+        print("  js %-6s %5.1f KB" % (name, len(text) / 1024))
 
 
 if __name__ == "__main__":
