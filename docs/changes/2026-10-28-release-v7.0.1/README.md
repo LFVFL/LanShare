@@ -42,11 +42,19 @@ Win7 候选包：
 - [Win7 x64 兼容包记录](../2026-10-28-win7-compat-v7.0.1/README.md)
 - [GitHub Release 文案](release-notes.md)
 
-## 发布方式
+## 发布结果
 
-源码提交和文档进入 `main`，annotated tag `v7.0.1` 指向同一受测源码基线。GitHub
-Release 先建草稿，上传两个附件并核对资产名称、大小和 API SHA-256 digest，再公开为
-latest 稳定版。凭据不写入仓库、日志或发布记录。
+源码和文档提交 `b202631b8071b81812c026dd8ba7b2017ca3844a` 已推送到 `main`，
+annotated tag `v7.0.1` 指向该提交。GitHub Release `426505756` 于
+2026-10-28T10:20:47Z 公开，并确认是 latest 稳定版：
+
+- [LanShare v7.0.1](https://github.com/LFVFL/LanShare/releases/tag/v7.0.1)
+- [lanshare.exe](https://github.com/LFVFL/LanShare/releases/download/v7.0.1/lanshare.exe)
+- [lanshare-win7.exe](https://github.com/LFVFL/LanShare/releases/download/v7.0.1/lanshare-win7.exe)
+
+两个附件的名称、大小、状态和 GitHub API SHA-256 digest 均已与本地文件逐项核对，
+结果见 [github-release.json](test-results/github-release.json)。发布使用本机既有 Git
+凭据，凭据没有写入仓库、日志或发布记录。
 
 ## 已知边界
 

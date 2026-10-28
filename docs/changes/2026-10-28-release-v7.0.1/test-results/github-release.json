@@ -1,0 +1,34 @@
+{
+  "repository": "LFVFL/LanShare",
+  "release_id": 426505756,
+  "release_name": "LanShare v7.0.1",
+  "tag_name": "v7.0.1",
+  "tag_commit": "b202631b8071b81812c026dd8ba7b2017ca3844a",
+  "draft": false,
+  "prerelease": false,
+  "is_latest": true,
+  "published_at": "2026-10-28T10:20:47Z",
+  "release_url": "https://github.com/LFVFL/LanShare/releases/tag/v7.0.1",
+  "asset_count": 2,
+  "all_asset_sizes_and_sha256_match": true,
+  "assets": [
+    {
+      "name": "lanshare-win7.exe",
+      "size": 61342385,
+      "state": "uploaded",
+      "digest": "sha256:bff338db03a2e8e8d2a43c95dd7ad22f41888b38aadcbe32765413db2f665e0e",
+      "sha256_matches_local": true,
+      "download_url": "https://github.com/LFVFL/LanShare/releases/download/v7.0.1/lanshare-win7.exe"
+    },
+    {
+      "name": "lanshare.exe",
+      "size": 63929453,
+      "state": "uploaded",
+      "digest": "sha256:ace121b3504d83c566b1c5b20be69e65e9de97a1b21d7be8b0bf8975df7d3c6b",
+      "sha256_matches_local": true,
+      "download_url": "https://github.com/LFVFL/LanShare/releases/download/v7.0.1/lanshare.exe"
+    }
+  ],
+  "verified_at_utc": "2026-10-28T10:21:11Z",
+  "credentials_recorded": false
+}
