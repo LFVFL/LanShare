@@ -14,6 +14,9 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 sys.path.insert(0, str(ROOT))
 
 import lanshare as j  # noqa: E402
@@ -33,7 +36,7 @@ def get(path):
 
 
 def main():
-    share = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-page-"))
+    share = Path(TEST_ENV.temporary_dir(prefix="lan6-page-"))
     for i in range(450):
         (share / ("f%03d.txt" % i)).write_text("x", encoding="utf-8")
 
@@ -76,8 +79,8 @@ def main():
             except Exception as exc:
                 check("%s 不报错" % qs, False, repr(exc))
     finally:
-        sharer.stop()
-        shutil.rmtree(share, ignore_errors=True)
+        sharer.stop(wait=True, timeout=10)
+        TEST_ENV.remove_test_dir(share)
 
     print("\n结果: 通过 %d 项" % len(PASSED))
     if FAILED:

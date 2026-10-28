@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-10-28T10:34:28.688353+08:00",
+  "success": true,
+  "tests": 9,
+  "passed": [
+    "network failure preserves the exact text and prepared image",
+    "HTTP error preserves draft and reuses idempotency key on retry",
+    "success clears only the sent draft, not newly typed text",
+    "paste inserts plain text with tabs, spaces and normalized line breaks",
+    "render contract uses pre-wrap and tab-size without the 5MB gate",
+    "delete, clear, reset and stale revisions apply consistently",
+    "composer removes the permanent hints rather than hiding functional controls",
+    "missing image decoder still disables uploads without a help element",
+    "SSE reconnect and polling fallback do not need a visible status element"
+  ],
+  "log": "chat-frontend.log",
+  "syntax_checks": [
+    {
+      "file": "web/js/85-chat-room.js",
+      "javascript_check_returncode": 0
+    },
+    {
+      "file": "tools/v7_chat_frontend_test.js",
+      "javascript_check_returncode": 0
+    }
+  ],
+  "python_ast_grammar": "3.8",
+  "python_ast_note": "Syntax-only check for tools/v7_chat_layout_test.py, not Python 3.8 runtime verification",
+  "diff_check_returncode": 0,
+  "post_test_fixture_checks": [
+    {
+      "report": "chat-layout-before.json",
+      "owned_test_root_removed": true
+    },
+    {
+      "report": "chat-layout.json",
+      "owned_test_root_removed": true
+    },
+    {
+      "report": "file-scope-browser.json",
+      "owned_test_root_removed": true
+    }
+  ],
+  "source_sha256": {
+    "web/app.css": "ea5e9c242863086205e7e0032346424aa3c33f2d2b15495bf8a5b2135dccf93d",
+    "web/pages/chat_list.html": "221bd39d23b0511f893b56cc2e69f7c3a88d5a538ae3b31ff9e7efa131d890e7",
+    "web/pages/chat_room.html": "6288f6996e6ff038bf157c67dc4104168521bc655c00f3ba3c75d0558e6f1ae7",
+    "web/js/85-chat-room.js": "10e39fd7fa39bc05dcbef8203b47affba645916d601ee4dd0ce458df9c56bb9e",
+    "tools/v7_chat_frontend_test.js": "0cf24c0d00c30a2f6fd332943035754b1ad2bd0bd5270fd3205e7751da497a2f",
+    "tools/v7_chat_layout_test.py": "25e6dec73c1925a8d312d4f9adbabef52733af0472886e374e0b490febbe920b"
+  },
+  "provenance": {
+    "kind": "derived_from_runner_log",
+    "runner": "node tools/v7_chat_frontend_test.js",
+    "runner_emits_json": false,
+    "source_log": "chat-frontend.log",
+    "source_log_sha256": "03f0960b9c6e6ca337c560681de10d7f2feb71a978763e0232fe41bdd6a7c7e2",
+    "verified_pass_lines": 9,
+    "verified_summary": "9 frontend regression tests passed.",
+    "derivation": "Structured wrapper of the recorded runner output; not a separate test execution.",
+    "current_sources_match_recorded_hashes": true,
+    "verified_at": "2026-10-28T11:06:03.323475+08:00"
+  }
+}

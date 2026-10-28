@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-10-28T01:57:28+08:00",
+  "python": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+  "python_executable": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "python_files": 61,
+  "python_ast_feature_version": "3.8",
+  "javascript_files": 16,
+  "javascript_runtime": "v24.14.1",
+  "diff_check_returncode": 0,
+  "v6_git_status_clean": true,
+  "errors": [],
+  "success": true
+}

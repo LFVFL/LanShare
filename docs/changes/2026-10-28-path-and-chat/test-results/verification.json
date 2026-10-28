@@ -1,0 +1,253 @@
+{
+  "timestamp": "2026-10-28T11:18:11.744503+08:00",
+  "success": true,
+  "exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+  "sha256": "023f3143d43733eeb7528be44703ee93dc5d2e185ef454dcc3ce8ed6ae0f9a24",
+  "size_bytes": 63929817,
+  "asset_version": "98bfe0bd8e",
+  "tests": 107,
+  "passed": 107,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "suites": [
+    {
+      "record": "root-v7_chat_test.json",
+      "sha256": "9011d2dcb669653c3b0ca33fbdca95c39509c2b08b12994e6c9d6d323847b952",
+      "methods": 16,
+      "passed": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "record": "root-v7_files_test.json",
+      "sha256": "74bc6df6080213ba09cb9fa54e770d4a9086d866d5031fbaa85060c7ac0eaece",
+      "methods": 9,
+      "passed": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "record": "root-v7_assets_test.json",
+      "sha256": "38df9483e8f7cd1a752b89f3402749ce508479d9e0d9e08a88e8c2aa4677b615",
+      "methods": 5,
+      "passed": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "record": "root-v7_build_test.json",
+      "sha256": "3ca7620892c5eec12486253d827f2f539c93b51e4fdf3a8a7f2db0ad42d319ca",
+      "methods": 27,
+      "passed": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "record": "files-frontend.json",
+      "sha256": "e0400a389f0a5beacc0139d825d3ae2235a5f714b0a35ac78aff9f5d763372c0",
+      "methods": 22,
+      "passed": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "record": "chat-frontend.json",
+      "sha256": "c96f21af60105896f309e6cb81bfcc292c81ec2bfce8afbbd58ec060227935a9",
+      "methods": 9,
+      "passed": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "record": "chat-layout.json",
+      "sha256": "2d61e64a2eaa767ec350ed34b7958bdb65a7e0e50bd7c7a3b4f44347ad8e1872",
+      "methods": 3,
+      "passed": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "record": "file-scope-browser.json",
+      "sha256": "b3d9e7a4e4ce1c527dd81589150527c96abbd7d55d8e4a53812e80d3efd29d20",
+      "methods": 2,
+      "passed": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "record": "exe-verification.json",
+      "sha256": "582a5fc85795070cf58ba79c7e9542375e1800665d113acb875cbb7b39768408",
+      "methods": 8,
+      "passed": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "record": "startup-temp-delivered.json",
+      "sha256": "49af86ec9f6b0493bd6d014c7316c0ca685d60e44a192cb7647e536ddcaf7a7c",
+      "methods": 6,
+      "passed": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "count_policy": "107 unique methods in this follow-up; candidate/final repeated runs, viewport loops, 17 probe assertions and 12 token assertions are not additional methods; prior-round totals are not added.",
+  "original_path_verified": true,
+  "working_directory_verified": true,
+  "file_low_label_absent": true,
+  "actual_user_medium_process_verified": true,
+  "all_original_path_startup_runs_exit_normally": true,
+  "delivery_metadata_persisted_across_tool_invocations": true,
+  "separate_process_token_launches": 1,
+  "startup_matrix_launches": 8,
+  "owned_fixture_roots_removed": 11,
+  "source_manifest_files_unchanged": 89,
+  "prior_historical_result_files_unchanged": 96,
+  "screenshots": [
+    {
+      "file": "chat-layout-list-1280.png",
+      "bytes": 750278,
+      "sha256": "07958fcce62b638cb189abf3f1e29c71328cef3e5b259b798e0616a409b763d9"
+    },
+    {
+      "file": "chat-layout-list-1024.png",
+      "bytes": 599392,
+      "sha256": "7777621c3def6d1817843c3e3d3ff6ee59dacba2554bfe31dcbbf12796ffd74a"
+    },
+    {
+      "file": "chat-layout-list-901.png",
+      "bytes": 524109,
+      "sha256": "25524f1e82949c768ed8de227b441c1a680a43466a84983a551a6512ea96d9f5"
+    },
+    {
+      "file": "chat-layout-list-390.png",
+      "bytes": 253158,
+      "sha256": "7fbe8b22386509062fe0af919ca5668f0b95d6a0d22b43ae175f36e697725f0a"
+    },
+    {
+      "file": "chat-layout-list-320.png",
+      "bytes": 213427,
+      "sha256": "f6c62fbd6ff07320984bf55878d0904baa97ee098c5fe1aa92012ae465111d36"
+    },
+    {
+      "file": "chat-layout-room-1280.png",
+      "bytes": 854843,
+      "sha256": "b7fd4c5d23472a0e8b60c6092debb776e3cdd97a7d68f072983f2f0edd64fe1b"
+    },
+    {
+      "file": "chat-layout-room-390.png",
+      "bytes": 273796,
+      "sha256": "41eac136f78ce9f149057c9e8af7f13a45c0755b991c15cd5f63fc6560eca2e3"
+    },
+    {
+      "file": "chat-layout-room-320.png",
+      "bytes": 227788,
+      "sha256": "0b73b5de0fd2926ff159c97ddddfd6e13cf69c949a516b3630037d49b0709658"
+    },
+    {
+      "file": "file-scope-root-1280.png",
+      "bytes": 548467,
+      "sha256": "af6a469e3773f8d4849d372f7c8c788fefe7f9e20c17a524af94028a5d6981dd"
+    },
+    {
+      "file": "file-scope-root-390.png",
+      "bytes": 219683,
+      "sha256": "2f6c4c0b52b36901e79e6aecbb7c4db2682f1af1d927d0a436567c855828cf68"
+    },
+    {
+      "file": "file-scope-root-320.png",
+      "bytes": 181037,
+      "sha256": "27708d56f8346bc53be0528f3f2885a439a02209e915b31878a7a8ba3de940c1"
+    },
+    {
+      "file": "file-scope-nested-1280.png",
+      "bytes": 778456,
+      "sha256": "8bd1b585ee10bdcd7577dd5655f3b6b98546488e4b992122a71ac46f57ac0d63"
+    },
+    {
+      "file": "file-scope-nested-390.png",
+      "bytes": 267950,
+      "sha256": "a7a03438afcaee1e4c5f93d092b4813c74f4bf25c7f3a11dc5c2d8bcc49068f5"
+    },
+    {
+      "file": "file-scope-nested-320.png",
+      "bytes": 217665,
+      "sha256": "e405be32aebb2a85f590fcbf918822e15434195b24cad52eee9eb2c06ae2bbb9"
+    }
+  ],
+  "screenshots_match_recorded_bytes": true,
+  "browser_tested_assets_match_delivered_source": true,
+  "previous_exe_backup_preserved": true,
+  "v6_worktree_clean": true,
+  "git_staged_paths": [],
+  "git_commit_or_push_performed": false,
+  "records": [
+    {
+      "file": "build.json",
+      "sha256": "c2afcd57e2b672a0ba5bf1ca6b98864d1441742635419b62a31cb28b429ab61a"
+    },
+    {
+      "file": "build-source-manifest.json",
+      "sha256": "b516093ed3e38be5bfbc865539f6c6ff6dc6eb671b20079189e7307ab702fd96"
+    },
+    {
+      "file": "native-dependencies.json",
+      "sha256": "cdaa42613b40f47e207456d8f6c1bd23543548d640cd715465ec5263ce202337"
+    },
+    {
+      "file": "previous-artifact.json",
+      "sha256": "cb882bf74df9372e254190d9b8c82525797f5cddb88256659e4e1b759328cb8c"
+    },
+    {
+      "file": "release-artifact.json",
+      "sha256": "107cb092496e94f95d193634fe41c5eb6989a7bc5fb8707402b782c6263b421b"
+    },
+    {
+      "file": "static-checks.json",
+      "sha256": "b455c71bd4be9ef7177ddaefb8f3da855e4df886298c45091c936b927ed70f7f"
+    },
+    {
+      "file": "source-manifest.json",
+      "sha256": "eb389d4f1e9ef052f805c7804527e6915aa8afa7d5ee35097491223984808f8c"
+    },
+    {
+      "file": "startup-diagnosis.json",
+      "sha256": "448fc277bf0f5400b5e836b6c5fbed6ee4e7c0c69c166e1eda05df48d09cac05"
+    },
+    {
+      "file": "integrity-replace-probe.json",
+      "sha256": "de3418653670442714da8a50424d055ac8c54f2ca2febb25de58ec6467122747"
+    },
+    {
+      "file": "startup-token-delivered.json",
+      "sha256": "46ae61ade333416af1d180b116129959990c44fc2d5637be21d786fb3076dba2"
+    },
+    {
+      "file": "startup-temp.json",
+      "sha256": "a6d1c7342d61d128007fcaf990b96baebca0d8adc0d11692058e5889d01290f8"
+    },
+    {
+      "file": "root-regressions.json",
+      "sha256": "ffed6c2c0db3797c5f3291d789cb3c120cf94ed3ea60e75f15d98cec606d1ac7"
+    }
+  ],
+  "limits": [
+    "Controlled offscreen startup with isolated data and profile, not an Explorer double click or real settings acceptance.",
+    "No claim of coverage for every Windows computer, Safari/WebView, physical mobile keyboard/IME or every theme.",
+    "Python 3.8 checks are AST syntax only; execution used the existing Python 3.12 build environment."
+  ],
+  "startup_matrix_original_path_launches": 1,
+  "startup_matrix_copied_path_launches": 7,
+  "total_final_original_path_launches": 2
+}

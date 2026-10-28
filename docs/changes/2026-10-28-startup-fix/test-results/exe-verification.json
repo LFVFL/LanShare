@@ -1,0 +1,106 @@
+{
+  "runtime_tmpdir_option": "%LOCALAPPDATA%\\LanShare\\Temp",
+  "runtime_tmpdir_archive_option": "pyi-runtime-tmpdir %LOCALAPPDATA%/LanShare/Temp",
+  "exe": "E:\\LanShare-builds\\build-9k4ezesh\\dist\\lanshare.exe",
+  "copied_exe": "C:\\Windows\\Temp\\lanshare-test-j3kfmivk\\portable-exe-ocb7otjz\\portable\\lanshare.exe",
+  "size_bytes": 63929292,
+  "sha256": "e283857ab18dc7533b735ede1ae017cb63a8691791d58f5c1dc70e1aab03ef41",
+  "environment": "offscreen; isolated Unicode LOCALAPPDATA/profile; Windows-only PATH; no source beside EXE",
+  "local_app_data": "C:\\Windows\\Temp\\lanshare-test-j3kfmivk\\portable-exe-ocb7otjz\\local-用户 配置",
+  "runtime_base": "C:\\Windows\\Temp\\lanshare-test-j3kfmivk\\portable-exe-ocb7otjz\\local-用户 配置\\LanShare\\Temp",
+  "runtime_extraction_directory": "C:\\Windows\\Temp\\lanshare-test-j3kfmivk\\portable-exe-ocb7otjz\\local-用户 配置\\LanShare\\Temp\\_MEI000061bc2",
+  "runtime_payload_files": [
+    {
+      "file": "python312.dll",
+      "bytes": 7003928
+    },
+    {
+      "file": "PyQt5/QtCore.pyd",
+      "bytes": 2483712
+    },
+    {
+      "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+      "bytes": 6023664
+    }
+  ],
+  "asset_version": "fe144e9977",
+  "formats": [
+    "PNG",
+    "JPEG",
+    "GIF",
+    "WEBP",
+    "BMP",
+    "TIFF",
+    "ICO",
+    "AVIF",
+    "HEIF"
+  ],
+  "common_format_roundtrips": [
+    {
+      "format": "PNG",
+      "original_bytes": 136,
+      "sha256": "d069d650970c5eb14f41f8bc99c4adef27c153d40c6744be85dacf22c3fd45e3"
+    },
+    {
+      "format": "JPEG",
+      "original_bytes": 665,
+      "sha256": "6c862694a1b1cafa18b75967cd8ad050db222d8cdac57eaf430d4760733d56f4"
+    },
+    {
+      "format": "GIF",
+      "original_bytes": 106,
+      "sha256": "511202399a436bf351bdd8bc9d7b642163822f2714719dda3fa87cc6e8fc2f26"
+    },
+    {
+      "format": "WEBP",
+      "original_bytes": 82,
+      "sha256": "84c6da7feb44336361fd208dccf8d6f8e3dfb02ce22ad47ff583c02c7c30c31d"
+    },
+    {
+      "format": "BMP",
+      "original_bytes": 4854,
+      "sha256": "450cf85d1c7938d25f7244e8768d27586af5f3ea670931e53907ccb54fdf5e39"
+    },
+    {
+      "format": "TIFF",
+      "original_bytes": 4940,
+      "sha256": "f110c0bb26d0441e5da3017ebed814d86fe8084f9815c0aae2bfdfa38b458926"
+    },
+    {
+      "format": "ICO",
+      "original_bytes": 363,
+      "sha256": "25316bad65728b5015141e34d3acbd305fb966ef0afa87cd1c31bcdb0a05c9ad"
+    }
+  ],
+  "optional_format_roundtrips": [
+    {
+      "format": "HEIF",
+      "original_bytes": 446,
+      "sha256": "daf3c2bf4b3b79afd3b561d4fdeee87f56b7254b4f677ae17f338fa5dce2e672"
+    },
+    {
+      "format": "AVIF",
+      "original_bytes": 321,
+      "sha256": "4c6d2f8e6a5534041298472293684d2e385b7b627c1bf7da87411dd548fe28d8"
+    }
+  ],
+  "large_image_roundtrip": {
+    "format": "BMP",
+    "original_bytes": 21870054,
+    "sha256": "ed9d5aacd10fbd4dcbaebe6536b33d2c154d0fe69bf7d72a27b3bc5663f23872"
+  },
+  "graceful_exit_code": 0,
+  "runtime_directory_removed_before_fixture_cleanup": true,
+  "runtime_base_remaining_entries": [],
+  "listener_closed": true,
+  "portable_directory_files": [
+    "lanshare.exe"
+  ],
+  "settings_ini_isolated": true,
+  "success": true,
+  "tests": 8,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 9.94,
+  "timestamp": "2026-10-28T09:40:23+0800"
+}

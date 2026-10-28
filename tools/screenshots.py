@@ -19,6 +19,9 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
 
@@ -40,7 +43,7 @@ DEMO_FILES = [
 
 
 def build_demo_dir():
-    demo = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-shot-"))
+    demo = Path(TEST_ENV.temporary_dir(prefix="lan6-shot-"))
     for name, size in DEMO_FILES:
         target = demo / name
         if size is None:
@@ -84,14 +87,15 @@ def main():
                       ("小林", "文件我先传到共享里了：季度报告.pdf")):
         post("/chat/send", {"room": room_id, "text": text, "sender": who})
 
+    chrome_profile = str(TEST_ENV.root / "chrome-shot-profile")
     chrome = subprocess.Popen([
         CHROME, "--headless=new", "--disable-gpu", "--no-sandbox", "--hide-scrollbars",
-        "--force-device-scale-factor=1", "--remote-debugging-port=%d" % CDP_PORT,
-        "--user-data-dir=%s" % r"C:\Windows\TEMP\lan6\shot-profile",
+        "--force-device-scale-factor=1", "--remote-debugging-port=0",
+        "--user-data-dir=%s" % chrome_profile,
         "http://127.0.0.1:%d/" % PORT,
     ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
-        wait_port(CDP_PORT, 25)
+        CDP_PORT = TEST_ENV.wait_browser(chrome, chrome_profile)
         cdp = CDP(page_ws(CDP_PORT))
         cdp.call("Page.enable")
         cdp.call("Emulation.setDeviceMetricsOverride", {
@@ -139,8 +143,8 @@ def main():
         shot(cdp, "mobile-files.png")
         cdp.call("Emulation.clearDeviceMetricsOverride")
     finally:
-        chrome.terminate()
-        sharer.stop()
+        TEST_ENV.stop_process(chrome)
+        sharer.stop(wait=True, timeout=10)
 
     # 桌面端：把网卡地址换成一串假的，避免截图里出现本机内网 IP
     from server import netinfo
@@ -155,7 +159,7 @@ def main():
     from ui.main_window import FileShareGUI
 
     app = QApplication([])
-    gui = FileShareGUI(auto_start=False)
+    gui = TEST_ENV.gui(auto_start=False)
     # 这台机器上的 QSettings 里可能还存着别的配色，截图固定用默认的青翠 + 大字号
     gui.settings.remove("theme/palette")
     gui.settings.remove("theme/size")
@@ -197,9 +201,11 @@ def main():
     print("  desktop-dark.png        %.0f KB" % ((OUT / "desktop-dark.png").stat().st_size / 1024))
     gui.set_theme(mode="light")
     gui.stop_share()
+    gui.sharer.wait_stopped(10)
+    app.processEvents()
     app.quit()
 
-    shutil.rmtree(demo, ignore_errors=True)
+    TEST_ENV.remove_test_dir(demo)
     print("完成，输出在", OUT)
     return 0
 

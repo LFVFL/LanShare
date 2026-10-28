@@ -1,0 +1,285 @@
+{
+  "suite": "v7_build_test",
+  "expectedMethods": 27,
+  "runtime": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+  "executable": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "virtualenv": true,
+  "timestamp": "2026-10-28T06:43:21.329728+00:00",
+  "isolationRoots": [
+    "C:\\Windows\\Temp\\lanshare-test-jo4_hx9j"
+  ],
+  "cases": [
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_archive_cannot_silently_omit_main_qt_dlls",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_build_environment_drops_external_python_qt_and_dll_paths",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_clean_source_regenerates_assets_before_snapshot",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_default_work_does_not_put_venv_in_windows_temp",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_delayed_qt_runtime_is_collected_from_the_selected_venv",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_environment_probe_ignores_parent_python_and_qt_vars",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_graceful_stop_uses_only_owned_profile_and_handle",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_not_a_venv_never_installs_packages",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_owned_container_creates_new_children_and_preserves_old_exe",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_packaging_command_keeps_portable_runtime_and_onefile_flags",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_preflight_reports_missing_pillow_as_required_not_optional",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_private_job_ends_only_its_owned_parent_and_child",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_runtime_directory_placeholder_is_not_expanded_while_building",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_smoke_overrides_only_child_localappdata_with_owned_profile",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_unmarked_existing_directory_refused_without_changes",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_venv_runtime_prefix_must_match_requested_directory",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_windows_directory_venv_is_rejected_before_install",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_wrong_ownership_marker_and_nonascii_refused",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_busy_port_smoke_aborts_without_touching_existing_service",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_cleanup_rejects_external_directory_and_preserves_sentinel",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_failed_child_readiness_never_contacts_any_http_server",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_gui_optional_none_cannot_fall_back_to_real_settings",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_owned_browser_profile_supplies_its_own_endpoint",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_ready_child_with_wrong_share_is_rejected",
+      "status": "passed"
+    }
+  ],
+  "success": true,
+  "chatDataDirectory": "C:\\Windows\\Temp\\lanshare-test-jo4_hx9j\\chat_data",
+  "settingsProfile": "C:\\Windows\\Temp\\lanshare-test-jo4_hx9j",
+  "qtPlatform": "offscreen",
+  "discoveredMethods": 27,
+  "tests": 27,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "expectedFailures": 0,
+  "unexpectedSuccesses": 0,
+  "subtests": [
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option (options=['pyi-runtime-tmpdir %LOCALAPPDATA%/LanShare/Temp'])",
+      "parent": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option (options=[])",
+      "parent": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option (options=['pyi-runtime-tmpdir C:/Users/builder/Temp'])",
+      "parent": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused (target='C:\\\\Windows\\\\Temp\\\\lanshare-test-jo4_hx9j\\\\build-test-jh8z_v82\\\\source')",
+      "parent": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused (target='C:\\\\Windows\\\\Temp\\\\lanshare-test-jo4_hx9j\\\\build-test-jh8z_v82')",
+      "parent": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused (target='C:\\\\Windows\\\\Temp\\\\lanshare-test-jo4_hx9j\\\\build-test-jh8z_v82\\\\source\\\\build')",
+      "parent": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused (target='C:\\\\')",
+      "parent": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_venv_runtime_prefix_must_match_requested_directory (prefix='C:\\\\Windows\\\\Temp\\\\lanshare-test-jo4_hx9j\\\\build-test-b0z77i22\\\\venv')",
+      "parent": "v7_build_test.BuildSafetyTests.test_venv_runtime_prefix_must_match_requested_directory",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.BuildSafetyTests.test_venv_runtime_prefix_must_match_requested_directory (prefix='C:\\\\Windows\\\\Temp\\\\lanshare-test-jo4_hx9j\\\\build-test-b0z77i22\\\\elsewhere')",
+      "parent": "v7_build_test.BuildSafetyTests.test_venv_runtime_prefix_must_match_requested_directory",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='smoke_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='auth_matrix_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='protocol_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='search_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='fsops_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='zip_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='sse_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='thumb_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='origin_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='paging_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='share_switch_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='limits_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='preflight')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='desktop_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='ui_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='admin_flow_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='mobile_shot')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='screenshots')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='theme_flash_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    },
+    {
+      "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='ui_detail_test')",
+      "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+      "status": "passed"
+    }
+  ],
+  "passed": 27,
+  "assetVersion": "01c9b74c9a",
+  "cleanupVerified": true,
+  "durationSeconds": 2.078,
+  "sourceSha256": "7808b4a12a851eb5e4f513f3b61192f7a4ca99b6de6f4325777ec1558b42e47b",
+  "webassetsSha256": "b6cffa94b81b2fb070c5239c720b507595e6385dc6ca05a0ac27acd03f5fc15f"
+}

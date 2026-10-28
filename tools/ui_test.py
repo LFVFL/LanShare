@@ -11,7 +11,7 @@
   3. 聊天页用 SSE，不再轮询 /chat/history
   4. 文件页搜索框回车 → 出结果条
 
-用法：python tools/ui_test.py            # 默认服务 6320、CDP 9223
+用法：python tools/ui_test.py            # 默认服务 6320、CDP 自动分配
 测试会自己建一个房间，跑完删掉，不动 default 房间。
 """
 import argparse
@@ -34,6 +34,9 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 CHROME = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
 FAILS = []
 
@@ -43,6 +46,9 @@ sys.path.insert(0, r'{root}')
 import lanshare as j
 s = j.FileSharer()
 ok, res = s.start(path=r'{share}', port={port}, password=None, admin_password=None)
+if not ok:
+    print("FAILED", res, flush=True)
+    raise SystemExit(2)
 print('READY' if ok else 'FAILED', flush=True)
 while True:
     time.sleep(1)
@@ -218,11 +224,11 @@ def page_ws(port):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", type=int, default=6320)
-    ap.add_argument("--cdp", type=int, default=9223)
+    ap.add_argument("--cdp", type=int, default=0, help="兼容旧参数；测试始终为自己的 Chrome 自动分配 CDP 端口")
     args = ap.parse_args()
     port, cdp_port = args.port, args.cdp
 
-    tmp = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-ui-"))
+    tmp = Path(TEST_ENV.temporary_dir(prefix="lan6-ui-"))
     share = tmp / "share"
     (share / "docs").mkdir(parents=True)
     (share / "keep.txt").write_text("keep", encoding="utf-8")
@@ -235,7 +241,7 @@ def main():
     cdp = None
     room_id = None
     try:
-        if not wait_port(port):
+        if not TEST_ENV.wait_server(server, port, share):
             print("服务没起来：")
             server.kill()
             print(server.stdout.read().decode("utf-8", "replace"))
@@ -251,11 +257,12 @@ def main():
         chrome = subprocess.Popen([
             CHROME, "--headless", "--disable-gpu", "--no-sandbox", "--no-first-run",
             "--disable-extensions", "--mute-audio",
-            "--remote-debugging-port=%d" % cdp_port,
+            "--remote-debugging-port=0",
             "--user-data-dir=%s" % userdir,
             "http://127.0.0.1:%d/chat/room?id=%s" % (port, room_id),
         ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+        cdp_port = TEST_ENV.wait_browser(chrome, userdir)
         ws_url = page_ws(cdp_port)
         if not ws_url:
             print("连不上 Chrome 调试端口")
@@ -420,13 +427,13 @@ def main():
                 print("删除测试房间失败:", e)
             cdp.ws.close()
         if chrome:
-            chrome.terminate()
+            TEST_ENV.stop_process(chrome)
         server.terminate()
         try:
             server.wait(5)
         except subprocess.TimeoutExpired:
             server.kill()
-        shutil.rmtree(tmp, ignore_errors=True)
+        TEST_ENV.remove_test_dir(tmp)
 
     print("\n结果:", "全部通过 ✓" if not FAILS else "失败 %d 项" % len(FAILS))
     for f in FAILS:

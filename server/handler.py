@@ -47,6 +47,7 @@ GET_ROUTES = (
     ('/chat/rooms',      'api_chat_rooms',     AUTH_PUBLIC,   None),
     ('/chat/history',    'api_chat_history',   AUTH_PUBLIC,   None),
     ('/chat/stream',     'api_chat_stream',    AUTH_PUBLIC,   None),
+    ('/chat/media/config', 'api_chat_media_config', AUTH_PUBLIC, None),
     ('/upload/unique',   'api_upload_unique',  AUTH_ADMIN_JSON, None),
     ('/api/list',        'api_list',           AUTH_403,      None),
     ('/api/search',      'api_search',         AUTH_403,      None),
@@ -54,7 +55,7 @@ GET_ROUTES = (
     ('/is_admin',        'api_is_admin',       AUTH_REDIRECT, None),
     ('/download',        'api_download',       AUTH_REDIRECT, None),
     ('/check_exists',    'api_check_exists',   AUTH_REDIRECT, None),
-    ('/open',            'api_open',           AUTH_REDIRECT, None),
+    ('/open',            'api_open_retired',   AUTH_PUBLIC,   None),
     ('/delete',          'api_delete_via_get', AUTH_REDIRECT, None),
     ('/dir',             'page_dir',           AUTH_REDIRECT, None),
     ('/',                'page_root',          AUTH_REDIRECT, None),
@@ -64,6 +65,11 @@ GET_ROUTES = (
 POST_ROUTES = (
     ('/login',            'post_login',        AUTH_PUBLIC,     None),
     ('/chat/create',      'api_chat_create',   AUTH_PUBLIC,     None),
+    ('/chat/rename_room', 'api_chat_rename_room', AUTH_PUBLIC,   None),
+    ('/chat/media/start', 'api_chat_media_start', AUTH_PUBLIC,   None),
+    ('/chat/media/chunk', 'api_chat_media_chunk', AUTH_PUBLIC,   None),
+    ('/chat/media/complete', 'api_chat_media_complete', AUTH_PUBLIC, None),
+    ('/chat/media/cancel', 'api_chat_media_cancel', AUTH_PUBLIC, None),
     ('/chat/delete_room', 'api_chat_delete_room', AUTH_PUBLIC,  None),
     ('/chat/send',        'api_chat_send',     AUTH_PUBLIC,     None),
     ('/chat/delete',      'api_chat_delete_msg', AUTH_PUBLIC,   None),
@@ -111,7 +117,6 @@ class FileShareHandler(HttpUtilMixin, AuthMixin, ChatApiMixin, RoutesMixin,
         self.access_logger = kwargs.pop('access_logger', None)
         self.password = kwargs.pop('password', None)
         self.admin_password = kwargs.pop('admin_password', None)
-        self._sec_headers_sent = False
         self._query = {}
         super().__init__(*args, **kwargs)
 

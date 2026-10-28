@@ -43,13 +43,21 @@ class RoutesMixin:
             urllib.parse.unquote(dir_path),
             limit=self.q('limit', '0'),
             offset=self.q('offset', '0'),
+            sort=self.q('sort', 'name'),
+            order=self.q('order', 'asc'),
+            query=self.q('q'),
         )
         self.send_json_response({
             'path': listing['path'],
+            'root': listing['root'],
+            'breadcrumb': listing['breadcrumb'],
             'entries': listing['entries'],
             'total': listing.get('total', len(listing['entries'])),
             'offset': listing.get('offset', 0),
             'hasMore': bool(listing.get('hasMore')),
+            'sort': listing['sort'],
+            'order': listing['order'],
+            'query': listing['query'],
         })
 
     def api_upload_unique(self):

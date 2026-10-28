@@ -32,3 +32,13 @@ desktop.ini
 lanshare.exe
 msg.txt
 relnotes.md
+
+# Local investigation evidence; publish only reviewed summary reports.
+docs/changes/**/test-results/diagnosis/
+docs/changes/**/test-results/initial-candidate/
+docs/changes/**/test-results/chat-layout-before*
+docs/changes/**/test-results/root-regression-runner.py
+docs/changes/**/test-results/integrity-move-probe.json
+docs/changes/**/test-results/v7-preview-initial-oopif.json
+docs/changes/2026-10-27/test-results/backend-build-tools.json
+docs/changes/2026-10-27/test-results/legacy-results.json

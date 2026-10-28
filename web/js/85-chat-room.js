@@ -21,7 +21,8 @@
 
     var chat = {
       room: '', me: '', msgs: [], lastId: '', pending: 0, timer: null, es: null,
-      image: '', thumb: '', filter: ''
+      image: '', thumb: '', filter: '', revision: '', name: '', media: null,
+      sending: false, deleted: false, client: '', draftId: ''
     };
 
     function chatEl(sel) { return document.querySelector(sel); }
@@ -140,35 +141,78 @@
         (chat.pending ? '<span><b>' + chat.pending + '</b> 条新消息</span>' : '<span>回到底部</span>');
     }
 
+    function setRoomName(name) {
+      chat.name = name || chat.name;
+      document.querySelectorAll('[data-chat-name],.mobile-bar-title').forEach(function (el) {
+        el.textContent = chat.name;
+      });
+      if (chat.name) document.title = chat.name + ' · 局域网共享';
+    }
+
+    function revisionIsOld(revision) {
+      if (!revision || !chat.revision) return false;
+      var a = revision.split(':'), b = chat.revision.split(':');
+      return a[0] === b[0] && Number(a[1]) <= Number(b[1]);
+    }
+
+    function applySnapshot(data) {
+      if (!data || !data.success) return;
+      chat.msgs = data.messages || [];
+      chat.lastId = chat.msgs.length ? chat.msgs[chat.msgs.length - 1].id : '';
+      chat.revision = data.revision || '';
+      chat.deleted = !!data.deleted;
+      if (data.room && data.room.name) setRoomName(data.room.name);
+      if (chat.deleted) {
+        chatStreamStop();
+        toast('聊天室已删除，请返回列表', 'err');
+      }
+      chatRender();
+      chatAutoGrow();
+    }
+
+    function applyChatEvent(type, data, revision) {
+      if (revisionIsOld(revision)) return;
+      var atBottom = chatNearBottom();
+      if (type === 'reset') {
+        applySnapshot(data);
+      } else if (type === 'message') {
+        if (data && data.id) chatAppend(data);
+      } else if (type === 'delete') {
+        chat.msgs = chat.msgs.filter(function (m) { return m.id !== data.id; });
+        chatRender();
+      } else if (type === 'clear') {
+        chat.msgs = []; chat.lastId = ''; chat.pending = 0; chatRender();
+      } else if (type === 'room_updated') {
+        setRoomName(data.name);
+      } else if (type === 'room_deleted') {
+        applySnapshot({ success: true, deleted: true, messages: [], revision: revision });
+      }
+      if (revision) chat.revision = revision;
+      if (atBottom) chatScrollBottom(); else chatUpdateJump();
+    }
+
+    function readSync(data) {
+      if (!data || !data.success) return;
+      if (data.reset) {
+        if (!revisionIsOld(data.revision) || !chat.revision) applySnapshot(data);
+      } else {
+        (data.events || []).forEach(function (event) {
+          applyChatEvent(event.type, event.data, event.revision);
+        });
+      }
+    }
+
     function chatLoad() {
-      return apiFetch('/chat/history?room=' + encodeURIComponent(chat.room))
-        .then(jsonOf)
-        .then(function (list) {
-          if (!Array.isArray(list)) return;
-          chat.msgs = list;
-          chat.lastId = list.length ? list[list.length - 1].id : '';
-          chatRender();
-          chatScrollBottom();
-        })
-        .catch(function () { });
+      return apiFetch('/chat/history?sync=1&room=' + encodeURIComponent(chat.room))
+        .then(jsonOf).then(function (data) { readSync(data); chatScrollBottom(); })
+        .catch(function () { toast('加载聊天记录失败，请检查连接', 'err'); });
     }
 
     function chatPoll() {
-      if (document.hidden) return;
-      if (!chat.lastId) { chatLoad(); return; }
-      apiFetch('/chat/history?room=' + encodeURIComponent(chat.room) +
-        '&after=' + encodeURIComponent(chat.lastId))
-        .then(jsonOf)
-        .then(function (list) {
-          if (!Array.isArray(list) || !list.length) return;
-          // 同样走 chatAppend：万一 SSE 和轮询短暂并存，也不会插出重复消息
-          var atBottom = chatNearBottom();
-          list.forEach(function (m) { chatAppend(m); });
-          chat.lastId = list[list.length - 1].id;
-          chatRender();
-          if (atBottom) chatScrollBottom(); else chatUpdateJump();
-        })
-        .catch(function () { });
+      if (document.hidden || chat.deleted) return Promise.resolve();
+      if (!chat.revision) return chatLoad();
+      return apiFetch('/chat/history?sync=1&room=' + encodeURIComponent(chat.room) +
+        '&since=' + encodeURIComponent(chat.revision)).then(jsonOf).then(readSync).catch(function () { });
     }
 
     /* ── 实时推送：优先 SSE，连不上就退回轮询 ───────────────────────────── */
@@ -203,7 +247,7 @@
 
     function chatStreamStart() {
       chatStreamStop();
-      if (document.hidden) return;
+      if (document.hidden || chat.deleted) return;
 
       // 老浏览器没有 EventSource，直接走轮询
       if (typeof window.EventSource !== 'function') {
@@ -211,8 +255,8 @@
         return;
       }
 
-      var url = '/chat/stream?room=' + encodeURIComponent(chat.room) +
-        (chat.lastId ? '&after=' + encodeURIComponent(chat.lastId) : '');
+      var url = '/chat/stream?sync=1&room=' + encodeURIComponent(chat.room) +
+        (chat.revision ? '&since=' + encodeURIComponent(chat.revision) : '');
       var es;
       try {
         es = new EventSource(url);
@@ -235,8 +279,14 @@
       es.onmessage = function (ev) {
         var m;
         try { m = JSON.parse(ev.data); } catch (e) { return; }
-        if (m && m.id) chatAppend(m);
+        if (m && m.id) applyChatEvent('message', m, ev.lastEventId);
       };
+
+      ['reset', 'delete', 'clear', 'room_updated', 'room_deleted'].forEach(function (type) {
+        es.addEventListener(type, function (event) {
+          try { applyChatEvent(type, JSON.parse(event.data), event.lastEventId); } catch (e) { }
+        });
+      });
 
       // 服务端 25 秒主动断一次属于正常情况，浏览器会自己重连（同一条 URL，带旧 after，
       // 靠 chatAppend 的 id 去重兜底）。连续失败 3 次才认为流不可用，退回轮询。
@@ -251,81 +301,145 @@
     }
 
     function chatClearImage() {
+      var media = chat.media;
+      chat.media = null;
       chat.image = '';
       chat.thumb = '';
+      if (media) {
+        media.cancelled = true;
+        if (media.xhr) media.xhr.abort();
+        if (media.url) URL.revokeObjectURL(media.url);
+        if (media.upload) mediaJson('/chat/media/cancel', { upload: media.upload }).catch(function () { });
+      }
       var slot = chatEl('[data-image-preview]');
       if (slot) { slot.hidden = true; slot.innerHTML = ''; }
+      chatAutoGrow();
     }
 
-    function chatShowImage(dataUrl) {
+    function chatShowImage() {
       var slot = chatEl('[data-image-preview]');
-      if (!slot) return;
+      var media = chat.media;
+      if (!slot || !media) return;
       slot.hidden = false;
-      slot.innerHTML = '<img src="' + dataUrl + '" alt="待发送图片" ' +
-        'style="height:56px;border-radius:8px;vertical-align:middle">' +
-        '<button class="btn btn--sm btn--ghost" type="button" data-img-remove style="margin-left:8px">移除</button>';
+      var label = media.status === 'ready' ? '上传完成，待发送（原图保留）' :
+        media.status === 'failed' ? media.error : media.progress >= 100 ? '正在安全解码/生成预览…' : '上传 ' + media.progress + '%';
+      slot.innerHTML = '<img class="chat-media-preview" src="' + esc(media.thumb || media.url) + '" alt="待发送图片">' +
+        '<div class="chat-media-info"><span class="chat-media-name">' + esc(media.file.name) + '</span>' +
+        '<span class="chat-media-status" role="status">' + esc(label) + '</span>' +
+        '<progress max="100" value="' + media.progress + '" aria-label="图片上传进度"></progress></div>' +
+        (media.status === 'failed' ? '<button class="btn btn--sm btn--ghost" type="button" data-img-retry>重试</button>' : '') +
+        '<button class="btn btn--sm btn--ghost" type="button" data-img-remove>' +
+        (media.status === 'uploading' ? '取消上传' : '移除') + '</button>';
     }
 
-    /* 缩略图：最长边 320px 的 JPEG。聊天里只加载它，点开才取原图。
-       图片解不开（比如某些 HEIC）就退回空串，服务端只存原图。 */
-    var THUMB_MAX = 320;
-    var THUMB_QUALITY = 0.72;
+    function randomId() {
+      var bytes = new Uint8Array(16);
+      window.crypto.getRandomValues(bytes);
+      return Array.from(bytes).map(function (value) { return ('0' + value.toString(16)).slice(-2); }).join('');
+    }
 
-    function makeThumb(dataUrl, cb) {
-      var img = new Image();
-      img.onload = function () {
-        try {
-          var scale = Math.min(1, THUMB_MAX / Math.max(img.width, img.height));
-          var w = Math.max(1, Math.round(img.width * scale));
-          var h = Math.max(1, Math.round(img.height * scale));
-          var canvas = document.createElement('canvas');
-          canvas.width = w;
-          canvas.height = h;
-          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          cb(canvas.toDataURL('image/jpeg', THUMB_QUALITY));
-        } catch (e) {
-          cb('');
-        }
-      };
-      img.onerror = function () { cb(''); };
-      img.src = dataUrl;
+    function mediaJson(url, body) {
+      return apiFetch(url, {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Chat-Client': chat.client },
+        body: JSON.stringify(body)
+      }).then(function (response) {
+        return jsonOf(response).then(function (data) {
+          if (!response.ok || !data || !data.success) throw new Error((data && data.message) || '图片上传失败');
+          return data;
+        });
+      });
+    }
+
+    function uploadChunk(media, blob, offset) {
+      return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        media.xhr = xhr;
+        xhr.open('POST', '/chat/media/chunk?upload=' + encodeURIComponent(media.upload) + '&offset=' + offset);
+        xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+        xhr.setRequestHeader('X-Chat-Client', chat.client);
+        xhr.timeout = 120000;
+        xhr.upload.onprogress = function (event) {
+          if (chat.media !== media) return;
+          media.progress = Math.min(100, Math.floor(100 * (offset + event.loaded) / media.file.size));
+          chatShowImage();
+        };
+        xhr.onload = function () {
+          var data;
+          try { data = JSON.parse(xhr.responseText); } catch (e) { }
+          media.xhr = null;
+          if (xhr.status >= 200 && xhr.status < 300 && data && data.success) resolve(data);
+          else reject(new Error((data && data.message) || '图片上传失败，请重试'));
+        };
+        xhr.onerror = xhr.ontimeout = function () { media.xhr = null; reject(new Error('图片上传网络中断，可重试')); };
+        xhr.onabort = function () { media.xhr = null; reject(new Error('已取消图片上传')); };
+        xhr.send(blob);
+      });
+    }
+
+    function uploadImage(media) {
+      media.status = 'uploading'; media.error = ''; media.progress = 0;
+      chatShowImage(); chatAutoGrow();
+      mediaJson('/chat/media/start', { room: chat.room, name: media.file.name, size: media.file.size })
+        .then(function (data) {
+          media.upload = data.upload;
+          function next(offset) {
+            if (media.cancelled || chat.media !== media) throw new Error('已取消图片上传');
+            if (offset >= media.file.size) return mediaJson('/chat/media/complete', { upload: media.upload });
+            return uploadChunk(media, media.file.slice(offset, offset + data.chunk_bytes), offset)
+              .then(function (chunk) { return next(chunk.offset); });
+          }
+          return next(0);
+        }).then(function (data) {
+          if (media.cancelled || chat.media !== media) {
+            mediaJson('/chat/media/cancel', { upload: media.upload }).catch(function () { });
+            return;
+          }
+          media.id = data.media; media.thumb = data.thumb; media.status = 'ready'; media.progress = 100;
+          chatShowImage(); chatAutoGrow();
+        }).catch(function (error) {
+          if (media.upload) mediaJson('/chat/media/cancel', { upload: media.upload }).catch(function () { });
+          media.upload = '';
+          if (media.cancelled || chat.media !== media) return;
+          media.status = 'failed'; media.error = error.message || '图片上传失败，可重试';
+          chatShowImage(); chatAutoGrow();
+          toast(media.error, 'err');
+        });
     }
 
     function chatSend() {
       var input = chatEl('[data-chat-input]');
       if (!input) return;
-      var text = input.value.trim();
-      if (!text && !chat.image) return;
-
-      var payload = { room: chat.room, text: text };
-      if (chat.image) {
-        payload.image = chat.image;
-        if (chat.thumb) payload.thumb = chat.thumb;
+      var text = input.value;
+      var media = chat.media;
+      if (chat.sending || chat.deleted || (!text.trim() && !media)) return;
+      if (media && media.status !== 'ready') { toast('请等待图片上传完成，或移除/重试图片', 'info'); return; }
+      if (!chat.pendingDraft || chat.pendingDraft.text !== text || chat.pendingDraft.media !== media) {
+        chat.pendingDraft = { text: text, media: media, id: randomId() };
       }
-      var backup = chat.image;
-      var backupThumb = chat.thumb;
-
-      input.value = '';
+      var payload = { room: chat.room, text: text, client_id: chat.pendingDraft.id };
+      if (media) payload.media = media.id;
+      chat.sending = true;
       chatAutoGrow();
-      chatClearImage();
 
       apiFetch('/chat/send', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-Chat-Client': chat.client },
         body: JSON.stringify(payload)
       }).then(jsonOf).then(function (d) {
         if (d && d.success && d.msg) {
           // 走 chatAppend 而不是直接 push：这条消息可能已经被 SSE 先推回来了
           chatAppend(d.msg, true);
-        } else {
-          if (backup) {
-            chat.image = backup;
-            chat.thumb = backupThumb || '';
-            chatShowImage(backup);
+          if (input.value === text) input.value = '';
+          if (chat.media === media) {
+            if (media) media.upload = '';
+            chatClearImage();
           }
-          toast((d && d.message) || '发送失败', 'err');
+          chat.pendingDraft = null;
+        } else {
+          toast((d && d.message) || '发送失败，草稿已保留，可重试', 'err');
         }
-      }).catch(function () { toast('网络中断', 'err'); });
+      }).catch(function () { toast('网络中断，草稿和图片已保留，可重试', 'err'); })
+        .then(function () { chat.sending = false; chatAutoGrow(); });
     }
 
     function chatDeleteMsg(id) {
@@ -359,14 +473,23 @@
       if (!input) return;
       input.style.height = 'auto';
       input.style.height = Math.min(132, input.scrollHeight) + 'px';
-      if (btn) btn.disabled = !input.value.trim() && !chat.image;
+      if (btn) {
+        btn.disabled = chat.sending || chat.deleted || (chat.media && chat.media.status !== 'ready') ||
+          (!input.value.trim() && !chat.media);
+        btn.textContent = chat.sending ? '发送中…' : '发送';
+      }
     }
 
     function initChatRoom() {
       var data = readJson('[data-room-json]');
       chat.room = (data && data.id) || '';
       chat.me = (data && data.me) || '';
+      chat.name = (data && data.name) || '';
       if (!chat.room) return;
+      try {
+        chat.client = sessionStorage.getItem('lan-chat-client') || randomId();
+        sessionStorage.setItem('lan-chat-client', chat.client);
+      } catch (e) { chat.client = randomId(); }
 
       var body = chatEl('[data-chat-body]');
       var input = chatEl('[data-chat-input]');
@@ -414,7 +537,7 @@
           if (img) {
             var row0 = img.closest('[data-id]');
             var m0 = row0 ? msgById(row0.getAttribute('data-id')) : null;
-            if (m0) openLightbox(m0.image, '图片', m0.image);
+            if (m0) openLightbox(m0.preview || m0.image, m0.name || '图片', m0.image + '?download=1');
             return;
           }
           if (!act) return;
@@ -425,7 +548,7 @@
           if (kind === 'copy') {
             copyText(m.text || '');
           } else if (kind === 'save') {
-            downloadUrl(m.image, '图片_' + (m.time || '').replace(':', '') + '.png');
+            downloadUrl(m.image + '?download=1', m.name || ('图片_' + (m.time || '').replace(':', '') + '.png'));
           } else if (kind === 'del') {
             chatDeleteMsg(m.id);
           }
@@ -488,7 +611,7 @@
           if (m.type === 'image' && m.image) {
             items.push({
               key: 'save', label: '保存图片', icon: 'download',
-              onSelect: function () { downloadUrl(m.image, '图片.png'); }
+              onSelect: function () { downloadUrl(m.image + '?download=1', m.name || '图片.png'); }
             });
           }
           if (items.length) items.push({ sep: true });
@@ -518,36 +641,40 @@
         });
         input.addEventListener('paste', function (e) {
           var items = e.clipboardData && e.clipboardData.items;
-          if (!items) return;
+          if (!e.clipboardData) return;
+          items = items || [];
           for (var i = 0; i < items.length; i++) {
             if (items[i].type.indexOf('image') !== -1) {
               var f = items[i].getAsFile();
               if (f) { readImage(f); e.preventDefault(); }
-              break;
+              return;
             }
+          }
+          var text = e.clipboardData.getData('text/plain');
+          if (text) {
+            e.preventDefault();
+            input.setRangeText(text.replace(/\r\n?/g, '\n'), input.selectionStart, input.selectionEnd, 'end');
+            chatAutoGrow();
           }
         });
       }
 
       if (sendBtn) sendBtn.addEventListener('click', chatSend);
       if (slot) slot.addEventListener('click', function (e) {
+        if (chat.sending) return;
         if (e.target.closest('[data-img-remove]')) chatClearImage();
+        if (e.target.closest('[data-img-retry]') && chat.media) uploadImage(chat.media);
       });
 
       function readImage(file) {
-        if (file.size > 5 * 1024 * 1024) { toast('图片不能超过 5MB', 'err'); return; }
-        var reader = new FileReader();
-        reader.onload = function (ev) {
-          chat.image = ev.target.result;
-          chat.thumb = '';
-          chatShowImage(chat.image);
-          chatAutoGrow();
-          // 顺手做一张缩略图：聊天列表只加载它，点开才取原图
-          makeThumb(chat.image, function (thumb) {
-            if (chat.image === ev.target.result) chat.thumb = thumb || '';
-          });
-        };
-        reader.readAsDataURL(file);
+        if (chat.sending) { toast('消息正在发送，请稍后选择图片', 'info'); return; }
+        if (/\.svgz?$/i.test(file.name) || file.type === 'image/svg+xml') {
+          toast('SVG 不能作为聊天图片发送，请先转为 PNG/JPEG', 'err'); return;
+        }
+        chatClearImage();
+        var media = { file: file, url: URL.createObjectURL(file), status: 'uploading', progress: 0, cancelled: false };
+        chat.media = media; chat.image = media.url;
+        uploadImage(media);
       }
 
       var imgBtn = document.querySelector('[data-chat-image]');
@@ -555,6 +682,38 @@
       if (imgInput) imgInput.addEventListener('change', function (e) {
         if (e.target.files[0]) readImage(e.target.files[0]);
         e.target.value = '';
+      });
+
+      apiFetch('/chat/media/config').then(jsonOf).then(function (config) {
+        if (!config || !config.success) return;
+        if (imgBtn) {
+          imgBtn.disabled = !config.available;
+          imgBtn.title = config.available ? '' : '服务器暂不支持图片上传';
+        }
+      }).catch(function () { });
+
+      var mobileActions = document.querySelector('.mobile-bar-actions');
+      var mobileRename = chatEl('.chat-mobile-rename');
+      if (mobileActions && mobileRename) mobileActions.appendChild(mobileRename);
+
+      document.querySelectorAll('[data-chat-rename]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          openModal({
+            title: '修改群名', icon: 'edit', confirmText: '保存',
+            desc: '默认群聊也可以改名；需要管理员权限。',
+            field: { label: '群名', value: chat.name },
+            validate: function (v) { return !v ? '请输入群名' : v.length > 50 ? '群名最长 50 个字' : ''; },
+            onConfirm: function (name) {
+              writeFetch('/chat/rename_room', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: chat.room, name: name })
+              }).then(jsonOf).then(function (result) {
+                if (result && result.success) { setRoomName(result.name); toast('群名已更新', 'ok'); }
+                else toast(Lan.api.explain(result, '修改群名失败'), 'err');
+              }).catch(function () { toast('网络中断，群名未修改', 'err'); });
+            }
+          });
+        });
       });
 
       var clearBtn = document.querySelector('[data-chat-clear]');
@@ -586,8 +745,7 @@
         if (document.hidden) {
           chatStreamStop();
         } else {
-          chatPoll();
-          chatStreamStart();
+          chatPoll().then(chatStreamStart);
         }
       });
       window.addEventListener('pagehide', chatStreamStop);
@@ -598,6 +756,7 @@
     Object.assign(Lan.chat, {
       state: chat, init: initChatRoom, render: chatRender, append: chatAppend,
       send: chatSend, load: chatLoad, poll: chatPoll, deleteMsg: chatDeleteMsg,
-      streamStart: chatStreamStart, streamStop: chatStreamStop
+      streamStart: chatStreamStart, streamStop: chatStreamStop,
+      applyEvent: applyChatEvent, applySnapshot: applySnapshot, clearImage: chatClearImage
     });
   })(window.Lan = window.Lan || {});

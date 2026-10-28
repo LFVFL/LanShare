@@ -83,6 +83,9 @@ def pack(text: str) -> str:
 
 def main():
     css = read(WEB / "tokens.css") + "\n" + read(WEB / "app.css")
+    extra_css = WEB / "files-search.css"
+    if extra_css.is_file():
+        css += "\n" + read(extra_css)
     js = js_bundle("core")
     theme_boot = read(WEB / "theme-boot.js")
     bundles = {name: js_bundle(name) for name in JS_BUNDLES}

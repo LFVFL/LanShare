@@ -1,0 +1,1916 @@
+{
+  "timestamp": "2026-10-28T09:40:49.408470+08:00",
+  "buildId": "build-9k4ezesh",
+  "inspection": "Read both completed onefile CArchives and decompressed every member in memory. Validated MZ/PE headers without loading or extracting application DLLs. Compared SHA256 using full archive-relative paths; then read final Analysis-00.toc and hashed each of its 119 native source files with approved read-only access.",
+  "oldExe": {
+    "path": "E:\\LanShare-builds\\build-2lqxw_37\\dist\\lanshare.exe",
+    "sizeBytes": 63929736,
+    "sha256": "ad5e408f42d8ddd3e302073e234c05d069da75d7188c6a1866e80d7b0e3eea17"
+  },
+  "newExe": {
+    "path": "E:\\LanShare-builds\\build-9k4ezesh\\dist\\lanshare.exe",
+    "sizeBytes": 63929292,
+    "sha256": "e283857ab18dc7533b735ede1ae017cb63a8691791d58f5c1dc70e1aab03ef41"
+  },
+  "artifactsStableDuringRead": true,
+  "priorAudit": {
+    "path": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\docs\\changes\\2026-10-27\\test-results\\packaging-dependencies.json",
+    "sha256": "277c8e33a2f12ce261c1b3c9967401fb7c51e85ecd7a0af4c2b6c7e307aea525",
+    "matchesOldExe": true,
+    "success": true,
+    "directDependenciesComplete": true,
+    "delayDependenciesComplete": true,
+    "packagedTargetSymbolCheckCounts": {
+      "delay": 12,
+      "direct": 35827
+    },
+    "importTableEntryCounts": {
+      "delay": 2,
+      "direct": 729
+    },
+    "scope": "Prior static direct/delay import and packaged export-symbol closure evidence is reused only because all 119 native payloads and full archive-relative paths are byte-identical. No new target-OS runtime claim is inferred from hashes."
+  },
+  "initialCandidateEvidence": {
+    "path": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\docs\\changes\\2026-10-28-startup-fix\\test-results\\initial-candidate\\native-dependencies.json",
+    "sha256": "7aac3a04b9941beacb887d05d2ad20364efb29e68d2e78aa0c70c774a9e9fb04",
+    "delivered": false,
+    "finding": "Initial sandbox build omitted 38 API-set shims and transitive ucrtbase.dll due to denied file reads. Approved read-only probes confirmed all 39 system payloads matched the old EXE. The final approved build restores all 39."
+  },
+  "oldPeEntriesScanned": 119,
+  "peEntriesScanned": 119,
+  "uniquePeBasenames": 116,
+  "unchangedPePayloadCount": 119,
+  "missingPeEntries": [],
+  "addedPeEntries": [],
+  "changedPeEntries": [],
+  "oldPeErrors": [],
+  "peErrors": [],
+  "nativePayloadsIdentical": true,
+  "qtMainRequired": {
+    "qt5core.dll": true,
+    "qt5gui.dll": true,
+    "qt5widgets.dll": true,
+    "qt5network.dll": true,
+    "qtcore.pyd": true,
+    "qwindows.dll": true,
+    "qoffscreen.dll": true,
+    "msvcp140_1.dll": true,
+    "concrt140.dll": true
+  },
+  "heifWheelDependencies": {
+    "libde265-0-da04b6b2448c39c0b7f218769dedb2f1.dll": true,
+    "libgcc_s_seh-1-60817ff87b1fa8e35c12cd1a333734a3.dll": true,
+    "libheif-18c57b017b404cb1ef96dee8a6eef027.dll": true,
+    "libstdc++-6-e4d43a335d57132a6ec3004cece76b4f.dll": true,
+    "libwinpthread-1-71c5c74678606753e0a2f79ceb8c68f9.dll": true,
+    "libx265-217-276e7d75772a32bd086b54d54e01fd11.dll": true
+  },
+  "runtimeOptions": [
+    "pyi-runtime-tmpdir %LOCALAPPDATA%/LanShare/Temp"
+  ],
+  "runtimeOptionCorrect": true,
+  "sourceProvenance": {
+    "analysisPath": "E:\\LanShare-builds\\build-9k4ezesh\\build\\lanshare\\Analysis-00.toc",
+    "analysisSha256": "3c31e1d54c2c3b74d753b1a47e004c83c6099aa309b72cdcfb5f06e4f384cf5b",
+    "priorAnalysisPath": "E:\\LanShare-builds\\build-2lqxw_37\\build\\lanshare\\Analysis-00.toc",
+    "priorAnalysisSha256": "a389f7509699800063092e80e6693a95edfba0501064c53312c5c9809ae4231d",
+    "allowedRoots": {
+      "build-venv": "E:\\LanShare-builds\\build-22jznups\\env",
+      "base-python": "D:\\Program Files\\python",
+      "windows-system": "C:\\Windows\\System32"
+    },
+    "missingOrAmbiguousSources": [],
+    "sourcePathChangesComparedWithPrior": [],
+    "sourceHashErrors": [],
+    "allSourcePayloadHashesMatch": true
+  },
+  "nativeSourceOriginCounts": {
+    "base-python": 22,
+    "build-venv": 58,
+    "windows-system": 39
+  },
+  "externalNativeEntryNames": [],
+  "codexNativeEntryNames": [],
+  "codexNativeSourceCount": 0,
+  "archiveMembers": {
+    "oldCount": 248,
+    "newCount": 248,
+    "missing": [],
+    "added": [],
+    "changedCount": 1,
+    "changed": [
+      {
+        "name": "base_library.zip",
+        "old": {
+          "sizeBytes": 1332005,
+          "sha256": "c444be0ea3a2581d9df6deeb49fda7c5657ea1e7a5ac68cec4b2b626d74b8e36",
+          "typecode": "b"
+        },
+        "new": {
+          "sizeBytes": 1332005,
+          "sha256": "9ff064463ce8d85726aeae3e07efa108d1bdb2dbf65491597c760aae4fcc77a5",
+          "typecode": "b"
+        }
+      }
+    ]
+  },
+  "baseLibraryZipPayloadComparison": {
+    "oldMemberCount": 155,
+    "newMemberCount": 155,
+    "missing": [],
+    "added": [],
+    "changedPayloads": [],
+    "memberOrderIdentical": false
+  },
+  "nativePayloads": [
+    {
+      "name": "PIL/_avif.cp312-win_amd64.pyd",
+      "sizeBytes": 7893504,
+      "sha256": "3c31d65c8b3b4c91ac2838d5c843a6b2479d775b6904fe654d60b56d41772411",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PIL\\_avif.cp312-win_amd64.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "3c31d65c8b3b4c91ac2838d5c843a6b2479d775b6904fe654d60b56d41772411",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PIL/_imaging.cp312-win_amd64.pyd",
+      "sizeBytes": 2662400,
+      "sha256": "7140f56d38dd6cd51512f8122386bcb914c5df2a82eb5f719c973527d9213cee",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PIL\\_imaging.cp312-win_amd64.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "7140f56d38dd6cd51512f8122386bcb914c5df2a82eb5f719c973527d9213cee",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PIL/_imagingcms.cp312-win_amd64.pyd",
+      "sizeBytes": 275456,
+      "sha256": "2640857cace64d69735bdcaa3987e9ad70f85168abc1a8662079c77ac44b5301",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PIL\\_imagingcms.cp312-win_amd64.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "2640857cace64d69735bdcaa3987e9ad70f85168abc1a8662079c77ac44b5301",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PIL/_imagingtk.cp312-win_amd64.pyd",
+      "sizeBytes": 14336,
+      "sha256": "e1c87f73e96d2269395624d03b3808300f4b0f795f5fad1ecc3d1492e5dcc7c2",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PIL\\_imagingtk.cp312-win_amd64.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "e1c87f73e96d2269395624d03b3808300f4b0f795f5fad1ecc3d1492e5dcc7c2",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PIL/_webp.cp312-win_amd64.pyd",
+      "sizeBytes": 415744,
+      "sha256": "bb9c64d38a6e4857bd3358e14dbe6cf3a4593b1efcd1185fdba1ef8931550896",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PIL\\_webp.cp312-win_amd64.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "bb9c64d38a6e4857bd3358e14dbe6cf3a4593b1efcd1185fdba1ef8931550896",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/MSVCP140.dll",
+      "sizeBytes": 590112,
+      "sha256": "88f55d86b50b0a7e55e71ad2d8f7552146ba26e927230daf2e26ad3a971973c5",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\msvcp140.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "88f55d86b50b0a7e55e71ad2d8f7552146ba26e927230daf2e26ad3a971973c5",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/MSVCP140_1.dll",
+      "sizeBytes": 31728,
+      "sha256": "446c48c1224c289bd3080087fe15d6759416d64f4136addf30086abd5415d83f",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\msvcp140_1.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "446c48c1224c289bd3080087fe15d6759416d64f4136addf30086abd5415d83f",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/Qt5Core.dll",
+      "sizeBytes": 6023664,
+      "sha256": "8d2ff4ce9096ddccc4f4cd62c2e41fc854cfd1b0d6e8d296645a7f5fd4ae565a",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Core.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "8d2ff4ce9096ddccc4f4cd62c2e41fc854cfd1b0d6e8d296645a7f5fd4ae565a",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/Qt5DBus.dll",
+      "sizeBytes": 436720,
+      "sha256": "1aa70b106a10c86946e23caa9fc752dc16e29fbe803bba1f1ab30d1c63ee852a",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5DBus.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "1aa70b106a10c86946e23caa9fc752dc16e29fbe803bba1f1ab30d1c63ee852a",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/Qt5Gui.dll",
+      "sizeBytes": 7008240,
+      "sha256": "5e7d2d41b8b92a880e83b8cc0ca173f5da61218604186196787ee1600956be1e",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Gui.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "5e7d2d41b8b92a880e83b8cc0ca173f5da61218604186196787ee1600956be1e",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/Qt5Network.dll",
+      "sizeBytes": 1340400,
+      "sha256": "4ef341ae9302e793878020f0740b09b0f31cb380408a697f75c69fdbd20fc7a1",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Network.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "4ef341ae9302e793878020f0740b09b0f31cb380408a697f75c69fdbd20fc7a1",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/Qt5Qml.dll",
+      "sizeBytes": 3591664,
+      "sha256": "30035484c81590976627f8face9507caa8581a7dc7630cccf6a8d6de65cab707",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Qml.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "30035484c81590976627f8face9507caa8581a7dc7630cccf6a8d6de65cab707",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/Qt5QmlModels.dll",
+      "sizeBytes": 438768,
+      "sha256": "51e4e5a5e91f78774c44f69b599fae4735277ef2918f7061778615cb5c4f6e81",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5QmlModels.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "51e4e5a5e91f78774c44f69b599fae4735277ef2918f7061778615cb5c4f6e81",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/Qt5Quick.dll",
+      "sizeBytes": 4148720,
+      "sha256": "c81ad3c1111544064b1830c6f1aef3c1fd13b401546ab3b852d697c0f4d854b3",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Quick.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "c81ad3c1111544064b1830c6f1aef3c1fd13b401546ab3b852d697c0f4d854b3",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/Qt5Svg.dll",
+      "sizeBytes": 330736,
+      "sha256": "7348cfc6444438b8845fb3f59381227325d40ca2187d463e82fc7b8e93e38db5",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Svg.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "7348cfc6444438b8845fb3f59381227325d40ca2187d463e82fc7b8e93e38db5",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/Qt5WebSockets.dll",
+      "sizeBytes": 149488,
+      "sha256": "6b56f77da6f17880a42d2f9d2ec8b426248f7ab2196a0f55d37ade39e3878bc6",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5WebSockets.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "6b56f77da6f17880a42d2f9d2ec8b426248f7ab2196a0f55d37ade39e3878bc6",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/Qt5Widgets.dll",
+      "sizeBytes": 5498352,
+      "sha256": "3788c669d4b645e5a576de9fc77fca776bf516d43c89143dc2ca28291ba14358",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\Qt5Widgets.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "3788c669d4b645e5a576de9fc77fca776bf516d43c89143dc2ca28291ba14358",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/VCRUNTIME140.dll",
+      "sizeBytes": 101872,
+      "sha256": "5e197a086b6a7711baa09afe4ea7c68f0e777b2ff33f1df25a21f375b7d9693a",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\vcruntime140.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "5e197a086b6a7711baa09afe4ea7c68f0e777b2ff33f1df25a21f375b7d9693a",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/VCRUNTIME140_1.dll",
+      "sizeBytes": 44528,
+      "sha256": "1f0f5f2ce671e0f68cf96176721df0e5e6f527c8ca9cfa98aa875b5a3816d460",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\vcruntime140_1.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "1f0f5f2ce671e0f68cf96176721df0e5e6f527c8ca9cfa98aa875b5a3816d460",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/concrt140.dll",
+      "sizeBytes": 317208,
+      "sha256": "1f072a6dc98cd882c542208e7a8fe4fbe5239781588f17c005a2607fdfe62d5d",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\concrt140.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "1f072a6dc98cd882c542208e7a8fe4fbe5239781588f17c005a2607fdfe62d5d",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/d3dcompiler_47.dll",
+      "sizeBytes": 4173928,
+      "sha256": "e994847e01a6f1e4cbdc5a864616ac262f67ee4f14db194984661a8d927ab7f4",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\d3dcompiler_47.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "e994847e01a6f1e4cbdc5a864616ac262f67ee4f14db194984661a8d927ab7f4",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/libEGL.dll",
+      "sizeBytes": 25072,
+      "sha256": "32092de077fd57b6ef355705ec46c6d21f6d72fbe3d3a5dd628f2a29185a96fa",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\libEGL.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "32092de077fd57b6ef355705ec46c6d21f6d72fbe3d3a5dd628f2a29185a96fa",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/libGLESv2.dll",
+      "sizeBytes": 3385328,
+      "sha256": "50fad5605b3d57627848b3b84a744dfb6a045609b8236b04124f2234676758d8",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\libGLESv2.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "50fad5605b3d57627848b3b84a744dfb6a045609b8236b04124f2234676758d8",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/libcrypto-1_1-x64.dll",
+      "sizeBytes": 3205632,
+      "sha256": "6db7bdb60559b52e27edb228ae25dcc4c5dd84943ad8e11eac1ef87250c94df4",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\libcrypto-1_1-x64.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "6db7bdb60559b52e27edb228ae25dcc4c5dd84943ad8e11eac1ef87250c94df4",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/libssl-1_1-x64.dll",
+      "sizeBytes": 681472,
+      "sha256": "da280e1d3cb5168e5e584a57058eb5b05fb3be36bdaefd20a144f4da3cdb9030",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\libssl-1_1-x64.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "da280e1d3cb5168e5e584a57058eb5b05fb3be36bdaefd20a144f4da3cdb9030",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/bin/opengl32sw.dll",
+      "sizeBytes": 20923392,
+      "sha256": "963641a718f9cae2705d5299eae9b7444e84e72ab3bef96a691510dd05fa1da4",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\bin\\opengl32sw.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "963641a718f9cae2705d5299eae9b7444e84e72ab3bef96a691510dd05fa1da4",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/bearer/qgenericbearer.dll",
+      "sizeBytes": 53232,
+      "sha256": "0534cef5f54eb6d10b2e90bd6089dc413c555771e12220be9a5cc48adddc803d",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\bearer\\qgenericbearer.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "0534cef5f54eb6d10b2e90bd6089dc413c555771e12220be9a5cc48adddc803d",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/generic/qtuiotouchplugin.dll",
+      "sizeBytes": 68080,
+      "sha256": "a9bffb0f3cd69cd775c328c916e46440fe80d99119faebc350c7ec51e3e57c41",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\generic\\qtuiotouchplugin.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "a9bffb0f3cd69cd775c328c916e46440fe80d99119faebc350c7ec51e3e57c41",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/iconengines/qsvgicon.dll",
+      "sizeBytes": 41968,
+      "sha256": "42dde60befcf1d9f96b8366a9988626b97d7d0d829ebea32f756d6ecd9ea99a8",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\iconengines\\qsvgicon.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "42dde60befcf1d9f96b8366a9988626b97d7d0d829ebea32f756d6ecd9ea99a8",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/imageformats/qgif.dll",
+      "sizeBytes": 39408,
+      "sha256": "36174dd4c5f37c5f065c7a26e0ac65c4c3a41fdc0416882af856a23a5d03bb9d",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qgif.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "36174dd4c5f37c5f065c7a26e0ac65c4c3a41fdc0416882af856a23a5d03bb9d",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/imageformats/qicns.dll",
+      "sizeBytes": 45040,
+      "sha256": "f4a229a082d16f80016f366156a2b951550f1e9df6d4177323bbedd92a429909",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qicns.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "f4a229a082d16f80016f366156a2b951550f1e9df6d4177323bbedd92a429909",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/imageformats/qico.dll",
+      "sizeBytes": 38384,
+      "sha256": "1982a635db9652304131c9c6ff9a693e70241600d2ef22b354962aa37997de0b",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qico.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "1982a635db9652304131c9c6ff9a693e70241600d2ef22b354962aa37997de0b",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/imageformats/qjpeg.dll",
+      "sizeBytes": 421360,
+      "sha256": "fb4e980cb5fafa8a4cd4239329aed93f7c32ed939c94b61fb2df657f3c6ad158",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qjpeg.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "fb4e980cb5fafa8a4cd4239329aed93f7c32ed939c94b61fb2df657f3c6ad158",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/imageformats/qsvg.dll",
+      "sizeBytes": 32240,
+      "sha256": "b3498f0a10ac4cb42cf7213db4944a34594ff36c78c50a0f249c9085d1b1ff39",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qsvg.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "b3498f0a10ac4cb42cf7213db4944a34594ff36c78c50a0f249c9085d1b1ff39",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/imageformats/qtga.dll",
+      "sizeBytes": 31728,
+      "sha256": "5b641dec81aec1cf7ac0cce9fc067bb642fbd32da138a36e3bdac3bb5b36c37a",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qtga.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "5b641dec81aec1cf7ac0cce9fc067bb642fbd32da138a36e3bdac3bb5b36c37a",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/imageformats/qtiff.dll",
+      "sizeBytes": 390128,
+      "sha256": "825174429ced6b3dab18115dbc6c9da07bf5248c86ec1bd5c0dcaeca93b4c22d",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qtiff.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "825174429ced6b3dab18115dbc6c9da07bf5248c86ec1bd5c0dcaeca93b4c22d",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/imageformats/qwbmp.dll",
+      "sizeBytes": 30192,
+      "sha256": "0f05969fb926a62a338782b32446ea3e28e4bfbffc0dbd25ed303fab3404abac",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qwbmp.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "0f05969fb926a62a338782b32446ea3e28e4bfbffc0dbd25ed303fab3404abac",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/imageformats/qwebp.dll",
+      "sizeBytes": 510448,
+      "sha256": "6e37acd0d357871f92b7fde7206c904c734caa02f94544df646957df8c4987af",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\imageformats\\qwebp.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "6e37acd0d357871f92b7fde7206c904c734caa02f94544df646957df8c4987af",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/platforms/qminimal.dll",
+      "sizeBytes": 844784,
+      "sha256": "05d1e7364dd2a672df3ca44dd6fd85bed3d3dc239dcfe29bfb464f10b4daa628",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qminimal.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "05d1e7364dd2a672df3ca44dd6fd85bed3d3dc239dcfe29bfb464f10b4daa628",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/platforms/qoffscreen.dll",
+      "sizeBytes": 754672,
+      "sha256": "54097626faae718a4bc8e436c85b4ded8f8fb7051b2b9563a29aee4ed5c32b7b",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qoffscreen.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "54097626faae718a4bc8e436c85b4ded8f8fb7051b2b9563a29aee4ed5c32b7b",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/platforms/qwebgl.dll",
+      "sizeBytes": 482288,
+      "sha256": "9c3b2fa2383eeed92bb5810bdcf893ae30fa654a30b453ab2e49a95e1ccf1631",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qwebgl.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "9c3b2fa2383eeed92bb5810bdcf893ae30fa654a30b453ab2e49a95e1ccf1631",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/platforms/qwindows.dll",
+      "sizeBytes": 1477104,
+      "sha256": "3333ba244c97264e3bd19db5953efa80a6e47aaced9d337ac3287ec718162b85",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\platforms\\qwindows.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "3333ba244c97264e3bd19db5953efa80a6e47aaced9d337ac3287ec718162b85",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/platformthemes/qxdgdesktopportal.dll",
+      "sizeBytes": 68592,
+      "sha256": "e23fbc1bec6ceedfa9fd305606a460d9cac5d43a66d19c0de36e27632fddd952",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\platformthemes\\qxdgdesktopportal.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "e23fbc1bec6ceedfa9fd305606a460d9cac5d43a66d19c0de36e27632fddd952",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/Qt5/plugins/styles/qwindowsvistastyle.dll",
+      "sizeBytes": 144368,
+      "sha256": "d9b21182952682fe7ba63af1df24e23ace592c35b3f31eceef9f0eabeb5881b9",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\Qt5\\plugins\\styles\\qwindowsvistastyle.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "d9b21182952682fe7ba63af1df24e23ace592c35b3f31eceef9f0eabeb5881b9",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/QtCore.pyd",
+      "sizeBytes": 2483712,
+      "sha256": "d6e45fd8c3b3f93f52c4d1b6f9e3ee220454a73f80f65f3d70504bd55415ea37",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\QtCore.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "d6e45fd8c3b3f93f52c4d1b6f9e3ee220454a73f80f65f3d70504bd55415ea37",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/QtGui.pyd",
+      "sizeBytes": 2494976,
+      "sha256": "a9408e3b15ff3030f0e9acb3429000d253d3bb7206f750091a7130325f6d0d72",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\QtGui.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "a9408e3b15ff3030f0e9acb3429000d253d3bb7206f750091a7130325f6d0d72",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/QtNetwork.pyd",
+      "sizeBytes": 706048,
+      "sha256": "0489d021b058700f0ebae0fb582339f5e1534d364baccbe44115ef26fa068fc4",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\QtNetwork.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "0489d021b058700f0ebae0fb582339f5e1534d364baccbe44115ef26fa068fc4",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/QtWidgets.pyd",
+      "sizeBytes": 5144576,
+      "sha256": "a1e97a2ab434c6ae5e56491c60172e59cdcce42960734e8bdf5d851b79361071",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\QtWidgets.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "a1e97a2ab434c6ae5e56491c60172e59cdcce42960734e8bdf5d851b79361071",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "PyQt5/sip.cp312-win_amd64.pyd",
+      "sizeBytes": 120320,
+      "sha256": "faec6e39c4cdabfd58ba37483da35f9a4176afca39742279902a7be28c0f9291",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\PyQt5\\sip.cp312-win_amd64.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "faec6e39c4cdabfd58ba37483da35f9a4176afca39742279902a7be28c0f9291",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "VCRUNTIME140.dll",
+      "sizeBytes": 119192,
+      "sha256": "4d292623516f65c80482081e62d5dadb759dc16e851de5db24c3cbb57b87db83",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\vcruntime140.dll"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "4d292623516f65c80482081e62d5dadb759dc16e851de5db24c3cbb57b87db83",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "VCRUNTIME140_1.dll",
+      "sizeBytes": 49528,
+      "sha256": "a113f192195f245f17389e6ecbed8005990bcb2476ddad33f7c4c6c86327afe5",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\vcruntime140_1.dll"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "a113f192195f245f17389e6ecbed8005990bcb2476ddad33f7c4c6c86327afe5",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_brotli.cp312-win_amd64.pyd",
+      "sizeBytes": 872960,
+      "sha256": "3338d63b7f281fa5a745def98e460807d2b3935e9133be71aeb043d6db556dd7",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\_brotli.cp312-win_amd64.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "3338d63b7f281fa5a745def98e460807d2b3935e9133be71aeb043d6db556dd7",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_bz2.pyd",
+      "sizeBytes": 84760,
+      "sha256": "bd8621fcc901fa1de3961d93184f61ea71068c436794af2a4449738ccf949946",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_bz2.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "bd8621fcc901fa1de3961d93184f61ea71068c436794af2a4449738ccf949946",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_ctypes.pyd",
+      "sizeBytes": 125208,
+      "sha256": "543ce9d6dc3693362271a2c6e7d7fc07ad75327e0b0322301dd29886467b0b0e",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_ctypes.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "543ce9d6dc3693362271a2c6e7d7fc07ad75327e0b0322301dd29886467b0b0e",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_decimal.pyd",
+      "sizeBytes": 253208,
+      "sha256": "d4ae192bbd4627fc9487a2c1cd9869d1b461c20cfd338194e87f5cf882bbed12",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_decimal.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "d4ae192bbd4627fc9487a2c1cd9869d1b461c20cfd338194e87f5cf882bbed12",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_elementtree.pyd",
+      "sizeBytes": 132888,
+      "sha256": "d010cc7519332a8eb4e5125ad57227192de7737db63ec72ffebe0c0737b87d69",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_elementtree.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "d010cc7519332a8eb4e5125ad57227192de7737db63ec72ffebe0c0737b87d69",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_hashlib.pyd",
+      "sizeBytes": 65816,
+      "sha256": "6c50c9801a5caf0bb52b384f9a0d5a4aa182ca835f293a39e8999cf6edf2f087",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_hashlib.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "6c50c9801a5caf0bb52b384f9a0d5a4aa182ca835f293a39e8999cf6edf2f087",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_lzma.pyd",
+      "sizeBytes": 159512,
+      "sha256": "22d10e2d6ad3e3ed3c49eb79ab69a81aaa9d16aeca7f948da2fe80877f106c16",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_lzma.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "22d10e2d6ad3e3ed3c49eb79ab69a81aaa9d16aeca7f948da2fe80877f106c16",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_multiprocessing.pyd",
+      "sizeBytes": 35096,
+      "sha256": "5673b594e70d1fdaad3895fc8c3676252b7b675656fb88ef3410bc93bb0e7687",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_multiprocessing.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "5673b594e70d1fdaad3895fc8c3676252b7b675656fb88ef3410bc93bb0e7687",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_pillow_heif.cp312-win_amd64.pyd",
+      "sizeBytes": 59904,
+      "sha256": "f7847ec74ebdf131b69c1f57c83928f1e3921c96f26c7d67c8f2ed0767c92613",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\_pillow_heif.cp312-win_amd64.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "f7847ec74ebdf131b69c1f57c83928f1e3921c96f26c7d67c8f2ed0767c92613",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_queue.pyd",
+      "sizeBytes": 32536,
+      "sha256": "d43dca0e00c3c11329b68177e967cf5240495c4786f5afa76ac4f267c3a5cdb9",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_queue.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "d43dca0e00c3c11329b68177e967cf5240495c4786f5afa76ac4f267c3a5cdb9",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_socket.pyd",
+      "sizeBytes": 83224,
+      "sha256": "24017d664af20ee3b89514539345caac83eca34825fcf066a23e8a4c99f73e6d",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_socket.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "24017d664af20ee3b89514539345caac83eca34825fcf066a23e8a4c99f73e6d",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_ssl.pyd",
+      "sizeBytes": 177432,
+      "sha256": "2b6f1b1ac47cb7878b62e8d6bb587052f86ca8145b05a261e855305b9ca3d36c",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_ssl.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "2b6f1b1ac47cb7878b62e8d6bb587052f86ca8145b05a261e855305b9ca3d36c",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_uuid.pyd",
+      "sizeBytes": 25368,
+      "sha256": "d462f34aca50d1f37b9ea03036c881ee4452e1fd37e1b303cd6daaecc53e260e",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_uuid.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "d462f34aca50d1f37b9ea03036c881ee4452e1fd37e1b303cd6daaecc53e260e",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "_wmi.pyd",
+      "sizeBytes": 36632,
+      "sha256": "0342916a60a7b39bbd5753d85e1c12a4d6f990499753d467018b21cefa49cf32",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\_wmi.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "0342916a60a7b39bbd5753d85e1c12a4d6f990499753d467018b21cefa49cf32",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-console-l1-1-0.dll",
+      "sizeBytes": 19864,
+      "sha256": "0052515763a1a31d2527a2eb2523fb7b88d8e55c4e4da5ef352b565476bf21e0",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-console-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "0052515763a1a31d2527a2eb2523fb7b88d8e55c4e4da5ef352b565476bf21e0",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-datetime-l1-1-0.dll",
+      "sizeBytes": 19352,
+      "sha256": "cc6c2fdf1c34fa82036165b111f91220bcf7e43aab79dfb284f982f0590bebb1",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-datetime-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "cc6c2fdf1c34fa82036165b111f91220bcf7e43aab79dfb284f982f0590bebb1",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-debug-l1-1-0.dll",
+      "sizeBytes": 19352,
+      "sha256": "f9aaaabf78feb39a1d8e971f5ce047d1c4a896a80409b800f1f7112cdce420ed",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-debug-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "f9aaaabf78feb39a1d8e971f5ce047d1c4a896a80409b800f1f7112cdce420ed",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-errorhandling-l1-1-0.dll",
+      "sizeBytes": 19376,
+      "sha256": "a0aa340274d4bb46b6d9547d647ab7dc16c229577bbab836e6a4f3307f310332",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-errorhandling-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "a0aa340274d4bb46b6d9547d647ab7dc16c229577bbab836e6a4f3307f310332",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-file-l1-1-0.dll",
+      "sizeBytes": 22928,
+      "sha256": "05b478718540a6f410a3ad859f7d5e56c223d6786eacc7e9bc80264f587fd0c7",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-file-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "05b478718540a6f410a3ad859f7d5e56c223d6786eacc7e9bc80264f587fd0c7",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-file-l1-2-0.dll",
+      "sizeBytes": 19344,
+      "sha256": "6878d8168d5cc159efe58f14e5ba10310d99b53ab8495521e54c966994dac50b",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-file-l1-2-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "6878d8168d5cc159efe58f14e5ba10310d99b53ab8495521e54c966994dac50b",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-file-l2-1-0.dll",
+      "sizeBytes": 19336,
+      "sha256": "b74aefd6fa638be3f415165c8109121a2093597421101abc312ee7ffa1130278",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-file-l2-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "b74aefd6fa638be3f415165c8109121a2093597421101abc312ee7ffa1130278",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-handle-l1-1-0.dll",
+      "sizeBytes": 19352,
+      "sha256": "550b4f5ba95108b01a24f05496576a4e73642334a10dde61b09846e0efb9f260",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-handle-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "550b4f5ba95108b01a24f05496576a4e73642334a10dde61b09846e0efb9f260",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-heap-l1-1-0.dll",
+      "sizeBytes": 19856,
+      "sha256": "eca63fc5c873ce8b36c507e2b9a88caaea9617c84669886b15f6bc38bd0024c6",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-heap-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "eca63fc5c873ce8b36c507e2b9a88caaea9617c84669886b15f6bc38bd0024c6",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-interlocked-l1-1-0.dll",
+      "sizeBytes": 19368,
+      "sha256": "2f2f9660f4ffa814f465676d5b9cb9bb70d0b7c5fc5eb14c34cfe94a50883b21",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-interlocked-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "2f2f9660f4ffa814f465676d5b9cb9bb70d0b7c5fc5eb14c34cfe94a50883b21",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-libraryloader-l1-1-0.dll",
+      "sizeBytes": 19888,
+      "sha256": "2f9c3b077da02c587964a59e9c4e2f383ff8357229eab4b4f04814df94d78ff0",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-libraryloader-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "2f9c3b077da02c587964a59e9c4e2f383ff8357229eab4b4f04814df94d78ff0",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-localization-l1-2-0.dll",
+      "sizeBytes": 21936,
+      "sha256": "6ed17fb3ca5156b39fbc1ef7d1eefa95e739857607de4cd8d41cecfcd1350705",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-localization-l1-2-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "6ed17fb3ca5156b39fbc1ef7d1eefa95e739857607de4cd8d41cecfcd1350705",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-memory-l1-1-0.dll",
+      "sizeBytes": 19856,
+      "sha256": "76a3aa52d49dd0d8e0451f4045f4d8ba05d2332d0db2a39408b85cd2e43b84a3",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-memory-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "76a3aa52d49dd0d8e0451f4045f4d8ba05d2332d0db2a39408b85cd2e43b84a3",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-namedpipe-l1-1-0.dll",
+      "sizeBytes": 19360,
+      "sha256": "b1b2595494072a52f1fc44586debf52312eab1a245a7a16185d7b1af37b159a6",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-namedpipe-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "b1b2595494072a52f1fc44586debf52312eab1a245a7a16185d7b1af37b159a6",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-processenvironment-l1-1-0.dll",
+      "sizeBytes": 20424,
+      "sha256": "bf11319eb6be15633e47ab8f247d1acc9a9ecdf37181fc0ddfe9388ab82ac90a",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-processenvironment-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "bf11319eb6be15633e47ab8f247d1acc9a9ecdf37181fc0ddfe9388ab82ac90a",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-processthreads-l1-1-0.dll",
+      "sizeBytes": 21432,
+      "sha256": "7646eba0c683fc3e1b00f0b3b2b5912621b2016a6ceb7d53181cd1c3fa64785a",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-processthreads-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "7646eba0c683fc3e1b00f0b3b2b5912621b2016a6ceb7d53181cd1c3fa64785a",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-processthreads-l1-1-1.dll",
+      "sizeBytes": 19896,
+      "sha256": "4de821884cbef4182b29d8c33cfe13e43e130ad58ee1281679e8d40a2edcb8ea",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-processthreads-l1-1-1.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "4de821884cbef4182b29d8c33cfe13e43e130ad58ee1281679e8d40a2edcb8ea",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-profile-l1-1-0.dll",
+      "sizeBytes": 18840,
+      "sha256": "4ca44ede30b46f1f23905cecfa27f0edb26ee960dba10f9bf8002d79ed77c3e5",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-profile-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "4ca44ede30b46f1f23905cecfa27f0edb26ee960dba10f9bf8002d79ed77c3e5",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-rtlsupport-l1-1-0.dll",
+      "sizeBytes": 19880,
+      "sha256": "09b7f0a7f68a12602e7f4dbd5a7f1cdfb3e93fd54326884e48f36e2e200acce9",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-rtlsupport-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "09b7f0a7f68a12602e7f4dbd5a7f1cdfb3e93fd54326884e48f36e2e200acce9",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-string-l1-1-0.dll",
+      "sizeBytes": 19352,
+      "sha256": "3eda46e395fad6ec222ab44188d6a46a468b0fd4aff28252938f4e6a9a3e3893",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-string-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "3eda46e395fad6ec222ab44188d6a46a468b0fd4aff28252938f4e6a9a3e3893",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-synch-l1-1-0.dll",
+      "sizeBytes": 21392,
+      "sha256": "83c1df33df30df48ab161a5a1d6c3cb4bdaebff330ee6e81e871afe3990d7a65",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-synch-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "83c1df33df30df48ab161a5a1d6c3cb4bdaebff330ee6e81e871afe3990d7a65",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-synch-l1-2-0.dll",
+      "sizeBytes": 19856,
+      "sha256": "e000c6685719c2b07355c1eddbfdae7c6794aa6c0ac883d34af33dfc8bf40779",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-synch-l1-2-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "e000c6685719c2b07355c1eddbfdae7c6794aa6c0ac883d34af33dfc8bf40779",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-sysinfo-l1-1-0.dll",
+      "sizeBytes": 20376,
+      "sha256": "f5bf492fe568eb57d2e7111b1c3927f1ee897b5a1109bc68ebe011a2dfdef2fe",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-sysinfo-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "f5bf492fe568eb57d2e7111b1c3927f1ee897b5a1109bc68ebe011a2dfdef2fe",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-timezone-l1-1-0.dll",
+      "sizeBytes": 19360,
+      "sha256": "630466fd77ac7009c947a8370a0d0c20652169824c54ddcb8c05e8df45e23197",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-timezone-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "630466fd77ac7009c947a8370a0d0c20652169824c54ddcb8c05e8df45e23197",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-core-util-l1-1-0.dll",
+      "sizeBytes": 19336,
+      "sha256": "187d47ebcc1e96abe635f23c92d2c63fc8cd741fcb03fe2dd5fc3054cb3d6d92",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-core-util-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "187d47ebcc1e96abe635f23c92d2c63fc8cd741fcb03fe2dd5fc3054cb3d6d92",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-conio-l1-1-0.dll",
+      "sizeBytes": 20368,
+      "sha256": "91f4db05c69c58ecb2493e30acc5297043c41b1ce6db50cee4e2922cd4bcd7f2",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-conio-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "91f4db05c69c58ecb2493e30acc5297043c41b1ce6db50cee4e2922cd4bcd7f2",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-convert-l1-1-0.dll",
+      "sizeBytes": 23448,
+      "sha256": "e64fbac3491b4693e79a3f7b0db1d788f93608d3fc82133edf25a868c80d2153",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-convert-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "e64fbac3491b4693e79a3f7b0db1d788f93608d3fc82133edf25a868c80d2153",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-environment-l1-1-0.dll",
+      "sizeBytes": 19872,
+      "sha256": "dd054e4de84144c2130fa8d28d563252a7c4089a58872e49d63bc43c9a1a3cb8",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-environment-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "dd054e4de84144c2130fa8d28d563252a7c4089a58872e49d63bc43c9a1a3cb8",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-filesystem-l1-1-0.dll",
+      "sizeBytes": 21408,
+      "sha256": "966a7f15bfb2e0ff7888d583638ebd675d8f46b264194cf332f78140b7c129e1",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-filesystem-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "966a7f15bfb2e0ff7888d583638ebd675d8f46b264194cf332f78140b7c129e1",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-heap-l1-1-0.dll",
+      "sizeBytes": 20360,
+      "sha256": "742bb9bf4c232f84ad8008af4af8eda7a1ec3eb76f05d9d7ebb95f6a5cabd2d8",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-heap-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "742bb9bf4c232f84ad8008af4af8eda7a1ec3eb76f05d9d7ebb95f6a5cabd2d8",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-locale-l1-1-0.dll",
+      "sizeBytes": 19856,
+      "sha256": "25905676b543c4f05e9dae135f929c03a57686a6941ce59be2b3450521feb943",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-locale-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "25905676b543c4f05e9dae135f929c03a57686a6941ce59be2b3450521feb943",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-math-l1-1-0.dll",
+      "sizeBytes": 28552,
+      "sha256": "08e34f12de24e89379a0533f21a23ce6fecbea05d4062796d4ffd4adc3012316",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-math-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "08e34f12de24e89379a0533f21a23ce6fecbea05d4062796d4ffd4adc3012316",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-process-l1-1-0.dll",
+      "sizeBytes": 20376,
+      "sha256": "c68a61c260454c0aeb051ddb2bed52cbca44b96d50046017cbc351b41f225dc0",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-process-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "c68a61c260454c0aeb051ddb2bed52cbca44b96d50046017cbc351b41f225dc0",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "sizeBytes": 23960,
+      "sha256": "4c787ff8d40bb803e75fe6218fec36a672cfa6cfc7f6e80e68a7eb0b77a10e5a",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-runtime-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "4c787ff8d40bb803e75fe6218fec36a672cfa6cfc7f6e80e68a7eb0b77a10e5a",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-stdio-l1-1-0.dll",
+      "sizeBytes": 25480,
+      "sha256": "c7919be431ce2fa1906ff9eeb19e4cb19a30a4680107ef8737ce894654b21a5a",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-stdio-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "c7919be431ce2fa1906ff9eeb19e4cb19a30a4680107ef8737ce894654b21a5a",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-string-l1-1-0.dll",
+      "sizeBytes": 25496,
+      "sha256": "92f72f495a6897f7d7cf2c2064b2b65f6b4fbd4f30911a534a5cd0de73395ebe",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-string-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "92f72f495a6897f7d7cf2c2064b2b65f6b4fbd4f30911a534a5cd0de73395ebe",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-time-l1-1-0.dll",
+      "sizeBytes": 21896,
+      "sha256": "46cb7b3a9f8aac5adcdbe23494e458f3195adf4b8ed1c71f2d934ddde651e57e",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-time-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "46cb7b3a9f8aac5adcdbe23494e458f3195adf4b8ed1c71f2d934ddde651e57e",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "api-ms-win-crt-utility-l1-1-0.dll",
+      "sizeBytes": 19864,
+      "sha256": "111f6dd2e7247071a33d75bf98d521a8d09c4071f90483a82e6ed9af69bb52c4",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\api-ms-win-crt-utility-l1-1-0.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "111f6dd2e7247071a33d75bf98d521a8d09c4071f90483a82e6ed9af69bb52c4",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "libcrypto-3.dll",
+      "sizeBytes": 5162776,
+      "sha256": "2a234b5aa20c3faecf725bbb54fb33f3d94543f78fa7045408e905593e49960a",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\libcrypto-3.dll"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "2a234b5aa20c3faecf725bbb54fb33f3d94543f78fa7045408e905593e49960a",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "libde265-0-da04b6b2448c39c0b7f218769dedb2f1.dll",
+      "sizeBytes": 960000,
+      "sha256": "41b02f2431e2fa6b268957eb9872b84feafce8f279611772cb4809e09f7a2645",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\libde265-0-da04b6b2448c39c0b7f218769dedb2f1.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "41b02f2431e2fa6b268957eb9872b84feafce8f279611772cb4809e09f7a2645",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "libffi-8.dll",
+      "sizeBytes": 39696,
+      "sha256": "eff52743773eb550fcc6ce3efc37c85724502233b6b002a35496d828bd7b280a",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\libffi-8.dll"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "eff52743773eb550fcc6ce3efc37c85724502233b6b002a35496d828bd7b280a",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "libgcc_s_seh-1-60817ff87b1fa8e35c12cd1a333734a3.dll",
+      "sizeBytes": 147968,
+      "sha256": "cf4e3bf58021159dc25a76b6cbee77e6403e756688937476a575203d1715cc5c",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\libgcc_s_seh-1-60817ff87b1fa8e35c12cd1a333734a3.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "cf4e3bf58021159dc25a76b6cbee77e6403e756688937476a575203d1715cc5c",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "libheif-18c57b017b404cb1ef96dee8a6eef027.dll",
+      "sizeBytes": 2176000,
+      "sha256": "180d93f1f5f8954ebca2d5d67ca06efa0dd0d3629e4bbfe0f9f18e985db0e176",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\libheif-18c57b017b404cb1ef96dee8a6eef027.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "180d93f1f5f8954ebca2d5d67ca06efa0dd0d3629e4bbfe0f9f18e985db0e176",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "libssl-3.dll",
+      "sizeBytes": 790296,
+      "sha256": "41ad1a04ca27a7959579e87fbbda87c93099616a64a0e66260c983381c5570d1",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\libssl-3.dll"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "41ad1a04ca27a7959579e87fbbda87c93099616a64a0e66260c983381c5570d1",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "libstdc++-6-e4d43a335d57132a6ec3004cece76b4f.dll",
+      "sizeBytes": 2652672,
+      "sha256": "815e046ec8ccf046c637abe6c718d3e0f608540bb4792207248296791edebfe9",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\libstdc++-6-e4d43a335d57132a6ec3004cece76b4f.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "815e046ec8ccf046c637abe6c718d3e0f608540bb4792207248296791edebfe9",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "libwinpthread-1-71c5c74678606753e0a2f79ceb8c68f9.dll",
+      "sizeBytes": 62976,
+      "sha256": "71c5c74678606753e0a2f79ceb8c68f928e6bb679163b0341c9e2d568a9c9360",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\libwinpthread-1-71c5c74678606753e0a2f79ceb8c68f9.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "71c5c74678606753e0a2f79ceb8c68f928e6bb679163b0341c9e2d568a9c9360",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "libx265-217-276e7d75772a32bd086b54d54e01fd11.dll",
+      "sizeBytes": 22658560,
+      "sha256": "44df67a67937277dc37c1fab3424c756ce3afd29ed55191f81234242048b2e59",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\libx265-217-276e7d75772a32bd086b54d54e01fd11.dll"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "44df67a67937277dc37c1fab3424c756ce3afd29ed55191f81234242048b2e59",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "pillow_avif/_avif.cp312-win_amd64.pyd",
+      "sizeBytes": 16042496,
+      "sha256": "829838960811464fb5c413858d879bee4545749bc402bdf68679ee012eaa23cd",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Lib\\site-packages\\pillow_avif\\_avif.cp312-win_amd64.pyd"
+      ],
+      "sourceOrigin": "build-venv",
+      "sourceSha256": "829838960811464fb5c413858d879bee4545749bc402bdf68679ee012eaa23cd",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "pyexpat.pyd",
+      "sizeBytes": 199448,
+      "sha256": "cdc09fbae2f103196215facd50d108be3eff60c8ee5795dcc80bf57a0f120cdf",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\pyexpat.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "cdc09fbae2f103196215facd50d108be3eff60c8ee5795dcc80bf57a0f120cdf",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "python3.dll",
+      "sizeBytes": 68376,
+      "sha256": "a5bb3eb6fdfd23e0d8b2e4bccd6016290c013389e06daae6cb83964fa69e2a4f",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\python3.dll"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "a5bb3eb6fdfd23e0d8b2e4bccd6016290c013389e06daae6cb83964fa69e2a4f",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "python312.dll",
+      "sizeBytes": 7003928,
+      "sha256": "0cc4e557972488eb99ea4aeb3d29f3ade974ef3bcd47c211911489a189a0b6f2",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\python312.dll"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "0cc4e557972488eb99ea4aeb3d29f3ade974ef3bcd47c211911489a189a0b6f2",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "select.pyd",
+      "sizeBytes": 30488,
+      "sha256": "74cca85600e7c17ea6532b54842e26d3cae9181287cdf5a4a3c50af4dab785e5",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\select.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "74cca85600e7c17ea6532b54842e26d3cae9181287cdf5a4a3c50af4dab785e5",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "ucrtbase.dll",
+      "sizeBytes": 1024656,
+      "sha256": "7b28f46f0a09cfd9129109a94b1c16c9c62eef46c09113c4c585d9bf0e69b2da",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "C:\\Windows\\System32\\ucrtbase.dll"
+      ],
+      "sourceOrigin": "windows-system",
+      "sourceSha256": "7b28f46f0a09cfd9129109a94b1c16c9c62eef46c09113c4c585d9bf0e69b2da",
+      "sourceMatchesPackagedPayload": true
+    },
+    {
+      "name": "unicodedata.pyd",
+      "sizeBytes": 1137944,
+      "sha256": "2a50d629895a05b10a262acf333e7a4a31db5cb035b70d14d1a4be1c3e27d309",
+      "typecode": "b",
+      "machine": "0x8664",
+      "optionalHeaderMagic": "0x20b",
+      "matchesPriorAuditedPayload": true,
+      "analysisSourcePaths": [
+        "D:\\Program Files\\python\\DLLs\\unicodedata.pyd"
+      ],
+      "sourceOrigin": "base-python",
+      "sourceSha256": "2a50d629895a05b10a262acf333e7a4a31db5cb035b70d14d1a4be1c3e27d309",
+      "sourceMatchesPackagedPayload": true
+    }
+  ],
+  "limits": "DLL presence and packaged-target exported symbols are checked statically. OS API-set resolution uses Windows conventions; other Windows versions and dynamic LoadLibrary paths are not runtime-tested here.",
+  "directDependenciesCompleteByPayloadEquivalence": true,
+  "delayDependenciesCompleteByPayloadEquivalence": true,
+  "success": true
+}

@@ -1,0 +1,49 @@
+{
+  "timestamp": "2026-10-28T09:40:22.824281+08:00",
+  "staging": "E:\\LanShare-builds\\build-9k4ezesh",
+  "build_cwd": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248",
+  "pyinstaller_cwd": "E:\\LanShare-builds\\build-9k4ezesh",
+  "python": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "python_version": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+  "versions": {
+    "pyinstaller": "6.22.3",
+    "pyinstaller-hooks-contrib": "2026.9",
+    "PyQt5": "5.15.11",
+    "PyQt5-Qt5": "5.15.2",
+    "PyQt5_sip": "12.20.0",
+    "Pillow": "13.0.0",
+    "pillow-heif": "1.8.1",
+    "pillow-avif-plugin": "1.6.0",
+    "brotli": "1.2.1",
+    "segno": "1.6.6"
+  },
+  "executed_build_command": [
+    "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+    "-B",
+    "tools/build_exe.py",
+    "--work",
+    "E:\\LanShare-builds",
+    "--venv",
+    "E:\\LanShare-builds\\build-22jznups\\env",
+    "--extra-images"
+  ],
+  "build_returncode": 0,
+  "qt_archive_check_success": true,
+  "runtime_tmpdir_literal": "%LOCALAPPDATA%\\LanShare\\Temp",
+  "archive_options": [
+    "pyi-contents-directory _internal",
+    "pyi-runtime-tmpdir %LOCALAPPDATA%/LanShare/Temp"
+  ],
+  "runtime_tmpdir_check_success": true,
+  "smoke_success": true,
+  "build_execution": "Approved outside sandbox to restore read access to Windows API-set DLLs; existing independent venv; no dependency installation",
+  "build_path_policy": "Selected venv and base Python plus Windows directories only, as implemented by tools/build_exe.py; no Codex DLL search paths",
+  "build_cache": "E:\\LanShare-builds\\build-9k4ezesh\\_pyinstaller-cache",
+  "build_log": "E:\\LanShare-builds\\build-9k4ezesh\\build.log",
+  "build_log_sha256": "337eac47a96c50e89041d6f3f77a3e8fb0a13445a0e30954c114ba7ae359f1fc",
+  "spec_sha256": "f2e125b94cd67a96d944334a61512f1088468f2a51b521c26a3355242adca89b",
+  "exe": "E:\\LanShare-builds\\build-9k4ezesh\\dist\\lanshare.exe",
+  "size_bytes": 63929292,
+  "sha256": "e283857ab18dc7533b735ede1ae017cb63a8691791d58f5c1dc70e1aab03ef41",
+  "does_not_prove": "Not a real Explorer double-click or a clean second-machine Windows test; settings/chat/registry isolated"
+}

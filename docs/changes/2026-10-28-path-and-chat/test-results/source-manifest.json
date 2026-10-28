@@ -1,0 +1,454 @@
+{
+  "timestamp": "2026-10-28T11:14:03.404293+08:00",
+  "asset_version": "98bfe0bd8e",
+  "runtime_build_manifest": "build-source-manifest.json",
+  "scope": "Current runtime, web and regression/build tools; no logs, diagnostic data or user settings",
+  "files": [
+    {
+      "file": "icon.ico",
+      "sha256": "d3730fdf7a4f1dcb4599fae4e9c9a47f25144ebb37b29ba10407515f97489842",
+      "size_bytes": 91463
+    },
+    {
+      "file": "lanshare.py",
+      "sha256": "224159dc0156aee3b1c7c1bc374a9f2e3df5f7c3fd1456f3b4d4a2600dc2adcb",
+      "size_bytes": 5743
+    },
+    {
+      "file": "requirements.txt",
+      "sha256": "63ce960384b3aed7fdd2c56b98847c21d3ae4aed79a84ff800c060ba9a57f1dc",
+      "size_bytes": 551
+    },
+    {
+      "file": "server/__init__.py",
+      "sha256": "0e4d945ef58b398d587c334595cb652dd24b61a353954a1f290e81e666e17f24",
+      "size_bytes": 64
+    },
+    {
+      "file": "server/archive.py",
+      "sha256": "d7a58ef909ed34787d0e01fd92ce005960ff56f1f269a916b09f8926f646dd30",
+      "size_bytes": 15090
+    },
+    {
+      "file": "server/auth.py",
+      "sha256": "04d143c91c0e036917937841e1f639c81255cc0cbf5c5e995a65d9770057e221",
+      "size_bytes": 5206
+    },
+    {
+      "file": "server/chat_api.py",
+      "sha256": "1c996470a5720c15d18bc5dbfff5085ec524589ced4b7d94868abbd3e6004dd6",
+      "size_bytes": 22875
+    },
+    {
+      "file": "server/chat_media.py",
+      "sha256": "20c5dc216b978bd6a022f5aa65b04045d4a5f749390e0ad6493652a5375064a3",
+      "size_bytes": 12604
+    },
+    {
+      "file": "server/chat_store.py",
+      "sha256": "1dbc86fcbb20a163b7b8167e6b922df1704710f9edd4b25fbec5fee1cf3983e5",
+      "size_bytes": 16203
+    },
+    {
+      "file": "server/config.py",
+      "sha256": "f3829acb6b856e9789ee07b7cf0de6fcc2dfe6daefbf9d85c4d9acf38df05c2e",
+      "size_bytes": 3309
+    },
+    {
+      "file": "server/fs_ops.py",
+      "sha256": "d432ca336da775fbce177d7a56738332a127ffd114a710d8334817d19f2f4c10",
+      "size_bytes": 10998
+    },
+    {
+      "file": "server/handler.py",
+      "sha256": "cf429999e54cd4cd47be27ffc8ed555aa193c94e250334fe63f1d9a93a9708e6",
+      "size_bytes": 10071
+    },
+    {
+      "file": "server/http_util.py",
+      "sha256": "e707ee3731a8944983bcbb97b2f0c67195d4b4a39473abc0ea1fb3dd473f8b6c",
+      "size_bytes": 16790
+    },
+    {
+      "file": "server/listing.py",
+      "sha256": "8c0083078ddd7f38b79b151c91a264d4e91ceade2d6e4d621c28b8dcda8280c2",
+      "size_bytes": 12964
+    },
+    {
+      "file": "server/netinfo.py",
+      "sha256": "db5e7c4e8f417c6c00f3168a378a25d89156bdf6ffd7381d314b8da889eab8e5",
+      "size_bytes": 4847
+    },
+    {
+      "file": "server/pages.py",
+      "sha256": "a7d32f75bf0366b9ad4c8719fffd8f60b376d2a9618df8cbf4d382bb72ee70d4",
+      "size_bytes": 5216
+    },
+    {
+      "file": "server/paths.py",
+      "sha256": "6ad2bdd4eab0a11e3967916656ae1a4d7a348eb5ad1aaeb98abf65012efcc838",
+      "size_bytes": 4052
+    },
+    {
+      "file": "server/routes.py",
+      "sha256": "c8d101f994fc612c4a053c2c93298e6ea5897d1ab8fac781900e19c30f9594d3",
+      "size_bytes": 8450
+    },
+    {
+      "file": "server/runner.py",
+      "sha256": "790a98ab831c64fef8c90a5820314665af29a0b3d36c3ba5ffe918fb16ea7e6c",
+      "size_bytes": 12463
+    },
+    {
+      "file": "server/storage.py",
+      "sha256": "3c290859a7333b79b18f6db6d817f54d1056caf36e2206748a22a16ea7dccdc9",
+      "size_bytes": 6320
+    },
+    {
+      "file": "server/transfer.py",
+      "sha256": "efa9bf7f6f14cebe318c593ed7942e7c11a51ad9ccfd1d79a667733391794f47",
+      "size_bytes": 18581
+    },
+    {
+      "file": "tools/admin_flow_test.py",
+      "sha256": "9acb7c92d76aeb78e25c38ddf081f7b184c775332aeffac3378086b5902dbd57",
+      "size_bytes": 18830
+    },
+    {
+      "file": "tools/auth_matrix_test.py",
+      "sha256": "d13ee66e2ac962c2b82cff4b5da21b037fa0ee6a6975baf6845ca1fee99c2bf0",
+      "size_bytes": 7332
+    },
+    {
+      "file": "tools/build_assets.py",
+      "sha256": "5e99184628560e04f594101233e61298db7c53d3e308df90365c7e135a6d490a",
+      "size_bytes": 5162
+    },
+    {
+      "file": "tools/build_exe.py",
+      "sha256": "f0ac01a5df94f4a07581c2a2c46ea8ecce256f3881c50075a3b307ba605da12f",
+      "size_bytes": 20767
+    },
+    {
+      "file": "tools/desktop_lifecycle_test.py",
+      "sha256": "34b5cd5baa02de29284a4526a49472af0d36cf5232825f66ff5a2bc4c24a45b9",
+      "size_bytes": 34627
+    },
+    {
+      "file": "tools/desktop_test.py",
+      "sha256": "d1cc9b0e8499b783a2e1ca7af9873b20cb92cf7c321298bc93f7ad27d0646c5b",
+      "size_bytes": 12068
+    },
+    {
+      "file": "tools/fsops_test.py",
+      "sha256": "fa5f441819098b90fd7ee28d0fd7c5ae67c5d3fb0661e0060198c160e957f0ef",
+      "size_bytes": 6144
+    },
+    {
+      "file": "tools/limits_test.py",
+      "sha256": "425630381971b4177bad5b15b7e4501d165fbbcb43cae3172a52069a7da23df8",
+      "size_bytes": 2454
+    },
+    {
+      "file": "tools/mobile_shot.py",
+      "sha256": "aaf16c34bb54eec9508ed45a056728cb436c3fb2782fa536f66513502541f275",
+      "size_bytes": 5225
+    },
+    {
+      "file": "tools/origin_test.py",
+      "sha256": "0340b7ccc2c9c9990d03839f14658c261f84fbdec6b13ebbf01570b09e4d158b",
+      "size_bytes": 6544
+    },
+    {
+      "file": "tools/paging_test.py",
+      "sha256": "a5d36bb5b07316d5851c20ff45eeefc75401a3f7a925b003d9305624e42bbfab",
+      "size_bytes": 3519
+    },
+    {
+      "file": "tools/preflight.py",
+      "sha256": "8b0dac210ca5e35dd7b15305e78232c449cf1a337be756e33f1b10e47302e899",
+      "size_bytes": 13144
+    },
+    {
+      "file": "tools/protocol_test.py",
+      "sha256": "f93c70d566fed31b83833ad15c77cd8abd23b0377a07287bd0947d46d8149575",
+      "size_bytes": 11317
+    },
+    {
+      "file": "tools/screenshots.py",
+      "sha256": "13e32f611f71f9a05c7ddcb1f5ce06c9c64290926c3b2f327af5cb3b8c1d2865",
+      "size_bytes": 8740
+    },
+    {
+      "file": "tools/search_test.py",
+      "sha256": "8eb99341f8924e6f01801768bf100f697ec4882370478d920db07752711cf95d",
+      "size_bytes": 5696
+    },
+    {
+      "file": "tools/share_switch_test.py",
+      "sha256": "70b816eacd794c68923ddb7d7db826f97d680b067cb5b90db9b13e71d8b39ed0",
+      "size_bytes": 3811
+    },
+    {
+      "file": "tools/shot.py",
+      "sha256": "7acd6f6cda85d75f92af85185e0a6c4079fec97ad0f7717752a2165d91187573",
+      "size_bytes": 2699
+    },
+    {
+      "file": "tools/smoke_test.py",
+      "sha256": "bfb707db29c8dfa4f6793fbbfa5b7f73ad7f12ba39ab7360ac6f9e91cdfad3f3",
+      "size_bytes": 10916
+    },
+    {
+      "file": "tools/sse_test.py",
+      "sha256": "c422d29f10271d99a6c7bff7cf20b6aa67c9ab2d4299a704eb9bc3d0bda34788",
+      "size_bytes": 8041
+    },
+    {
+      "file": "tools/test_support.py",
+      "sha256": "3bf8fc24fdaa5e0bb43a09d9701342d634b44431082fafd03765d389224caab8",
+      "size_bytes": 6638
+    },
+    {
+      "file": "tools/theme_flash_test.py",
+      "sha256": "2697e0c9b773ddb1269e266184fc60f78bc3047c949c08fe81f29f1ea66e349a",
+      "size_bytes": 6313
+    },
+    {
+      "file": "tools/thumb_test.py",
+      "sha256": "1fb69ab968a5d8afb9c4c5443dac35cc12fc40ce7bb3daef507f7afcb135939b",
+      "size_bytes": 10920
+    },
+    {
+      "file": "tools/ui_detail_test.py",
+      "sha256": "3d46c92b486a92474b4ccdea0d5b9022f4a8edc811d5c02a5742db2d3fdb4f3c",
+      "size_bytes": 10177
+    },
+    {
+      "file": "tools/ui_test.py",
+      "sha256": "a80490b35960e3626e9e50b52fc3279379669db43114f10206bc155c859ea913",
+      "size_bytes": 19078
+    },
+    {
+      "file": "tools/v7_assets_test.py",
+      "sha256": "451330d4db4ef5decc8b8ca5a448d5f75854cdd87537d84a36397f0ae5543bd0",
+      "size_bytes": 4510
+    },
+    {
+      "file": "tools/v7_browser_test.py",
+      "sha256": "cf6c9c418f4afb9916091f4d2cebc27be85371cab4ad928a0dedabbc79cf4d13",
+      "size_bytes": 32183
+    },
+    {
+      "file": "tools/v7_build_test.py",
+      "sha256": "7808b4a12a851eb5e4f513f3b61192f7a4ca99b6de6f4325777ec1558b42e47b",
+      "size_bytes": 22530
+    },
+    {
+      "file": "tools/v7_chat_frontend_test.js",
+      "sha256": "0cf24c0d00c30a2f6fd332943035754b1ad2bd0bd5270fd3205e7751da497a2f",
+      "size_bytes": 9833
+    },
+    {
+      "file": "tools/v7_chat_layout_test.py",
+      "sha256": "25e6dec73c1925a8d312d4f9adbabef52733af0472886e374e0b490febbe920b",
+      "size_bytes": 11144
+    },
+    {
+      "file": "tools/v7_chat_test.py",
+      "sha256": "546d8082d4e6372c622df7f3d835dd0f465835d66bc6a084c939e35ef4fb2bac",
+      "size_bytes": 22300
+    },
+    {
+      "file": "tools/v7_exe_test.py",
+      "sha256": "2e353b94566b5c57589354a8e21911ddc4e16451007a5cc2ec2c1d201f81fc03",
+      "size_bytes": 18709
+    },
+    {
+      "file": "tools/v7_files_frontend_test.js",
+      "sha256": "28c427c16a5efd82dbe5494097d620317f9d7f344f6bb249e94fc9dcc5e00b31",
+      "size_bytes": 30226
+    },
+    {
+      "file": "tools/v7_files_test.py",
+      "sha256": "4b3eada960f03241a14adbd9bb13d127cd58c5f61b7236a27969e4ca5225d44a",
+      "size_bytes": 15232
+    },
+    {
+      "file": "tools/v7_security_test.py",
+      "sha256": "0c5fe16bbfc1bef428195acd80c1a5417029f5c4b628eade9e581e4764d86c68",
+      "size_bytes": 25463
+    },
+    {
+      "file": "tools/v7_startup_temp_test.py",
+      "sha256": "59238778a96c98f6c0eacacf3f01ee672a12239c1d4ec039de22f29fbb743b81",
+      "size_bytes": 15288
+    },
+    {
+      "file": "tools/windows_job.py",
+      "sha256": "4f7de6d1fb2ad1188c83de01fce8586b13f525d9ebe5238ffba689a370f94038",
+      "size_bytes": 3099
+    },
+    {
+      "file": "tools/zip_test.py",
+      "sha256": "36e4e012ebfb71b9bf07cda017df7434c8cacf4395fc4dfcb3199a85d6cfd1d2",
+      "size_bytes": 9212
+    },
+    {
+      "file": "ui/__init__.py",
+      "sha256": "92afe684d28b24e681c7b71ddcfb9bcf683917904f82a66b9f09db0bf96c8d9d",
+      "size_bytes": 52
+    },
+    {
+      "file": "ui/context_menu.py",
+      "sha256": "4b1e4a91a5ccfb0b464c20ae669da29da3dc14695133d688cb13559c57ac740d",
+      "size_bytes": 3151
+    },
+    {
+      "file": "ui/icon.py",
+      "sha256": "6e7506ebbcd1d61256a1a6354a0636239f2f34fcd850c6f464a9c3848d21acd5",
+      "size_bytes": 1568
+    },
+    {
+      "file": "ui/main_window.py",
+      "sha256": "bb0637e29f8957b1b654ab152bbefe652574d45382bab6cf6f1e273430b16bf4",
+      "size_bytes": 52803
+    },
+    {
+      "file": "ui/qr.py",
+      "sha256": "3615eb18a0f92e45466f3e1b7edcd57462f1f05c73aac6777e375569353ed3ac",
+      "size_bytes": 1108
+    },
+    {
+      "file": "ui/single_instance.py",
+      "sha256": "b476caff6040a0010c7d4afceadc7ca51621f19da784725b7bf8dac65501cfac",
+      "size_bytes": 10264
+    },
+    {
+      "file": "ui/style.py",
+      "sha256": "090c4e38670a4bd903fccde70a6bac4f4b8ec0bd556c003501b78fa9529b37a4",
+      "size_bytes": 9419
+    },
+    {
+      "file": "ui/widgets.py",
+      "sha256": "a1967a8362b2e6f86af6c9c1555d9b28bbfd5442993212bfe0821943262d063d",
+      "size_bytes": 258
+    },
+    {
+      "file": "web/app.css",
+      "sha256": "ea5e9c242863086205e7e0032346424aa3c33f2d2b15495bf8a5b2135dccf93d",
+      "size_bytes": 52803
+    },
+    {
+      "file": "web/files-search.css",
+      "sha256": "624f41df022808ae35423b5b80c0a18d73f46af78f86b1645d924552890a5c20",
+      "size_bytes": 2090
+    },
+    {
+      "file": "web/js/00-core.js",
+      "sha256": "584ea38c9afcd79e4ef23be82586d1a0c575e0bcb3a631faba5d90dd8a1d02cd",
+      "size_bytes": 2709
+    },
+    {
+      "file": "web/js/10-icons.js",
+      "sha256": "d7aaef88218be7629ec5fc7a244512978c26e4b3a2ffd67b8a1aadced8fb46f8",
+      "size_bytes": 5805
+    },
+    {
+      "file": "web/js/20-appearance.js",
+      "sha256": "6e265f770804c056ddd06419832be4abe0a8354edd1a88ec5587a39b55046d8e",
+      "size_bytes": 7190
+    },
+    {
+      "file": "web/js/30-ui.js",
+      "sha256": "d206190b23985de51109a9751f9ffc3e7963b4febe5ffdf05e2377a3480feddf",
+      "size_bytes": 8242
+    },
+    {
+      "file": "web/js/40-api.js",
+      "sha256": "4d2354f221a4650914fc667cee486dbb6003318761b154e9720b11cd97a74ed9",
+      "size_bytes": 3444
+    },
+    {
+      "file": "web/js/50-files.js",
+      "sha256": "006edba49063e0154847c164a297ed85bf1776e1e69ad3dbeb7e6fb3be45eb0a",
+      "size_bytes": 31260
+    },
+    {
+      "file": "web/js/60-upload.js",
+      "sha256": "eb28810b0ac42829317f5cf39f147f2b14e9371309868fb59e25595ba052b869",
+      "size_bytes": 14554
+    },
+    {
+      "file": "web/js/70-lightbox.js",
+      "sha256": "acee4e00c07cf3c72723b783f02e2cc136cde1b581896521f11fb67b1b5432ce",
+      "size_bytes": 1625
+    },
+    {
+      "file": "web/js/72-files-page.js",
+      "sha256": "e89dfb7ae4afd34241ea4f4b3413a3927086596c7505657dbb37ed5284b9f1b7",
+      "size_bytes": 3096
+    },
+    {
+      "file": "web/js/80-chat-list.js",
+      "sha256": "564f6f96c3cbbc33a8297c3cf8e22eb811be04e60b86842e59ee7da5176a229f",
+      "size_bytes": 6357
+    },
+    {
+      "file": "web/js/85-chat-room.js",
+      "sha256": "10e39fd7fa39bc05dcbef8203b47affba645916d601ee4dd0ce458df9c56bb9e",
+      "size_bytes": 31451
+    },
+    {
+      "file": "web/js/88-login.js",
+      "sha256": "2455268268926ffb58fe4de7c6d59821e93ce605edaf45985c6aa426c7788bc4",
+      "size_bytes": 1491
+    },
+    {
+      "file": "web/js/90-boot.js",
+      "sha256": "fd2f3603efb7395b925a5460b8cd8da5e7942ca820a3532dc7ae567ca058faef",
+      "size_bytes": 2967
+    },
+    {
+      "file": "web/pages/chat_list.html",
+      "sha256": "221bd39d23b0511f893b56cc2e69f7c3a88d5a538ae3b31ff9e7efa131d890e7",
+      "size_bytes": 1438
+    },
+    {
+      "file": "web/pages/chat_room.html",
+      "sha256": "6288f6996e6ff038bf157c67dc4104168521bc655c00f3ba3c75d0558e6f1ae7",
+      "size_bytes": 2540
+    },
+    {
+      "file": "web/pages/files.html",
+      "sha256": "6225bb5d5a855f3167d4c1997d7fae725c5106ab2a3854e68f4639049b4f9d6b",
+      "size_bytes": 7235
+    },
+    {
+      "file": "web/pages/layout.html",
+      "sha256": "380930e14d342f9e8d2d1874e17901ebc0d9e4262baba4d7e2cafa0559b4d1ec",
+      "size_bytes": 2728
+    },
+    {
+      "file": "web/pages/login.html",
+      "sha256": "7b029b0dbaf3ddaa1911633d8282c2d7894845b15196f2e41846b5bf9ba1c7dc",
+      "size_bytes": 2135
+    },
+    {
+      "file": "web/theme-boot.js",
+      "sha256": "59e15fbaa241aba69d9d4c32554c94ba7abfe0ab498a89365f1d9a771aba05eb",
+      "size_bytes": 717
+    },
+    {
+      "file": "web/tokens.css",
+      "sha256": "81b58a68c86a32097413a034d6afbb4020114fedb28631340769447eb930a311",
+      "size_bytes": 11413
+    },
+    {
+      "file": "webassets.py",
+      "sha256": "545f4cf7117f5feb26a3b5533ffe2cb76b2afd15cb6edeedb0d9b6201058286d",
+      "size_bytes": 326510
+    }
+  ],
+  "source_files": 89
+}

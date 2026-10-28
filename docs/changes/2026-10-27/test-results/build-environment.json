@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-10-28T01:57:28+08:00",
+  "python": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "version": "3.12.1",
+  "architecture": "AMD64",
+  "staging": "E:\\LanShare-builds\\build-2lqxw_37",
+  "venv": "E:\\LanShare-builds\\build-22jznups\\env",
+  "extra_images": true,
+  "packages": {
+    "altgraph": "0.17.5",
+    "brotli": "1.2.1",
+    "packaging": "26.3",
+    "pefile": "2024.8.26",
+    "pillow": "13.0.0",
+    "pillow-avif-plugin": "1.6.0",
+    "pillow_heif": "1.8.1",
+    "pip": "23.2.1",
+    "pyinstaller": "6.22.3",
+    "pyinstaller-hooks-contrib": "2026.9",
+    "PyQt5": "5.15.11",
+    "PyQt5-Qt5": "5.15.2",
+    "PyQt5_sip": "12.20.0",
+    "pywin32-ctypes": "0.2.3",
+    "segno": "1.6.6",
+    "setuptools": "84.2.1"
+  }
+}

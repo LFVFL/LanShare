@@ -22,6 +22,9 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
 
@@ -50,7 +53,7 @@ def check(label, ok, detail=""):
 
 
 def main():
-    share = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-flash-"))
+    share = Path(TEST_ENV.temporary_dir(prefix="lan6-flash-"))
     (share / "docs").mkdir()
     (share / "docs" / "a.txt").write_text("hi", encoding="utf-8")
     (share / "b.txt").write_text("hi", encoding="utf-8")
@@ -61,15 +64,16 @@ def main():
         print("服务起不来:", result)
         return 1
 
+    chrome_profile = str(TEST_ENV.root / "chrome-flash-profile")
     chrome = subprocess.Popen([
         CHROME, "--headless=new", "--disable-gpu", "--no-sandbox", "--hide-scrollbars",
-        "--remote-debugging-port=%d" % CDP_PORT,
-        "--user-data-dir=%s" % r"C:\Windows\TEMP\lan6\flash-profile",
+        "--remote-debugging-port=0",
+        "--user-data-dir=%s" % chrome_profile,
         "http://127.0.0.1:%d/" % PORT,
     ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     try:
-        wait_port(CDP_PORT, 25)
+        CDP_PORT = TEST_ENV.wait_browser(chrome, chrome_profile)
         cdp = CDP(page_ws(CDP_PORT))
         cdp.call("Page.enable")
         cdp.call("Page.addScriptToEvaluateOnNewDocument", {"source": PROBE})
@@ -132,9 +136,9 @@ def main():
         first = cdp.js("window.__first")
         check("首帧主题是 light", (first or {}).get("theme") == "light", first)
     finally:
-        chrome.terminate()
-        sharer.stop()
-        shutil.rmtree(share, ignore_errors=True)
+        TEST_ENV.stop_process(chrome)
+        sharer.stop(wait=True, timeout=10)
+        TEST_ENV.remove_test_dir(share)
 
     print("\n结果: 通过 %d 项" % len(PASSED))
     if FAILED:

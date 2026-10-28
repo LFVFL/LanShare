@@ -1,0 +1,27 @@
+/* File search keeps the established glass theme and works without hover. */
+.file-search-controls { flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.file-search-row { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.file-search-row .search { flex: 1 1 180px; min-width: 80px; }
+.file-search-row .search input { width: 100%; min-width: 0; }
+.file-search-scope { flex: 0 0 auto; min-width: 144px; max-width: 100%; height: 36px; padding: 0 7px; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface-2); color: var(--text-2); font: inherit; cursor: pointer; }
+.file-search-status { color: var(--text-3); font-size: 11px; min-height: 0; overflow-wrap: anywhere; }
+.file-search-status:empty { display: none; }
+.topbar { flex-wrap: wrap; }
+.row-actions { display: inline-flex; align-items: center; gap: 4px; flex: none; width: 68px; }
+.row-preview { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; flex: none; border: 0; border-radius: var(--r-xs); background: transparent; color: var(--text-3); text-decoration: none; cursor: pointer; opacity: .65; }
+.row-preview:hover, .row-preview:focus-visible { background: var(--surface-3); color: var(--text); opacity: 1; }
+.row-preview:disabled { opacity: .3; cursor: not-allowed; }
+.col-more { width: 112px; }
+.row-hit-main { text-decoration: none; }
+.row-hit-main:hover .row-name { color: var(--brand); }
+.tile-actions { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+.tile-actions .row-dl, .tile-actions .row-preview, .tile-actions .row-more { opacity: 1; }
+.tile-actions .row-preview:disabled { opacity: .3; }
+@media (max-width: 900px) and (min-width: 701px) { .topbar .file-search-controls { order: 5; flex-basis: 100%; } }
+@media (max-width: 700px) {
+  .mobile-search .file-search-controls { gap: 8px; }
+  .mobile-search .file-search-scope { align-self: flex-start; }
+  .row-preview { opacity: 1; width: 36px; height: 36px; }
+  .row-actions { width: 76px; }
+  .list .row { gap: 6px; }
+}

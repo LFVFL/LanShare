@@ -54,10 +54,11 @@ class ListingMixin:
                 return kind
         return 'other'
 
-    def build_listing(self, current_path, limit=0, offset=0):
+    def build_listing(self, current_path, limit=0, offset=0, sort='name',
+                      order='asc', query=''):
         """返回一份目录清单，HTML 页面与 /api/list 共用。
 
-        limit>0 时只返回这一页（按名字排序后切片），并告诉前端总条数与是否还有下一页；
+        limit>0 时只返回这一页（先全局排序/筛选再切片），并告诉前端总条数与是否还有下一页；
         默认不传就是全部，老调用方行为不变。
         """
         shared_path = Path(self.shared_path).resolve()
@@ -65,10 +66,18 @@ class ListingMixin:
         if not is_path_within(current_path, shared_path):
             current_path = shared_path
 
+        sort = sort if sort in ('name', 'size', 'mtime') else 'name'
+        order = order if order in ('asc', 'desc') else 'asc'
+        query = str(query or '').strip()
+        needle = query.casefold()
         entries = []
         try:
             for item in current_path.iterdir():
                 try:
+                    if needle and needle not in item.name.casefold():
+                        continue
+                    if is_link_or_reparse(item):
+                        continue
                     if not is_path_within(item.resolve(), shared_path):
                         continue
                     stat = item.stat()
@@ -77,6 +86,7 @@ class ListingMixin:
                         'name': item.name,
                         'enc': urllib.parse.quote(item.name),
                         'kind': self.entry_kind(item),
+                        'previewable': can_preview(item) if not is_dir else False,
                         'size': 0 if is_dir else stat.st_size,
                         'sizeText': '-' if is_dir else self.format_size(stat.st_size),
                         'mtime': int(stat.st_mtime * 1000),
@@ -88,21 +98,31 @@ class ListingMixin:
         except (PermissionError, OSError):
             pass
 
-        entries.sort(key=lambda e: e['name'].lower())
+        entries.sort(key=lambda e: (e['name'].casefold(), e['name']))
+        if sort == 'name':
+            entries.sort(key=lambda e: (e['name'].casefold(), e['name']),
+                         reverse=order == 'desc')
+        else:
+            entries.sort(key=lambda e: e[sort], reverse=order == 'desc')
+        entries.sort(key=lambda e: e['kind'] != 'folder')
         total = len(entries)
         try:
-            limit = int(limit or 0)
+            limit = min(1000, int(limit or 0))
             offset = max(0, int(offset or 0))
         except (TypeError, ValueError):
             limit, offset = 0, 0
         page = entries[offset:offset + limit] if limit > 0 else entries[offset:]
         return {
             'path': str(current_path),
+            'root': str(shared_path),
             'entries': page,
             'breadcrumb': self.get_breadcrumb(current_path),
             'total': total,
             'offset': offset,
             'hasMore': offset + len(page) < total,
+            'sort': sort,
+            'order': order,
+            'query': query,
         }
 
     def get_breadcrumb(self, current_path):
@@ -159,71 +179,101 @@ class ListingMixin:
             self.send_api_error('关键词太长', 400)
             return
 
+        scope = self.q('scope', 'subtree')
+        if scope not in ('current', 'subtree', 'share'):
+            self.send_api_error('搜索范围不合法', 400)
+            return
+        sort = self.q('sort', 'name')
+        order = self.q('order', 'asc')
+        sort = sort if sort in ('name', 'size', 'mtime') else 'name'
+        order = order if order in ('asc', 'desc') else 'asc'
         shared_path = Path(self.shared_path).resolve()
-        root = Path(urllib.parse.unquote(self.q('path', self.shared_path))).resolve()
+        root = (shared_path if scope == 'share' else
+                Path(urllib.parse.unquote(self.q('path', self.shared_path))).resolve())
         if not is_path_within(root, shared_path) or not root.is_dir():
             self.send_json_response(
                 {'success': False, 'message': '路径不可访问'}, 403)
             return
 
-        needle_lc = needle.lower()
+        needle_lc = needle.casefold()
         hits = []
         scanned = 0
         truncated = False
-        deadline = time.time() + self.SEARCH_MAX_SECONDS
+        deadline = time.monotonic() + self.SEARCH_MAX_SECONDS
+        pending = [root]
+        reason = ''
 
-        for cur_dir, dirs, files in os.walk(root):
-            # 跳过常见的依赖/版本库目录，别在这上面浪费时间
-            dirs[:] = [d for d in dirs
-                       if d not in self.SEARCH_SKIP_DIRS and not d.startswith('.')]
-            dir_path = Path(cur_dir)
-            for name in dirs + files:
-                if needle_lc not in name.lower():
-                    continue
-                item = dir_path / name
-                try:
-                    if not is_path_within(item.resolve(), shared_path):
-                        continue
-                    stat = item.stat()
-                    is_dir = item.is_dir()
-                    try:
-                        rel_dir = str(dir_path.relative_to(shared_path)).replace('\\', '/')
-                    except ValueError:
-                        rel_dir = ''
-                    hits.append({
-                        'name': name,
-                        'enc': urllib.parse.quote(name),
-                        'dir': rel_dir,
-                        'dirHref': '/dir?path=' + urllib.parse.quote(str(dir_path)),
-                        'encPath': urllib.parse.quote(
-                            (rel_dir + '/' + name) if rel_dir else name),
-                        'kind': self.entry_kind(item),
-                        'size': 0 if is_dir else stat.st_size,
-                        'sizeText': '-' if is_dir else self.format_size(stat.st_size),
-                        'mtime': int(stat.st_mtime * 1000),
-                        'timeText': time.strftime('%m-%d %H:%M',
-                                                  time.localtime(stat.st_mtime)),
-                    })
-                except OSError:
-                    continue
-                if len(hits) >= self.SEARCH_MAX_RESULTS:
-                    truncated = True
-                    break
+        while pending and not truncated:
+            dir_path = pending.pop()
+            try:
+                with os.scandir(dir_path) as items:
+                    for entry in items:
+                        if scanned >= self.SEARCH_MAX_SCAN or time.monotonic() > deadline:
+                            truncated = True
+                            reason = 'scan_limit' if scanned >= self.SEARCH_MAX_SCAN else 'time_limit'
+                            break
+                        scanned += 1
+                        item = Path(entry.path)
+                        try:
+                            # Do not descend through links, including Windows junctions.
+                            if is_link_or_reparse(item):
+                                continue
+                            if not is_path_within(item.resolve(), shared_path):
+                                continue
+                            is_dir = entry.is_dir(follow_symlinks=False)
+                            if is_dir:
+                                if entry.name in self.SEARCH_SKIP_DIRS or entry.name.startswith('.'):
+                                    continue
+                                if scope != 'current':
+                                    pending.append(item)
+                            if needle_lc not in entry.name.casefold():
+                                continue
+                            stat = entry.stat(follow_symlinks=False)
+                            rel_dir = str(dir_path.relative_to(shared_path)).replace('\\', '/')
+                            if rel_dir == '.':
+                                rel_dir = ''
+                            hits.append({
+                                'name': entry.name,
+                                'enc': urllib.parse.quote(entry.name),
+                                'dir': rel_dir,
+                                'path': str(dir_path),
+                                'dirHref': '/dir?path=' + urllib.parse.quote(str(dir_path)),
+                                'encPath': urllib.parse.quote(
+                                    (rel_dir + '/' + entry.name) if rel_dir else entry.name),
+                                'kind': self.entry_kind(item),
+                                'previewable': can_preview(item) if not is_dir else False,
+                                'size': 0 if is_dir else stat.st_size,
+                                'sizeText': '-' if is_dir else self.format_size(stat.st_size),
+                                'mtime': int(stat.st_mtime * 1000),
+                                'timeText': time.strftime('%m-%d %H:%M', time.localtime(stat.st_mtime)),
+                            })
+                        except (OSError, ValueError):
+                            continue
+                        if len(hits) >= self.SEARCH_MAX_RESULTS:
+                            truncated, reason = True, 'result_limit'
+                            break
+            except OSError:
+                continue
 
-            scanned += len(dirs) + len(files)
-            if (truncated or scanned >= self.SEARCH_MAX_SCAN
-                    or time.time() > deadline):
-                truncated = truncated or True
-                break
-
-        hits.sort(key=lambda e: (e['dir'], e['name'].lower()))
+        hits.sort(key=lambda e: (e['name'].casefold(), e['name'], e['dir']))
+        if sort == 'name':
+            hits.sort(key=lambda e: (e['name'].casefold(), e['name'], e['dir']),
+                      reverse=order == 'desc')
+        else:
+            hits.sort(key=lambda e: e[sort], reverse=order == 'desc')
+        hits.sort(key=lambda e: e['kind'] != 'folder')
         self.send_json_response({
             'success': True,
             'query': needle,
             'root': str(root),
+            'shareRoot': str(shared_path),
+            'scope': scope,
+            'sort': sort,
+            'order': order,
             'count': len(hits),
             'scanned': scanned,
             'truncated': truncated,
+            'truncatedReason': reason,
             'entries': hits,
         })
 

@@ -1,0 +1,34 @@
+{
+  "timestamp": "2026-10-28T01:27:57.375346+08:00",
+  "runtime": "3.12.1",
+  "environment": "virtualenv",
+  "tests": 5,
+  "success": true,
+  "failures": 0,
+  "errors": 0,
+  "cases": [
+    {
+      "name": "__main__.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.AssetVersionTests.test_no_assets_uses_zero_version",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.AssetVersionTests.test_same_contents_and_missing_empty_attributes_are_stable",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.AssetVersionTests.test_tags_and_lengths_separate_empty_bundles_and_boundaries",
+      "status": "passed"
+    }
+  ],
+  "runtimePath": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "command": "python -B tools/v7_assets_test.py",
+  "exitCode": 0
+}

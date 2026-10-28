@@ -18,6 +18,9 @@ except Exception:
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 OK, WARN, BAD = "  [OK]  ", "  [WARN]", "  [FAIL]"
 problems = []
 
@@ -123,10 +126,14 @@ def check_method_signatures():
 
 
 def check_optional():
-    print("\n[4] 可选依赖（缺了也能跑，只是少点能力）")
+    print("\n[4] 图片运行时与可选依赖")
+    try:
+        pillow = importlib.import_module('PIL')
+        line(OK, "PIL %s —— 必装图片解码与缩略图运行时" % getattr(pillow, '__version__', '?'))
+    except ImportError:
+        line(BAD, "Pillow 没装 —— 新聊天图片上传需要 requirements.txt 中的 Pillow")
     for mod, why in (("brotli", "静态资源用 br 压缩（比 gzip 再省约 6%）"),
-                     ("segno", "桌面端生成二维码"),
-                     ("PIL", "服务端补生成聊天图片缩略图")):
+                     ("segno", "桌面端生成二维码")):
         try:
             m = importlib.import_module(mod)
             ver = getattr(m, "__version__", "?")
@@ -184,14 +191,14 @@ _JS_GLOBALS = {
     'fetch', 'JSON', 'Object', 'Array', 'String', 'Number', 'Math', 'Date', 'Promise',
     'encodeURIComponent', 'decodeURIComponent', 'encodeURI', 'decodeURI', 'parseInt',
     'parseFloat', 'isNaN', 'alert', 'confirm', 'console', 'Set', 'Map', 'WeakMap',
-    'URL', 'URLSearchParams', 'FileReader', 'Image', 'Event', 'CustomEvent', 'FormData',
+    'URL', 'URLSearchParams', 'FileReader', 'XMLHttpRequest', 'Image', 'Event', 'CustomEvent', 'FormData',
     'Blob', 'File', 'localStorage', 'sessionStorage', 'navigator', 'location', 'history',
     'requestAnimationFrame', 'cancelAnimationFrame', 'Intl', 'RegExp', 'Error', 'Boolean',
     'Symbol', 'structuredClone', 'btoa', 'atob', 'getComputedStyle', 'matchMedia',
     'crypto', 'queueMicrotask', 'TextEncoder', 'TextDecoder', 'AbortController',
     'EventSource', 'WebSocket', 'MutationObserver', 'IntersectionObserver',
     'ResizeObserver', 'Element', 'Node', 'NodeList', 'HTMLElement', 'Audio',
-    'performance', 'screen', 'devicePixelRatio', 'Lan',
+    'performance', 'screen', 'devicePixelRatio', 'ArrayBuffer', 'Uint8Array', 'Lan',
 }
 _JS_KEYWORDS = {
     'if', 'for', 'while', 'switch', 'catch', 'return', 'typeof', 'function', 'new',

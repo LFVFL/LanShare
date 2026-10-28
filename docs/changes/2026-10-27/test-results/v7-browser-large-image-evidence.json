@@ -1,0 +1,9 @@
+{
+  "source_bytes": 21870054,
+  "chunks": 21,
+  "sent_messages": 1,
+  "preview_width": 1920,
+  "original_download_sha256": "a3d1051a48bb3023d8cc61d026d0efe0934fc3d96baeb78e5c49215698fe4a4c",
+  "failed_send_reused_media": true,
+  "new_draft_preserved": true
+}

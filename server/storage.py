@@ -17,13 +17,55 @@ UPLOAD_STATE_MAX = 500
 
 ZIP_DOWNLOAD_STORE = {}
 ZIP_STORE_LOCK = threading.Lock()
+ZIP_RETIRED_PATHS = set()
 
 # 当前共享目录：换成"全局可改"的值，handler 每次请求都读它，
 # 这样运行中切换目录立刻生效（不用重启服务）。
-SHARE_STATE = {'path': None}
+SHARE_STATE = {'path': None, 'generation': 0}
+SHARE_STATE_LOCK = threading.RLock()
 
 # 聊天数据结构的读写锁（房间字典本身在 chat_store 里）
 chat_lock = threading.Lock()
+
+
+def shared_root_snapshot(fallback=None):
+    with SHARE_STATE_LOCK:
+        root = SHARE_STATE.get('path') or fallback
+        return (str(Path(root).resolve()) if root else None,
+                SHARE_STATE['generation'])
+
+
+def _retire_zip_paths(paths):
+    for path in paths:
+        try:
+            Path(path).unlink(missing_ok=True)
+        except OSError:
+            # Windows cannot unlink an open download; retry after it closes.
+            with ZIP_STORE_LOCK:
+                ZIP_RETIRED_PATHS.add(str(path))
+
+
+def set_shared_root(path):
+    """Publish a validated root and revoke ZIP tasks from the previous root."""
+    target = Path(path).resolve() if path else None
+    if target is None or not target.is_dir():
+        raise ValueError('Shared directory does not exist')
+    target = str(target)
+    retired = []
+    with SHARE_STATE_LOCK:
+        if SHARE_STATE['path'] == target:
+            return SHARE_STATE['generation']
+        SHARE_STATE['path'] = target
+        SHARE_STATE['generation'] += 1
+        generation = SHARE_STATE['generation']
+        with ZIP_STORE_LOCK:
+            for info in ZIP_DOWNLOAD_STORE.values():
+                info['invalidated'] = True
+                if info.get('path'):
+                    retired.append(info['path'])
+            ZIP_DOWNLOAD_STORE.clear()
+    _retire_zip_paths(retired)
+    return generation
 
 
 def _upload_key(base_path, filename):
@@ -63,23 +105,19 @@ def cleanup_sessions():
 
 
 def cleanup_zip_store():
-    """清理过期的打包任务。
-
-    现在打包是流式的，不落临时文件，所以这里只是把过期的"清单"丢掉；
-    老版本留下的 'path' 字段如果还在，顺手把文件删掉。
-    """
+    """清理过期清单及磁盘缓存，并重试删除曾被 Windows 占用的旧缓存。"""
     now = time.time()
-    for zid in list(ZIP_DOWNLOAD_STORE.keys()):
-        info = ZIP_DOWNLOAD_STORE.get(zid)
-        if not info:
-            continue
-        if now - info.get('time', 0) > ZIP_EXPIRE_SECONDS:
-            if info.get('path'):
-                try:
-                    Path(info['path']).unlink(missing_ok=True)
-                except Exception:
-                    pass
-            ZIP_DOWNLOAD_STORE.pop(zid, None)
+    with ZIP_STORE_LOCK:
+        retired = list(ZIP_RETIRED_PATHS)
+        ZIP_RETIRED_PATHS.clear()
+        for zid, info in list(ZIP_DOWNLOAD_STORE.items()):
+            if (not info.get('active')
+                    and now - info.get('time', 0) > ZIP_EXPIRE_SECONDS):
+                info['invalidated'] = True
+                if info.get('path'):
+                    retired.append(info['path'])
+                ZIP_DOWNLOAD_STORE.pop(zid, None)
+    _retire_zip_paths(retired)
 
 
 def enforce_zip_cache(keep_path=None, max_bytes=None):
@@ -119,6 +157,8 @@ def enforce_zip_cache(keep_path=None, max_bytes=None):
             if total - freed <= limit:
                 break
             if keep and os.path.abspath(path) == keep:
+                continue
+            if ZIP_DOWNLOAD_STORE.get(zid, {}).get('active'):
                 continue
             try:
                 os.unlink(path)

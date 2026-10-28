@@ -1,0 +1,101 @@
+{
+  "timestamp": "2026-10-28T11:10:21.907061+08:00",
+  "success": true,
+  "method": "CPython os.replace on same-volume self-created files; MOVEFILE_REPLACE_EXISTING only; no COPY_ALLOWED",
+  "execution_context": "approved actual-user process, non-elevated Medium integrity",
+  "caller_integrity_rid": 8192,
+  "source": "E:\\LanShare-builds\\build-7ihfiggx\\_integrity-replace-probe-0rc06gwm\\replace-source.bin",
+  "destination": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\.lan7-integrity-probe-59ded5a1042c4d3c9b5fa6d3ecd0d7aa.bin",
+  "source_sha256": "bcbb5d33c7603b9016850b46e31dee49c309c3e46e3c859ee215360b2e8aafce",
+  "old_destination_sha256": "bf9ca11fef6845c0e361c552ca781c36dbdbe41cfc106401a5cf426070276eed",
+  "destination_sha256_after": "bcbb5d33c7603b9016850b46e31dee49c309c3e46e3c859ee215360b2e8aafce",
+  "source_labels_before": [],
+  "destination_labels_before": [
+    {
+      "integrity": "low",
+      "rid": 4096,
+      "flags": 16,
+      "policy_mask": 1
+    }
+  ],
+  "destination_labels_after": [],
+  "source_metadata_preserved": true,
+  "destination_old_metadata_replaced": true,
+  "checks": {
+    "same_volume": true,
+    "preexisting_destination_low": true,
+    "source_owner_is_caller": true,
+    "preexisting_destination_owner_is_caller": true,
+    "source_removed_by_replace": true,
+    "source_bytes_preserved": true,
+    "replaced_old_destination_bytes": true,
+    "source_file_id_preserved": true,
+    "old_destination_file_id_replaced": true,
+    "source_owner_preserved": true,
+    "source_group_preserved": true,
+    "source_dacl_preserved": true,
+    "source_security_descriptor_preserved": true,
+    "source_labels_preserved": true,
+    "destination_after_not_low": true,
+    "destination_parent_security_unchanged": true,
+    "owned_destination_cleaned": true
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "context": "approved",
+      "new_destination_parent": "workspace/_diag",
+      "destination_labels": [],
+      "replacement_executed": false,
+      "result": "Stopped at required-Low destination precondition"
+    },
+    {
+      "attempt": 2,
+      "context": "default sandbox exec",
+      "new_destination_parent": "workspace/_diag",
+      "caller_integrity_rid": 8192,
+      "destination_labels": [],
+      "replacement_executed": false,
+      "result": "Preparation only; no Low inheritance in this directory"
+    },
+    {
+      "attempt": 3,
+      "context": "approved",
+      "new_destination_parent": "seventh-version delivery directory",
+      "destination_labels": [
+        {
+          "integrity": "low",
+          "rid": 4096,
+          "flags": 16,
+          "policy_mask": 1
+        }
+      ],
+      "replacement_executed": true,
+      "success": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": "diagnosis\\integrity-replace-probe.attempt1.summary.json",
+      "sha256": "efc4c3a2d7a20343829551025cd32e279abaf0a3fb7c8733d16f03810b6b1edf"
+    },
+    {
+      "path": "diagnosis\\integrity-replace-probe.raw.json",
+      "sha256": "99f50b3fe7d9ce78aa7364326e2b5b5454871f70a61d8ca06b7d4d1dd45dda40"
+    },
+    {
+      "path": "diagnosis\\integrity-replace-sandbox-prepare.raw.json",
+      "sha256": "c34b2a5ae6b21be82ef0e075d5fa8ecc837ab5c135066ffd7b89817bb2b9dc66"
+    },
+    {
+      "path": "diagnosis\\integrity-replace-existing.raw.json",
+      "sha256": "c7ddd361e318d2a8a04c434310f18519bf57959f9dbb3d3253672ff33ba0c85d"
+    }
+  ],
+  "label_note": "Absent labels mean implicit Medium under Windows MIC. No explicit label or ACL modification attempted.",
+  "scope": "Only new owned harmless probe files. Original EXE, settings, registry, environment and existing services untouched. Exact owned .bin destination removed after measurement.",
+  "limitations": [
+    "This is a file-object replacement probe, not final EXE startup acceptance.",
+    "Post-exit persistence is not measured for the removed probe; final delivery requires a fresh-context metadata and process-token check."
+  ]
+}

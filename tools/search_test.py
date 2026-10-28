@@ -17,6 +17,9 @@ import urllib.parse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 FAILS = []
 
 BOOT = """
@@ -25,6 +28,9 @@ sys.path.insert(0, r'{root}')
 import lanshare as j
 s = j.FileSharer()
 ok, res = s.start(path=r'{share}', port={port}, password=None, admin_password=None)
+if not ok:
+    print("FAILED", res, flush=True)
+    raise SystemExit(2)
 print('READY' if ok else 'FAILED', flush=True)
 while True:
     time.sleep(1)
@@ -75,7 +81,7 @@ def search(port, q, path=""):
 
 def main():
     port = 6278
-    tmp = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-search-"))
+    tmp = Path(TEST_ENV.temporary_dir(prefix="lan6-search-"))
     share = tmp / "share"
     (share / "docs" / "2024").mkdir(parents=True)
     (share / "media").mkdir()
@@ -92,7 +98,7 @@ def main():
     child = subprocess.Popen([sys.executable, str(boot)], stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT, cwd=str(ROOT))
     try:
-        if not wait(port):
+        if not TEST_ENV.wait_server(child, port, share):
             print("服务没起来：")
             child.kill()
             print(child.stdout.read().decode("utf-8", "replace"))
@@ -138,7 +144,7 @@ def main():
             child.wait(5)
         except subprocess.TimeoutExpired:
             child.kill()
-        shutil.rmtree(tmp, ignore_errors=True)
+        TEST_ENV.remove_test_dir(tmp)
 
     print("\n结果:", "全部通过 ✓" if not FAILS else "失败 %d 项" % len(FAILS))
     for f in FAILS:

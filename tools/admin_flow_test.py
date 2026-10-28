@@ -22,6 +22,9 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
 
@@ -60,10 +63,10 @@ def check(label, ok, detail=""):
 def main():
     import subprocess
 
-    share = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-adm-"))
+    share = Path(TEST_ENV.temporary_dir(prefix="lan6-adm-"))
     (share / "docs").mkdir()
     (share / "docs" / "说明.txt").write_text("hello", encoding="utf-8")
-    (ROOT / "lan6-adm-upload.txt").write_text("uploaded by test", encoding="utf-8")
+    (TEST_ENV.root / "lan6-adm-upload.txt").write_text("uploaded by test", encoding="utf-8")
 
     sharer = j.FileSharer()
     ok, result = sharer.start(path=str(share), port=PORT,
@@ -77,15 +80,16 @@ def main():
     # 先发一条消息（发消息不需要管理密码），待会儿删它来验证鉴权
     api(PORT, "POST", "/chat/send", {"room": room_id, "text": "待删除的消息"})
 
+    chrome_profile = str(TEST_ENV.root / "chrome-adm-profile")
     chrome = subprocess.Popen([
         CHROME, "--headless=new", "--disable-gpu", "--no-sandbox", "--hide-scrollbars",
-        "--remote-debugging-port=%d" % CDP_PORT,
-        "--user-data-dir=%s" % r"C:\Windows\TEMP\lan6\adm-profile",
+        "--remote-debugging-port=0",
+        "--user-data-dir=%s" % chrome_profile,
         "http://127.0.0.1:%d/" % PORT,
     ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     try:
-        wait_port(CDP_PORT, 25)
+        CDP_PORT = TEST_ENV.wait_browser(chrome, chrome_profile)
         cdp = CDP(page_ws(CDP_PORT))
         cdp.call("Page.enable")
         cdp.call("DOM.enable")
@@ -183,7 +187,7 @@ def main():
             "nodeId": root["root"]["nodeId"], "selector": "#fileInput"})
         cdp.call("DOM.setFileInputFiles", {
             "nodeId": node["nodeId"],
-            "files": [str(ROOT / "lan6-adm-upload.txt")]})
+            "files": [str(TEST_ENV.root / "lan6-adm-upload.txt")]})
         time.sleep(0.8)
         title = cdp.js("!!document.querySelector('.scrim .modal input')")
         check("选文件时已经不再要密码了", title is False, title)
@@ -312,7 +316,7 @@ def main():
                 check("侧栏入口隐藏", state.get("side") is True, state)
                 check("手机端入口隐藏", state.get("mob") is True, state)
             finally:
-                plain.stop()
+                plain.stop(wait=True, timeout=10)
 
         print("\n[8] 访问密码 + 管理密码同时开（最常见的部署方式）")
         both = j.FileSharer()
@@ -340,7 +344,7 @@ def main():
                 check("此时还不是管理员",
                       cdp.js("Lan.api.ctx.isAdmin") is False,
                       cdp.js("Lan.api.ctx.isAdmin"))
-                (ROOT / "lan6-both-upload.txt").write_text("both", encoding="utf-8")
+                (TEST_ENV.root / "lan6-both-upload.txt").write_text("both", encoding="utf-8")
                 # 走真实路径：先点上传 → 弹密码 → 解锁（此时才打开选择框）→ 选文件
                 cdp.js("""(function(){
                   document.querySelector('[data-upload-pick]').click();
@@ -362,7 +366,7 @@ def main():
                     "nodeId": root2["root"]["nodeId"], "selector": "#fileInput"})
                 cdp.call("DOM.setFileInputFiles", {
                     "nodeId": node2["nodeId"],
-                    "files": [str(ROOT / "lan6-both-upload.txt")]})
+                    "files": [str(TEST_ENV.root / "lan6-both-upload.txt")]})
                 landed = False
                 for _ in range(25):
                     if (share / "lan6-both-upload.txt").exists():
@@ -370,14 +374,14 @@ def main():
                         break
                     time.sleep(0.3)
                 check("两个密码都在时上传成功", landed, "文件没落地")
-                (ROOT / "lan6-both-upload.txt").unlink(missing_ok=True)
+                (TEST_ENV.root / "lan6-both-upload.txt").unlink(missing_ok=True)
             finally:
-                both.stop()
+                both.stop(wait=True, timeout=10)
     finally:
-        chrome.terminate()
-        sharer.stop()
-        shutil.rmtree(share, ignore_errors=True)
-        (ROOT / "lan6-adm-upload.txt").unlink(missing_ok=True)
+        TEST_ENV.stop_process(chrome)
+        sharer.stop(wait=True, timeout=10)
+        TEST_ENV.remove_test_dir(share)
+        (TEST_ENV.root / "lan6-adm-upload.txt").unlink(missing_ok=True)
 
     print("\n结果: 通过 %d 项" % len(PASSED))
     if FAILED:

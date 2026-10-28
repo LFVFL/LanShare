@@ -9,6 +9,9 @@
 *.json  text eol=lf
 *.txt   text eol=lf
 
+# Preserve verification evidence bytes and the hashes recorded across reports.
+docs/changes/**/test-results/*.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
 # 二进制
 *.ico   binary
 *.png   binary

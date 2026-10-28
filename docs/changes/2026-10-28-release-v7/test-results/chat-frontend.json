@@ -1,0 +1,79 @@
+{
+  "kind": "derived_from_runner_log",
+  "timestamp": "2026-10-28T06:43:52.985315+00:00",
+  "runtime": "v24.14.1",
+  "runner": "tools/v7_chat_frontend_test.js",
+  "command": "node tools/v7_chat_frontend_test.js",
+  "scope": "Actual chat module in isolated Node VM with minimal fake DOM plus template/style assertions; not browser rendering.",
+  "tests": 10,
+  "passed": 10,
+  "failures": 0,
+  "success": true,
+  "runner_exit_code": 0,
+  "exit_code_provenance": "Observed successful exec result for the real runner; this report is a later wrapper around its unchanged stdout log, not native runner JSON.",
+  "source_log": {
+    "file": "chat-frontend.log",
+    "bytes": 754,
+    "sha256": "54fa4f74453a8c5d993fda182042bb6e3f138285c14588d301b33d4effd3d1b0"
+  },
+  "sources": [
+    {
+      "file": "web/pages/chat_room.html",
+      "sha256": "1dc5f0167ecdc14869e3ee67002e59b3b61eb956d667848b7c03425aa4cac6d0"
+    },
+    {
+      "file": "web/app.css",
+      "sha256": "b08caa3d5659bc61712e672d22114feaa5d7d2349ebdb90513d27e7ab6621972"
+    },
+    {
+      "file": "web/js/85-chat-room.js",
+      "sha256": "d6fdd53600c29cf10260a1b054f567862d0a37096826758533b1226ce17db24b"
+    },
+    {
+      "file": "tools/v7_chat_frontend_test.js",
+      "sha256": "b1ca6bf6d375030bcb346a36a0e0a514f6eeac4c2b6bdd71aa49914da1d852ac"
+    }
+  ],
+  "cases": [
+    {
+      "name": "network failure preserves the exact text and prepared image",
+      "status": "passed"
+    },
+    {
+      "name": "HTTP error preserves draft and reuses idempotency key on retry",
+      "status": "passed"
+    },
+    {
+      "name": "success clears only the sent draft, not newly typed text",
+      "status": "passed"
+    },
+    {
+      "name": "paste inserts plain text with tabs, spaces and normalized line breaks",
+      "status": "passed"
+    },
+    {
+      "name": "render contract uses pre-wrap and tab-size without the 5MB gate",
+      "status": "passed"
+    },
+    {
+      "name": "delete, clear, reset and stale revisions apply consistently",
+      "status": "passed"
+    },
+    {
+      "name": "composer removes the permanent hints rather than hiding functional controls",
+      "status": "passed"
+    },
+    {
+      "name": "mobile rename moves to the top bar before binding the shared desktop action",
+      "status": "passed"
+    },
+    {
+      "name": "missing image decoder still disables uploads without a help element",
+      "status": "passed"
+    },
+    {
+      "name": "SSE reconnect and polling fallback do not need a visible status element",
+      "status": "passed"
+    }
+  ]
+}

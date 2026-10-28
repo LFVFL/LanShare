@@ -1,0 +1,51 @@
+{
+  "timestamp": "2026-10-28T01:29:15.138765+08:00",
+  "runtime": "3.12.1",
+  "environment": "virtualenv",
+  "tests": 9,
+  "success": true,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "name": "__main__.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.FilesHTTPTests.test_current_filter_finds_files_beyond_unfiltered_first_page",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.FilesHTTPTests.test_initial_page_embeds_400_with_complete_contract",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.FilesHTTPTests.test_invalid_scope_outside_root_and_old_root_do_not_leak",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.FilesHTTPTests.test_junction_is_hidden_and_never_descended",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.FilesHTTPTests.test_preview_metadata_agrees_with_file_types",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.FilesHTTPTests.test_result_scan_and_time_truncation_are_explicit",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.FilesHTTPTests.test_scopes_find_chinese_subfolders_and_skip_private_dependencies",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.FilesHTTPTests.test_url_query_first_page_and_followup_pages_use_same_filter",
+      "status": "passed"
+    }
+  ],
+  "runtimePath": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "command": "python -B tools/v7_files_test.py",
+  "exitCode": 0
+}

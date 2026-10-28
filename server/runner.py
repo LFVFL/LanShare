@@ -32,7 +32,11 @@ class FastBindHTTPServer(ThreadingMixIn, HTTPServer):
         self._slots = threading.BoundedSemaphore(MAX_WORKERS)
 
     def server_bind(self):
-        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        if hasattr(socket, 'SO_EXCLUSIVEADDRUSE'):
+            # Windows SO_REUSEADDR allows a second live listener on the same port.
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        else:
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind(self.server_address)
         self.server_address = self.socket.getsockname()
 
@@ -65,6 +69,11 @@ class FastBindHTTPServer(ThreadingMixIn, HTTPServer):
 
 
 class FileSharer:
+    STOPPED = 'stopped'
+    STARTING = 'starting'
+    RUNNING = 'running'
+    STOPPING = 'stopping'
+
     def __init__(self):
         self.server = None
         self.server_thread = None
@@ -72,20 +81,40 @@ class FileSharer:
         self.password = None
         self.admin_password = None
         self.port = DEFAULT_PORT
-        self.is_running = False
+        self._state = self.STOPPED
+        self._state_lock = threading.RLock()
+        self._operation = 0
+        self._stopped = threading.Event()
+        self._stopped.set()
         self.status_callback = None
         self.log_queue = queue.Queue()
 
-    def set_shared_path(self, path):
-        """运行中切换共享目录：改全局值，下一次请求立刻生效。
+    @property
+    def state(self):
+        with self._state_lock:
+            return self._state
 
-        不需要重启服务——handler 每次请求都会重新读 SHARE_STATE。
-        """
-        target = Path(path).resolve() if path else None
-        if not target or not target.is_dir():
-            return False, "目录不存在或不是文件夹"
-        self.shared_path = str(target)
-        SHARE_STATE['path'] = self.shared_path
+    @property
+    def is_running(self):
+        return self.state == self.RUNNING
+
+    @property
+    def is_busy(self):
+        return self.state in (self.STARTING, self.STOPPING)
+
+    def set_shared_path(self, path):
+        """Publish a validated root atomically; requests keep their own snapshot."""
+        try:
+            target = Path(path).resolve() if path else None
+            if not target or not target.is_dir():
+                return False, "目录不存在或不是文件夹"
+            with self._state_lock:
+                if self._state in (self.STARTING, self.STOPPING):
+                    return False, "服务正在启动或停止，请稍后重试"
+                set_shared_root(str(target))
+                self.shared_path = str(target)
+        except (OSError, ValueError) as exc:
+            return False, "切换目录失败: %s" % exc
         print("[Share] 共享目录切换为 %s" % self.shared_path)
         return True, self.shared_path
 
@@ -93,45 +122,85 @@ class FileSharer:
         self.status_callback = callback
 
     def update_status(self, message, is_running):
-        self.is_running = is_running
         if self.status_callback:
-            self.status_callback(message, is_running)
+            try:
+                self.status_callback(message, is_running)
+            except Exception as exc:
+                print('[Server] 状态回调失败:', exc)
 
-    def stop(self):
-        if not self.is_running or not self.server:
-            return
+    def wait_stopped(self, timeout=None):
+        """Wait for the listener to close, rather than only for a stop request."""
+        return self._stopped.wait(timeout)
 
-        self.update_status("正在停止...", True)
-        chat_room_saver.flush()
+    def stop(self, wait=False, timeout=None):
+        with self._state_lock:
+            if self._state == self.STOPPED:
+                return True
+            if self._state == self.STOPPING:
+                server = None
+            else:
+                self._state = self.STOPPING
+                operation = self._operation
+                server = self.server
+                server_thread = self.server_thread
+                self.update_status("正在停止...", False)
+
+        # A starting worker owns its not-yet-published socket and closes it itself.
+        if server is None:
+            return self.wait_stopped(timeout) if wait else False
 
         def cleanup():
             try:
-                self.server.shutdown()
-                self.server.server_close()
+                try:
+                    server.shutdown()
+                finally:
+                    server.server_close()
+                if server_thread and server_thread is not threading.current_thread():
+                    server_thread.join()
+                chat_room_saver.flush()
             except Exception as e:
                 print(f"[Server] 停止服务失败: {e}")
             finally:
-                self.server = None
-
-                global server_instance
-                server_instance = None
-
-                self.update_status("已停止", False)
+                with self._state_lock:
+                    if self._operation == operation:
+                        self.server = None
+                        self.server_thread = None
+                        self._state = self.STOPPED
+                        global server_instance
+                        if server_instance is self:
+                            server_instance = None
+                        self._stopped.set()
+                        self.update_status("已停止", False)
 
         threading.Thread(target=cleanup, daemon=True).start()
+        return self.wait_stopped(timeout) if wait else False
+
     def get_all_local_ips(self):
         # 排序交给 netinfo：默认路由网卡优先，代理 TUN / APIPA 这类虚拟地址垫底
         return netinfo.local_ips()
 
-    def start(self, path=None, port=None, password=None, admin_password=None):
-        if self.is_running:
-            return False, "服务已在运行中。"
-        self.update_status("正在启动...", True)
-        self.shared_path = path if path and Path(path).exists() else DEFAULT_SHARE_PATH
-        SHARE_STATE['path'] = self.shared_path
-        self.port = port if port and isinstance(port, int) and 1 <= port <= 65535 else DEFAULT_PORT
-        self.password = password if password else None
-        self.admin_password = admin_password if admin_password else None
+    def start(self, path=None, port=None, password=None, admin_password=None, cancel_event=None):
+        try:
+            target = Path(path or DEFAULT_SHARE_PATH).resolve()
+            if not target.is_dir():
+                return False, "路径不存在或不是文件夹"
+        except (OSError, ValueError) as exc:
+            return False, "路径无效: %s" % exc
+
+        with self._state_lock:
+            if cancel_event is not None and cancel_event.is_set():
+                return False, "启动已取消"
+            if self._state != self.STOPPED:
+                return False, "服务已在运行或正在切换状态。"
+            self._operation += 1
+            operation = self._operation
+            self._state = self.STARTING
+            self._stopped.clear()
+            self.shared_path = str(target)
+            self.port = port if isinstance(port, int) and 1 <= port <= 65535 else DEFAULT_PORT
+            self.password = password or None
+            self.admin_password = admin_password or None
+            self.update_status("正在启动...", False)
         self.log_queue.put((
             time.strftime('%H:%M:%S'),
             '系统',
@@ -143,12 +212,6 @@ class FileSharer:
             '系统',
             f'聊天图片保存位置：{CHAT_IMAGE_DIR.resolve()}'
         ))
-        SESSIONS_STORE.clear()
-
-        if not Path(self.shared_path).exists():
-            self.update_status("启动失败", False)
-            return False, "路径不存在"
-
         shared_path = self.shared_path
         password = self.password
         admin_password = self.admin_password
@@ -178,7 +241,15 @@ class FileSharer:
             except Exception:
                 pass
 
+        server = None
+        started = False
         try:
+            initialize_chat_store()
+            local_ips = self.get_all_local_ips()
+            with self._state_lock:
+                if self._state != self.STARTING or self._operation != operation:
+                    return False, "启动已取消"
+
             def handler_factory(*args, **kwargs):
                 kwargs['shared_path'] = shared_path
                 kwargs['access_logger'] = access_logger
@@ -186,19 +257,25 @@ class FileSharer:
                 kwargs['admin_password'] = admin_password
                 return FileShareHandler(*args, **kwargs)
 
-            self.server = FastBindHTTPServer(('', self.port), handler_factory)
-            self.server_thread = threading.Thread(target=self.server.serve_forever, daemon=True)
-            self.server_thread.start()
+            server = FastBindHTTPServer(('', self.port), handler_factory)
+            with self._state_lock:
+                if self._state != self.STARTING or self._operation != operation:
+                    return False, "启动已取消"
+                set_shared_root(shared_path)
+                SESSIONS_STORE.clear()
+                self.server = server
+                self.server_thread = threading.Thread(target=server.serve_forever, daemon=True)
+                self.server_thread.start()
+                self._state = self.RUNNING
+                started = True
+                global server_instance
+                server_instance = self
+                self.update_status("运行中 (端口 {})".format(self.port), True)
 
-            local_ips = self.get_all_local_ips()
             local_url = "http://localhost:{}".format(self.port)
             network_urls = ["http://{}:{}".format(ip, self.port) for ip in local_ips]
             # 二维码默认扫这个：排序后的第一个地址（路由器那条局域网），不是 localhost
             primary_url = network_urls[0] if network_urls else local_url
-
-            global server_instance
-            server_instance = self
-            self.update_status("运行中 (端口 {})".format(self.port), True)
 
             return True, {
                 'local_url': local_url,
@@ -211,8 +288,22 @@ class FileSharer:
                 'has_admin_password': bool(self.admin_password)
             }
         except Exception as e:
-            self.update_status("启动失败", False)
             return False, "启动失败: {}".format(str(e))
+        finally:
+            if not started:
+                if server is not None:
+                    try:
+                        server.server_close()
+                    except OSError as exc:
+                        print('[Server] 关闭启动失败的监听失败:', exc)
+                with self._state_lock:
+                    if self._operation == operation:
+                        cancelled = self._state == self.STOPPING
+                        self.server = None
+                        self.server_thread = None
+                        self._state = self.STOPPED
+                        self._stopped.set()
+                        self.update_status("已停止" if cancelled else "启动失败", False)
 
 
 # ══════════════════════════════════════════════════════════════════════════════

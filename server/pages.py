@@ -2,6 +2,7 @@
 import base64
 import hashlib
 import html
+import json
 import re
 from pathlib import Path
 
@@ -54,6 +55,14 @@ def load_icon_bytes():
 _PLACEHOLDER_RE = re.compile(r"\{\{[A-Z_][A-Z0-9_]*\}\}")
 
 
+def safe_json(value):
+    """JSON embedded in a script data block must not contain HTML delimiters."""
+    return (json.dumps(value, ensure_ascii=False)
+            .replace('&', '\\u0026').replace('<', '\\u003c')
+            .replace('>', '\\u003e').replace('\u2028', '\\u2028')
+            .replace('\u2029', '\\u2029'))
+
+
 def _asset_version():
     """静态资源的版本号：内容变了它才变，用来拼 ?v=xxx。
 
@@ -63,9 +72,12 @@ def _asset_version():
     if webassets is None:
         return "0"
     digest = hashlib.sha1()
-    digest.update((webassets.CSS or "").encode("utf-8"))
-    digest.update((webassets.JS or "").encode("utf-8"))
-    digest.update((getattr(webassets, "THEME_BOOT", "") or "").encode("utf-8"))
+    for name in ('CSS', 'JS', 'JS_FILES', 'JS_CHAT', 'JS_LOGIN', 'THEME_BOOT'):
+        payload = (getattr(webassets, name, '') or '').encode('utf-8')
+        # Tags and lengths keep empty bundles and content boundaries distinct.
+        digest.update(name.encode('ascii') + b'\0')
+        digest.update(len(payload).to_bytes(8, 'big'))
+        digest.update(payload)
     return digest.hexdigest()[:10]
 
 

@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-10-28T10:20:08.990933+08:00",
+  "exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+  "sha256": "e283857ab18dc7533b735ede1ae017cb63a8691791d58f5c1dc70e1aab03ef41",
+  "size_bytes": 63929292,
+  "backup": "E:\\code\\\u5c40\u57df\u7f51\\_diag\\lan7-path-followup-ag_6a_5f\\previous\\lanshare.exe",
+  "backup_verified": true,
+  "user_feedback": "Same EXE still reports Could not create temporary directory! at original v7 path, apparently works after moving to another directory.",
+  "scope": "Follow up exact executable path/cwd behavior plus file-search scope clarity and chat layout cleanup.",
+  "prior_record": "docs/changes/2026-10-28-startup-fix/README.md"
+}

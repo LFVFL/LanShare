@@ -1,0 +1,310 @@
+{
+  "viewports": [
+    {
+      "page": "root",
+      "width": 1280,
+      "controls": [
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            }
+          ],
+          "visible": true,
+          "width": 146,
+          "selectedTextWidth": 112,
+          "padding": 14
+        },
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            }
+          ],
+          "visible": false,
+          "width": 0,
+          "selectedTextWidth": 112,
+          "padding": 14
+        }
+      ]
+    },
+    {
+      "page": "root",
+      "width": 390,
+      "controls": [
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            }
+          ],
+          "visible": false,
+          "width": 0,
+          "selectedTextWidth": 112,
+          "padding": 14
+        },
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            }
+          ],
+          "visible": true,
+          "width": 146,
+          "selectedTextWidth": 112,
+          "padding": 14
+        }
+      ]
+    },
+    {
+      "page": "root",
+      "width": 320,
+      "controls": [
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            }
+          ],
+          "visible": false,
+          "width": 0,
+          "selectedTextWidth": 112,
+          "padding": 14
+        },
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            }
+          ],
+          "visible": true,
+          "width": 146,
+          "selectedTextWidth": 112,
+          "padding": 14
+        }
+      ]
+    },
+    {
+      "page": "nested",
+      "width": 1280,
+      "controls": [
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            },
+            {
+              "value": "share",
+              "label": "\u6574\u4e2a\u5171\u4eab\u76ee\u5f55"
+            }
+          ],
+          "visible": true,
+          "width": 146,
+          "selectedTextWidth": 112,
+          "padding": 14
+        },
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            },
+            {
+              "value": "share",
+              "label": "\u6574\u4e2a\u5171\u4eab\u76ee\u5f55"
+            }
+          ],
+          "visible": false,
+          "width": 0,
+          "selectedTextWidth": 112,
+          "padding": 14
+        }
+      ]
+    },
+    {
+      "page": "nested",
+      "width": 390,
+      "controls": [
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            },
+            {
+              "value": "share",
+              "label": "\u6574\u4e2a\u5171\u4eab\u76ee\u5f55"
+            }
+          ],
+          "visible": false,
+          "width": 0,
+          "selectedTextWidth": 112,
+          "padding": 14
+        },
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            },
+            {
+              "value": "share",
+              "label": "\u6574\u4e2a\u5171\u4eab\u76ee\u5f55"
+            }
+          ],
+          "visible": true,
+          "width": 146,
+          "selectedTextWidth": 112,
+          "padding": 14
+        }
+      ]
+    },
+    {
+      "page": "nested",
+      "width": 320,
+      "controls": [
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            },
+            {
+              "value": "share",
+              "label": "\u6574\u4e2a\u5171\u4eab\u76ee\u5f55"
+            }
+          ],
+          "visible": false,
+          "width": 0,
+          "selectedTextWidth": 112,
+          "padding": 14
+        },
+        {
+          "value": "subtree",
+          "options": [
+            {
+              "value": "current",
+              "label": "\u4ec5\u5f53\u524d\u76ee\u5f55"
+            },
+            {
+              "value": "subtree",
+              "label": "\u5f53\u524d\u76ee\u5f55\u53ca\u5b50\u76ee\u5f55"
+            },
+            {
+              "value": "share",
+              "label": "\u6574\u4e2a\u5171\u4eab\u76ee\u5f55"
+            }
+          ],
+          "visible": true,
+          "width": 146,
+          "selectedTextWidth": 112,
+          "padding": 14
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "file-scope-root-1280.png",
+      "bytes": 548467,
+      "sha256": "af6a469e3773f8d4849d372f7c8c788fefe7f9e20c17a524af94028a5d6981dd"
+    },
+    {
+      "file": "file-scope-root-390.png",
+      "bytes": 219683,
+      "sha256": "2f6c4c0b52b36901e79e6aecbb7c4db2682f1af1d927d0a436567c855828cf68"
+    },
+    {
+      "file": "file-scope-root-320.png",
+      "bytes": 181037,
+      "sha256": "27708d56f8346bc53be0528f3f2885a439a02209e915b31878a7a8ba3de940c1"
+    },
+    {
+      "file": "file-scope-nested-1280.png",
+      "bytes": 778456,
+      "sha256": "8bd1b585ee10bdcd7577dd5655f3b6b98546488e4b992122a71ac46f57ac0d63"
+    },
+    {
+      "file": "file-scope-nested-390.png",
+      "bytes": 267950,
+      "sha256": "a7a03438afcaee1e4c5f93d092b4813c74f4bf25c7f3a11dc5c2d8bcc49068f5"
+    },
+    {
+      "file": "file-scope-nested-320.png",
+      "bytes": 217665,
+      "sha256": "e405be32aebb2a85f590fcbf918822e15434195b24cad52eee9eb2c06ae2bbb9"
+    }
+  ],
+  "success": true,
+  "tests": 2,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 5.047,
+  "timestamp": "2026-10-28T10:28:25+0800",
+  "scope": "One viewport/control method plus the existing true-browser 1/2/3-result and stale-response method; six viewport loops are not extra methods",
+  "temporary_assets": true,
+  "owned_test_root": "C:\\Windows\\Temp\\lanshare-test-se1ay2wv"
+}

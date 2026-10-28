@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-10-28T11:31:41.458498+08:00",
+  "repository": "LFVFL/LanShare",
+  "default_branch": "main",
+  "authenticated_login": "LFVFL",
+  "authentication_source": "configured Git credential helper",
+  "permissions": {
+    "admin": true,
+    "maintain": true,
+    "push": true,
+    "triage": true,
+    "pull": true
+  },
+  "private": false,
+  "target_tag": "v7.0",
+  "target_release_exists": false,
+  "existing_releases": [
+    {
+      "tag": "v6.5",
+      "url": "https://github.com/LFVFL/LanShare/releases/tag/v6.5",
+      "draft": false,
+      "prerelease": false,
+      "assets": [
+        {
+          "name": "lanshare.exe",
+          "bytes": 47990450
+        }
+      ]
+    },
+    {
+      "tag": "v6.4",
+      "url": "https://github.com/LFVFL/LanShare/releases/tag/v6.4",
+      "draft": false,
+      "prerelease": false,
+      "assets": []
+    },
+    {
+      "tag": "v6.3",
+      "url": "https://github.com/LFVFL/LanShare/releases/tag/v6.3",
+      "draft": false,
+      "prerelease": false,
+      "assets": []
+    },
+    {
+      "tag": "v6.2",
+      "url": "https://github.com/LFVFL/LanShare/releases/tag/v6.2",
+      "draft": false,
+      "prerelease": false,
+      "assets": []
+    },
+    {
+      "tag": "v6.1",
+      "url": "https://github.com/LFVFL/LanShare/releases/tag/v6.1",
+      "draft": false,
+      "prerelease": false,
+      "assets": []
+    }
+  ],
+  "target_release_url": null,
+  "credentials_printed_or_saved": false
+}

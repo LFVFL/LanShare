@@ -21,6 +21,9 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 sys.path.insert(0, str(ROOT))
 
 import lanshare as j  # noqa: E402
@@ -39,7 +42,7 @@ def check(label, ok, detail=""):
 
 
 def main():
-    share = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-origin-"))
+    share = Path(TEST_ENV.temporary_dir(prefix="lan6-origin-"))
     (share / "a.txt").write_text("hi", encoding="utf-8")
     sharer = j.FileSharer()
     ok, result = sharer.start(path=str(share), port=PORT,
@@ -136,8 +139,8 @@ def main():
         check("空值不炸", host(None) == "", host(None))
         check("可以直接静态调用", AuthMixin._hostname("h:1") == "h")
     finally:
-        sharer.stop()
-        shutil.rmtree(share, ignore_errors=True)
+        sharer.stop(wait=True, timeout=10)
+        TEST_ENV.remove_test_dir(share)
 
     print("\n结果: 通过 %d 项" % len(PASSED))
     if FAILED:

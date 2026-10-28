@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-10-28T09:48:27.712287+08:00",
+  "success": true,
+  "delivered_exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+  "sha256": "e283857ab18dc7533b735ede1ae017cb63a8691791d58f5c1dc70e1aab03ef41",
+  "size_bytes": 63929292,
+  "targeted_test_methods": 39,
+  "tests": {
+    "build_safety": 27,
+    "startup_temp": 4,
+    "standalone_exe": 8
+  },
+  "all_tests_passed": true,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "count_policy": "39 executed unittest methods across three suites; repeated launches/image loops not extra tests. Earlier 138-method run is historical, not re-executed in full.",
+  "startup_launches": 6,
+  "functional_exe_launches": 1,
+  "normal_exit_and_extraction_removal_verified": true,
+  "isolated_profiles_and_ini_verified": true,
+  "post_test_owned_fixture_checks": [
+    {
+      "owned_test_root": "C:\\Windows\\Temp\\lanshare-test-3i43jb3q",
+      "exists_after_test_process_exit": false
+    },
+    {
+      "owned_test_root": "C:\\Windows\\Temp\\lanshare-test-j3kfmivk",
+      "exists_after_test_process_exit": false
+    }
+  ],
+  "build_smoke_extraction_leftovers": [],
+  "runtime_archive_options": [
+    "pyi-runtime-tmpdir %LOCALAPPDATA%/LanShare/Temp"
+  ],
+  "native_payload_entries": 119,
+  "native_payloads_identical_to_original": true,
+  "unchanged_runtime_source_files": 29,
+  "source_matches_staging": true,
+  "delivered_bytes_match_candidate_tested_in_owned_portable_directory": true,
+  "v6_git_clean": true,
+  "v7_no_staged_changes": true,
+  "git_head": "131c39c8e3133c458b316df39faacd9b275bce27",
+  "branch": "fix/v7-review",
+  "ignored_log_files_checked": 11,
+  "evidence_sha256": {
+    "diagnosis.json": "995cf80074eb0331fa8af75d9984c80ffad334424ff70655f2f8dffdcb28c75c",
+    "build.json": "4ee0be0ee0835958186f9a96f7d78953fa601854b532489d38d99aa2c1a2af9f",
+    "build-safety.json": "34340b1296fe5a71ee4ee9d512379d04f15fb608908aa16abae3d9aaafd136b5",
+    "build-source-manifest.json": "4d9c870256aa8f6761b5a12946fa2469e372e8c9f975a9053ea37cde0abf3b94",
+    "exe-verification.json": "ce0ab23243c9545465eb5654099abb196916849faf8c9e081c798db9fcc79220",
+    "startup-temp.json": "50e2529b3a74633a9e72872b38ecd1c50b09e503983f2a212ebe5bdee4cc22e8",
+    "native-dependencies.json": "4e01a12dd9df20da58274f37dd834277eeeea4455fc403b2de52a3a905bc5f30",
+    "static-checks.json": "06738417b71b76f0e1b5532041cafdb58495122272587280b4e73d4c86f4105f",
+    "release-artifact.json": "f1df2bd7ce1144e348edc2edaf008cb280576476a0b73c0bf10cb53d2cfd4e3f"
+  },
+  "limitations": [
+    "Actual Explorer user environment not launched or modified.",
+    "Only this Windows x64 host tested; not a clean second machine.",
+    "No automatic Git commit, push, Release, registry or normal data migration."
+  ]
+}

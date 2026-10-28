@@ -1,0 +1,242 @@
+{
+  "timestamp": "2026-10-28T09:39:16.105820+08:00",
+  "staging": "E:\\LanShare-builds\\build-9k4ezesh",
+  "prior_manifest": "docs/changes/2026-10-27/test-results/build-source-manifest.json",
+  "runtime_files": 29,
+  "source_matches_staging": true,
+  "runtime_sources_unchanged": true,
+  "files": [
+    {
+      "file": "lanshare.py",
+      "sha256": "224159dc0156aee3b1c7c1bc374a9f2e3df5f7c3fd1456f3b4d4a2600dc2adcb",
+      "staging_sha256": "224159dc0156aee3b1c7c1bc374a9f2e3df5f7c3fd1456f3b4d4a2600dc2adcb",
+      "prior_runtime_sha256": "224159dc0156aee3b1c7c1bc374a9f2e3df5f7c3fd1456f3b4d4a2600dc2adcb",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "webassets.py",
+      "sha256": "6480cf99d3db8f0fe035155d405bf2ede9bea1ac98df4105a59b8fe00bb084b3",
+      "staging_sha256": "6480cf99d3db8f0fe035155d405bf2ede9bea1ac98df4105a59b8fe00bb084b3",
+      "prior_runtime_sha256": "6480cf99d3db8f0fe035155d405bf2ede9bea1ac98df4105a59b8fe00bb084b3",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "icon.ico",
+      "sha256": "d3730fdf7a4f1dcb4599fae4e9c9a47f25144ebb37b29ba10407515f97489842",
+      "staging_sha256": "d3730fdf7a4f1dcb4599fae4e9c9a47f25144ebb37b29ba10407515f97489842",
+      "prior_runtime_sha256": "d3730fdf7a4f1dcb4599fae4e9c9a47f25144ebb37b29ba10407515f97489842",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/__init__.py",
+      "sha256": "0e4d945ef58b398d587c334595cb652dd24b61a353954a1f290e81e666e17f24",
+      "staging_sha256": "0e4d945ef58b398d587c334595cb652dd24b61a353954a1f290e81e666e17f24",
+      "prior_runtime_sha256": "0e4d945ef58b398d587c334595cb652dd24b61a353954a1f290e81e666e17f24",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/archive.py",
+      "sha256": "d7a58ef909ed34787d0e01fd92ce005960ff56f1f269a916b09f8926f646dd30",
+      "staging_sha256": "d7a58ef909ed34787d0e01fd92ce005960ff56f1f269a916b09f8926f646dd30",
+      "prior_runtime_sha256": "d7a58ef909ed34787d0e01fd92ce005960ff56f1f269a916b09f8926f646dd30",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/auth.py",
+      "sha256": "04d143c91c0e036917937841e1f639c81255cc0cbf5c5e995a65d9770057e221",
+      "staging_sha256": "04d143c91c0e036917937841e1f639c81255cc0cbf5c5e995a65d9770057e221",
+      "prior_runtime_sha256": "04d143c91c0e036917937841e1f639c81255cc0cbf5c5e995a65d9770057e221",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/chat_api.py",
+      "sha256": "1c996470a5720c15d18bc5dbfff5085ec524589ced4b7d94868abbd3e6004dd6",
+      "staging_sha256": "1c996470a5720c15d18bc5dbfff5085ec524589ced4b7d94868abbd3e6004dd6",
+      "prior_runtime_sha256": "1c996470a5720c15d18bc5dbfff5085ec524589ced4b7d94868abbd3e6004dd6",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/chat_media.py",
+      "sha256": "20c5dc216b978bd6a022f5aa65b04045d4a5f749390e0ad6493652a5375064a3",
+      "staging_sha256": "20c5dc216b978bd6a022f5aa65b04045d4a5f749390e0ad6493652a5375064a3",
+      "prior_runtime_sha256": "20c5dc216b978bd6a022f5aa65b04045d4a5f749390e0ad6493652a5375064a3",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/chat_store.py",
+      "sha256": "1dbc86fcbb20a163b7b8167e6b922df1704710f9edd4b25fbec5fee1cf3983e5",
+      "staging_sha256": "1dbc86fcbb20a163b7b8167e6b922df1704710f9edd4b25fbec5fee1cf3983e5",
+      "prior_runtime_sha256": "1dbc86fcbb20a163b7b8167e6b922df1704710f9edd4b25fbec5fee1cf3983e5",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/config.py",
+      "sha256": "f3829acb6b856e9789ee07b7cf0de6fcc2dfe6daefbf9d85c4d9acf38df05c2e",
+      "staging_sha256": "f3829acb6b856e9789ee07b7cf0de6fcc2dfe6daefbf9d85c4d9acf38df05c2e",
+      "prior_runtime_sha256": "f3829acb6b856e9789ee07b7cf0de6fcc2dfe6daefbf9d85c4d9acf38df05c2e",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/fs_ops.py",
+      "sha256": "d432ca336da775fbce177d7a56738332a127ffd114a710d8334817d19f2f4c10",
+      "staging_sha256": "d432ca336da775fbce177d7a56738332a127ffd114a710d8334817d19f2f4c10",
+      "prior_runtime_sha256": "d432ca336da775fbce177d7a56738332a127ffd114a710d8334817d19f2f4c10",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/handler.py",
+      "sha256": "cf429999e54cd4cd47be27ffc8ed555aa193c94e250334fe63f1d9a93a9708e6",
+      "staging_sha256": "cf429999e54cd4cd47be27ffc8ed555aa193c94e250334fe63f1d9a93a9708e6",
+      "prior_runtime_sha256": "cf429999e54cd4cd47be27ffc8ed555aa193c94e250334fe63f1d9a93a9708e6",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/http_util.py",
+      "sha256": "e707ee3731a8944983bcbb97b2f0c67195d4b4a39473abc0ea1fb3dd473f8b6c",
+      "staging_sha256": "e707ee3731a8944983bcbb97b2f0c67195d4b4a39473abc0ea1fb3dd473f8b6c",
+      "prior_runtime_sha256": "e707ee3731a8944983bcbb97b2f0c67195d4b4a39473abc0ea1fb3dd473f8b6c",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/listing.py",
+      "sha256": "8c0083078ddd7f38b79b151c91a264d4e91ceade2d6e4d621c28b8dcda8280c2",
+      "staging_sha256": "8c0083078ddd7f38b79b151c91a264d4e91ceade2d6e4d621c28b8dcda8280c2",
+      "prior_runtime_sha256": "8c0083078ddd7f38b79b151c91a264d4e91ceade2d6e4d621c28b8dcda8280c2",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/netinfo.py",
+      "sha256": "db5e7c4e8f417c6c00f3168a378a25d89156bdf6ffd7381d314b8da889eab8e5",
+      "staging_sha256": "db5e7c4e8f417c6c00f3168a378a25d89156bdf6ffd7381d314b8da889eab8e5",
+      "prior_runtime_sha256": "db5e7c4e8f417c6c00f3168a378a25d89156bdf6ffd7381d314b8da889eab8e5",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/pages.py",
+      "sha256": "a7d32f75bf0366b9ad4c8719fffd8f60b376d2a9618df8cbf4d382bb72ee70d4",
+      "staging_sha256": "a7d32f75bf0366b9ad4c8719fffd8f60b376d2a9618df8cbf4d382bb72ee70d4",
+      "prior_runtime_sha256": "a7d32f75bf0366b9ad4c8719fffd8f60b376d2a9618df8cbf4d382bb72ee70d4",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/paths.py",
+      "sha256": "6ad2bdd4eab0a11e3967916656ae1a4d7a348eb5ad1aaeb98abf65012efcc838",
+      "staging_sha256": "6ad2bdd4eab0a11e3967916656ae1a4d7a348eb5ad1aaeb98abf65012efcc838",
+      "prior_runtime_sha256": "6ad2bdd4eab0a11e3967916656ae1a4d7a348eb5ad1aaeb98abf65012efcc838",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/routes.py",
+      "sha256": "c8d101f994fc612c4a053c2c93298e6ea5897d1ab8fac781900e19c30f9594d3",
+      "staging_sha256": "c8d101f994fc612c4a053c2c93298e6ea5897d1ab8fac781900e19c30f9594d3",
+      "prior_runtime_sha256": "c8d101f994fc612c4a053c2c93298e6ea5897d1ab8fac781900e19c30f9594d3",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/runner.py",
+      "sha256": "790a98ab831c64fef8c90a5820314665af29a0b3d36c3ba5ffe918fb16ea7e6c",
+      "staging_sha256": "790a98ab831c64fef8c90a5820314665af29a0b3d36c3ba5ffe918fb16ea7e6c",
+      "prior_runtime_sha256": "790a98ab831c64fef8c90a5820314665af29a0b3d36c3ba5ffe918fb16ea7e6c",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/storage.py",
+      "sha256": "3c290859a7333b79b18f6db6d817f54d1056caf36e2206748a22a16ea7dccdc9",
+      "staging_sha256": "3c290859a7333b79b18f6db6d817f54d1056caf36e2206748a22a16ea7dccdc9",
+      "prior_runtime_sha256": "3c290859a7333b79b18f6db6d817f54d1056caf36e2206748a22a16ea7dccdc9",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "server/transfer.py",
+      "sha256": "efa9bf7f6f14cebe318c593ed7942e7c11a51ad9ccfd1d79a667733391794f47",
+      "staging_sha256": "efa9bf7f6f14cebe318c593ed7942e7c11a51ad9ccfd1d79a667733391794f47",
+      "prior_runtime_sha256": "efa9bf7f6f14cebe318c593ed7942e7c11a51ad9ccfd1d79a667733391794f47",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "ui/__init__.py",
+      "sha256": "92afe684d28b24e681c7b71ddcfb9bcf683917904f82a66b9f09db0bf96c8d9d",
+      "staging_sha256": "92afe684d28b24e681c7b71ddcfb9bcf683917904f82a66b9f09db0bf96c8d9d",
+      "prior_runtime_sha256": "92afe684d28b24e681c7b71ddcfb9bcf683917904f82a66b9f09db0bf96c8d9d",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "ui/context_menu.py",
+      "sha256": "4b1e4a91a5ccfb0b464c20ae669da29da3dc14695133d688cb13559c57ac740d",
+      "staging_sha256": "4b1e4a91a5ccfb0b464c20ae669da29da3dc14695133d688cb13559c57ac740d",
+      "prior_runtime_sha256": "4b1e4a91a5ccfb0b464c20ae669da29da3dc14695133d688cb13559c57ac740d",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "ui/icon.py",
+      "sha256": "6e7506ebbcd1d61256a1a6354a0636239f2f34fcd850c6f464a9c3848d21acd5",
+      "staging_sha256": "6e7506ebbcd1d61256a1a6354a0636239f2f34fcd850c6f464a9c3848d21acd5",
+      "prior_runtime_sha256": "6e7506ebbcd1d61256a1a6354a0636239f2f34fcd850c6f464a9c3848d21acd5",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "ui/main_window.py",
+      "sha256": "bb0637e29f8957b1b654ab152bbefe652574d45382bab6cf6f1e273430b16bf4",
+      "staging_sha256": "bb0637e29f8957b1b654ab152bbefe652574d45382bab6cf6f1e273430b16bf4",
+      "prior_runtime_sha256": "bb0637e29f8957b1b654ab152bbefe652574d45382bab6cf6f1e273430b16bf4",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "ui/qr.py",
+      "sha256": "3615eb18a0f92e45466f3e1b7edcd57462f1f05c73aac6777e375569353ed3ac",
+      "staging_sha256": "3615eb18a0f92e45466f3e1b7edcd57462f1f05c73aac6777e375569353ed3ac",
+      "prior_runtime_sha256": "3615eb18a0f92e45466f3e1b7edcd57462f1f05c73aac6777e375569353ed3ac",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "ui/single_instance.py",
+      "sha256": "b476caff6040a0010c7d4afceadc7ca51621f19da784725b7bf8dac65501cfac",
+      "staging_sha256": "b476caff6040a0010c7d4afceadc7ca51621f19da784725b7bf8dac65501cfac",
+      "prior_runtime_sha256": "b476caff6040a0010c7d4afceadc7ca51621f19da784725b7bf8dac65501cfac",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "ui/style.py",
+      "sha256": "090c4e38670a4bd903fccde70a6bac4f4b8ec0bd556c003501b78fa9529b37a4",
+      "staging_sha256": "090c4e38670a4bd903fccde70a6bac4f4b8ec0bd556c003501b78fa9529b37a4",
+      "prior_runtime_sha256": "090c4e38670a4bd903fccde70a6bac4f4b8ec0bd556c003501b78fa9529b37a4",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    },
+    {
+      "file": "ui/widgets.py",
+      "sha256": "a1967a8362b2e6f86af6c9c1555d9b28bbfd5442993212bfe0821943262d063d",
+      "staging_sha256": "a1967a8362b2e6f86af6c9c1555d9b28bbfd5442993212bfe0821943262d063d",
+      "prior_runtime_sha256": "a1967a8362b2e6f86af6c9c1555d9b28bbfd5442993212bfe0821943262d063d",
+      "matches_staging": true,
+      "unchanged_runtime_source": true
+    }
+  ]
+}

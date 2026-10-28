@@ -1,0 +1,81 @@
+{
+  "timestamp": "2026-10-28T09:41:48.225330+08:00",
+  "reported_error": "Could not create temporary directory!",
+  "stage": "PyInstaller onefile bootloader before application Python starts",
+  "baseline_probe": [
+    {
+      "case": "inherited_tool_environment",
+      "returncode": 0,
+      "python_started": true,
+      "temporary_directory_error": false,
+      "extraction_removed": true
+    },
+    {
+      "case": "owned_ascii_temp",
+      "returncode": 0,
+      "python_started": true,
+      "temporary_directory_error": false,
+      "extraction_removed": true
+    },
+    {
+      "case": "owned_unicode_and_spaces_temp",
+      "returncode": 0,
+      "python_started": true,
+      "temporary_directory_error": false,
+      "extraction_removed": true
+    },
+    {
+      "case": "missing_tmp_valid_temp",
+      "returncode": 4294967295,
+      "python_started": false,
+      "temporary_directory_error": true
+    },
+    {
+      "case": "file_tmp_valid_temp",
+      "returncode": 4294967295,
+      "python_started": false,
+      "temporary_directory_error": true
+    }
+  ],
+  "fixed_probe": [
+    {
+      "case": "valid_temp",
+      "returncode": 0,
+      "success": true,
+      "inside_private_localappdata": true,
+      "extraction_removed": true
+    },
+    {
+      "case": "missing_tmp",
+      "returncode": 0,
+      "success": true,
+      "inside_private_localappdata": true,
+      "extraction_removed": true
+    },
+    {
+      "case": "file_tmp",
+      "returncode": 0,
+      "success": true,
+      "inside_private_localappdata": true,
+      "extraction_removed": true
+    },
+    {
+      "case": "repeat_file_tmp",
+      "returncode": 0,
+      "success": true,
+      "inside_private_localappdata": true,
+      "extraction_removed": true
+    }
+  ],
+  "fixed_archive_options": [
+    "pyi-contents-directory _internal",
+    "pyi-runtime-tmpdir %LOCALAPPDATA%/LanShare/Temp"
+  ],
+  "raw_evidence_sha256": {
+    "probe-default-results.json": "e0f61605fd73a34a024f92d4d750158725ed5e3e74a200931eba7a0801c2ad2e",
+    "probe-fixed-results.json": "635a5878b2f9d11699145b5e4d454198489934f5072edeea11e0fc9b4b3e4574"
+  },
+  "scope": "Minimal console/debug bootloader probes, not the actual Explorer process or real user profile",
+  "finding": "Invalid TMP reproduces the same error while TEMP remains valid. Unicode and spaces alone succeed. This identifies a reproduced failure class, not the exact original Explorer environment.",
+  "privacy_note": "Only selected result fields copied; raw diagnostic tails and account SID not included"
+}

@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-10-28T14:53:40.536280+08:00",
+  "success": true,
+  "replace_attempted": true,
+  "replace_completed": true,
+  "exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+  "sha256": "a7f64eca35d2a1257d2b2a5d4c2e5b63f0718aa3650b607f108168cabb220c25",
+  "size_bytes": 63929596,
+  "app_version": "7.0",
+  "asset_version": "01c9b74c9a",
+  "candidate": "E:\\LanShare-builds\\build-hw18u5xf\\dist\\lanshare.exe",
+  "previous_backup": "E:\\code\\\u5c40\u57df\u7f51\\_diag\\lan7-release-20261028\\previous\\lanshare.exe",
+  "previous_sha256": "023f3143d43733eeb7528be44703ee93dc5d2e185ef454dcc3ce8ed6ae0f9a24",
+  "method": "Same-volume os.replace/MoveFileExW(REPLACE_EXISTING), no COPY_ALLOWED",
+  "checks": {
+    "final_sha256_matches": true,
+    "final_size_matches": true,
+    "source_consumed": true,
+    "source_security_preserved": true,
+    "final_default_medium_label": true,
+    "parent_security_unchanged": true,
+    "previous_backup_preserved": true,
+    "backup_default_medium_label": true,
+    "candidate_preserved": true
+  },
+  "directory_permissions_modified": false,
+  "real_settings_or_chat_data_modified": false,
+  "processes_terminated": false,
+  "startup_acceptance": "Separate final-path startup and token records required",
+  "final_security_sha256": "ad574ae97eef226362593aab9306bdeb7899ea1e42c5b9a3494adf37ffd90d7b",
+  "empty_staging_directory_removed": true
+}

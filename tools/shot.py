@@ -16,6 +16,9 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 from ui_test import CDP, wait_port  # noqa: E402
 
@@ -40,15 +43,15 @@ def main():
     width = int(sys.argv[3]) if len(sys.argv) > 3 else 1040
     height = int(sys.argv[4]) if len(sys.argv) > 4 else 720
     port = 9388
-    profile = r"C:\Windows\TEMP\lan6\shot-profile"
+    profile = str(TEST_ENV.root / "chrome-shot-profile")
     proc = subprocess.Popen([
         find_chrome(), "--headless=new", "--disable-gpu", "--no-sandbox",
-        "--hide-scrollbars", "--remote-debugging-port=%d" % port,
+        "--hide-scrollbars", "--remote-debugging-port=0",
         "--window-size=%d,%d" % (width, height),
         "--user-data-dir=" + profile, "about:blank",
     ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
-        wait_port(port, 25)
+        port = TEST_ENV.wait_browser(proc, profile)
         url = "file:///" + src.replace("\\", "/")
         req = urllib.request.Request(
             "http://127.0.0.1:%d/json/new?about:blank" % port, method="PUT")
@@ -66,7 +69,7 @@ def main():
             f.write(base64.b64decode(r["data"]))
         print("已保存 %s  %.1f KB" % (dst, os.path.getsize(dst) / 1024.0))
     finally:
-        proc.terminate()
+        TEST_ENV.stop_process(proc)
 
 
 if __name__ == "__main__":

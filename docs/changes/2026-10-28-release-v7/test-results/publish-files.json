@@ -1,0 +1,1402 @@
+{
+  "schema": "lanshare.release-file-whitelist.v1",
+  "status": "reviewed-ready-for-source-commit",
+  "generatedUtc": "2026-10-28T07:08:01.781920+00:00",
+  "targetVersion": "7.0",
+  "repository": "https://github.com/LFVFL/LanShare",
+  "gitHeadAtAudit": "131c39c8e3133c458b316df39faacd9b275bce27",
+  "gitBranchAtAudit": "fix/v7-review",
+  "baseWhitelist": {
+    "path": "docs/changes/2026-10-27/github-push.md",
+    "sha256AtAudit": "802ab717808592f4b60b15c5d8f2bfdfa90399bdca5430e8ec6eedb6a06d59f7",
+    "exactUniqueFileCount": 151,
+    "method": "Parse quoted PowerShell array entries as data; no document commands executed."
+  },
+  "candidateFileCount": 192,
+  "paths": [
+    "README.md",
+    "lanshare.py",
+    "requirements.txt",
+    "server/archive.py",
+    "server/chat_api.py",
+    "server/chat_store.py",
+    "server/config.py",
+    "server/fs_ops.py",
+    "server/handler.py",
+    "server/http_util.py",
+    "server/listing.py",
+    "server/pages.py",
+    "server/paths.py",
+    "server/routes.py",
+    "server/runner.py",
+    "server/storage.py",
+    "server/transfer.py",
+    "tools/admin_flow_test.py",
+    "tools/auth_matrix_test.py",
+    "tools/build_assets.py",
+    "tools/build_exe.py",
+    "tools/desktop_test.py",
+    "tools/fsops_test.py",
+    "tools/limits_test.py",
+    "tools/mobile_shot.py",
+    "tools/origin_test.py",
+    "tools/paging_test.py",
+    "tools/preflight.py",
+    "tools/protocol_test.py",
+    "tools/screenshots.py",
+    "tools/search_test.py",
+    "tools/share_switch_test.py",
+    "tools/shot.py",
+    "tools/smoke_test.py",
+    "tools/sse_test.py",
+    "tools/theme_flash_test.py",
+    "tools/thumb_test.py",
+    "tools/ui_detail_test.py",
+    "tools/ui_test.py",
+    "tools/zip_test.py",
+    "ui/main_window.py",
+    "web/app.css",
+    "web/js/50-files.js",
+    "web/js/72-files-page.js",
+    "web/js/80-chat-list.js",
+    "web/js/85-chat-room.js",
+    "web/pages/chat_list.html",
+    "web/pages/chat_room.html",
+    "web/pages/files.html",
+    "server/chat_media.py",
+    "ui/context_menu.py",
+    "ui/single_instance.py",
+    "web/files-search.css",
+    "tools/desktop_lifecycle_test.py",
+    "tools/test_support.py",
+    "tools/windows_job.py",
+    "tools/v7_assets_test.py",
+    "tools/v7_browser_test.py",
+    "tools/v7_build_test.py",
+    "tools/v7_chat_frontend_test.js",
+    "tools/v7_chat_layout_test.py",
+    "tools/v7_chat_test.py",
+    "tools/v7_exe_test.py",
+    "tools/v7_files_frontend_test.js",
+    "tools/v7_files_test.py",
+    "tools/v7_security_test.py",
+    "tools/v7_startup_temp_test.py",
+    "docs/changes/2026-10-27/README.md",
+    "docs/changes/2026-10-27/backend.md",
+    "docs/changes/2026-10-27/chat.md",
+    "docs/changes/2026-10-27/desktop.md",
+    "docs/changes/2026-10-27/files-build-tests.md",
+    "docs/changes/2026-10-27/verification.md",
+    "docs/changes/2026-10-27/github-push.md",
+    "docs/changes/2026-10-27/test-results/assets.json",
+    "docs/changes/2026-10-27/test-results/build-environment.json",
+    "docs/changes/2026-10-27/test-results/build-source-manifest.json",
+    "docs/changes/2026-10-27/test-results/dll-closure-build-E.json",
+    "docs/changes/2026-10-27/test-results/exe-verification.json",
+    "docs/changes/2026-10-27/test-results/files-frontend.json",
+    "docs/changes/2026-10-27/test-results/files-http.json",
+    "docs/changes/2026-10-27/test-results/final-root-regressions.json",
+    "docs/changes/2026-10-27/test-results/final-suite-results.json",
+    "docs/changes/2026-10-27/test-results/packaging-dependencies.json",
+    "docs/changes/2026-10-27/test-results/password-policy-unchanged.json",
+    "docs/changes/2026-10-27/test-results/release-artifact.json",
+    "docs/changes/2026-10-27/test-results/security-build-venv.json",
+    "docs/changes/2026-10-27/test-results/static-checks.json",
+    "docs/changes/2026-10-27/test-results/v7-browser-artifacts.json",
+    "docs/changes/2026-10-27/test-results/v7-browser-large-image-evidence.json",
+    "docs/changes/2026-10-27/test-results/v7-pdf-browser-evidence.json",
+    "docs/changes/2026-10-27/test-results/v7-files-320.png",
+    "docs/changes/2026-10-27/test-results/v7-files-390.png",
+    "docs/changes/2026-10-27/test-results/v7-files-1280.png",
+    "docs/changes/2026-10-27/test-results/v7-chat-320.png",
+    "docs/changes/2026-10-27/test-results/v7-chat-390.png",
+    "docs/changes/2026-10-27/test-results/v7-chat-1280.png",
+    "docs/changes/2026-10-27/test-results/v7-preview-pdf.png",
+    "docs/changes/2026-10-27/test-results/v7-chat-large-image.png",
+    "docs/changes/2026-10-27/test-results/v7-chat-bmp-lightbox.png",
+    "docs/changes/2026-10-28-startup-fix/test-results/diagnosis.json",
+    "docs/changes/2026-10-28-startup-fix/test-results/build.json",
+    "docs/changes/2026-10-28-startup-fix/test-results/build-safety.json",
+    "docs/changes/2026-10-28-startup-fix/test-results/build-source-manifest.json",
+    "docs/changes/2026-10-28-startup-fix/test-results/exe-verification.json",
+    "docs/changes/2026-10-28-startup-fix/test-results/startup-temp.json",
+    "docs/changes/2026-10-28-startup-fix/test-results/native-dependencies.json",
+    "docs/changes/2026-10-28-startup-fix/test-results/static-checks.json",
+    "docs/changes/2026-10-28-startup-fix/test-results/release-artifact.json",
+    "docs/changes/2026-10-28-startup-fix/test-results/verification.json",
+    "docs/changes/2026-10-28-path-and-chat/README.md",
+    "docs/changes/2026-10-28-path-and-chat/chat-layout.md",
+    "docs/changes/2026-10-28-path-and-chat/files-scope.md",
+    "docs/changes/2026-10-28-path-and-chat/test-results/build.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/build-source-manifest.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/native-dependencies.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/previous-artifact.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-frontend.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/files-frontend.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-browser.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/root-regressions.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/root-v7_chat_test.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/root-v7_files_test.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/root-v7_assets_test.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/root-v7_build_test.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/exe-verification.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/startup-temp.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/startup-diagnosis.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/integrity-replace-probe.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/release-artifact.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/startup-temp-delivered.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/startup-token-delivered.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/static-checks.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/source-manifest.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/verification.json",
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-list-1280.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-list-1024.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-list-901.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-list-390.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-list-320.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-room-1280.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-room-390.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-room-320.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-root-1280.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-root-390.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-root-320.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-nested-1280.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-nested-390.png",
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-nested-320.png",
+    "docs/changes/2026-10-28-startup-fix/README.md",
+    ".gitignore",
+    "server/__init__.py",
+    "web/js/00-core.js",
+    "tools/v7_version_test.py",
+    "docs/changes/2026-10-28-release-v7/README.md",
+    "docs/changes/2026-10-28-release-v7/mobile-chat.md",
+    "docs/changes/2026-10-28-release-v7/release-notes.md",
+    "docs/changes/2026-10-28-release-v7/test-results/root-v7_chat_test.json",
+    "docs/changes/2026-10-28-release-v7/test-results/root-v7_files_test.json",
+    "docs/changes/2026-10-28-release-v7/test-results/root-v7_assets_test.json",
+    "docs/changes/2026-10-28-release-v7/test-results/root-v7_build_test.json",
+    "docs/changes/2026-10-28-release-v7/test-results/root-regressions.json",
+    "docs/changes/2026-10-28-release-v7/test-results/files-frontend.json",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-frontend.json",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout.json",
+    "docs/changes/2026-10-28-release-v7/test-results/version.json",
+    "docs/changes/2026-10-28-release-v7/test-results/github-before.json",
+    "docs/changes/2026-10-28-release-v7/test-results/exe-verification.json",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-1280.png",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-1024.png",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-901.png",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-390.png",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-320.png",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-room-1280.png",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-room-390.png",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-room-320.png",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-rename-1280.png",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-rename-390.png",
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-rename-320.png",
+    "docs/changes/2026-10-28-release-v7/test-results/publish-files.json",
+    "docs/changes/2026-10-28-release-v7/test-results/build.json",
+    "docs/changes/2026-10-28-release-v7/test-results/build-source-manifest.json",
+    "docs/changes/2026-10-28-release-v7/test-results/native-dependencies.json",
+    "docs/changes/2026-10-28-release-v7/test-results/source-manifest.json",
+    "docs/changes/2026-10-28-release-v7/test-results/static-checks.json",
+    "docs/changes/2026-10-28-release-v7/test-results/startup-temp-candidate.json",
+    "docs/changes/2026-10-28-release-v7/test-results/release-artifact.json",
+    "docs/changes/2026-10-28-release-v7/test-results/startup-temp-delivered.json",
+    "docs/changes/2026-10-28-release-v7/test-results/delivered-token.json",
+    "docs/changes/2026-10-28-release-v7/test-results/verification.json",
+    ".gitattributes"
+  ],
+  "groups": [
+    {
+      "name": "trackedSources",
+      "count": 49,
+      "base": "."
+    },
+    {
+      "name": "newSources",
+      "count": 18,
+      "base": "."
+    },
+    {
+      "name": "documents",
+      "count": 7,
+      "base": "docs/changes/2026-10-27"
+    },
+    {
+      "name": "jsonNames",
+      "count": 17,
+      "base": "docs/changes/2026-10-27/test-results"
+    },
+    {
+      "name": "imageNames",
+      "count": 9,
+      "base": "docs/changes/2026-10-27/test-results"
+    },
+    {
+      "name": "startupJsonNames",
+      "count": 10,
+      "base": "docs/changes/2026-10-28-startup-fix/test-results"
+    },
+    {
+      "name": "pathDocumentNames",
+      "count": 3,
+      "base": "docs/changes/2026-10-28-path-and-chat"
+    },
+    {
+      "name": "pathJsonNames",
+      "count": 23,
+      "base": "docs/changes/2026-10-28-path-and-chat/test-results"
+    },
+    {
+      "name": "pathImageNames",
+      "count": 14,
+      "base": "docs/changes/2026-10-28-path-and-chat/test-results"
+    },
+    {
+      "name": "startupReadme",
+      "count": 1,
+      "base": "docs/changes/2026-10-28-startup-fix"
+    },
+    {
+      "name": "auditedV7Additions",
+      "count": 3,
+      "base": "."
+    },
+    {
+      "name": "v7VersionTest",
+      "count": 1,
+      "base": "."
+    },
+    {
+      "name": "v7ReleaseDocuments",
+      "count": 3,
+      "base": "docs/changes/2026-10-28-release-v7"
+    },
+    {
+      "name": "v7CompletedReports",
+      "count": 11,
+      "base": "docs/changes/2026-10-28-release-v7/test-results"
+    },
+    {
+      "name": "v7FinalSyntheticScreenshots",
+      "count": 11,
+      "base": "docs/changes/2026-10-28-release-v7/test-results"
+    },
+    {
+      "name": "publicationManifest",
+      "count": 1,
+      "base": "docs/changes/2026-10-28-release-v7/test-results"
+    },
+    {
+      "name": "v7BuildAndNativeAudits",
+      "count": 3,
+      "base": "docs/changes/2026-10-28-release-v7/test-results"
+    },
+    {
+      "name": "v7FrozenSourceStaticAndCandidateStartup",
+      "count": 3,
+      "base": "docs/changes/2026-10-28-release-v7/test-results"
+    },
+    {
+      "name": "v7FinalDeliveryAndAcceptance",
+      "count": 4,
+      "base": "docs/changes/2026-10-28-release-v7/test-results"
+    },
+    {
+      "name": "byteExactEvidenceAttributes",
+      "count": 1,
+      "base": "."
+    }
+  ],
+  "auditedAdditions": [
+    {
+      "path": ".gitignore",
+      "reason": "Narrow local-investigation exclusions; no repository-wide evidence-directory ignore."
+    },
+    {
+      "path": "server/__init__.py",
+      "reason": "Shared APP_VERSION is 7.0."
+    },
+    {
+      "path": "web/js/00-core.js",
+      "reason": "Browser Lan.version is 7.0."
+    },
+    {
+      "path": "tools/v7_version_test.py",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/README.md",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/mobile-chat.md",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/release-notes.md",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/root-v7_chat_test.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/root-v7_files_test.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/root-v7_assets_test.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/root-v7_build_test.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/root-regressions.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/files-frontend.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-frontend.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/version.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/github-before.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/exe-verification.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-1280.png",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-1024.png",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-901.png",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-390.png",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-320.png",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout-room-1280.png",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout-room-390.png",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout-room-320.png",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout-rename-1280.png",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout-rename-390.png",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/chat-layout-rename-320.png",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/publish-files.json",
+      "reason": "Explicit v7.0 release evidence/source/document review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/build.json",
+      "reason": "Completed source/staging and native dependency audit; explicit identity/privacy review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/build-source-manifest.json",
+      "reason": "Completed source/staging and native dependency audit; explicit identity/privacy review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/native-dependencies.json",
+      "reason": "Completed source/staging and native dependency audit; explicit identity/privacy review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/source-manifest.json",
+      "reason": "Completed frozen-source, static or candidate-only startup evidence; identity/privacy review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/static-checks.json",
+      "reason": "Completed frozen-source, static or candidate-only startup evidence; identity/privacy review."
+    },
+    {
+      "path": "docs/changes/2026-10-28-release-v7/test-results/startup-temp-candidate.json",
+      "reason": "Completed frozen-source, static or candidate-only startup evidence; identity/privacy review."
+    }
+  ],
+  "snapshotMeaning": "Reviewed pre-source-commit selection. Final local v7.0 delivery and isolated original-path acceptance completed; GitHub publication has not yet been asserted. Historical result bytes remain unchanged. The manifest includes itself by path, not by a circular self-hash.",
+  "candidateSnapshots": {
+    "README.md": {
+      "bytes": 11317,
+      "sha256": "e66e0eefa2b6c70e16123983597fdafb4676424c899051302a42947f1958951b"
+    },
+    "lanshare.py": {
+      "bytes": 5817,
+      "sha256": "cd3276078b733bd0dd5b70546820642853b7a0227eebb854e851fb999e8585e5"
+    },
+    "requirements.txt": {
+      "bytes": 551,
+      "sha256": "63ce960384b3aed7fdd2c56b98847c21d3ae4aed79a84ff800c060ba9a57f1dc"
+    },
+    "server/archive.py": {
+      "bytes": 15090,
+      "sha256": "d7a58ef909ed34787d0e01fd92ce005960ff56f1f269a916b09f8926f646dd30"
+    },
+    "server/chat_api.py": {
+      "bytes": 22875,
+      "sha256": "1c996470a5720c15d18bc5dbfff5085ec524589ced4b7d94868abbd3e6004dd6"
+    },
+    "server/chat_store.py": {
+      "bytes": 16203,
+      "sha256": "1dbc86fcbb20a163b7b8167e6b922df1704710f9edd4b25fbec5fee1cf3983e5"
+    },
+    "server/config.py": {
+      "bytes": 3309,
+      "sha256": "f3829acb6b856e9789ee07b7cf0de6fcc2dfe6daefbf9d85c4d9acf38df05c2e"
+    },
+    "server/fs_ops.py": {
+      "bytes": 10998,
+      "sha256": "d432ca336da775fbce177d7a56738332a127ffd114a710d8334817d19f2f4c10"
+    },
+    "server/handler.py": {
+      "bytes": 10071,
+      "sha256": "cf429999e54cd4cd47be27ffc8ed555aa193c94e250334fe63f1d9a93a9708e6"
+    },
+    "server/http_util.py": {
+      "bytes": 16790,
+      "sha256": "e707ee3731a8944983bcbb97b2f0c67195d4b4a39473abc0ea1fb3dd473f8b6c"
+    },
+    "server/listing.py": {
+      "bytes": 12964,
+      "sha256": "8c0083078ddd7f38b79b151c91a264d4e91ceade2d6e4d621c28b8dcda8280c2"
+    },
+    "server/pages.py": {
+      "bytes": 5216,
+      "sha256": "a7d32f75bf0366b9ad4c8719fffd8f60b376d2a9618df8cbf4d382bb72ee70d4"
+    },
+    "server/paths.py": {
+      "bytes": 4052,
+      "sha256": "6ad2bdd4eab0a11e3967916656ae1a4d7a348eb5ad1aaeb98abf65012efcc838"
+    },
+    "server/routes.py": {
+      "bytes": 8450,
+      "sha256": "c8d101f994fc612c4a053c2c93298e6ea5897d1ab8fac781900e19c30f9594d3"
+    },
+    "server/runner.py": {
+      "bytes": 12463,
+      "sha256": "790a98ab831c64fef8c90a5820314665af29a0b3d36c3ba5ffe918fb16ea7e6c"
+    },
+    "server/storage.py": {
+      "bytes": 6320,
+      "sha256": "3c290859a7333b79b18f6db6d817f54d1056caf36e2206748a22a16ea7dccdc9"
+    },
+    "server/transfer.py": {
+      "bytes": 18581,
+      "sha256": "efa9bf7f6f14cebe318c593ed7942e7c11a51ad9ccfd1d79a667733391794f47"
+    },
+    "tools/admin_flow_test.py": {
+      "bytes": 18830,
+      "sha256": "9acb7c92d76aeb78e25c38ddf081f7b184c775332aeffac3378086b5902dbd57"
+    },
+    "tools/auth_matrix_test.py": {
+      "bytes": 7332,
+      "sha256": "d13ee66e2ac962c2b82cff4b5da21b037fa0ee6a6975baf6845ca1fee99c2bf0"
+    },
+    "tools/build_assets.py": {
+      "bytes": 5162,
+      "sha256": "5e99184628560e04f594101233e61298db7c53d3e308df90365c7e135a6d490a"
+    },
+    "tools/build_exe.py": {
+      "bytes": 20767,
+      "sha256": "f0ac01a5df94f4a07581c2a2c46ea8ecce256f3881c50075a3b307ba605da12f"
+    },
+    "tools/desktop_test.py": {
+      "bytes": 12068,
+      "sha256": "d1cc9b0e8499b783a2e1ca7af9873b20cb92cf7c321298bc93f7ad27d0646c5b"
+    },
+    "tools/fsops_test.py": {
+      "bytes": 6144,
+      "sha256": "fa5f441819098b90fd7ee28d0fd7c5ae67c5d3fb0661e0060198c160e957f0ef"
+    },
+    "tools/limits_test.py": {
+      "bytes": 2454,
+      "sha256": "425630381971b4177bad5b15b7e4501d165fbbcb43cae3172a52069a7da23df8"
+    },
+    "tools/mobile_shot.py": {
+      "bytes": 5225,
+      "sha256": "aaf16c34bb54eec9508ed45a056728cb436c3fb2782fa536f66513502541f275"
+    },
+    "tools/origin_test.py": {
+      "bytes": 6544,
+      "sha256": "0340b7ccc2c9c9990d03839f14658c261f84fbdec6b13ebbf01570b09e4d158b"
+    },
+    "tools/paging_test.py": {
+      "bytes": 3519,
+      "sha256": "a5d36bb5b07316d5851c20ff45eeefc75401a3f7a925b003d9305624e42bbfab"
+    },
+    "tools/preflight.py": {
+      "bytes": 13144,
+      "sha256": "8b0dac210ca5e35dd7b15305e78232c449cf1a337be756e33f1b10e47302e899"
+    },
+    "tools/protocol_test.py": {
+      "bytes": 11317,
+      "sha256": "f93c70d566fed31b83833ad15c77cd8abd23b0377a07287bd0947d46d8149575"
+    },
+    "tools/screenshots.py": {
+      "bytes": 8740,
+      "sha256": "13e32f611f71f9a05c7ddcb1f5ce06c9c64290926c3b2f327af5cb3b8c1d2865"
+    },
+    "tools/search_test.py": {
+      "bytes": 5696,
+      "sha256": "8eb99341f8924e6f01801768bf100f697ec4882370478d920db07752711cf95d"
+    },
+    "tools/share_switch_test.py": {
+      "bytes": 3811,
+      "sha256": "70b816eacd794c68923ddb7d7db826f97d680b067cb5b90db9b13e71d8b39ed0"
+    },
+    "tools/shot.py": {
+      "bytes": 2699,
+      "sha256": "7acd6f6cda85d75f92af85185e0a6c4079fec97ad0f7717752a2165d91187573"
+    },
+    "tools/smoke_test.py": {
+      "bytes": 10916,
+      "sha256": "bfb707db29c8dfa4f6793fbbfa5b7f73ad7f12ba39ab7360ac6f9e91cdfad3f3"
+    },
+    "tools/sse_test.py": {
+      "bytes": 8041,
+      "sha256": "c422d29f10271d99a6c7bff7cf20b6aa67c9ab2d4299a704eb9bc3d0bda34788"
+    },
+    "tools/theme_flash_test.py": {
+      "bytes": 6313,
+      "sha256": "2697e0c9b773ddb1269e266184fc60f78bc3047c949c08fe81f29f1ea66e349a"
+    },
+    "tools/thumb_test.py": {
+      "bytes": 10920,
+      "sha256": "1fb69ab968a5d8afb9c4c5443dac35cc12fc40ce7bb3daef507f7afcb135939b"
+    },
+    "tools/ui_detail_test.py": {
+      "bytes": 10177,
+      "sha256": "3d46c92b486a92474b4ccdea0d5b9022f4a8edc811d5c02a5742db2d3fdb4f3c"
+    },
+    "tools/ui_test.py": {
+      "bytes": 19078,
+      "sha256": "a80490b35960e3626e9e50b52fc3279379669db43114f10206bc155c859ea913"
+    },
+    "tools/zip_test.py": {
+      "bytes": 9212,
+      "sha256": "36e4e012ebfb71b9bf07cda017df7434c8cacf4395fc4dfcb3199a85d6cfd1d2"
+    },
+    "ui/main_window.py": {
+      "bytes": 52842,
+      "sha256": "42377774050cfc35db38f0679258cedc56f3665f89c2a96bb47c169a0a2e540d"
+    },
+    "web/app.css": {
+      "bytes": 52806,
+      "sha256": "b08caa3d5659bc61712e672d22114feaa5d7d2349ebdb90513d27e7ab6621972"
+    },
+    "web/js/50-files.js": {
+      "bytes": 31260,
+      "sha256": "006edba49063e0154847c164a297ed85bf1776e1e69ad3dbeb7e6fb3be45eb0a"
+    },
+    "web/js/72-files-page.js": {
+      "bytes": 3096,
+      "sha256": "e89dfb7ae4afd34241ea4f4b3413a3927086596c7505657dbb37ed5284b9f1b7"
+    },
+    "web/js/80-chat-list.js": {
+      "bytes": 6357,
+      "sha256": "564f6f96c3cbbc33a8297c3cf8e22eb811be04e60b86842e59ee7da5176a229f"
+    },
+    "web/js/85-chat-room.js": {
+      "bytes": 31663,
+      "sha256": "d6fdd53600c29cf10260a1b054f567862d0a37096826758533b1226ce17db24b"
+    },
+    "web/pages/chat_list.html": {
+      "bytes": 1438,
+      "sha256": "221bd39d23b0511f893b56cc2e69f7c3a88d5a538ae3b31ff9e7efa131d890e7"
+    },
+    "web/pages/chat_room.html": {
+      "bytes": 2542,
+      "sha256": "1dc5f0167ecdc14869e3ee67002e59b3b61eb956d667848b7c03425aa4cac6d0"
+    },
+    "web/pages/files.html": {
+      "bytes": 7235,
+      "sha256": "6225bb5d5a855f3167d4c1997d7fae725c5106ab2a3854e68f4639049b4f9d6b"
+    },
+    "server/chat_media.py": {
+      "bytes": 12604,
+      "sha256": "20c5dc216b978bd6a022f5aa65b04045d4a5f749390e0ad6493652a5375064a3"
+    },
+    "ui/context_menu.py": {
+      "bytes": 3151,
+      "sha256": "4b1e4a91a5ccfb0b464c20ae669da29da3dc14695133d688cb13559c57ac740d"
+    },
+    "ui/single_instance.py": {
+      "bytes": 10264,
+      "sha256": "b476caff6040a0010c7d4afceadc7ca51621f19da784725b7bf8dac65501cfac"
+    },
+    "web/files-search.css": {
+      "bytes": 2090,
+      "sha256": "624f41df022808ae35423b5b80c0a18d73f46af78f86b1645d924552890a5c20"
+    },
+    "tools/desktop_lifecycle_test.py": {
+      "bytes": 34627,
+      "sha256": "34b5cd5baa02de29284a4526a49472af0d36cf5232825f66ff5a2bc4c24a45b9"
+    },
+    "tools/test_support.py": {
+      "bytes": 6638,
+      "sha256": "3bf8fc24fdaa5e0bb43a09d9701342d634b44431082fafd03765d389224caab8"
+    },
+    "tools/windows_job.py": {
+      "bytes": 3099,
+      "sha256": "4f7de6d1fb2ad1188c83de01fce8586b13f525d9ebe5238ffba689a370f94038"
+    },
+    "tools/v7_assets_test.py": {
+      "bytes": 4510,
+      "sha256": "451330d4db4ef5decc8b8ca5a448d5f75854cdd87537d84a36397f0ae5543bd0"
+    },
+    "tools/v7_browser_test.py": {
+      "bytes": 32183,
+      "sha256": "cf6c9c418f4afb9916091f4d2cebc27be85371cab4ad928a0dedabbc79cf4d13"
+    },
+    "tools/v7_build_test.py": {
+      "bytes": 22530,
+      "sha256": "7808b4a12a851eb5e4f513f3b61192f7a4ca99b6de6f4325777ec1558b42e47b"
+    },
+    "tools/v7_chat_frontend_test.js": {
+      "bytes": 12242,
+      "sha256": "b1ca6bf6d375030bcb346a36a0e0a514f6eeac4c2b6bdd71aa49914da1d852ac"
+    },
+    "tools/v7_chat_layout_test.py": {
+      "bytes": 15452,
+      "sha256": "ffa004014f047261ad33636bb462f1e86828a7557121ae3f0c3a6d64684e3f86"
+    },
+    "tools/v7_chat_test.py": {
+      "bytes": 22300,
+      "sha256": "546d8082d4e6372c622df7f3d835dd0f465835d66bc6a084c939e35ef4fb2bac"
+    },
+    "tools/v7_exe_test.py": {
+      "bytes": 18709,
+      "sha256": "2e353b94566b5c57589354a8e21911ddc4e16451007a5cc2ec2c1d201f81fc03"
+    },
+    "tools/v7_files_frontend_test.js": {
+      "bytes": 30226,
+      "sha256": "28c427c16a5efd82dbe5494097d620317f9d7f344f6bb249e94fc9dcc5e00b31"
+    },
+    "tools/v7_files_test.py": {
+      "bytes": 15232,
+      "sha256": "4b3eada960f03241a14adbd9bb13d127cd58c5f61b7236a27969e4ca5225d44a"
+    },
+    "tools/v7_security_test.py": {
+      "bytes": 25463,
+      "sha256": "0c5fe16bbfc1bef428195acd80c1a5417029f5c4b628eade9e581e4764d86c68"
+    },
+    "tools/v7_startup_temp_test.py": {
+      "bytes": 15288,
+      "sha256": "59238778a96c98f6c0eacacf3f01ee672a12239c1d4ec039de22f29fbb743b81"
+    },
+    "docs/changes/2026-10-27/README.md": {
+      "bytes": 3558,
+      "sha256": "8d3ac2ac1ae09e20d4b83f8323b67f92c600fb42a7679ac18cfef91f9c6261eb"
+    },
+    "docs/changes/2026-10-27/backend.md": {
+      "bytes": 9018,
+      "sha256": "8cf849014bf149382966086c1cb5b1384b378ec1e0440747fb23a99dda284da9"
+    },
+    "docs/changes/2026-10-27/chat.md": {
+      "bytes": 11518,
+      "sha256": "1c7a8554c19f699533954cf67110488a0c4992c05ec7532366fb5dcc25657e53"
+    },
+    "docs/changes/2026-10-27/desktop.md": {
+      "bytes": 11568,
+      "sha256": "8bcfd815bdf6e8835cd9169fcbb2612a14efc4abd6a6fa38b8dde748d818f5d5"
+    },
+    "docs/changes/2026-10-27/files-build-tests.md": {
+      "bytes": 6393,
+      "sha256": "5a4761df93a4f6a95d7662bddcbee3456953ae9aa5ffec19b05df9c2946e6b04"
+    },
+    "docs/changes/2026-10-27/verification.md": {
+      "bytes": 10805,
+      "sha256": "7890647f97dff15bf8c86f1d7356c8838a34b2ee491589daa0fe82d913b9f26f"
+    },
+    "docs/changes/2026-10-27/github-push.md": {
+      "bytes": 11124,
+      "sha256": "fdcd05764a699d9308eec0057d1abc6f23b44bb8e1cd974d247bd94f8dd03647"
+    },
+    "docs/changes/2026-10-27/test-results/assets.json": {
+      "bytes": 1048,
+      "sha256": "f3b409a7b7b7607a2c467939ec84eae00d07407fe8e30e35200ec9ba883a0cb0"
+    },
+    "docs/changes/2026-10-27/test-results/build-environment.json": {
+      "bytes": 792,
+      "sha256": "711d2073e192ae057d478d1f1a1db96a08c37ca84c3feb9d3f9708afe2457958"
+    },
+    "docs/changes/2026-10-27/test-results/build-source-manifest.json": {
+      "bytes": 8017,
+      "sha256": "bc17139c03f6390269d19134674ececb8c9ea7f52f51ac920f5fff89a4a69166"
+    },
+    "docs/changes/2026-10-27/test-results/dll-closure-build-E.json": {
+      "bytes": 2637,
+      "sha256": "277c8e33a2f12ce261c1b3c9967401fb7c51e85ecd7a0af4c2b6c7e307aea525"
+    },
+    "docs/changes/2026-10-27/test-results/exe-verification.json": {
+      "bytes": 2461,
+      "sha256": "ec26b4738346a96bd94cf09a52dccb54eee8688a4dc3dc99683cf8ede768877b"
+    },
+    "docs/changes/2026-10-27/test-results/files-frontend.json": {
+      "bytes": 2762,
+      "sha256": "903c6704d015d5a4c71fa321f2c5f7f14bf03db0fe9858c9545956b1aa8e4b1b"
+    },
+    "docs/changes/2026-10-27/test-results/files-http.json": {
+      "bytes": 1606,
+      "sha256": "19d49884f4a3d2a8a82ba2106f34b9d2a4e9546a77841b9cebc42fdc3be139d9"
+    },
+    "docs/changes/2026-10-27/test-results/final-root-regressions.json": {
+      "bytes": 5027,
+      "sha256": "3b4ecac148961330cbf7989af5a716e76d8c6f3aa3e81bb092df8436d61cc67c"
+    },
+    "docs/changes/2026-10-27/test-results/final-suite-results.json": {
+      "bytes": 7594,
+      "sha256": "9b66e262bd3815cffdbfd3a616e61c3d05f75f905db171b731edb25fbc8e2028"
+    },
+    "docs/changes/2026-10-27/test-results/packaging-dependencies.json": {
+      "bytes": 2637,
+      "sha256": "277c8e33a2f12ce261c1b3c9967401fb7c51e85ecd7a0af4c2b6c7e307aea525"
+    },
+    "docs/changes/2026-10-27/test-results/password-policy-unchanged.json": {
+      "bytes": 11582,
+      "sha256": "47c3d74a1c2fd74c936cecb72981bd29977df9b966dcfdc305bec6de4231fa2d"
+    },
+    "docs/changes/2026-10-27/test-results/release-artifact.json": {
+      "bytes": 1428,
+      "sha256": "3dee5c7ec27cfd005ceac0a0a7eac9d6b5a6d669a1a283032399f39fe8b865ef"
+    },
+    "docs/changes/2026-10-27/test-results/security-build-venv.json": {
+      "bytes": 3499,
+      "sha256": "b34fb40341ca2d52ea19209882a51f6f6ee4c36e7cee0b42a3e4e4459b557365"
+    },
+    "docs/changes/2026-10-27/test-results/static-checks.json": {
+      "bytes": 463,
+      "sha256": "215ff59840bef40117bb8373b3781ca0f66d4d477e8b1d4a305772be6e1cda4f"
+    },
+    "docs/changes/2026-10-27/test-results/v7-browser-artifacts.json": {
+      "bytes": 3575,
+      "sha256": "1f83a2944793ed503abbb704d40126cdffed567e131586c9e924979d551cab2c"
+    },
+    "docs/changes/2026-10-27/test-results/v7-browser-large-image-evidence.json": {
+      "bytes": 266,
+      "sha256": "9772f131fbf894c55dbe1cab9a838597a757cc0b20dcb69b27408c24bb8e04f1"
+    },
+    "docs/changes/2026-10-27/test-results/v7-pdf-browser-evidence.json": {
+      "bytes": 611,
+      "sha256": "53d1464abf2dee28d948aaf139d1fb90764bb2ed59d035f065951b280f7ee043"
+    },
+    "docs/changes/2026-10-27/test-results/v7-files-320.png": {
+      "bytes": 181301,
+      "sha256": "d1bd6944c4d920c89b97f05123e0642929620b34cd966bc5eb7cc50dc38cea36"
+    },
+    "docs/changes/2026-10-27/test-results/v7-files-390.png": {
+      "bytes": 220192,
+      "sha256": "dbded5cdce1acdc1624c2e0a56c9ea14075334d3cc3940a0f92a76185dc9ad9c"
+    },
+    "docs/changes/2026-10-27/test-results/v7-files-1280.png": {
+      "bytes": 548185,
+      "sha256": "b34f440869a7314fc03486665b3af06eb5d936169b76785e45c034ec030e2931"
+    },
+    "docs/changes/2026-10-27/test-results/v7-chat-320.png": {
+      "bytes": 232195,
+      "sha256": "03f3e391e0027232b610a44b52c59e6c776091f16d18d741b589dc8703d5fce3"
+    },
+    "docs/changes/2026-10-27/test-results/v7-chat-390.png": {
+      "bytes": 280598,
+      "sha256": "e5c714b49b898672c0154327533849286ec76dc12b52e23f6fa683a1c464fa49"
+    },
+    "docs/changes/2026-10-27/test-results/v7-chat-1280.png": {
+      "bytes": 867211,
+      "sha256": "edb8fd12215c14d3cd28e7ad1028ab5f7434a81b3fa58cf1ff45ce8080c27c4d"
+    },
+    "docs/changes/2026-10-27/test-results/v7-preview-pdf.png": {
+      "bytes": 15020,
+      "sha256": "ec692d59515931c21c268b4a551a0da3bb30ca3795f070ef8a6391ee57671850"
+    },
+    "docs/changes/2026-10-27/test-results/v7-chat-large-image.png": {
+      "bytes": 814906,
+      "sha256": "ba922107a5413017cdd9e3654c2c63573fadc3bc27f8210fcdf954fd659173fd"
+    },
+    "docs/changes/2026-10-27/test-results/v7-chat-bmp-lightbox.png": {
+      "bytes": 79992,
+      "sha256": "116f403d8771786cfb437ef1daaed3981b411cccd663b6553dacaba63326d6c1"
+    },
+    "docs/changes/2026-10-28-startup-fix/test-results/diagnosis.json": {
+      "bytes": 2615,
+      "sha256": "995cf80074eb0331fa8af75d9984c80ffad334424ff70655f2f8dffdcb28c75c"
+    },
+    "docs/changes/2026-10-28-startup-fix/test-results/build.json": {
+      "bytes": 2260,
+      "sha256": "4ee0be0ee0835958186f9a96f7d78953fa601854b532489d38d99aa2c1a2af9f"
+    },
+    "docs/changes/2026-10-28-startup-fix/test-results/build-safety.json": {
+      "bytes": 386,
+      "sha256": "34340b1296fe5a71ee4ee9d512379d04f15fb608908aa16abae3d9aaafd136b5"
+    },
+    "docs/changes/2026-10-28-startup-fix/test-results/build-source-manifest.json": {
+      "bytes": 11870,
+      "sha256": "4d9c870256aa8f6761b5a12946fa2469e372e8c9f975a9053ea37cde0abf3b94"
+    },
+    "docs/changes/2026-10-28-startup-fix/test-results/exe-verification.json": {
+      "bytes": 3389,
+      "sha256": "ce0ab23243c9545465eb5654099abb196916849faf8c9e081c798db9fcc79220"
+    },
+    "docs/changes/2026-10-28-startup-fix/test-results/startup-temp.json": {
+      "bytes": 9570,
+      "sha256": "50e2529b3a74633a9e72872b38ecd1c50b09e503983f2a212ebe5bdee4cc22e8"
+    },
+    "docs/changes/2026-10-28-startup-fix/test-results/native-dependencies.json": {
+      "bytes": 78358,
+      "sha256": "4e01a12dd9df20da58274f37dd834277eeeea4455fc403b2de52a3a905bc5f30"
+    },
+    "docs/changes/2026-10-28-startup-fix/test-results/static-checks.json": {
+      "bytes": 2165,
+      "sha256": "06738417b71b76f0e1b5532041cafdb58495122272587280b4e73d4c86f4105f"
+    },
+    "docs/changes/2026-10-28-startup-fix/test-results/release-artifact.json": {
+      "bytes": 891,
+      "sha256": "f1df2bd7ce1144e348edc2edaf008cb280576476a0b73c0bf10cb53d2cfd4e3f"
+    },
+    "docs/changes/2026-10-28-startup-fix/test-results/verification.json": {
+      "bytes": 2825,
+      "sha256": "e1230bfd4541b3404a42d84defd1c853ffe4dfea27269d7b26e5aad8254f4a8c"
+    },
+    "docs/changes/2026-10-28-path-and-chat/README.md": {
+      "bytes": 9113,
+      "sha256": "d2548973530f91f492021944b691772d5d040abfefc8c63769c2575470562409"
+    },
+    "docs/changes/2026-10-28-path-and-chat/chat-layout.md": {
+      "bytes": 4515,
+      "sha256": "a7ee834e774b397f16acae4ca1bdc61c9433cc1e4957bd35b61a141d51306467"
+    },
+    "docs/changes/2026-10-28-path-and-chat/files-scope.md": {
+      "bytes": 3291,
+      "sha256": "81d2d397fb85e7dc3de450b5c843542daa272c29df59f8f78ce4891ed19866a4"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/build.json": {
+      "bytes": 1617,
+      "sha256": "c2afcd57e2b672a0ba5bf1ca6b98864d1441742635419b62a31cb28b429ab61a"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/build-source-manifest.json": {
+      "bytes": 11453,
+      "sha256": "b516093ed3e38be5bfbc865539f6c6ff6dc6eb671b20079189e7307ab702fd96"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/native-dependencies.json": {
+      "bytes": 13747,
+      "sha256": "cdaa42613b40f47e207456d8f6c1bd23543548d640cd715465ec5263ce202337"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/previous-artifact.json": {
+      "bytes": 715,
+      "sha256": "cb882bf74df9372e254190d9b8c82525797f5cddb88256659e4e1b759328cb8c"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-frontend.json": {
+      "bytes": 2752,
+      "sha256": "c96f21af60105896f309e6cb81bfcc292c81ec2bfce8afbbd58ec060227935a9"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout.json": {
+      "bytes": 15213,
+      "sha256": "2d61e64a2eaa767ec350ed34b7958bdb65a7e0e50bd7c7a3b4f44347ad8e1872"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/files-frontend.json": {
+      "bytes": 4061,
+      "sha256": "e0400a389f0a5beacc0139d825d3ae2235a5f714b0a35ac78aff9f5d763372c0"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-browser.json": {
+      "bytes": 8385,
+      "sha256": "b3d9e7a4e4ce1c527dd81589150527c96abbd7d55d8e4a53812e80d3efd29d20"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/root-regressions.json": {
+      "bytes": 46992,
+      "sha256": "ffed6c2c0db3797c5f3291d789cb3c120cf94ed3ea60e75f15d98cec606d1ac7"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/root-v7_chat_test.json": {
+      "bytes": 3140,
+      "sha256": "9011d2dcb669653c3b0ca33fbdca95c39509c2b08b12994e6c9d6d323847b952"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/root-v7_files_test.json": {
+      "bytes": 3982,
+      "sha256": "74bc6df6080213ba09cb9fa54e770d4a9086d866d5031fbaa85060c7ac0eaece"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/root-v7_assets_test.json": {
+      "bytes": 3445,
+      "sha256": "38df9483e8f7cd1a752b89f3402749ce508479d9e0d9e08a88e8c2aa4677b615"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/root-v7_build_test.json": {
+      "bytes": 13198,
+      "sha256": "3ca7620892c5eec12486253d827f2f539c93b51e4fdf3a8a7f2db0ad42d319ca"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/exe-verification.json": {
+      "bytes": 3389,
+      "sha256": "582a5fc85795070cf58ba79c7e9542375e1800665d113acb875cbb7b39768408"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/startup-temp.json": {
+      "bytes": 14551,
+      "sha256": "a6d1c7342d61d128007fcaf990b96baebca0d8adc0d11692058e5889d01290f8"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/startup-diagnosis.json": {
+      "bytes": 7032,
+      "sha256": "448fc277bf0f5400b5e836b6c5fbed6ee4e7c0c69c166e1eda05df48d09cac05"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/integrity-replace-probe.json": {
+      "bytes": 3959,
+      "sha256": "de3418653670442714da8a50424d055ac8c54f2ca2febb25de58ec6467122747"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/release-artifact.json": {
+      "bytes": 1864,
+      "sha256": "107cb092496e94f95d193634fe41c5eb6989a7bc5fb8707402b782c6263b421b"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/startup-temp-delivered.json": {
+      "bytes": 14572,
+      "sha256": "49af86ec9f6b0493bd6d014c7316c0ca685d60e44a192cb7647e536ddcaf7a7c"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/startup-token-delivered.json": {
+      "bytes": 2343,
+      "sha256": "46ae61ade333416af1d180b116129959990c44fc2d5637be21d786fb3076dba2"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/static-checks.json": {
+      "bytes": 8179,
+      "sha256": "b455c71bd4be9ef7177ddaefb8f3da855e4df886298c45091c936b927ed70f7f"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/source-manifest.json": {
+      "bytes": 14930,
+      "sha256": "eb389d4f1e9ef052f805c7804527e6915aa8afa7d5ee35097491223984808f8c"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/verification.json": {
+      "bytes": 8355,
+      "sha256": "0156abf391fe53be1ba89e31125735ffe6d881d2a60a9f60268822c9bf11cc97"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-list-1280.png": {
+      "bytes": 750278,
+      "sha256": "07958fcce62b638cb189abf3f1e29c71328cef3e5b259b798e0616a409b763d9"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-list-1024.png": {
+      "bytes": 599392,
+      "sha256": "7777621c3def6d1817843c3e3d3ff6ee59dacba2554bfe31dcbbf12796ffd74a"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-list-901.png": {
+      "bytes": 524109,
+      "sha256": "25524f1e82949c768ed8de227b441c1a680a43466a84983a551a6512ea96d9f5"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-list-390.png": {
+      "bytes": 253158,
+      "sha256": "7fbe8b22386509062fe0af919ca5668f0b95d6a0d22b43ae175f36e697725f0a"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-list-320.png": {
+      "bytes": 213427,
+      "sha256": "f6c62fbd6ff07320984bf55878d0904baa97ee098c5fe1aa92012ae465111d36"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-room-1280.png": {
+      "bytes": 854843,
+      "sha256": "b7fd4c5d23472a0e8b60c6092debb776e3cdd97a7d68f072983f2f0edd64fe1b"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-room-390.png": {
+      "bytes": 273796,
+      "sha256": "41eac136f78ce9f149057c9e8af7f13a45c0755b991c15cd5f63fc6560eca2e3"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/chat-layout-room-320.png": {
+      "bytes": 227788,
+      "sha256": "0b73b5de0fd2926ff159c97ddddfd6e13cf69c949a516b3630037d49b0709658"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-root-1280.png": {
+      "bytes": 548467,
+      "sha256": "af6a469e3773f8d4849d372f7c8c788fefe7f9e20c17a524af94028a5d6981dd"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-root-390.png": {
+      "bytes": 219683,
+      "sha256": "2f6c4c0b52b36901e79e6aecbb7c4db2682f1af1d927d0a436567c855828cf68"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-root-320.png": {
+      "bytes": 181037,
+      "sha256": "27708d56f8346bc53be0528f3f2885a439a02209e915b31878a7a8ba3de940c1"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-nested-1280.png": {
+      "bytes": 778456,
+      "sha256": "8bd1b585ee10bdcd7577dd5655f3b6b98546488e4b992122a71ac46f57ac0d63"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-nested-390.png": {
+      "bytes": 267950,
+      "sha256": "a7a03438afcaee1e4c5f93d092b4813c74f4bf25c7f3a11dc5c2d8bcc49068f5"
+    },
+    "docs/changes/2026-10-28-path-and-chat/test-results/file-scope-nested-320.png": {
+      "bytes": 217665,
+      "sha256": "e405be32aebb2a85f590fcbf918822e15434195b24cad52eee9eb2c06ae2bbb9"
+    },
+    "docs/changes/2026-10-28-startup-fix/README.md": {
+      "bytes": 8752,
+      "sha256": "cc60bc97e61575226afd84f4e3afe67ec7bed1c6a893b169398e2e75444c4105"
+    },
+    ".gitignore": {
+      "bytes": 949,
+      "sha256": "6ddad9d737be2023c915a6dc05aadbe20a8ee5971f8c98ad1f7a795b39463a2c"
+    },
+    "server/__init__.py": {
+      "bytes": 85,
+      "sha256": "126cb3d5cd6f3aff1c8896e864669c0471717180b59cef65e03dcbae855e1a11"
+    },
+    "web/js/00-core.js": {
+      "bytes": 2709,
+      "sha256": "98add34ee69a73903d39fb774a0bdcfcf5b04924b9d1440e7b2b513d0768e656"
+    },
+    "tools/v7_version_test.py": {
+      "bytes": 16490,
+      "sha256": "86db8bc8f7b688648065d63ac890f255781b9afe0a976eabdc4051492b320492"
+    },
+    "docs/changes/2026-10-28-release-v7/README.md": {
+      "bytes": 4867,
+      "sha256": "bed9cf84235849533ca1d2321edfbf5369fdbf004f98d213ee897476cd8f5826"
+    },
+    "docs/changes/2026-10-28-release-v7/mobile-chat.md": {
+      "bytes": 5469,
+      "sha256": "db53ad2338bf8b05f92eba5dac7647a60037fb3235a91a0c9d8e6c8a651f3332"
+    },
+    "docs/changes/2026-10-28-release-v7/release-notes.md": {
+      "bytes": 3309,
+      "sha256": "027cf37c087a8c7b7092a1cf711381cf297715f106fb6a798e3ec804dc279c43"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/root-v7_chat_test.json": {
+      "bytes": 3044,
+      "sha256": "31524d40a1824d13a8f5a51f715740f05f1be8846f349dd897db07bed835f12b"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/root-v7_files_test.json": {
+      "bytes": 3883,
+      "sha256": "04ce76519b89854aa3e97e7632f2f68b5b8d334db0d4bbee759fc8e370bf4d87"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/root-v7_assets_test.json": {
+      "bytes": 3363,
+      "sha256": "d16e29b0ebb9b14bdbb8fdf094d18389d95b504a4e03ae74eb12b26607ab03d4"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/root-v7_build_test.json": {
+      "bytes": 12913,
+      "sha256": "3bd7a816307539a0f0c4afa90a95b13e75f644f95ac4c630d82819fe5bd4bac3"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/root-regressions.json": {
+      "bytes": 56732,
+      "sha256": "b3b1ea4c26721c19541003541f81bb8111516ffc90b56ef710bcc311b7b61468"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/files-frontend.json": {
+      "bytes": 4061,
+      "sha256": "936e9fa32206ea9ea187f8c5620e02d339afa1939f1edc69e11e87168e238753"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-frontend.json": {
+      "bytes": 2635,
+      "sha256": "0ad92ede0b9dc5b163bfb572b160f2bd8fb76eee0c51fbd225fe95b2d95f5c1d"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout.json": {
+      "bytes": 18444,
+      "sha256": "ce4f2fa37b1a1b08113c9e122417071af2ecbeaa8dcdc7dfeb02f76a627cc422"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/version.json": {
+      "bytes": 4185,
+      "sha256": "0e9be531d6474d1162e1e1c48dc8388a3c37b059551fc242c18bc9b2e97602fe"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/github-before.json": {
+      "bytes": 1511,
+      "sha256": "d96c2fba475e6096e3165a2ddb3496e77472d897b9464c88931362efdb839fd7"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/exe-verification.json": {
+      "bytes": 3388,
+      "sha256": "c569f48e6a142ce2a75754ca9d3cf72fe3f8ce99c6b782a3f029e3b85fa4e0aa"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-1280.png": {
+      "bytes": 749946,
+      "sha256": "54636e5ade7a47a32cfd8216243808773debee0d46f7b5d08571f8732cd37829"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-1024.png": {
+      "bytes": 599165,
+      "sha256": "7032f54fe723b14c484f095094f8c0902c6b1bb9305d0e3fa029578c2105a646"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-901.png": {
+      "bytes": 523963,
+      "sha256": "66563a7ef2e3f8db5b41d2005275bd94e18b3496d5ebaa720353149481ed49b6"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-390.png": {
+      "bytes": 253196,
+      "sha256": "b71b3dcb85f48a3295784f20195f02ebc4bab36c9fee5f10d8f3a0481552cd9b"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-list-320.png": {
+      "bytes": 213525,
+      "sha256": "15c9cac8ebd1b4c625587d2a7c1467e31cf178a96f7d9be6369c816320f56877"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-room-1280.png": {
+      "bytes": 854709,
+      "sha256": "d8f0be19a79fc1aee197a6e7ce211230562669dd8bb348056b03ceff69ce493a"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-room-390.png": {
+      "bytes": 276739,
+      "sha256": "171fbb6f854f04930dda175748e098414cf0c7a21be491b00669d1674b2b62c5"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-room-320.png": {
+      "bytes": 229999,
+      "sha256": "a1ae06219a1e41d64c118b5905a3a1b296b92cd15d950abaa13aab67b084a555"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-rename-1280.png": {
+      "bytes": 859674,
+      "sha256": "f559d8e956046eb4eab961e7a176772c9ff093860bc70eab03a287ec69964358"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-rename-390.png": {
+      "bytes": 277550,
+      "sha256": "9ef677b98d97ba8700cf5736616c6f3f38bc7eb41a7723c05234301d348f9930"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/chat-layout-rename-320.png": {
+      "bytes": 229791,
+      "sha256": "1cc894147808cdefb889a2f373c3647a9057894fe16fc06de72d33b805876230"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/build.json": {
+      "bytes": 2742,
+      "sha256": "32907ee5daf541cf074fc756fc169c9446168171af9436cb90f082493691727c"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/build-source-manifest.json": {
+      "bytes": 11814,
+      "sha256": "d0c43b177184041e91dd17501d97ff0b49d1a8a90ab5b8f01eea0dc3df99eafa"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/native-dependencies.json": {
+      "bytes": 14585,
+      "sha256": "5e055216196fc3a344bda9d86a976f0bce7c4d92bc278929b704c6fccd151560"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/source-manifest.json": {
+      "bytes": 15091,
+      "sha256": "58a4320703eb966ffbf7ba0fc71822966eda6cb0ac4cb2ef1d7532776c790ede"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/static-checks.json": {
+      "bytes": 8216,
+      "sha256": "c8160bbb1a3c2512d23081f0d85586157dc32666144c232de7a9343876a1b0e9"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/startup-temp-candidate.json": {
+      "bytes": 14553,
+      "sha256": "4a7cd7d22663b636a09f955ee5311ae6a53e06eacb8513f1eda73d291301ba2e"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/release-artifact.json": {
+      "bytes": 1444,
+      "sha256": "96724795c090cbbffddd2b7fa211a75d9a7969ffae19a7c938b5a49a800aca23"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/startup-temp-delivered.json": {
+      "bytes": 14573,
+      "sha256": "87e81f983af18319fc0a9c6416014660fe9da10bb2e457a4bdc40569cd38a1b2"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/delivered-token.json": {
+      "bytes": 4456,
+      "sha256": "935d40bca287b9c4903a4a64c43b3a31a8c2cbc2d7bc6fbc93e2685f708682c3"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/verification.json": {
+      "bytes": 6050,
+      "sha256": "222cb86c63d1e91f7ebc310b21ade1393165d04c7e494974fd1f53029dac3d38"
+    },
+    ".gitattributes": {
+      "bytes": 479,
+      "sha256": "e616cfec2f4190ac68a1f5633109c94b7dc33c5d6ca8d94db0c471fa3d7387db"
+    }
+  },
+  "checks": {
+    "allPathsInsideCheckout": true,
+    "allRegularFiles": true,
+    "uniquePaths": true,
+    "noWildcardsOrDirectories": true,
+    "gitIndexModifiedByAudit": false,
+    "jsonPrivacySignatureAudit": {
+      "files": 67,
+      "accountSidFindings": 0,
+      "credentialSignatureFindings": 0,
+      "emailFindings": 0,
+      "privateNonLoopbackIpv4Findings": 0
+    },
+    "pngAudit": {
+      "files": 34,
+      "validStructureAndCrc": 34,
+      "metadataChunks": 0,
+      "newScreenshotHashesMatchBrowserReport": true,
+      "visualInspection": "New 11 images individually inspected by the layout owner; mobile-chat.md records the review. Prior 23 remain historical synthetic fixtures."
+    },
+    "initialIgnoreCheck": {
+      "fileCount": 154,
+      "ignoredPaths": [],
+      "generatedUtc": "2026-10-28T06:41:23.313760+00:00"
+    },
+    "gitOperationsDuringThisExtension": "None; final ignore/index/status preflight remains with root.",
+    "newPathsIgnoreCheck": {
+      "fileCount": 192,
+      "ignoredPaths": [],
+      "timestamp": "2026-10-28T07:08:01.781920+00:00"
+    },
+    "frozenSourceHashesMatchReports": true,
+    "completedDistinctTestMethods": 116,
+    "countingNote": "57 Python + 22 files VM + 10 chat VM + 4 Chrome + 9 version + 8 copied EXE + 6 startup; reruns, subtests, repeated launches and screenshots are not extra methods.",
+    "buildEvidenceReview": {
+      "runtimeSourcesMatchWorkspaceAndStaging": 29,
+      "nativePayloadEntries": 119,
+      "sameArtifactAsExeAndVersionReports": true,
+      "historicalNativeAuditHashVerified": true,
+      "scope": "Reviewed the independent native auditor result; native payload equality is not a new full loader/OS compatibility test."
+    },
+    "candidateStartup": {
+      "testMethods": 6,
+      "launches": 8,
+      "buildPathLaunches": 1,
+      "copiedPathLaunches": 7,
+      "finalDeliveryPathLaunches": 0,
+      "allRecordedExtractionDirectoriesAbsent": true,
+      "scopeNote": "The candidate report original-location means the build/dist path, not the user delivery path."
+    },
+    "completeFrozenSourceManifestMatches": 90,
+    "finalJsonPrivacyAudit": {
+      "files": 71,
+      "signatureFindings": 0,
+      "patterns": [
+        "accountSid",
+        "credential",
+        "email"
+      ]
+    },
+    "gitLfNormalization": {
+      "path": "server/chat_media.py",
+      "meaning": "The frozen workspace/build copy retains CRLF. Existing .gitattributes normalizes the committed Python blob to LF; only this newline-only transform is allowed by the publication helper. Runtime/source snapshot hashes retain their raw-byte meaning."
+    },
+    "finalDelivery": {
+      "success": true,
+      "sha256": "a7f64eca35d2a1257d2b2a5d4c2e5b63f0718aa3650b607f108168cabb220c25",
+      "exactDeliveryPathControlledLaunches": 2,
+      "mediumNonElevatedSameUser": true,
+      "directoryPermissionsUnchanged": true,
+      "realSettingsAndChatUnchanged": true
+    },
+    "evidenceAttributes": {
+      "pattern": "docs/changes/**/test-results/*.json",
+      "text": "unset",
+      "jsonBytesPreservedInGit": true,
+      "whitespace": "blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol"
+    }
+  },
+  "localOnlyHistoricalFiles": [
+    {
+      "path": "docs/changes/2026-10-27/test-results/backend-build-tools.json",
+      "reason": "Historical 21-method preliminary build-tools result; backend.md identifies it as non-final. Keep in place; optionally ignore by this exact path."
+    },
+    {
+      "path": "docs/changes/2026-10-27/test-results/legacy-results.json",
+      "reason": "Preliminary legacy-script return-code summary, superseded by reviewed final regression evidence. Keep in place; optionally ignore by this exact path."
+    }
+  ],
+  "excludedCategories": [
+    "Real chat data and user settings",
+    "EXE and generated webassets.py",
+    "Environment/build/dist trees",
+    "Raw logs and account-token/ACL diagnostic folders",
+    "Initial-candidate/before screenshots",
+    "Temporary regression runners and invalidated probes"
+  ],
+  "pendingRootReviewPathsAtAudit": [
+    "docs/changes/2026-10-28-release-v7/test-results/release-artifact.json"
+  ],
+  "finalizationRequired": [
+    "Stage exactly these reviewed paths and compare the complete index before committing.",
+    "Non-force push the source commit and v7.0 lightweight tag; publish only after remote tag and local frozen-source verification.",
+    "Append actual GitHub publication metadata and update status in a separate documentation commit after upload/digest/latest verification."
+  ],
+  "previousCandidate": {
+    "generatedUtc": "2026-10-28T06:53:40.021503+00:00",
+    "fileCount": 184,
+    "sha256": "e580158d22e7495e4dab2cc5f52d765f808b98f7704f25ccc18dc8f1345da030"
+  },
+  "revision": 6,
+  "candidateArtifact": {
+    "path": "E:\\LanShare-builds\\build-hw18u5xf\\dist\\lanshare.exe",
+    "bytes": 63929596,
+    "sha256": "a7f64eca35d2a1257d2b2a5d4c2e5b63f0718aa3650b607f108168cabb220c25",
+    "assetVersion": "01c9b74c9a",
+    "state": "Delivered to exact user path and passed startup matrix plus Medium/non-elevated token acceptance."
+  },
+  "pendingCompletionGates": [
+    "Stage exactly these reviewed paths and compare the complete index before committing.",
+    "Non-force push the source commit and v7.0 lightweight tag; publish only after remote tag and local frozen-source verification.",
+    "Append actual GitHub publication metadata and update status in a separate documentation commit after upload/digest/latest verification."
+  ],
+  "candidateRevisions": [
+    {
+      "generatedUtc": "2026-10-28T06:41:23.313760+00:00",
+      "fileCount": 154,
+      "sha256": "e6a3762bbf6e75509bf7c3b6a216e5c14d143f6c750e062fce84b7d79562ae72"
+    },
+    {
+      "generatedUtc": "2026-10-28T06:52:06.225638+00:00",
+      "fileCount": 181,
+      "sha256": "7350027d28fbfc079a264f0a2e9c46bd0bef2c23112197173593f50a418dcee3"
+    },
+    {
+      "generatedUtc": "2026-10-28T06:53:40.021503+00:00",
+      "fileCount": 184,
+      "sha256": "e580158d22e7495e4dab2cc5f52d765f808b98f7704f25ccc18dc8f1345da030"
+    },
+    {
+      "timestamp": "2026-10-28T07:03:24.799748+00:00",
+      "previous_sha256": "d7b8383381a55d656b131799398f02bfc0be948d84be2adcbcfcf43289400360",
+      "addedPaths": [
+        "docs/changes/2026-10-28-release-v7/test-results/release-artifact.json",
+        "docs/changes/2026-10-28-release-v7/test-results/startup-temp-delivered.json",
+        "docs/changes/2026-10-28-release-v7/test-results/delivered-token.json",
+        "docs/changes/2026-10-28-release-v7/test-results/verification.json"
+      ],
+      "refreshedDocuments": [
+        "docs/changes/2026-10-27/README.md",
+        "docs/changes/2026-10-27/github-push.md",
+        "docs/changes/2026-10-28-path-and-chat/README.md",
+        "docs/changes/2026-10-28-release-v7/README.md",
+        "docs/changes/2026-10-28-release-v7/release-notes.md",
+        "docs/changes/2026-10-28-startup-fix/README.md"
+      ]
+    },
+    {
+      "timestamp": "2026-10-28T07:08:01.781920+00:00",
+      "previous_sha256": "67e4e5b5b524fc0428eb352331145de661d8d9b153d3df0bd954c43041546222",
+      "addedPaths": [
+        ".gitattributes"
+      ],
+      "refreshedDocuments": [
+        "README.md",
+        "docs/changes/2026-10-28-path-and-chat/README.md",
+        "docs/changes/2026-10-28-release-v7/README.md"
+      ],
+      "reason": "Preserve original evidence JSON bytes rather than normalize CRLF during Git staging; clarify public metadata and historical status."
+    }
+  ],
+  "resolvedRootReviewPaths": [
+    "docs/changes/2026-10-28-release-v7/test-results/release-artifact.json",
+    "docs/changes/2026-10-28-release-v7/test-results/startup-temp-delivered.json",
+    "docs/changes/2026-10-28-release-v7/test-results/delivered-token.json",
+    "docs/changes/2026-10-28-release-v7/test-results/verification.json"
+  ]
+}

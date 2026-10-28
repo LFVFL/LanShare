@@ -23,43 +23,40 @@
       archive: 'archive', doc: 'doc', code: 'code'
     };
     var fsState = {
-      path: '', entries: [], sortKey: 'name', sortDir: 'asc',
+      path: '', root: '', entries: [], sortKey: 'name', sortDir: 'asc',
       view: 'list', query: '', sel: new Set(),
-      total: 0, hasMore: false
+      total: 0, hasMore: false, scope: 'subtree'
     };
 
-    /* 共享内搜索（服务端递归）的状态。和上面的 query 不是一回事：
-       query 是当前目录的内存过滤，search 是"整个共享找一遍"。 */
+    /* Pagination, filtering and sorting share the server's global ordering. */
     var searchState = { active: false, query: '', entries: [], truncated: false, scanned: 0 };
+    var searchTimer = null;
+    var searchController = null;
+    var searchRequestId = 0;
+    var listRequestId = 0;
 
     function visibleEntries() {
-      var q = fsState.query.trim().toLowerCase();
-      var rows = fsState.entries.filter(function (e) {
-        return !q || e.name.toLowerCase().indexOf(q) !== -1;
-      });
-      rows.sort(function (a, b) {
-        var r;
-        if (fsState.sortKey === 'name') r = a.name.localeCompare(b.name, 'zh-CN');
-        else if (fsState.sortKey === 'size') r = a.size - b.size;
-        else r = a.mtime - b.mtime;
-        return fsState.sortDir === 'asc' ? r : -r;
-      });
-      rows.sort(function (a, b) {
-        return (a.kind === 'folder' ? 0 : 1) - (b.kind === 'folder' ? 0 : 1);
-      });
-      return rows;
+      return fsState.entries.slice();
+    }
+
+    function fileActionsHtml(e, path) {
+      if (e.kind === 'folder') {
+        return '<span class="row-actions row-dl--empty" aria-hidden="true"></span>';
+      }
+      var dl = '/download?file=' + encodeURIComponent(e.name) + '&path=' + encodeURIComponent(path);
+      var preview = e.previewable
+        ? '<a class="row-preview" href="' + esc(dl + '&preview=1') + '" target="_blank" rel="noopener"' +
+          ' title="预览" aria-label="预览 ' + esc(e.name) + '">' + icon('eye', 'icon--sm') + '</a>'
+        : '<button class="row-preview" type="button" disabled title="此格式不支持浏览器直接预览，请下载后打开"' +
+          ' aria-label="无法直接预览 ' + esc(e.name) + '">' + icon('eye', 'icon--sm') + '</button>';
+      return '<span class="row-actions">' + preview +
+        '<a class="row-dl" href="' + esc(dl) + '" download title="下载" aria-label="下载 ' + esc(e.name) + '">' +
+        icon('download', 'icon--sm') + '</a></span>';
     }
 
     function rowHtml(e) {
       var tone = TONE[e.kind] || 'other';
       var sel = fsState.sel.has(e.enc) ? ' data-selected="true"' : '';
-      // 文件夹不放下载按钮（点一下压大半个目录太容易误触），只留占位保持对齐
-      var dl = e.kind === 'folder'
-        ? '<span class="row-dl row-dl--empty" aria-hidden="true"></span>'
-        : '<a class="row-dl" href="/download?file=' + esc(e.enc) +
-          '&path=' + encodeURIComponent(fsState.path) +
-          '" download title="下载" aria-label="下载 ' + esc(e.name) + '">' +
-          icon('download', 'icon--sm') + '</a>';
       return '<div class="row" data-name="' + esc(e.name) + '" data-enc="' + esc(e.enc) +
         '" data-kind="' + e.kind + '"' + sel + ' tabindex="0">' +
         '<input type="checkbox" class="cbx" aria-label="选择 ' + esc(e.name) + '"' +
@@ -71,7 +68,7 @@
         '</div>' +
         '<div class="row-size tnum">' + esc(e.sizeText) + '</div>' +
         '<div class="row-time tnum">' + esc(e.timeText) + '</div>' +
-        dl +
+        fileActionsHtml(e, fsState.path) +
         '<button class="row-more" data-menu-trigger aria-label="更多操作" aria-expanded="false">' +
           icon('more') + '</button>' +
         '</div>';
@@ -85,11 +82,15 @@
         '<input type="checkbox" class="cbx"' + (sel ? ' checked' : '') + '>' +
         '<div class="tile-thumb">' + icon(TONE[tone] || 'file') + '</div>' +
         '<div class="tile-name">' + esc(e.name) + '</div>' +
-        '<div class="tile-sub">' + esc(e.kind === 'folder' ? e.sizeText : e.sizeText) + '</div>' +
+        '<div class="tile-sub">' + esc(e.sizeText) + '</div>' +
+        '<div class="tile-actions">' + fileActionsHtml(e, fsState.path) +
+          '<button class="row-more" data-menu-trigger aria-label="更多操作" aria-expanded="false">' +
+          icon('more') + '</button></div>' +
         '</div>';
     }
 
     function renderFiles() {
+      if (typeof Lan.files.syncSearchScopes === 'function') Lan.files.syncSearchScopes();
       if (searchState.active) { return; }
       var list = document.querySelector('[data-files-list]');
       var emptyEl = document.querySelector('[data-files-empty]');
@@ -128,13 +129,14 @@
       if (countEl) {
         var folders = fsState.entries.filter(function (e) { return e.kind === 'folder'; }).length;
         countEl.textContent = fsState.query
-          ? rows.length + ' 个匹配'
-          : fsState.entries.length + ' 项 · ' + folders + ' 个文件夹';
+          ? '当前目录匹配 ' + fsState.total + ' 项 · 已加载 ' + rows.length + ' 项'
+          : fsState.total + ' 项 · 已加载 ' + fsState.entries.length + ' 项（' + folders + ' 个文件夹）';
       }
 
       updateHead();
       updateSelbar();
       syncSelectAll();
+      updateLoadMore();
     }
 
     /* ───────────── 共享内搜索 ───────────── */
@@ -144,24 +146,73 @@
     }
 
     function searchExit() {
+      clearTimeout(searchTimer);
+      searchRequestId++;
+      if (searchController) searchController.abort();
+      searchController = null;
       searchState.active = false;
       searchState.entries = [];
+      searchState.query = '';
+      fsState.query = '';
+      fsState.sel.clear();
+      document.querySelectorAll('[data-files-search]').forEach(function (input) { input.value = ''; });
       var note = searchNote();
       if (note) note.remove();
       var list = document.querySelector('[data-files-list]');
       if (list) list.className = fsState.view === 'grid' ? 'grid' : 'list';
-      renderFiles();
+      setSearchStatus('');
+      return refreshFiles();
+    }
+
+    function setSearchStatus(message) {
+      document.querySelectorAll('[data-files-search-status]').forEach(function (node) {
+        node.textContent = message;
+      });
+    }
+
+    function scopeLabel(scope) {
+      return { current: '当前目录', subtree: '当前目录及子目录', share: '全部共享' }[scope] || '当前目录及子目录';
     }
 
     function searchRun(raw) {
+      clearTimeout(searchTimer);
       var query = (raw || '').trim();
       if (!query) { searchExit(); return; }
+      fsState.query = query;
+      fsState.sel.clear();
       searchState.query = query;
+      var requestId = ++searchRequestId;
+      if (searchController) searchController.abort();
+      searchController = null;
+      listRequestId++;
+      if (fsState.scope === 'current') {
+        searchState.active = false;
+        var note = searchNote();
+        if (note) note.remove();
+        setSearchStatus('正在搜索当前目录…');
+        return loadPage(0, false).then(function () {
+          if (requestId === searchRequestId) setSearchStatus('当前目录 · ' + fsState.total + ' 个匹配');
+        }).catch(function (error) {
+          if (requestId !== searchRequestId) return;
+          setSearchStatus('搜索失败，请重试');
+          toast(error.message || '网络中断', 'err');
+        });
+      }
+      searchController = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      var opts = searchController ? { signal: searchController.signal } : {};
+      setSearchStatus('正在搜索' + scopeLabel(fsState.scope) + '…');
 
-      apiFetch('/api/search?q=' + encodeURIComponent(query) +
-        '&path=' + encodeURIComponent(fsState.path))
-        .then(jsonOf)
+      return apiFetch('/api/search?q=' + encodeURIComponent(query) +
+        '&path=' + encodeURIComponent(fsState.path) + '&scope=' + fsState.scope +
+        '&sort=' + fsState.sortKey + '&order=' + fsState.sortDir, opts)
+        .then(function (response) {
+          return jsonOf(response).then(function (data) {
+            if (!response.ok) throw new Error((data && data.message) || '搜索失败');
+            return data;
+          });
+        })
         .then(function (d) {
+          if (requestId !== searchRequestId) return;
           if (!d || !d.success) {
             toast((d && d.message) || '搜索失败', 'err');
             return;
@@ -170,22 +221,29 @@
           searchState.entries = d.entries || [];
           searchState.truncated = !!d.truncated;
           searchState.scanned = d.scanned || 0;
+          searchState.scope = d.scope || fsState.scope;
+          setSearchStatus(scopeLabel(searchState.scope) + ' · ' + searchState.entries.length +
+            ' 个结果' + (d.truncated ? '（未搜索完毕）' : ''));
           renderSearchResults();
         })
-        .catch(function () { toast('网络中断', 'err'); });
+        .catch(function (error) {
+          if (requestId !== searchRequestId || error.name === 'AbortError') return;
+          setSearchStatus('搜索失败，请重试');
+          toast(error.message || '网络中断', 'err');
+        });
     }
 
     function searchRowHtml(e) {
       var tone = TONE[e.kind] || 'other';
       var where = e.dir ? e.dir : '根目录';
-      return '<a class="row row--hit" href="' + esc(e.dirHref) + '">' +
+      return '<div class="row row--hit">' +
         '<span class="row-icon" data-tone="' + tone + '">' + icon(TONE[tone] || 'file') + '</span>' +
-        '<div class="row-main">' +
+        '<a class="row-main row-hit-main" href="' + esc(e.dirHref) + '" title="打开所在目录">' +
           '<div class="row-name">' + esc(e.name) + '</div>' +
           '<div class="row-sub">' + esc(where) + (e.kind === 'folder' ? ' · 文件夹' : '') + '</div>' +
-        '</div>' +
+        '</a>' +
         '<div class="row-size tnum">' + esc(e.sizeText) + '</div>' +
-        '</a>';
+        fileActionsHtml(e, e.path || fsState.root) + '</div>';
     }
 
     function renderSearchResults() {
@@ -194,6 +252,11 @@
       if (!list) return;
 
       var hits = searchState.entries;
+      var countEl = document.querySelector('[data-files-count]');
+      if (countEl) countEl.textContent = hits.length + ' 个结果（' + scopeLabel(searchState.scope) + '）';
+      updateHead();
+      syncSelectAll();
+      updateLoadMore();
       var note = searchNote();
       if (!note) {
         note = document.createElement('div');
@@ -201,9 +264,9 @@
         note.setAttribute('data-search-note', '');
         list.parentNode.insertBefore(note, list);
       }
-      note.innerHTML = '共享内搜索「' + esc(searchState.query) + '」：' +
+      note.innerHTML = scopeLabel(searchState.scope) + '搜索「' + esc(searchState.query) + '」：' +
         hits.length + ' 条' +
-        (searchState.truncated ? '（结果过多已截断）' : '') +
+        (searchState.truncated ? '（已达搜索上限，请缩小范围或细化关键词）' : '') +
         ' · 扫描 ' + searchState.scanned + ' 项' +
         ' <button class="btn btn--sm btn--ghost" type="button" data-search-exit>回到当前目录</button>';
       note.querySelector('[data-search-exit]').addEventListener('click', function () {
@@ -220,7 +283,7 @@
           emptyEl.hidden = false;
           var t = emptyEl.querySelector('[data-empty-title]');
           var d = emptyEl.querySelector('[data-empty-desc]');
-          if (t) t.textContent = '共享里没有找到「' + searchState.query + '」';
+          if (t) t.textContent = scopeLabel(searchState.scope) + '没有找到「' + searchState.query + '」';
           if (d) d.textContent = '换个关键词试试，或点上面的「回到当前目录」';
         }
         return;
@@ -230,8 +293,8 @@
       list.hidden = false;
       list.className = 'list';
       list.innerHTML = hits.map(searchRowHtml).join('');
-      var countEl = document.querySelector('[data-files-count]');
-      if (countEl) countEl.textContent = hits.length + ' 个结果（共享内搜索）';
+      updateSelbar();
+      updateLoadMore();
     }
 
     function updateHead() {
@@ -257,6 +320,8 @@
     function syncSelectAll() {
       var all = document.querySelector('[data-select-all]');
       if (!all) return;
+      all.disabled = searchState.active;
+      if (searchState.active) { all.checked = false; all.indeterminate = false; return; }
       var rows = visibleEntries();
       var n = rows.filter(function (e) { return fsState.sel.has(e.enc); }).length;
       all.checked = n > 0 && n === rows.length;
@@ -276,10 +341,28 @@
     var PAGE_SIZE = 400;
 
     function loadPage(offset, append) {
+      var requestId = ++listRequestId;
+      var requestedPath = fsState.path;
+      var query = fsState.scope === 'current' ? fsState.query.trim() : '';
       var url = '/api/list?path=' + encodeURIComponent(fsState.path) +
-        '&limit=' + PAGE_SIZE + '&offset=' + offset;
-      return apiFetch(url).then(jsonOf).then(function (d) {
+        '&limit=' + PAGE_SIZE + '&offset=' + offset +
+        '&sort=' + fsState.sortKey + '&order=' + fsState.sortDir +
+        '&q=' + encodeURIComponent(query);
+      return apiFetch(url).then(function (response) {
+        return jsonOf(response).then(function (data) {
+          if (!response.ok) throw new Error((data && data.message) || '列表加载失败');
+          return data;
+        });
+      }).then(function (d) {
+        if (requestId !== listRequestId) return null;
         if (!d || !d.entries) return null;
+        // A root switch invalidates an old page offset as well as its entries.
+        if (append && d.path && d.path !== requestedPath) {
+          fsState.path = d.path;
+          fsState.sel.clear();
+          toast('共享目录已变更，已回到新目录', 'info');
+          return loadPage(0, false);
+        }
         // 桌面端可能在运行中换了共享目录：服务端会把越界的 path 归到新根，
         // 这里跟着回到新目录，别让页面一直指着一个已经不存在的旧路径
         if (!append && d.path && d.path !== fsState.path) {
@@ -288,8 +371,15 @@
           toast('共享目录已变更，已回到新目录', 'info');
         }
         fsState.entries = append ? fsState.entries.concat(d.entries) : d.entries;
-        fsState.total = d.total || fsState.entries.length;
+        fsState.root = d.root || fsState.root;
+        fsState.total = typeof d.total === 'number' ? d.total : fsState.entries.length;
         fsState.hasMore = !!d.hasMore;
+        fsState.sortKey = d.sort || fsState.sortKey;
+        fsState.sortDir = d.order || fsState.sortDir;
+        if (d.breadcrumb) {
+          var crumbs = document.querySelector('.topbar .crumbs');
+          if (crumbs) crumbs.innerHTML = d.breadcrumb;
+        }
         renderFiles();
         updateLoadMore();
         return d;
@@ -300,12 +390,13 @@
       var bar = document.querySelector('[data-load-more]');
       if (!bar) return;
       var rest = (fsState.total || 0) - fsState.entries.length;
-      bar.hidden = !(fsState.hasMore && rest > 0);
+      bar.hidden = searchState.active || !(fsState.hasMore && rest > 0);
       var label = bar.querySelector('[data-load-more-text]');
       if (label) label.textContent = '还有 ' + rest + ' 项，点这里继续加载';
     }
 
     function refreshFiles() {
+      if (searchState.active && fsState.query.trim()) return searchRun(fsState.query);
       return loadPage(0, false).catch(function () {
         toast('刷新列表失败', 'err');
       });
@@ -431,7 +522,7 @@
           onSelect: function () { doZip([entry.name]); }
         });
       } else {
-        items.push({
+        if (entry.previewable) items.push({
           key: 'preview', label: '预览', icon: 'eye',
           onSelect: function () { window.open(dl + '&preview=1', '_blank'); }
         });
@@ -501,7 +592,8 @@
             fsState.sortKey = key;
             fsState.sortDir = 'asc';
           }
-          renderFiles();
+          if (fsState.query.trim()) searchRun(fsState.query);
+          else refreshFiles();
         });
       });
 
@@ -517,25 +609,41 @@
 
       document.querySelectorAll('[data-files-search]').forEach(function (input) {
         input.addEventListener('input', function () {
-          // 正在看共享内搜索结果时，一改输入就退回本地过滤
-          if (searchState.active) searchExit();
+          clearTimeout(searchTimer);
+          searchRequestId++;
+          listRequestId++;
+          if (searchController) searchController.abort();
           fsState.query = input.value;
           fsState.sel.clear();
           document.querySelectorAll('[data-files-search]').forEach(function (o) {
             if (o !== input) o.value = input.value;
           });
-          renderFiles();
+          if (!input.value.trim()) { searchExit(); return; }
+          setSearchStatus('输入后自动搜索，也可以按回车');
+          searchTimer = setTimeout(function () { searchRun(input.value); }, 320);
         });
-        // 回车 = 在整个共享里找；Esc = 退出搜索
+        // Enter and the visible button share the selected scope on mobile too.
         input.addEventListener('keydown', function (e) {
           if (e.key === 'Enter') {
             e.preventDefault();
             searchRun(input.value);
           } else if (e.key === 'Escape') {
-            input.value = '';
-            fsState.query = '';
             searchExit();
           }
+        });
+      });
+
+      document.querySelectorAll('[data-files-search-submit]').forEach(function (button) {
+        button.addEventListener('click', function () { searchRun(fsState.query); });
+      });
+      document.querySelectorAll('[data-files-search-scope]').forEach(function (select) {
+        select.value = fsState.scope;
+        select.addEventListener('change', function () {
+          fsState.scope = select.value;
+          document.querySelectorAll('[data-files-search-scope]').forEach(function (other) {
+            other.value = fsState.scope;
+          });
+          if (fsState.query.trim()) searchRun(fsState.query);
         });
       });
 
@@ -588,16 +696,32 @@
             desc: '确定删除选中的 <strong>' + n + '</strong> 项吗？此操作不可撤销。',
             onConfirm: function () {
               var chain = Promise.resolve();
+              var succeeded = 0;
+              var failed = 0;
+              var cancelled = false;
               encs.forEach(function (enc) {
                 chain = chain.then(function () {
-                  return writeFetch('/delete?file=' + encodeURIComponent(enc) + '&' + q(''), { method: 'POST' });
+                  if (cancelled) return;
+                  return writeFetch('/delete?file=' + encodeURIComponent(enc) + '&' + q(''), { method: 'POST' })
+                    .then(function (response) {
+                      return jsonOf(response).then(function (data) {
+                        if (response.ok && data && data.success) {
+                          succeeded++;
+                          fsState.sel.delete(enc);
+                        } else {
+                          failed++;
+                          if (response.status === 401 || response.status === 403) cancelled = true;
+                        }
+                      });
+                    }).catch(function () { failed++; cancelled = true; });
                 });
               });
               chain.then(function () {
-                fsState.sel.clear();
-                toast('已删除 ' + n + ' 项', 'ok');
+                var remaining = n - succeeded - failed;
+                toast('已删除 ' + succeeded + ' 项' + (failed ? '，失败 ' + failed + ' 项' : '') +
+                  (remaining ? '，未执行 ' + remaining + ' 项' : ''), failed || remaining ? 'err' : 'ok');
                 refreshFiles();
-              }).catch(function () { toast('部分删除失败', 'err'); refreshFiles(); });
+              });
             }
           });
         });

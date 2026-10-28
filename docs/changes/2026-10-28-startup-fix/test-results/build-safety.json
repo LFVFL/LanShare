@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-10-28T09:41:48.223330+08:00",
+  "command": [
+    "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+    "-B",
+    "tools/v7_build_test.py"
+  ],
+  "returncode": 0,
+  "tests": 27,
+  "seconds": 3.078,
+  "success": true,
+  "count_policy": "unittest methods only; loop cases and assertions not counted again",
+  "log": "build-safety.log"
+}

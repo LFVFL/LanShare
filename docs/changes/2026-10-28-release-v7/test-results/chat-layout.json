@@ -1,0 +1,769 @@
+{
+  "viewports": [
+    {
+      "page": "chat-list",
+      "width": 1280,
+      "headerVisible": true,
+      "countHeader": {
+        "left": 951,
+        "right": 1043,
+        "width": 92,
+        "visible": true
+      },
+      "timeHeader": {
+        "left": 1055,
+        "right": 1203,
+        "width": 148,
+        "visible": true
+      },
+      "actionHeader": {
+        "left": 1215,
+        "right": 1247,
+        "width": 32,
+        "visible": true
+      },
+      "rows": [
+        {
+          "count": {
+            "left": 951,
+            "right": 1043,
+            "width": 92,
+            "visible": true
+          },
+          "time": {
+            "left": 1055,
+            "right": 1203,
+            "width": 148,
+            "visible": true
+          },
+          "action": {
+            "left": 1215,
+            "right": 1247,
+            "width": 32,
+            "visible": true
+          },
+          "sub": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "subText": "0 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        },
+        {
+          "count": {
+            "left": 951,
+            "right": 1043,
+            "width": 92,
+            "visible": true
+          },
+          "time": {
+            "left": 1055,
+            "right": 1203,
+            "width": 148,
+            "visible": true
+          },
+          "action": {
+            "left": 1215,
+            "right": 1247,
+            "width": 32,
+            "visible": true
+          },
+          "sub": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "subText": "12 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        },
+        {
+          "count": {
+            "left": 951,
+            "right": 1043,
+            "width": 92,
+            "visible": true
+          },
+          "time": {
+            "left": 1055,
+            "right": 1203,
+            "width": 148,
+            "visible": true
+          },
+          "action": {
+            "left": 1215,
+            "right": 1247,
+            "width": 32,
+            "visible": true
+          },
+          "sub": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "subText": "0 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        }
+      ]
+    },
+    {
+      "page": "chat-list",
+      "width": 1024,
+      "headerVisible": true,
+      "countHeader": {
+        "left": 695,
+        "right": 787,
+        "width": 92,
+        "visible": true
+      },
+      "timeHeader": {
+        "left": 799,
+        "right": 947,
+        "width": 148,
+        "visible": true
+      },
+      "actionHeader": {
+        "left": 959,
+        "right": 991,
+        "width": 32,
+        "visible": true
+      },
+      "rows": [
+        {
+          "count": {
+            "left": 695,
+            "right": 787,
+            "width": 92,
+            "visible": true
+          },
+          "time": {
+            "left": 799,
+            "right": 947,
+            "width": 148,
+            "visible": true
+          },
+          "action": {
+            "left": 959,
+            "right": 991,
+            "width": 32,
+            "visible": true
+          },
+          "sub": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "subText": "0 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        },
+        {
+          "count": {
+            "left": 695,
+            "right": 787,
+            "width": 92,
+            "visible": true
+          },
+          "time": {
+            "left": 799,
+            "right": 947,
+            "width": 148,
+            "visible": true
+          },
+          "action": {
+            "left": 959,
+            "right": 991,
+            "width": 32,
+            "visible": true
+          },
+          "sub": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "subText": "12 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        },
+        {
+          "count": {
+            "left": 695,
+            "right": 787,
+            "width": 92,
+            "visible": true
+          },
+          "time": {
+            "left": 799,
+            "right": 947,
+            "width": 148,
+            "visible": true
+          },
+          "action": {
+            "left": 959,
+            "right": 991,
+            "width": 32,
+            "visible": true
+          },
+          "sub": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "subText": "0 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        }
+      ]
+    },
+    {
+      "page": "chat-list",
+      "width": 901,
+      "headerVisible": true,
+      "countHeader": {
+        "left": 572,
+        "right": 664,
+        "width": 92,
+        "visible": true
+      },
+      "timeHeader": {
+        "left": 676,
+        "right": 824,
+        "width": 148,
+        "visible": true
+      },
+      "actionHeader": {
+        "left": 836,
+        "right": 868,
+        "width": 32,
+        "visible": true
+      },
+      "rows": [
+        {
+          "count": {
+            "left": 572,
+            "right": 664,
+            "width": 92,
+            "visible": true
+          },
+          "time": {
+            "left": 676,
+            "right": 824,
+            "width": 148,
+            "visible": true
+          },
+          "action": {
+            "left": 836,
+            "right": 868,
+            "width": 32,
+            "visible": true
+          },
+          "sub": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "subText": "0 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        },
+        {
+          "count": {
+            "left": 572,
+            "right": 664,
+            "width": 92,
+            "visible": true
+          },
+          "time": {
+            "left": 676,
+            "right": 824,
+            "width": 148,
+            "visible": true
+          },
+          "action": {
+            "left": 836,
+            "right": 868,
+            "width": 32,
+            "visible": true
+          },
+          "sub": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "subText": "12 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        },
+        {
+          "count": {
+            "left": 572,
+            "right": 664,
+            "width": 92,
+            "visible": true
+          },
+          "time": {
+            "left": 676,
+            "right": 824,
+            "width": 148,
+            "visible": true
+          },
+          "action": {
+            "left": 836,
+            "right": 868,
+            "width": 32,
+            "visible": true
+          },
+          "sub": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "subText": "0 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        }
+      ]
+    },
+    {
+      "page": "chat-list",
+      "width": 390,
+      "headerVisible": false,
+      "countHeader": {
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      },
+      "timeHeader": {
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      },
+      "actionHeader": {
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      },
+      "rows": [
+        {
+          "count": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "time": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "action": {
+            "left": 327,
+            "right": 363,
+            "width": 36,
+            "visible": true
+          },
+          "sub": {
+            "left": 75,
+            "right": 313,
+            "width": 238,
+            "visible": true
+          },
+          "subText": "0 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        },
+        {
+          "count": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "time": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "action": {
+            "left": 327,
+            "right": 363,
+            "width": 36,
+            "visible": true
+          },
+          "sub": {
+            "left": 71,
+            "right": 317,
+            "width": 246,
+            "visible": true
+          },
+          "subText": "12 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        },
+        {
+          "count": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "time": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "action": {
+            "left": 327,
+            "right": 363,
+            "width": 36,
+            "visible": true
+          },
+          "sub": {
+            "left": 71,
+            "right": 317,
+            "width": 246,
+            "visible": true
+          },
+          "subText": "0 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        }
+      ]
+    },
+    {
+      "page": "chat-list",
+      "width": 320,
+      "headerVisible": false,
+      "countHeader": {
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      },
+      "timeHeader": {
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      },
+      "actionHeader": {
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      },
+      "rows": [
+        {
+          "count": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "time": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "action": {
+            "left": 257,
+            "right": 293,
+            "width": 36,
+            "visible": true
+          },
+          "sub": {
+            "left": 75,
+            "right": 243,
+            "width": 168,
+            "visible": true
+          },
+          "subText": "0 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        },
+        {
+          "count": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "time": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "action": {
+            "left": 257,
+            "right": 293,
+            "width": 36,
+            "visible": true
+          },
+          "sub": {
+            "left": 71,
+            "right": 247,
+            "width": 176,
+            "visible": true
+          },
+          "subText": "12 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        },
+        {
+          "count": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "time": {
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "visible": false
+          },
+          "action": {
+            "left": 257,
+            "right": 293,
+            "width": 36,
+            "visible": true
+          },
+          "sub": {
+            "left": 71,
+            "right": 247,
+            "width": 176,
+            "visible": true
+          },
+          "subText": "0 \u6761\u6d88\u606f \u00b7 2026-10-28 11:38"
+        }
+      ]
+    },
+    {
+      "page": "chat-room",
+      "width": 1280,
+      "composer": {
+        "text": "\u53d1\u9001",
+        "hintCount": 0,
+        "renameCount": 0,
+        "previewHidden": true,
+        "imageEnabled": true
+      }
+    },
+    {
+      "page": "chat-room",
+      "width": 390,
+      "composer": {
+        "text": "\u53d1\u9001",
+        "hintCount": 0,
+        "renameCount": 0,
+        "previewHidden": true,
+        "imageEnabled": true
+      }
+    },
+    {
+      "page": "chat-room",
+      "width": 320,
+      "composer": {
+        "text": "\u53d1\u9001",
+        "hintCount": 0,
+        "renameCount": 0,
+        "previewHidden": true,
+        "imageEnabled": true
+      }
+    },
+    {
+      "page": "chat-rename",
+      "width": 1280,
+      "totalButtons": 2,
+      "visibleButtons": 1,
+      "header": {
+        "left": 240,
+        "right": 1280,
+        "top": 0,
+        "bottom": 58,
+        "width": 1040
+      },
+      "buttons": [
+        {
+          "rect": {
+            "left": 920,
+            "right": 1000,
+            "top": 13.5,
+            "bottom": 43.5,
+            "width": 80
+          },
+          "inDesktop": true,
+          "inMobile": false
+        }
+      ],
+      "title": {
+        "left": 334,
+        "right": 808,
+        "top": 17.25,
+        "bottom": 39.75,
+        "width": 474
+      },
+      "actions": {
+        "left": 920,
+        "right": 1264,
+        "top": 13.5,
+        "bottom": 43.5,
+        "width": 344
+      },
+      "rename_confirmed": true,
+      "room_and_history_preserved": true
+    },
+    {
+      "page": "chat-rename",
+      "width": 390,
+      "totalButtons": 2,
+      "visibleButtons": 1,
+      "header": {
+        "left": 0,
+        "right": 390,
+        "top": 0,
+        "bottom": 54,
+        "width": 390
+      },
+      "buttons": [
+        {
+          "rect": {
+            "left": 306,
+            "right": 376,
+            "top": 11.5,
+            "bottom": 41.5,
+            "width": 70
+          },
+          "inDesktop": false,
+          "inMobile": true
+        }
+      ],
+      "title": {
+        "left": 52,
+        "right": 258,
+        "top": 15.25,
+        "bottom": 37.75,
+        "width": 206
+      },
+      "actions": {
+        "left": 268,
+        "right": 376,
+        "top": 8.5,
+        "bottom": 44.5,
+        "width": 108
+      },
+      "rename_confirmed": true,
+      "room_and_history_preserved": true
+    },
+    {
+      "page": "chat-rename",
+      "width": 320,
+      "totalButtons": 2,
+      "visibleButtons": 1,
+      "header": {
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "bottom": 54,
+        "width": 320
+      },
+      "buttons": [
+        {
+          "rect": {
+            "left": 236,
+            "right": 306,
+            "top": 11.5,
+            "bottom": 41.5,
+            "width": 70
+          },
+          "inDesktop": false,
+          "inMobile": true
+        }
+      ],
+      "title": {
+        "left": 52,
+        "right": 188,
+        "top": 15.25,
+        "bottom": 37.75,
+        "width": 136
+      },
+      "actions": {
+        "left": 198,
+        "right": 306,
+        "top": 8.5,
+        "bottom": 44.5,
+        "width": 108
+      },
+      "rename_confirmed": true,
+      "room_and_history_preserved": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "chat-layout-list-1280.png",
+      "bytes": 749946,
+      "sha256": "54636e5ade7a47a32cfd8216243808773debee0d46f7b5d08571f8732cd37829"
+    },
+    {
+      "file": "chat-layout-list-1024.png",
+      "bytes": 599165,
+      "sha256": "7032f54fe723b14c484f095094f8c0902c6b1bb9305d0e3fa029578c2105a646"
+    },
+    {
+      "file": "chat-layout-list-901.png",
+      "bytes": 523963,
+      "sha256": "66563a7ef2e3f8db5b41d2005275bd94e18b3496d5ebaa720353149481ed49b6"
+    },
+    {
+      "file": "chat-layout-list-390.png",
+      "bytes": 253196,
+      "sha256": "b71b3dcb85f48a3295784f20195f02ebc4bab36c9fee5f10d8f3a0481552cd9b"
+    },
+    {
+      "file": "chat-layout-list-320.png",
+      "bytes": 213525,
+      "sha256": "15c9cac8ebd1b4c625587d2a7c1467e31cf178a96f7d9be6369c816320f56877"
+    },
+    {
+      "file": "chat-layout-room-1280.png",
+      "bytes": 854709,
+      "sha256": "d8f0be19a79fc1aee197a6e7ce211230562669dd8bb348056b03ceff69ce493a"
+    },
+    {
+      "file": "chat-layout-room-390.png",
+      "bytes": 276739,
+      "sha256": "171fbb6f854f04930dda175748e098414cf0c7a21be491b00669d1674b2b62c5"
+    },
+    {
+      "file": "chat-layout-room-320.png",
+      "bytes": 229999,
+      "sha256": "a1ae06219a1e41d64c118b5905a3a1b296b92cd15d950abaa13aab67b084a555"
+    },
+    {
+      "file": "chat-layout-rename-1280.png",
+      "bytes": 859674,
+      "sha256": "f559d8e956046eb4eab961e7a176772c9ff093860bc70eab03a287ec69964358"
+    },
+    {
+      "file": "chat-layout-rename-390.png",
+      "bytes": 277550,
+      "sha256": "9ef677b98d97ba8700cf5736616c6f3f38bc7eb41a7723c05234301d348f9930"
+    },
+    {
+      "file": "chat-layout-rename-320.png",
+      "bytes": 229791,
+      "sha256": "1cc894147808cdefb889a2f373c3647a9057894fe16fc06de72d33b805876230"
+    }
+  ],
+  "behavior": {
+    "sse": true,
+    "shift_enter_newline": true,
+    "enter_send": true,
+    "preserved_whitespace": true,
+    "image_upload_and_send": true,
+    "javascript_errors": []
+  },
+  "tests": 4,
+  "success": true,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 6.984,
+  "timestamp": "2026-10-28T11:38:11+0800",
+  "source_css_sha256": "381cd37598d4d8ec814e53efe8197c8016fac350ecd2ce469f732c0bdf316f00",
+  "source_chat_js_sha256": "fed37fb4ffc2f7b9e08e97a9d8fe8e8604782b40abc649b49a5c64dc4a8da12c",
+  "isolation": "Owned dynamic-port server and Chrome profile; fresh temporary webassets; synthetic rooms/images only",
+  "owned_test_root": "C:\\Windows\\Temp\\lanshare-test-ksqa6atf"
+}

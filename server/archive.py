@@ -1,11 +1,4 @@
-"""打包下载：默认边压边发（不落临时文件），断点续传时再落一份缓存。
-
-- POST /zip 只登记"要打包哪些文件"（很快）；
-- GET /zip_download 不带 Range → 边压缩边往连接里写，零临时文件；
-- 带 Range（浏览器续传）→ 先把同样的 zip 生成到临时文件，再按范围发；
-  生成规则是确定的（同样的条目 + 同样的压缩级别 → 同样的字节），所以能和
-  第一次流出去的前半段对齐。
-"""
+"""打包下载：默认缓存可续传，stream=1 边压边发；任务绑定共享目录代次。"""
 import hashlib
 import io
 import os
@@ -25,6 +18,11 @@ from .chat_store import *
 from .pages import *
 from .paths import _password_ok
 from .storage import _upload_key
+from .storage import _retire_zip_paths
+
+
+class _ZipTaskRevoked(PermissionError):
+    pass
 
 
 class _ZipSink:
@@ -34,12 +32,15 @@ class _ZipSink:
     所以不需要提前知道总长度，也不需要回退重写。
     """
 
-    def __init__(self, wfile):
+    def __init__(self, wfile, guard=None):
         self._w = wfile
         self._written = 0
+        self._guard = guard
 
     def write(self, data):
         if data:
+            if self._guard:
+                self._guard()
             self._w.write(data)
             self._written += len(data)
         return len(data)
@@ -74,11 +75,8 @@ class ArchiveMixin:
             cleanup_zip_store()
 
             current_path = urllib.parse.unquote(current_path)
-            base_dir = Path(current_path).resolve()
-
-            if not is_path_within(base_dir, self.shared_path):
-                self.send_json_response({'success': False, 'message': 'Access denied'}, 403)
-                return
+            shared_root, generation = shared_root_snapshot(self.shared_path)
+            base_dir = checked_shared_path(Path(current_path), shared_root)
 
             if not files:
                 self.send_json_response({'success': False, 'message': 'No files selected'}, 400)
@@ -91,21 +89,31 @@ class ArchiveMixin:
                 first_name = sanitize_relative_path(files[0])
                 zip_name = f"{Path(first_name).stem}_{timestamp}.zip"
 
-            entries, total = self._collect_zip_entries(base_dir, files)
+            entries, total = self._collect_zip_entries(base_dir, files, shared_root)
             if not entries:
                 self.send_json_response(
                     {'success': False, 'message': 'Nothing to pack'}, 400)
                 return
 
             zip_id = str(uuid.uuid4())
-            ZIP_DOWNLOAD_STORE[zip_id] = {
+            info = {
                 'entries': entries,          # [(绝对路径, 压缩包内名字)]
                 'filename': zip_name,
                 'size': total,               # 原始总大小，只用于前端提示
                 'count': len(entries),
                 'etag': self._zip_etag(entries),
                 'time': time.time(),
+                'root': shared_root,
+                'generation': generation,
+                'lock': threading.RLock(),
+                'active': 0,
             }
+            with SHARE_STATE_LOCK:
+                if shared_root_snapshot(self.shared_path) != (shared_root, generation):
+                    self.send_api_error('共享目录已切换，请重新选择文件', 409)
+                    return
+                with ZIP_STORE_LOCK:
+                    ZIP_DOWNLOAD_STORE[zip_id] = info
 
             self.send_json_response({
                 "success": True,
@@ -114,6 +122,8 @@ class ArchiveMixin:
                 "size": total,
             })
 
+        except PermissionError:
+            self.send_api_error('路径越权或包含链接，无法打包', 403)
         except Exception as e:
             print(f"[HTTP] ZIP 打包失败: {e}")
             try:
@@ -122,42 +132,39 @@ class ArchiveMixin:
             except Exception:
                 pass
 
-    def _collect_zip_entries(self, base_dir, files):
+    def _collect_zip_entries(self, base_dir, files, shared_root=None):
         """把选中的文件/目录展开成 [(绝对路径, 包内相对名)]，顺手算总大小。"""
         entries = []
         total = 0
+        shared_root = shared_root or self.shared_path
         for fname in files:
             fname = sanitize_relative_path(fname)
             if not fname:
                 continue
 
-            target = (base_dir / fname).resolve()
-            if not is_path_within(target, self.shared_path) or not target.exists():
+            try:
+                target = checked_shared_path(base_dir / fname, shared_root)
+            except FileNotFoundError:
                 continue
-
-            if target.is_file():
-                entries.append((target, fname))
-                try:
-                    total += target.stat().st_size
-                except OSError:
-                    pass
-                continue
-
-            for root, _dirs, filenames in os.walk(target):
-                for fn in filenames:
-                    full = (Path(root) / fn).resolve()
-                    if not is_path_within(full, self.shared_path):
-                        continue
-                    try:
-                        arc = str(full.relative_to(base_dir))
-                    except ValueError:
-                        continue
-                    entries.append((full, arc))
-                    try:
-                        total += full.stat().st_size
-                    except OSError:
-                        pass
+            for full, is_directory in iter_shared_tree(target, shared_root):
+                if is_directory:
+                    continue
+                arc = str(full.relative_to(base_dir))
+                entries.append((full, arc))
+                total += full.stat().st_size
         return entries, total
+
+    def _check_zip_task(self, info, validate_entries=False):
+        if (info.get('invalidated')
+                or shared_root_snapshot(self.shared_path)
+                != (info.get('root'), info.get('generation'))):
+            raise _ZipTaskRevoked('Shared directory changed')
+        if validate_entries:
+            for path, _arc in info['entries']:
+                try:
+                    checked_shared_path(path, info['root'])
+                except FileNotFoundError:
+                    continue
 
     # ── 发送 ────────────────────────────────────────────────────────────
     def _zip_etag(self, entries):
@@ -173,7 +180,7 @@ class ArchiveMixin:
                 digest.update(("%s|missing" % arc).encode('utf-8'))
         return '"' + digest.hexdigest()[:16] + '"'
 
-    def _build_zip_file(self, entries):
+    def _build_zip_file(self, entries, info):
         """把 zip 真正生成到临时文件（只有续传才用），返回路径。"""
         fd, tmp_path = tempfile.mkstemp(suffix=".zip")
         os.close(fd)
@@ -182,10 +189,15 @@ class ArchiveMixin:
             with zipfile.ZipFile(tmp_path, 'w', zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
                 for path, arc in entries:
                     try:
+                        self._check_zip_task(info)
+                        checked_shared_path(path, info['root'])
                         zf.write(path, arc)
                         added += 1
+                    except PermissionError:
+                        raise
                     except (OSError, ValueError) as e:
                         print(f"[ZIP] 跳过 {path}: {e}")
+            self._check_zip_task(info)
         except Exception:
             Path(tmp_path).unlink(missing_ok=True)
             raise
@@ -195,6 +207,7 @@ class ArchiveMixin:
 
     def _serve_zip_file(self, file_path, info, etag, start, end):
         """从缓存文件里发一段（206）或整份（200）。"""
+        self._check_zip_task(info, validate_entries=True)
         size = os.path.getsize(file_path)
         if start is None:
             start, end, status = 0, size - 1, 200
@@ -211,6 +224,7 @@ class ArchiveMixin:
         end = min(end, size - 1)
         length = end - start + 1
 
+        self._zip_response_started = True
         self.send_response(status)
         self.send_header('Content-Type', 'application/zip')
         encoded = urllib.parse.quote(info['filename'])
@@ -230,6 +244,7 @@ class ArchiveMixin:
             f.seek(start)
             left = length
             while left > 0:
+                self._check_zip_task(info)
                 chunk = f.read(min(262144, left))
                 if not chunk:
                     break
@@ -242,36 +257,43 @@ class ArchiveMixin:
         默认：先把 zip 生成到缓存文件，再按 Range 发 —— 浏览器能断点续传。
         stream=1：边压边发（零临时文件、立刻开始），但没法续传（不宣告 Accept-Ranges）。
         """
+        self._zip_response_started = False
+        cleanup_zip_store()
         zip_id = self.q('id')
-        info = ZIP_DOWNLOAD_STORE.get(zip_id)
+        with ZIP_STORE_LOCK:
+            info = ZIP_DOWNLOAD_STORE.get(zip_id)
         if not info:
             self.send_error(404, "Download expired")
             return
-
-        # 文件可能在两次下载之间被改过，etag 对不上就作废旧缓存
-        etag = self._zip_etag(info['entries'])
-        if etag != info.get('etag'):
-            print("[ZIP] 内容已变化，作废旧缓存")
-            if info.get('path'):
-                try:
-                    Path(info['path']).unlink(missing_ok=True)
-                except OSError:
-                    pass
-            info['path'] = None
-            info['etag'] = etag
 
         if not self._zip_slots.acquire(blocking=False):
             self.send_error(503, "Too many downloads")
             return
 
+        task_locked = info['lock'].acquire(blocking=False)
+        if not task_locked:
+            self._zip_slots.release()
+            self.send_api_error('该打包任务正在下载，请稍后再试', 503)
+            return
+        with ZIP_STORE_LOCK:
+            info['active'] += 1
         try:
+            self._check_zip_task(info, validate_entries=True)
+            # Serialize each task so a second request cannot replace its cache.
+            etag = self._zip_etag(info['entries'])
+            if etag != info.get('etag'):
+                if info.get('path'):
+                    _retire_zip_paths([info['path']])
+                info['path'] = None
+                info['etag'] = etag
+
             if self.q('stream') == '1':
                 self._stream_zip(info, etag)
                 return
 
             # 可续传模式：确保缓存文件在，然后按 Range 发
             if not info.get('path') or not Path(info['path']).is_file():
-                info['path'] = str(self._build_zip_file(info['entries']))
+                info['path'] = str(self._build_zip_file(info['entries'], info))
                 # 生成完立刻看一次总容量，别等后台线程（10 分钟太久）
                 info['used'] = time.time()
                 enforce_zip_cache(keep_path=info['path'])
@@ -290,16 +312,45 @@ class ArchiveMixin:
                     end = int(m.group(2)) if m.group(2) else size - 1
             self._serve_zip_file(Path(info['path']), info, etag, start, end)
 
-        except (BrokenPipeError, ConnectionResetError, OSError):
-            pass                      # 用户取消下载 / 关页面
+        except _ZipTaskRevoked:
+            if info.get('path'):
+                _retire_zip_paths([info['path']])
+            if not self._zip_response_started:
+                self.send_api_error('共享目录已切换，请重新打包', 410)
+            else:
+                self.close_connection = True
+        except PermissionError:
+            if not self._zip_response_started:
+                self.send_api_error('文件路径发生变化或包含链接，下载已拒绝', 403)
+            else:
+                self.close_connection = True
+        except (BrokenPipeError, ConnectionResetError):
+            self.close_connection = True
+        except OSError:
+            if not self._zip_response_started:
+                self.send_api_error('打包文件不可用，请重新打包', 404)
+            else:
+                self.close_connection = True
         except Exception as e:        # 头已经发出去了，只能记日志
             print(f"[ZIP] 发送失败: {e}")
+            if not self._zip_response_started:
+                self.send_api_error('打包下载失败', 500)
+            else:
+                self.close_connection = True
         finally:
+            with ZIP_STORE_LOCK:
+                info['active'] -= 1
+            info['lock'].release()
             self._zip_slots.release()
+            if info.get('invalidated') and info.get('path'):
+                _retire_zip_paths([info['path']])
+            cleanup_zip_store()
 
     def _stream_zip(self, info, etag):
         """边压边发。不宣告 Accept-Ranges：两条路径的 zip 字节布局不同
         （流式用 data descriptor），混着续传会拿到错位的内容。"""
+        self._check_zip_task(info, validate_entries=True)
+        self._zip_response_started = True
         self.send_response(200)
         self.send_header('Content-Type', 'application/zip')
         encoded = urllib.parse.quote(info['filename'])
@@ -313,13 +364,17 @@ class ArchiveMixin:
         self.end_headers()
         self.close_connection = True
 
-        sink = _ZipSink(self.wfile)
+        sink = _ZipSink(self.wfile, lambda: self._check_zip_task(info))
         added = 0
         with zipfile.ZipFile(sink, 'w', zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
             for path, arc in info['entries']:
                 try:
+                    self._check_zip_task(info)
+                    checked_shared_path(path, info['root'])
                     zf.write(path, arc)
                     added += 1
+                except PermissionError:
+                    raise
                 except (OSError, ValueError) as e:
                     print(f"[ZIP] 跳过 {path}: {e}")
                     continue

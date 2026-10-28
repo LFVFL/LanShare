@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "runtime": {
+    "python": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+    "Pillow": "13.0.0",
+    "pillow-heif": "1.8.1",
+    "pillow-avif-plugin": "1.6.0"
+  },
+  "screenshots": [
+    {
+      "file": "v7-files-320.png",
+      "bytes": 181301,
+      "sha256": "d1bd6944c4d920c89b97f05123e0642929620b34cd966bc5eb7cc50dc38cea36",
+      "modified_utc": "2026-10-27T17:26:55.942948+00:00",
+      "width": 320,
+      "height": 844,
+      "format": "PNG"
+    },
+    {
+      "file": "v7-files-390.png",
+      "bytes": 220192,
+      "sha256": "dbded5cdce1acdc1624c2e0a56c9ea14075334d3cc3940a0f92a76185dc9ad9c",
+      "modified_utc": "2026-10-27T17:26:56.326325+00:00",
+      "width": 390,
+      "height": 844,
+      "format": "PNG"
+    },
+    {
+      "file": "v7-files-1280.png",
+      "bytes": 548185,
+      "sha256": "b34f440869a7314fc03486665b3af06eb5d936169b76785e45c034ec030e2931",
+      "modified_utc": "2026-10-27T17:26:57.043114+00:00",
+      "width": 1280,
+      "height": 900,
+      "format": "PNG"
+    },
+    {
+      "file": "v7-chat-320.png",
+      "bytes": 232195,
+      "sha256": "03f3e391e0027232b610a44b52c59e6c776091f16d18d741b589dc8703d5fce3",
+      "modified_utc": "2026-10-27T17:26:56.132491+00:00",
+      "width": 320,
+      "height": 844,
+      "format": "PNG"
+    },
+    {
+      "file": "v7-chat-390.png",
+      "bytes": 280598,
+      "sha256": "e5c714b49b898672c0154327533849286ec76dc12b52e23f6fa683a1c464fa49",
+      "modified_utc": "2026-10-27T17:26:56.555504+00:00",
+      "width": 390,
+      "height": 844,
+      "format": "PNG"
+    },
+    {
+      "file": "v7-chat-1280.png",
+      "bytes": 867211,
+      "sha256": "edb8fd12215c14d3cd28e7ad1028ab5f7434a81b3fa58cf1ff45ce8080c27c4d",
+      "modified_utc": "2026-10-27T17:26:57.526020+00:00",
+      "width": 1280,
+      "height": 900,
+      "format": "PNG"
+    },
+    {
+      "file": "v7-preview-pdf.png",
+      "bytes": 15020,
+      "sha256": "ec692d59515931c21c268b4a551a0da3bb30ca3795f070ef8a6391ee57671850",
+      "modified_utc": "2026-10-27T17:26:53.102680+00:00",
+      "width": 1258,
+      "height": 802,
+      "format": "PNG"
+    },
+    {
+      "file": "v7-chat-large-image.png",
+      "bytes": 814906,
+      "sha256": "ba922107a5413017cdd9e3654c2c63573fadc3bc27f8210fcdf954fd659173fd",
+      "modified_utc": "2026-10-27T17:27:01.480836+00:00",
+      "width": 1280,
+      "height": 900,
+      "format": "PNG"
+    },
+    {
+      "file": "v7-chat-bmp-lightbox.png",
+      "bytes": 79992,
+      "sha256": "116f403d8771786cfb437ef1daaed3981b411cccd663b6553dacaba63326d6c1",
+      "modified_utc": "2026-10-27T17:27:01.853199+00:00",
+      "width": 1280,
+      "height": 900,
+      "format": "PNG"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "v7-pdf-browser-evidence.json",
+      "bytes": 611,
+      "sha256": "53d1464abf2dee28d948aaf139d1fb90764bb2ed59d035f065951b280f7ee043",
+      "modified_utc": "2026-10-27T17:26:53.019444+00:00"
+    },
+    {
+      "file": "v7-browser-large-image-evidence.json",
+      "bytes": 266,
+      "sha256": "9772f131fbf894c55dbe1cab9a838597a757cc0b20dcb69b27408c24bb8e04f1",
+      "modified_utc": "2026-10-27T17:27:02.101451+00:00"
+    }
+  ],
+  "scope": "Synthetic artifacts from owned isolated Chrome profile and share; no user data. Test counts belong to the root aggregate.",
+  "local_logs_ignored": [
+    "v7-chat-build-python.log",
+    "v7-browser-build-python.log",
+    "v7-chat-frontend-final.log"
+  ]
+}

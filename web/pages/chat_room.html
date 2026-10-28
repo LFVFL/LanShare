@@ -6,10 +6,14 @@
     </a>
     <div class="chat-title">
       <i data-icon="chat" data-icon-cls="icon--sm"></i>
-      <span>{{ROOM_NAME}}</span>
+      <span data-chat-name>{{ROOM_NAME}}</span>
     </div>
     <span class="chat-meta" data-room-meta>{{ROOM_META}}</span>
     <div class="chat-head-actions">
+      <button class="btn btn--ghost btn--sm" data-chat-rename type="button">
+        <i data-icon="edit" data-icon-cls="icon--sm"></i>改群名
+      </button>
+      <button class="btn btn--sm btn--ghost chat-mobile-rename" data-chat-rename type="button">修改群名</button>
       <label class="chat-search">
         <i data-icon="search" data-icon-cls="icon--sm"></i>
         <input type="search" placeholder="搜聊天记录" aria-label="搜聊天记录" data-chat-search>
@@ -36,11 +40,7 @@
         <button class="send" data-chat-send type="button" disabled>发送</button>
       </div>
     </div>
-    <div class="composer-hint">
-      <span>Enter 发送 · Shift+Enter 换行 · 可直接粘贴图片</span>
-      <span class="tnum" data-online>轮询 2s</span>
-    </div>
-    <input type="file" id="chatImage" accept="image/*" hidden>
+    <input type="file" id="chatImage" accept="image/*,.heic,.heif,.avif,.tif,.tiff,.bmp,.ico" hidden>
     <div class="preview-slot" data-image-preview hidden></div>
   </div>
 </div>

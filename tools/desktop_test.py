@@ -10,6 +10,7 @@ import os
 import shutil
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -18,6 +19,9 @@ if hasattr(sys.stdout, "reconfigure"):
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 sys.path.insert(0, str(ROOT))
 
 from PyQt5.QtWidgets import QApplication  # noqa: E402
@@ -40,11 +44,11 @@ def check(label, ok, detail=""):
 
 
 def main():
-    share = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-desk-"))
+    share = Path(TEST_ENV.temporary_dir(prefix="lan6-desk-"))
     (share / "docs").mkdir()
     (share / "docs" / "a.txt").write_text("hi", encoding="utf-8")
     app = QApplication([])
-    gui = j.FileShareGUI(auto_start=False)
+    gui = TEST_ENV.gui(auto_start=False)
 
     print("\n[1] 窗口与控件")
     check("窗口建出来了", gui.width() >= 820 and gui.height() >= 600,
@@ -124,7 +128,7 @@ def main():
           len(style.tone_colors("dark")))
 
     print("\n[6] 运行中切换共享目录（不重启服务）")
-    other = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-desk-b-"))
+    other = Path(TEST_ENV.temporary_dir(prefix="lan6-desk-b-"))
     (other / "another.txt").write_text("b", encoding="utf-8")
     before = gui.path_entry.text()
     gui.apply_share_path(str(other))
@@ -136,11 +140,16 @@ def main():
     check("能切回去", Path(gui.sharer.shared_path) == share.resolve(), gui.sharer.shared_path)
     check("路径框运行中也可编辑", not gui.path_entry.isReadOnly())
     check("浏览按钮运行中可用", gui.select_path_btn.isEnabled())
-    shutil.rmtree(other, ignore_errors=True)
+    TEST_ENV.remove_test_dir(other)
     check("原路径还在", bool(before), before)
 
     print("\n[7] 停止后回到初始态")
     gui.stop_share()
+    deadline = time.monotonic() + 10
+    while gui.sharer.is_busy and time.monotonic() < deadline:
+        app.processEvents()
+        time.sleep(0.01)
+    app.processEvents()
     check("按钮回到「启动服务」", gui.toggle_share_btn.text() == "启动服务",
           gui.toggle_share_btn.text())
     check("胶囊回到已停止", gui.pill.property("tone") == "muted", gui.pill.property("tone"))
@@ -229,7 +238,7 @@ def main():
 
     gui.close()
     app.quit()
-    shutil.rmtree(share, ignore_errors=True)
+    TEST_ENV.remove_test_dir(share)
 
     print("\n结果: 通过 %d 项" % len(PASSED))
     if FAILED:

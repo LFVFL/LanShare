@@ -1,0 +1,23 @@
+{
+  "url": "chrome-extension://mhjfbmdgcfjbbpaeojofohoefgiehjai/index.html",
+  "source": "http://127.0.0.1:56396/download?file=preview.pdf&path=C%3A%5CWindows%5CTemp%5Clanshare-test-5kt6l6x9%5Cbrowser-share-__h4196q&preview=1",
+  "loadState": "success",
+  "dimensions": {
+    "height": 276,
+    "layoutOptions": {
+      "defaultPageOrientation": 0,
+      "direction": 2,
+      "twoUpViewEnabled": false
+    },
+    "pageDimensions": [
+      {
+        "height": 276,
+        "width": 410,
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "type": "documentDimensions",
+    "width": 410
+  }
+}

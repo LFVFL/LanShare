@@ -1,0 +1,82 @@
+{
+  "suite": "v7_assets_test",
+  "expectedMethods": 5,
+  "runtime": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+  "executable": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "virtualenv": true,
+  "timestamp": "2026-10-28T06:43:20.957764+00:00",
+  "isolationRoots": [
+    "C:\\Windows\\Temp\\lanshare-test-b681203i"
+  ],
+  "cases": [
+    {
+      "name": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url",
+      "status": "passed"
+    },
+    {
+      "name": "v7_assets_test.AssetVersionTests.test_no_assets_uses_zero_version",
+      "status": "passed"
+    },
+    {
+      "name": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url",
+      "status": "passed"
+    },
+    {
+      "name": "v7_assets_test.AssetVersionTests.test_same_contents_and_missing_empty_attributes_are_stable",
+      "status": "passed"
+    },
+    {
+      "name": "v7_assets_test.AssetVersionTests.test_tags_and_lengths_separate_empty_bundles_and_boundaries",
+      "status": "passed"
+    }
+  ],
+  "success": true,
+  "chatDataDirectory": "C:\\Windows\\Temp\\lanshare-test-b681203i\\chat_data",
+  "settingsProfile": "C:\\Windows\\Temp\\lanshare-test-b681203i",
+  "qtPlatform": "offscreen",
+  "discoveredMethods": 5,
+  "tests": 5,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "expectedFailures": 0,
+  "unexpectedSuccesses": 0,
+  "subtests": [
+    {
+      "name": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url (bundle='CSS')",
+      "parent": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url",
+      "status": "passed"
+    },
+    {
+      "name": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url (bundle='JS')",
+      "parent": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url",
+      "status": "passed"
+    },
+    {
+      "name": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url (bundle='THEME_BOOT')",
+      "parent": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url",
+      "status": "passed"
+    },
+    {
+      "name": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url (bundle='JS_FILES')",
+      "parent": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url",
+      "status": "passed"
+    },
+    {
+      "name": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url (bundle='JS_CHAT')",
+      "parent": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url",
+      "status": "passed"
+    },
+    {
+      "name": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url (bundle='JS_LOGIN')",
+      "parent": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url",
+      "status": "passed"
+    }
+  ],
+  "passed": 5,
+  "assetVersion": "01c9b74c9a",
+  "cleanupVerified": true,
+  "durationSeconds": 0.078,
+  "sourceSha256": "451330d4db4ef5decc8b8ca5a448d5f75854cdd87537d84a36397f0ae5543bd0",
+  "webassetsSha256": "b6cffa94b81b2fb070c5239c720b507595e6385dc6ca05a0ac27acd03f5fc15f"
+}

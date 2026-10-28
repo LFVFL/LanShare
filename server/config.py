@@ -1,4 +1,5 @@
 """配置常量：路径、上限、白名单。改动集中在这里。"""
+import os
 import sys
 from pathlib import Path
 
@@ -16,6 +17,23 @@ MAX_CHAT_LEN = 500                     # 每个房间保留条数
 MAX_CHAT_IMAGE_BASE64_LEN = 7 * 1024 * 1024   # base64 后体积（原图约 5MB）
 MAX_CHAT_THUMB_BASE64_LEN = 200 * 1024        # 缩略图（前端 canvas 生成，最长边 320）
 ALLOWED_CHAT_IMAGE_EXTS = {"png", "jpg", "gif", "webp"}
+
+
+def _env_limit(name, default):
+    try:
+        return max(0, int(os.environ.get(name, default)))
+    except (TypeError, ValueError):
+        return default
+
+
+# Binary uploads are chunked; 0 means no fixed per-image size ceiling.
+CHAT_IMAGE_MAX_BYTES = _env_limit('LANSHARE_CHAT_IMAGE_MAX_MB', 0) * 1024 ** 2
+CHAT_MEDIA_CHUNK_BYTES = 1024 ** 2
+CHAT_MEDIA_TEMP_BYTES = _env_limit('LANSHARE_CHAT_TEMP_MB', 2048) * 1024 ** 2
+CHAT_MEDIA_MIN_FREE_BYTES = _env_limit('LANSHARE_CHAT_MIN_FREE_MB', 512) * 1024 ** 2
+CHAT_MEDIA_MAX_UPLOADS = 8
+CHAT_MEDIA_EXPIRE_SECONDS = 1800
+CHAT_MEDIA_MAX_PIXELS = _env_limit('LANSHARE_CHAT_MAX_PIXELS', 80000000)
 
 # 请求体上限
 MAX_JSON_BODY_LEN = 10 * 1024 * 1024
@@ -35,14 +53,12 @@ def get_app_base_dir():
 APP_BASE_DIR = get_app_base_dir()
 
 # 聊天数据保存目录
-CHAT_DATA_DIR = APP_BASE_DIR / "chat_data"
+CHAT_DATA_DIR = Path(os.environ.get('LANSHARE_DATA_DIR') or APP_BASE_DIR / "chat_data").resolve()
 CHAT_IMAGE_DIR = CHAT_DATA_DIR / "images"
+CHAT_UPLOAD_DIR = CHAT_DATA_DIR / "uploads"
 
 # 这里保存的是聊天室集合，不只是单纯 history 列表，所以命名改准确一些
 CHAT_ROOMS_FILE_PATH = CHAT_DATA_DIR / "rooms.json"
-
-CHAT_DATA_DIR.mkdir(parents=True, exist_ok=True)
-CHAT_IMAGE_DIR.mkdir(parents=True, exist_ok=True)
 
 # 统一安全响应头（end_headers 时自动补）
 SECURITY_HEADERS = (
@@ -68,9 +84,8 @@ PAGE_CSP = (
     "object-src 'none'"
 )
 
-# 预览时允许内联展示的类型；其余一律强制下载，避免 .html/.svg 在同源执行脚本
-INLINE_PREVIEW_EXTS = {
-    '.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.ico', '.svg',
-    '.pdf', '.txt', '.log', '.md', '.csv',
-    '.mp4', '.webm', '.ogg', '.mp3', '.wav', '.m4a',
-}
+# Compatibility export; paths.py is the single MIME/preview allowlist.
+# HTML/SVG/Office/archives are downloads, never same-origin active previews.
+from .paths import PREVIEW_MIME_TYPES
+
+INLINE_PREVIEW_EXTS = frozenset(PREVIEW_MIME_TYPES)

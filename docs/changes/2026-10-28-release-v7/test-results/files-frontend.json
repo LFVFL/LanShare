@@ -1,0 +1,124 @@
+{
+  "timestamp": "2026-10-28T03:34:56.043Z",
+  "runtime": "v24.14.1",
+  "scope": "Actual API/files/initializer modules in an isolated Node VM with a minimal fake DOM; not browser rendering.",
+  "tests": 22,
+  "passed": 22,
+  "failures": 0,
+  "success": true,
+  "durationMs": 46,
+  "modules": [
+    {
+      "name": "40-api.js",
+      "sha256": "4d2354f221a4650914fc667cee486dbb6003318761b154e9720b11cd97a74ed9"
+    },
+    {
+      "name": "50-files.js",
+      "sha256": "006edba49063e0154847c164a297ed85bf1776e1e69ad3dbeb7e6fb3be45eb0a"
+    },
+    {
+      "name": "72-files-page.js",
+      "sha256": "e89dfb7ae4afd34241ea4f4b3413a3927086596c7505657dbb37ed5284b9f1b7"
+    }
+  ],
+  "assets": [
+    {
+      "name": "web/pages/files.html",
+      "sha256": "6225bb5d5a855f3167d4c1997d7fae725c5106ab2a3854e68f4639049b4f9d6b"
+    },
+    {
+      "name": "web/files-search.css",
+      "sha256": "624f41df022808ae35423b5b80c0a18d73f46af78f86b1645d924552890a5c20"
+    }
+  ],
+  "cases": [
+    {
+      "name": "Root shows two accurate scopes on desktop/mobile and keeps recursive search as default",
+      "status": "passed"
+    },
+    {
+      "name": "Nested scope choices stay distinct and mobile whole-share selection preserves the request contract",
+      "status": "passed"
+    },
+    {
+      "name": "Root equality follows resolved Windows drive/UNC semantics without prefix or POSIX case guessing",
+      "status": "passed"
+    },
+    {
+      "name": "A share selection at root normalizes before rendering even with active search results",
+      "status": "passed"
+    },
+    {
+      "name": "API root switch normalizes a nested whole-share selection and synchronizes both selectors",
+      "status": "passed"
+    },
+    {
+      "name": "API expansion of the shared root restores the third choice without changing the current directory",
+      "status": "passed"
+    },
+    {
+      "name": "File rendering still works when the page-specific scope hook is absent",
+      "status": "passed"
+    },
+    {
+      "name": "URL query initializer restores both inputs and preserves query/sort on append",
+      "status": "passed"
+    },
+    {
+      "name": "Older recursive search response cannot overwrite the newest response even when fetch ignores abort",
+      "status": "passed"
+    },
+    {
+      "name": "Typing invalidates an in-flight recursive search before the debounce fires",
+      "status": "passed"
+    },
+    {
+      "name": "Typing invalidates an in-flight current-directory list/filter before debounce",
+      "status": "passed"
+    },
+    {
+      "name": "Current-directory HTTP 422 renders failure instead of a successful match count",
+      "status": "passed"
+    },
+    {
+      "name": "Current-directory HTTP 503 renders failure instead of a successful match count",
+      "status": "passed"
+    },
+    {
+      "name": "Root changed during append discards old offset and refetches the new root from zero",
+      "status": "passed"
+    },
+    {
+      "name": "Mobile scope and Enter submit use the same current-directory server search contract",
+      "status": "passed"
+    },
+    {
+      "name": "Batch all-success reports four actual deletions and clears only successful selections",
+      "status": "passed"
+    },
+    {
+      "name": "Batch first 403 stops writes and truthfully reports failed and unexecuted items",
+      "status": "passed"
+    },
+    {
+      "name": "Batch 500 retains its failed selection but continues later successful deletions",
+      "status": "passed"
+    },
+    {
+      "name": "Batch network interruption after one success stops and retains failed/unexecuted selections",
+      "status": "passed"
+    },
+    {
+      "name": "Batch mixed 200 success:false and HTTP 500 are not counted as deleted",
+      "status": "passed"
+    },
+    {
+      "name": "Cancelling the original delete confirmation performs no request and keeps all selections",
+      "status": "passed"
+    },
+    {
+      "name": "Real Lan.api.write 401 administrator cancellation stops the batch without false successes",
+      "status": "passed"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "timestamp": "2026-10-28T01:50:13.737882+08:00",
+  "buildId": "build-2lqxw_37",
+  "runtime": "3.12.1",
+  "runtimePath": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "exe": {
+    "name": "lanshare.exe",
+    "sizeBytes": 63929736,
+    "sha256": "ad5e408f42d8ddd3e302073e234c05d069da75d7188c6a1866e80d7b0e3eea17"
+  },
+  "inspection": "CArchiveReader extracted actual EXE PE bytes in memory; direct imports, delay imports, and packaged-target export symbols inspected without loading application DLLs",
+  "peEntriesScanned": 119,
+  "uniquePeBasenames": 116,
+  "importTableEntryCounts": {
+    "delay": 2,
+    "direct": 729
+  },
+  "qtMainRequired": {
+    "qt5core.dll": true,
+    "qt5gui.dll": true,
+    "qt5widgets.dll": true,
+    "qt5network.dll": true,
+    "qtcore.pyd": true,
+    "qwindows.dll": true,
+    "qoffscreen.dll": true,
+    "msvcp140_1.dll": true,
+    "concrt140.dll": true
+  },
+  "qtLibraryNames": [
+    "qt5core.dll",
+    "qt5dbus.dll",
+    "qt5gui.dll",
+    "qt5network.dll",
+    "qt5qml.dll",
+    "qt5qmlmodels.dll",
+    "qt5quick.dll",
+    "qt5svg.dll",
+    "qt5websockets.dll",
+    "qt5widgets.dll"
+  ],
+  "heifWheelDependencies": {
+    "libde265-0-da04b6b2448c39c0b7f218769dedb2f1.dll": true,
+    "libgcc_s_seh-1-60817ff87b1fa8e35c12cd1a333734a3.dll": true,
+    "libheif-18c57b017b404cb1ef96dee8a6eef027.dll": true,
+    "libstdc++-6-e4d43a335d57132a6ec3004cece76b4f.dll": true,
+    "libwinpthread-1-71c5c74678606753e0a2f79ceb8c68f9.dll": true,
+    "libx265-217-276e7d75772a32bd086b54d54e01fd11.dll": true
+  },
+  "missingAvailableVenvDependencies": [],
+  "unresolvedNonApiImports": [],
+  "missingPackagedTargetExportSymbols": [],
+  "nativeSourceOriginCounts": {
+    "base-python": 22,
+    "build-venv": 58,
+    "windows-system": 39
+  },
+  "externalNativeEntryNames": [],
+  "codexNativeSourceCount": 0,
+  "ucrtSource": "windows-system",
+  "peErrors": [],
+  "limits": "DLL presence and packaged-target exported symbols are checked statically. OS API-set resolution uses Windows conventions; other Windows versions and dynamic LoadLibrary paths are not runtime-tested here.",
+  "directDependenciesComplete": true,
+  "delayDependenciesComplete": true,
+  "success": true,
+  "packagedTargetSymbolCheckCounts": {
+    "delay": 12,
+    "direct": 35827
+  },
+  "peWarnings": [],
+  "parserSymbolLimits": {
+    "imports": 100000,
+    "exports": 100000,
+    "note": "Qt libraries exceed pefile default 8192-symbol safety limits; full tables are inspected with bounded higher limits."
+  },
+  "ignoredZeroEntryPointForwarderNotes": 78
+}

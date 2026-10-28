@@ -1,0 +1,137 @@
+{
+  "timestamp": "2026-10-28T14:57:34.580573+08:00",
+  "method": "One isolated CreateProcessW CREATE_SUSPENDED launch; owned job assigned before ResumeThread; direct GetTokenInformation without injection",
+  "execution_context": "approved actual-user, Medium integrity, no administrator elevation",
+  "exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+  "exe_sha256": "a7f64eca35d2a1257d2b2a5d4c2e5b63f0718aa3650b607f108168cabb220c25",
+  "cwd": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248",
+  "caller_integrity_rid": 8192,
+  "file_labels_before": [],
+  "caller_elevated": false,
+  "file_security_before": {
+    "labels": [],
+    "security_sha256": "ad574ae97eef226362593aab9306bdeb7899ea1e42c5b9a3494adf37ffd90d7b"
+  },
+  "parent_security_before": {
+    "E:\\code\\\u5c40\u57df\u7f51": {
+      "labels": [
+        {
+          "integrity": "low",
+          "rid": 4096,
+          "flags": 3,
+          "policy_mask": 1
+        }
+      ],
+      "security_sha256": "dd7d111b768e65688f727d2dcf9d53bfc921b87c22f1f92bfe9ae8fb7a97c1f1"
+    },
+    "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248": {
+      "labels": [
+        {
+          "integrity": "low",
+          "rid": 4096,
+          "flags": 19,
+          "policy_mask": 1
+        }
+      ],
+      "security_sha256": "95718a633b4b4d5bf3ed281321455b229fcb582c18bfdfa75d5c67c69836e2c5"
+    }
+  },
+  "fixture": "C:\\Windows\\Temp\\lanshare-token-delivered-6d_g3u86",
+  "fixture_labels": [],
+  "port": 55826,
+  "ready": true,
+  "resumed": true,
+  "scope": "Owned share, test profile, chat data, LOCALAPPDATA, TEMP/TMP, ephemeral port and hidden offscreen Qt. No existing service or real settings used.",
+  "helper_sha256": "ba85847b251f19d81384f278e46a44261324293eda7d0a9ff6e09354f052368b",
+  "owned_job_helper_sha256": "4f7de6d1fb2ad1188c83de01fce8586b13f525d9ebe5238ffba689a370f94038",
+  "limitations": [
+    "Controlled launch, not an Explorer double click or visible UI acceptance.",
+    "Broader startup-matrix evidence, if run, is a separate report."
+  ],
+  "pid": 26356,
+  "token_before_resume": {
+    "integrity_rid": 8192,
+    "integrity": "medium",
+    "same_user_as_caller": true,
+    "elevated": false
+  },
+  "tokens_at_ready": [
+    {
+      "pid": 26356,
+      "integrity_rid": 8192,
+      "integrity": "medium",
+      "same_user_as_caller": true,
+      "elevated": false
+    },
+    {
+      "pid": 24088,
+      "integrity_rid": 8192,
+      "integrity": "medium",
+      "same_user_as_caller": true,
+      "elevated": false
+    }
+  ],
+  "runtime_extractions_at_ready": [
+    "local\\LanShare\\Temp\\_MEI000066f42"
+  ],
+  "exit_code_before_job_close": 0,
+  "terminated_unassigned_owned_child": false,
+  "owned_job_processes_before_close": [],
+  "force_closed_owned_job": false,
+  "final_exit_code": 0,
+  "remaining_extractions_before_fixture_cleanup": [],
+  "exe_hash_unchanged": true,
+  "file_security_unchanged": true,
+  "file_labels_after": [],
+  "file_security_after": {
+    "labels": [],
+    "security_sha256": "ad574ae97eef226362593aab9306bdeb7899ea1e42c5b9a3494adf37ffd90d7b"
+  },
+  "file_id_unchanged": true,
+  "parent_security_after": {
+    "E:\\code\\\u5c40\u57df\u7f51": {
+      "labels": [
+        {
+          "integrity": "low",
+          "rid": 4096,
+          "flags": 3,
+          "policy_mask": 1
+        }
+      ],
+      "security_sha256": "dd7d111b768e65688f727d2dcf9d53bfc921b87c22f1f92bfe9ae8fb7a97c1f1"
+    },
+    "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248": {
+      "labels": [
+        {
+          "integrity": "low",
+          "rid": 4096,
+          "flags": 19,
+          "policy_mask": 1
+        }
+      ],
+      "security_sha256": "95718a633b4b4d5bf3ed281321455b229fcb582c18bfdfa75d5c67c69836e2c5"
+    }
+  },
+  "parent_security_unchanged": true,
+  "listener_closed": true,
+  "fixture_removed": true,
+  "checks": {
+    "original_path_medium_before_resume": true,
+    "ready": true,
+    "all_owned_processes_medium_at_ready": true,
+    "all_owned_processes_same_user": true,
+    "all_owned_processes_non_elevated": true,
+    "normal_exit_zero": true,
+    "no_forced_job_cleanup": true,
+    "no_unassigned_child_cleanup": true,
+    "runtime_extraction_seen": true,
+    "runtime_extraction_cleaned_normally": true,
+    "listener_closed": true,
+    "exe_bytes_unchanged": true,
+    "exe_security_unchanged": true,
+    "exe_file_id_unchanged": true,
+    "parent_security_unchanged": true,
+    "fixture_removed": true
+  },
+  "success": true
+}

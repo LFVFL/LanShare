@@ -13,13 +13,16 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 sys.path.insert(0, str(ROOT))
 sys.argv = ["x"]
 
 import lanshare as j
 from server import runner
 
-SHARE = ROOT / "chat_data"          # 随便找个存在的目录当共享目录
+SHARE = TEST_ENV.temporary_dir(prefix="limits-share-")
 FAILS = []
 
 
@@ -52,7 +55,7 @@ def main():
     print("    状态: %s 耗时 %.2fs" % (st, time.time() - t0))
     if st != 503:
         FAILS.append(("503", st))
-    s.stop()
+    s.stop(wait=True, timeout=10)
     time.sleep(0.4)
 
     print("[2] 默认名额下 20 并发应全 200")
@@ -83,7 +86,7 @@ def main():
         if st != 200:
             FAILS.append(("serial", st))
             break
-    s.stop()
+    s.stop(wait=True, timeout=10)
 
     print("\n结果:", "全部通过 ✓" if not FAILS else FAILS)
     return 1 if FAILS else 0

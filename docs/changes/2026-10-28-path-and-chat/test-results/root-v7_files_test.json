@@ -1,0 +1,98 @@
+{
+  "suite": "v7_files_test",
+  "expectedMethods": 9,
+  "runtime": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+  "executable": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "virtualenv": true,
+  "timestamp": "2026-10-28T02:39:40.760046+00:00",
+  "isolationRoots": [
+    "C:\\Windows\\Temp\\lanshare-test-mgh4bxp2"
+  ],
+  "cases": [
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_current_filter_finds_files_beyond_unfiltered_first_page",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_initial_page_embeds_400_with_complete_contract",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_invalid_scope_outside_root_and_old_root_do_not_leak",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_junction_is_hidden_and_never_descended",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_preview_metadata_agrees_with_file_types",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_result_scan_and_time_truncation_are_explicit",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_scopes_find_chinese_subfolders_and_skip_private_dependencies",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_url_query_first_page_and_followup_pages_use_same_filter",
+      "status": "passed"
+    }
+  ],
+  "success": true,
+  "chatDataDirectory": "C:\\Windows\\Temp\\lanshare-test-mgh4bxp2\\chat_data",
+  "settingsProfile": "C:\\Windows\\Temp\\lanshare-test-mgh4bxp2",
+  "qtPlatform": "offscreen",
+  "discoveredMethods": 9,
+  "tests": 9,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "expectedFailures": 0,
+  "unexpectedSuccesses": 0,
+  "subtests": [
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='name', order='asc')",
+      "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='name', order='desc')",
+      "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='size', order='asc')",
+      "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='size', order='desc')",
+      "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='mtime', order='asc')",
+      "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+      "status": "passed"
+    },
+    {
+      "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='mtime', order='desc')",
+      "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+      "status": "passed"
+    }
+  ],
+  "passed": 9,
+  "assetVersion": "98bfe0bd8e",
+  "cleanupVerified": true,
+  "durationSeconds": 111.437,
+  "sourceSha256": "4b3eada960f03241a14adbd9bb13d127cd58c5f61b7236a27969e4ca5225d44a",
+  "webassetsSha256": "545f4cf7117f5feb26a3b5533ffe2cb76b2afd15cb6edeedb0d9b6201058286d"
+}

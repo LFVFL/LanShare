@@ -24,6 +24,9 @@ import urllib.parse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 PW, ADMIN = "pw123", "admin123"
 FAILS = []
 
@@ -33,6 +36,9 @@ sys.path.insert(0, r'{root}')
 import lanshare as j
 s = j.FileSharer()
 ok, res = s.start(path=r'{share}', port={port}, password={pw!r}, admin_password={adm!r})
+if not ok:
+    print("FAILED", res, flush=True)
+    raise SystemExit(2)
 print('READY' if ok else 'FAILED', flush=True)
 while True:
     time.sleep(1)
@@ -77,7 +83,7 @@ def main():
     args = ap.parse_args()
     port = args.port
 
-    tmp = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-auth-"))
+    tmp = Path(TEST_ENV.temporary_dir(prefix="lan6-auth-"))
     share = tmp / "share"
     share.mkdir()
     (share / "a.txt").write_text("x", encoding="utf-8")
@@ -88,7 +94,7 @@ def main():
                              stderr=subprocess.STDOUT, cwd=str(ROOT))
     q = lambda **kw: urllib.parse.urlencode(kw)
     try:
-        if not wait(port):
+        if not TEST_ENV.wait_server(child, port, share):
             print("服务没起来：")
             child.kill()
             print(child.stdout.read().decode("utf-8", "replace"))
@@ -155,7 +161,7 @@ def main():
             child.wait(5)
         except subprocess.TimeoutExpired:
             child.kill()
-        shutil.rmtree(tmp, ignore_errors=True)
+        TEST_ENV.remove_test_dir(tmp)
 
     print("\n结果:", "全部通过 ✓" if not FAILS else "失败 %d 项" % len(FAILS))
     for f in FAILS:

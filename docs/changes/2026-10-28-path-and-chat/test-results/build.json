@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-10-28T10:40:46.225786+08:00",
+  "exe": "E:\\LanShare-builds\\build-7ihfiggx\\dist\\lanshare.exe",
+  "sha256": "023f3143d43733eeb7528be44703ee93dc5d2e185ef454dcc3ce8ed6ae0f9a24",
+  "size_bytes": 63929817,
+  "staging": "E:\\LanShare-builds\\build-7ihfiggx",
+  "build_returncode": 0,
+  "smoke_success": true,
+  "runtime_archive_check_success": true,
+  "qt_archive_check_success": true,
+  "asset_version": "98bfe0bd8e",
+  "versions": {
+    "pyinstaller": "6.22.3",
+    "pyinstaller-hooks-contrib": "2026.9",
+    "PyQt5": "5.15.11",
+    "PyQt5-Qt5": "5.15.2",
+    "Pillow": "13.0.0",
+    "pillow-heif": "1.8.1",
+    "pillow-avif-plugin": "1.6.0",
+    "brotli": "1.2.1",
+    "segno": "1.6.6"
+  },
+  "executed_build_command": [
+    "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+    "-B",
+    "tools/build_exe.py",
+    "--work",
+    "E:\\LanShare-builds",
+    "--venv",
+    "E:\\LanShare-builds\\build-22jznups\\env",
+    "--extra-images"
+  ],
+  "build_cwd": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248",
+  "build_log": "E:\\LanShare-builds\\build-7ihfiggx\\build.log",
+  "build_log_sha256": "20947ca5c1fce45410d3b4e701c60877c3713faf62e46b7bb427188628e0b5e8",
+  "packaging_options": [
+    "pyi-contents-directory _internal",
+    "pyi-runtime-tmpdir %LOCALAPPDATA%/LanShare/Temp"
+  ],
+  "build_execution": "Approved outside sandbox, existing venv, no dependency installations",
+  "original_delivery_replaced": true,
+  "delivery_record": "release-artifact.json",
+  "delivery_acceptance_timestamp": "2026-10-28T11:18:11.744503+08:00"
+}

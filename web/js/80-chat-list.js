@@ -58,6 +58,10 @@
               key: 'open', label: '进入', icon: 'chat',
               onSelect: function () { location.href = '/chat/room?id=' + encodeURIComponent(room.id); }
             },
+            {
+              key: 'rename', label: '修改群名', icon: 'edit',
+              onSelect: function () { askRenameRoom(room); }
+            },
             { sep: true },
             {
               key: 'del', label: '删除', icon: 'trash', danger: true,
@@ -75,7 +79,26 @@
         if (row) location.href = '/chat/room?id=' + encodeURIComponent(row.getAttribute('data-room'));
       });
 
+      function askRenameRoom(room) {
+        openModal({
+          title: '修改群名', icon: 'edit', confirmText: '保存',
+          desc: '需要管理员权限，默认群聊也可以改名。',
+          field: { label: '群名', value: room.name },
+          validate: function (v) { return !v ? '请输入群名' : v.length > 50 ? '群名最长 50 个字' : ''; },
+          onConfirm: function (value) {
+            writeFetch('/chat/rename_room', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: room.id, name: value })
+            }).then(jsonOf).then(function (data) {
+              if (data && data.success) { toast('群名已更新', 'ok'); location.reload(); }
+              else toast(Lan.api.explain(data, '修改群名失败'), 'err');
+            }).catch(function () { toast('网络中断，群名未修改', 'err'); });
+          }
+        });
+      }
+
       function askDeleteRoom(room) {
+        if (room.id === 'default') { toast('默认群聊可以改名，但不能删除', 'info'); return; }
         openModal({
           title: '删除聊天室', tone: 'danger', icon: 'trash', confirmText: '删除',
           desc: '确定删除 <strong>' + esc(room.name) + '</strong> 吗？里面的 ' + room.count + ' 条消息会一起删除。',

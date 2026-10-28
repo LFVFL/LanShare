@@ -1,0 +1,170 @@
+{
+  "timestamp": "2026-10-28T11:15:53.920448+08:00",
+  "purpose": "Diagnosis of the previous delivered artifact, not a post-release acceptance claim",
+  "original_artifact": {
+    "exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+    "sha256": "e283857ab18dc7533b735ede1ae017cb63a8691791d58f5c1dc70e1aab03ef41",
+    "bytes_unchanged_during_diagnosis": true
+  },
+  "finding": "The original-path bootloader starts at Low integrity and cannot create a normal Medium-integrity runtime directory. The same executable bytes in a fresh copy start at Medium and succeed.",
+  "integrity_comparison": {
+    "caller": {
+      "level": "Medium",
+      "rid": 8192
+    },
+    "original_before_resume": {
+      "level": "Low",
+      "rid": 4096
+    },
+    "original_at_error_dialog": {
+      "level": "Low",
+      "rid": 4096
+    },
+    "identical_copy_before_resume": {
+      "level": "Medium",
+      "rid": 8192
+    },
+    "original_and_copy_same_user_as_caller": true,
+    "original_and_copy_sha256_equal": true,
+    "same_fixture_discretionary_descriptors": true,
+    "original_ready": false,
+    "copy_ready": true,
+    "copy_final_exit_code": 0
+  },
+  "temp_directory_failure": {
+    "variables_expand_correctly": true,
+    "full_path_resolves_correctly": true,
+    "create_directory_api": "CreateDirectoryW",
+    "relative_target": "LOCALAPPDATA/LanShare",
+    "result": 0,
+    "win32_error": 5,
+    "win32_error_name": "ERROR_ACCESS_DENIED",
+    "failure_precedes_python_application_start": true,
+    "original_nt_create_file": [
+      {
+        "relative_target": "LanShare",
+        "status": "0xc0000022"
+      },
+      {
+        "relative_target": "LanShare/Temp",
+        "status": "0xc000003a"
+      }
+    ],
+    "identical_copy_nt_create_file": [
+      {
+        "relative_target": "LanShare",
+        "status": "0x00000000"
+      },
+      {
+        "relative_target": "LanShare/Temp",
+        "status": "0x00000000"
+      }
+    ]
+  },
+  "fresh_approved_matrix": {
+    "execution": "require_escalated; fresh fixture created by the launching context",
+    "ordinary_launches": 9,
+    "successes": 4,
+    "failures": 5,
+    "cases": [
+      {
+        "case": "ascii-exe_ascii-cwd",
+        "ready": true,
+        "exit_code": 0
+      },
+      {
+        "case": "delivery-exe_ascii-cwd",
+        "ready": false,
+        "exit_code": 4294967295
+      },
+      {
+        "case": "ascii-exe_unicode-cwd",
+        "ready": true,
+        "exit_code": 0
+      },
+      {
+        "case": "delivery-exe_unicode-cwd",
+        "ready": false,
+        "exit_code": 4294967295
+      },
+      {
+        "case": "ascii-exe_delivery-cwd",
+        "ready": true,
+        "exit_code": 0
+      },
+      {
+        "case": "delivery-exe_delivery-cwd",
+        "ready": false,
+        "exit_code": 4294967295
+      },
+      {
+        "case": "unicode-copy_ascii-cwd",
+        "ready": true,
+        "exit_code": 0
+      },
+      {
+        "case": "delivery-exe_inherited-temp",
+        "ready": false,
+        "exit_code": 4294967295
+      },
+      {
+        "case": "delivery-exe_unicode-local",
+        "ready": false,
+        "exit_code": 4294967295
+      }
+    ],
+    "interpretation": "The exact original path fails across tested cwd/TEMP/LOCALAPPDATA variations; a separate Unicode-path copy succeeds. This is not a general Unicode-path failure."
+  },
+  "method": [
+    "Matrix fixtures and copies were freshly created in the same approved caller context, avoiding reused sandbox-account fixture ownership as a confound.",
+    "API reports use Frida observations of newly spawned isolated owned processes. Arguments/results are observed, not replaced. Token measurements precede installation of observation hooks.",
+    "Every launch uses a private share, test profile, chat-data directory, LOCALAPPDATA, temporary directories, ephemeral port, offscreen Qt and owned kill-on-close process job.",
+    "No delivered binary bytes, real settings, chat data, registry, directory ACLs, global environment or pre-existing service were modified by diagnosis."
+  ],
+  "boundaries": [
+    "Controlled process creation is not an Explorer double-click interaction. The approved ordinary matrix reproduces the native error at the original path.",
+    "API evidence is capped at 300 events and is not complete filesystem coverage. NtCreateFile return observation is not kernel tracing and cannot alone exclude deeper interception.",
+    "Earlier sandbox matrix and approved replay of sandbox-created fixtures are retained separately but are not the primary comparison evidence.",
+    "No claim is made that changing TEMP alone, requiring elevation or weakening directory permissions is a valid repair.",
+    "The inherited Low file-label observation and replacement are recorded separately in release-artifact.json. Final-path acceptance is recorded separately in startup-token-delivered.json and startup-temp-delivered.json."
+  ],
+  "cleanup": {
+    "all_owned_trace_extractions_removed": true,
+    "api_trace_extractions_removed": true,
+    "owned_trace_jobs_force_closed": [
+      false,
+      false
+    ]
+  },
+  "evidence": [
+    {
+      "relative_path": "diagnosis\\path-matrix-approved-owned.json",
+      "absolute_path": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\docs\\changes\\2026-10-28-path-and-chat\\test-results\\diagnosis\\path-matrix-approved-owned.json",
+      "sha256": "a39ca3d40c5818793d42d64742094185347c3e4f2aecbf8a8ebc0534ec9c84a8"
+    },
+    {
+      "relative_path": "diagnosis\\bootloader-api-trace.json",
+      "absolute_path": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\docs\\changes\\2026-10-28-path-and-chat\\test-results\\diagnosis\\bootloader-api-trace.json",
+      "sha256": "92e3a6d6d63bf2fc7a30e9ce0d12b76987c06b43cccc34e6f43bc384be9c3693"
+    },
+    {
+      "relative_path": "diagnosis\\bootloader-security-trace.json",
+      "absolute_path": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\docs\\changes\\2026-10-28-path-and-chat\\test-results\\diagnosis\\bootloader-security-trace.json",
+      "sha256": "08890277f3e2f41b2fa230a3f72db23ce6a67ddf785751c43a952dacd6c1e361"
+    }
+  ],
+  "official_references": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/mandatory-integrity-control",
+      "relevance": "Low cannot write Medium even when the DACL permits it; a new process receives the minimum of the caller and executable integrity levels."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilew",
+      "relevance": "ReplaceFileW preserves original destination attributes including its DACL; this is not the chosen replacement operation."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/troubleshoot/windows-client/windows-security/permissions-on-copying-moving-files",
+      "relevance": "Same-volume moves normally preserve original permissions. The exact local os.replace behavior is verified by integrity-replace-probe.json rather than inferred for all SACL cases."
+    }
+  ]
+}

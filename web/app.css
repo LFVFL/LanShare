@@ -483,6 +483,8 @@
 .col-size { width: 92px; justify-content: flex-end; flex: none; }
 .col-time { width: 148px; flex: none; justify-content: flex-end; }
 .col-more { width: 76px; flex: none; }
+/* Room rows have one action button, unlike the file list's action group. */
+.room-list .col-more { width: 32px; }
 
 /* ── 行 ── */
 .list { display: flex; flex-direction: column; gap: 0; }
@@ -1271,13 +1273,6 @@ body[data-dragging="true"] .dropzone { display: flex; }
 }
 .send:hover { filter: brightness(1.08); }
 .send:disabled { opacity: .45; cursor: default; box-shadow: none; }
-.composer-hint {
-  display: flex;
-  justify-content: space-between;
-  padding: 7px 4px 0;
-  font-size: 11px;
-  color: var(--text-4);
-}
 
 /* ═══════════════ 7. 登录页 ═══════════════ */
 
@@ -1777,8 +1772,6 @@ body[data-dragging="true"] .dropzone { display: flex; }
   .msg-img { max-width: 200px; max-height: 200px; }
   .msg-tools { display: none; }          /* 移动端改用长按菜单 */
   .composer-wrap { padding: 8px 10px calc(66px + env(safe-area-inset-bottom, 0px)); }
-  .composer-hint { padding: 6px 4px 0; justify-content: flex-end; }
-  .composer-hint span:first-child { display: none; }
   .jump { bottom: calc(148px + env(safe-area-inset-bottom, 0px)); }
 
   .popover {
@@ -1816,6 +1809,8 @@ body[data-dragging="true"] .dropzone { display: flex; }
   line-height: 1.6;
   word-break: break-word;
   overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  tab-size: 4;
 }
 .msg-text + .msg-text { margin-top: 4px; }
 
@@ -1826,6 +1821,18 @@ body[data-dragging="true"] .dropzone { display: flex; }
   margin-top: 8px;
   font-size: 12px;
   color: var(--text-3);
+}
+.preview-slot[hidden] { display: none; }
+.composer textarea { white-space: pre-wrap; tab-size: 4; }
+.chat-media-preview { width: 56px; height: 56px; border-radius: 8px; object-fit: contain; flex: none; }
+.chat-media-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
+.chat-media-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chat-media-status { overflow-wrap: anywhere; }
+.chat-media-info progress { width: 100%; height: 5px; accent-color: rgb(var(--p1)); }
+.chat-mobile-rename { display: none; }
+@media (max-width: 900px) {
+  .chat-mobile-rename { display: inline-flex; align-self: center; }
+  .preview-slot { flex-wrap: wrap; }
 }
 
 @media (max-width: 900px) {

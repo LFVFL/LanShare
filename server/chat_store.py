@@ -20,6 +20,9 @@ from .storage import chat_lock
 
 CHAT_ROOMS = {}
 CHAT_ROOMS_FILE = ""
+_initialize_lock = threading.Lock()
+_initialized = False
+_save_lock = threading.Lock()
 
 # 新消息事件：SSE 连接平时在这里等，写入方 notify 一下就立刻醒。
 # 和 chat_lock 分开，避免把「发消息」和「推消息」两件事的锁缠在一起。
@@ -156,6 +159,7 @@ def delete_chat_image_file(image_url):
     targets = [image_path]
     if not image_path.stem.endswith("_t"):
         targets.extend(CHAT_IMAGE_DIR.glob(image_path.stem + "_t.*"))
+        targets.extend(CHAT_IMAGE_DIR.glob(image_path.stem + "_p.*"))
 
     for target in targets:
         try:
@@ -234,10 +238,14 @@ def cleanup_chat_images(grace_seconds=600, dry_run=False):
         referenced = set()
         for room in CHAT_ROOMS.values():
             for msg in room.get('messages', []):
-                for key in ('image', 'thumb'):
+                for key in ('image', 'thumb', 'preview'):
                     url = msg.get(key) or ''
                     if url.startswith('/chat/image/'):
                         referenced.add(Path(url).name)
+
+    # Prepared images still belong to an upload until the user clicks Send.
+    from .chat_media import pending_media_names
+    referenced.update(pending_media_names())
 
     referenced_stems = {Path(n).stem for n in referenced}
     deadline = time.time() - grace_seconds
@@ -257,7 +265,7 @@ def cleanup_chat_images(grace_seconds=600, dry_run=False):
         except OSError:
             continue
 
-        is_thumb = path.stem.endswith('_t')
+        is_thumb = path.stem.endswith(('_t', '_p'))
         if is_thumb:
             if path.stem[:-2] in existing_stems:
                 kept += 1
@@ -284,7 +292,9 @@ def cleanup_chat_images(grace_seconds=600, dry_run=False):
             freed += size
             print(f"[Chat] 清理孤儿图片（{reason}）：{path.name}")
             if not is_thumb:
-                for t in CHAT_IMAGE_DIR.glob(path.stem + '_t.*'):
+                related = list(CHAT_IMAGE_DIR.glob(path.stem + '_t.*'))
+                related.extend(CHAT_IMAGE_DIR.glob(path.stem + '_p.*'))
+                for t in related:
                     try:
                         freed += t.stat().st_size
                     except OSError:
@@ -310,18 +320,13 @@ def get_chat_rooms_file():
     优先使用程序目录下 chat_data/rooms.json。
     如果创建失败，则回退到用户目录。
     """
-    try:
-        CHAT_DATA_DIR.mkdir(parents=True, exist_ok=True)
-        CHAT_IMAGE_DIR.mkdir(parents=True, exist_ok=True)
-        return str(CHAT_ROOMS_FILE_PATH)
-    except Exception:
-        app_data = Path.home() / ".lan_cloud_share"
-        app_data.mkdir(parents=True, exist_ok=True)
-        return str(app_data / "chat_rooms.json")
+    CHAT_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    CHAT_IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    return str(CHAT_ROOMS_FILE_PATH)
 
 
 def load_chat_rooms():
-    global CHAT_ROOMS, CHAT_ROOMS_FILE
+    global CHAT_ROOMS_FILE
     CHAT_ROOMS_FILE = get_chat_rooms_file()
 
     def _read(path):
@@ -339,15 +344,24 @@ def load_chat_rooms():
                 if isinstance(data, dict):
                     print(f"[Chat] 已从备份恢复 {len(data)} 个聊天室")
             if isinstance(data, dict):
-                CHAT_ROOMS = data
+                with chat_lock:
+                    CHAT_ROOMS.clear()
+                    CHAT_ROOMS.update(data)
                 print(f"[Chat] 已加载 {len(CHAT_ROOMS)} 个聊天室")
                 return
     except (json.JSONDecodeError, IOError, OSError) as e:
         print(f"[Chat] 加载聊天室失败: {e}")
-    CHAT_ROOMS = {}
+    with chat_lock:
+        CHAT_ROOMS.clear()
 
 
 def save_chat_rooms():
+    # Timer saves and synchronous flushes must not share an in-flight .tmp.
+    with _save_lock:
+        _save_chat_rooms()
+
+
+def _save_chat_rooms():
     """
     原子写：先写 .tmp 再 os.replace。
     直接 'w' 覆盖的话，写到一半断电/崩溃就把 rooms.json 变成半截 JSON，
@@ -414,14 +428,16 @@ def migrate_old_chat():
     2. 无论迁移是否成功，都保证 default 房间存在；
     3. 不会出现打印已创建但实际没有创建的情况。
     """
-    global CHAT_ROOMS
-
     if 'default' in CHAT_ROOMS:
         return
 
-    old_chat_file = Path.home() / ".lan_cloud_share" / "chat_history.json"
-
-    if not old_chat_file.exists():
+    if os.environ.get('LANSHARE_DATA_DIR'):
+        old_chat_file = CHAT_DATA_DIR / 'chat_history.json'
+        if not old_chat_file.exists():
+            old_chat_file = None
+    else:
+        old_chat_file = Path.home() / ".lan_cloud_share" / "chat_history.json"
+    if old_chat_file is not None and not old_chat_file.exists():
         alt = APP_BASE_DIR / "chat_history.json"
         old_chat_file = alt if alt.exists() else None
 
@@ -463,14 +479,21 @@ def migrate_old_chat():
     save_chat_rooms()
 
 chat_room_saver = ChatRoomSaver(delay=5.0)
-load_chat_rooms()
-migrate_old_chat()
 
-# 启动时顺手清一次图片目录（只删"确定没人用"的孤儿文件，见函数注释）
-try:
-    cleanup_chat_images()
-except Exception as e:
-    print(f"[Chat] 启动清理图片失败（忽略）: {e}")
+
+def initialize_chat_store():
+    """Initialize on service start, never merely by importing a module."""
+    global _initialized
+    with _initialize_lock:
+        if _initialized:
+            return
+        load_chat_rooms()
+        migrate_old_chat()
+        try:
+            cleanup_chat_images()
+        except OSError as e:
+            print(f"[Chat] 启动清理图片失败（忽略）: {e}")
+        _initialized = True
 
 # ══════════════════════════════════════════════════════════════════════════════
 # 工具函数

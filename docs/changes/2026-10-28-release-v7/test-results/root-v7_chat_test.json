@@ -1,0 +1,96 @@
+{
+  "suite": "v7_chat_test",
+  "expectedMethods": 16,
+  "runtime": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+  "executable": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "virtualenv": true,
+  "timestamp": "2026-10-28T06:41:56.799508+00:00",
+  "isolationRoots": [
+    "C:\\Windows\\Temp\\lanshare-test-q218t8bk",
+    "C:\\Windows\\Temp\\lanshare-v7-chat-8k1t58wk"
+  ],
+  "cases": [
+    {
+      "name": "v7_chat_test.ChatTest.test_01_import_has_no_data_side_effects",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_02_empty_room_live_first_message",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_03_mutations_replay_and_last_event_id",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_04_invalid_cursor_reset",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_05_default_rename_persistence_and_auth",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_06_text_whitespace_and_idempotent_retry",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_07_large_binary_original_preview_and_cancel",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_08_format_support_validation_and_session_binding",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_09_chunk_offset_and_resource_guards",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_10_twenty_mebibyte_original",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_11_prepared_images_survive_cleanup_then_cancel_removes_all",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_12_message_ownership_and_retry_lifecycle",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_13_expired_partial_upload_and_bad_path_tokens",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_14_decode_pixels_and_slots_temp_space_and_disk_guards",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_15_optional_heif_original_and_safe_preview",
+      "status": "passed"
+    },
+    {
+      "name": "v7_chat_test.ChatTest.test_16_optional_avif_original_and_safe_preview",
+      "status": "passed"
+    }
+  ],
+  "success": true,
+  "chatDataDirectory": "C:\\Windows\\TEMP\\lanshare-v7-chat-8k1t58wk\\data",
+  "settingsProfile": "C:\\Windows\\Temp\\lanshare-test-q218t8bk",
+  "qtPlatform": "offscreen",
+  "discoveredMethods": 16,
+  "tests": 16,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "expectedFailures": 0,
+  "unexpectedSuccesses": 0,
+  "subtests": [],
+  "passed": 16,
+  "assetVersion": "01c9b74c9a",
+  "cleanupVerified": true,
+  "durationSeconds": 3.032,
+  "sourceSha256": "546d8082d4e6372c622df7f3d835dd0f465835d66bc6a084c939e35ef4fb2bac",
+  "webassetsSha256": "b6cffa94b81b2fb070c5239c720b507595e6385dc6ca05a0ac27acd03f5fc15f"
+}

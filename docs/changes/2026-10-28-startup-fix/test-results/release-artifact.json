@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-10-28T09:42:51.959558+08:00",
+  "exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+  "size_bytes": 63929292,
+  "sha256": "e283857ab18dc7533b735ede1ae017cb63a8691791d58f5c1dc70e1aab03ef41",
+  "built_candidate": "E:\\LanShare-builds\\build-9k4ezesh\\dist\\lanshare.exe",
+  "matches_tested_candidate": true,
+  "replaced_original_sha256": "ad5e408f42d8ddd3e302073e234c05d069da75d7188c6a1866e80d7b0e3eea17",
+  "original_backup": "E:\\code\\\u5c40\u57df\u7f51\\_diag\\lan7-temp-startup-a4ccexbc\\previous\\lanshare.exe",
+  "original_backup_hash_verified": true,
+  "replacement": "Hash-gated same-volume atomic replacement; no user process stopped",
+  "runtime_tmpdir": "%LOCALAPPDATA%\\LanShare\\Temp",
+  "normal_settings_and_chat_storage_changed": false,
+  "registry_changed": false,
+  "git_committed": false,
+  "git_pushed": false
+}

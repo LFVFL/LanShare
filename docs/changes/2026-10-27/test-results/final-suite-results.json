@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "timestamp": "2026-10-28T01:57:28+08:00",
+  "python": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "node": "D:\\Program Files\\nodejs\\node.exe",
+  "source_baseline": "131c39c8e3133c458b316df39faacd9b275bce27",
+  "artifact_sha256": "ad5e408f42d8ddd3e302073e234c05d069da75d7188c6a1866e80d7b0e3eea17",
+  "success": true,
+  "total_new_tests": 138,
+  "passed": 138,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "count_policy": "unittest methods / Node test cases; loops and assertions are not counted again",
+  "suites": [
+    {
+      "suite": "security",
+      "command": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+        "-B",
+        "tools/v7_security_test.py"
+      ],
+      "test_source_sha256": "0c5fe16bbfc1bef428195acd80c1a5417029f5c4b628eade9e581e4764d86c68",
+      "local_log": "security-build-venv.log",
+      "log_sha256": "80c17ca7d36d10b0622073d2e42c582ff5147ce40776d45965672b1e3300a81a",
+      "evidence_json": "security-build-venv.json",
+      "tests": 29,
+      "passed": 29,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 6.109,
+      "success": true
+    },
+    {
+      "suite": "files_http",
+      "command": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+        "-B",
+        "tools/v7_files_test.py"
+      ],
+      "test_source_sha256": "4b3eada960f03241a14adbd9bb13d127cd58c5f61b7236a27969e4ca5225d44a",
+      "local_log": "files-http.log",
+      "log_sha256": "b30ca6b72847c75d99bdd74c46d4ecb3829d2107a52c77373432eb8c4f1a2796",
+      "evidence_json": "files-http.json",
+      "tests": 9,
+      "passed": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 78.659,
+      "success": true
+    },
+    {
+      "suite": "asset_version",
+      "command": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+        "-B",
+        "tools/v7_assets_test.py"
+      ],
+      "test_source_sha256": "451330d4db4ef5decc8b8ca5a448d5f75854cdd87537d84a36397f0ae5543bd0",
+      "local_log": "assets.log",
+      "log_sha256": "ebe7fddd5272577112133b762502d95ef68076a505d57f6cade0bd917900feb8",
+      "evidence_json": "assets.json",
+      "tests": 5,
+      "passed": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.001,
+      "success": true
+    },
+    {
+      "suite": "files_node_vm",
+      "command": [
+        "D:\\Program Files\\nodejs\\node.exe",
+        "tools/v7_files_frontend_test.js"
+      ],
+      "test_source_sha256": "14373f594d5e9dd945ed6f03ca58dc14cecb8abf014e61a107f3d96d946c23cb",
+      "local_log": "files-frontend.log",
+      "log_sha256": "2fe95bded4dafbc839d43caf6bb059e6edb77ba89b2476a7dccc12c2d5a9c055",
+      "evidence_json": "files-frontend.json",
+      "tests": 15,
+      "passed": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "success": true
+    },
+    {
+      "suite": "chat_http",
+      "command": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+        "-B",
+        "tools/v7_chat_test.py"
+      ],
+      "test_source_sha256": "546d8082d4e6372c622df7f3d835dd0f465835d66bc6a084c939e35ef4fb2bac",
+      "local_log": "v7-chat-build-python.log",
+      "log_sha256": "8d1c505e78ec7bbc79ea59df5031d1cdef115dbeb2c69720c09ef497879936d4",
+      "evidence_json": null,
+      "tests": 16,
+      "passed": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 3.085,
+      "success": true
+    },
+    {
+      "suite": "chat_node_vm",
+      "command": [
+        "D:\\Program Files\\nodejs\\node.exe",
+        "tools/v7_chat_frontend_test.js"
+      ],
+      "test_source_sha256": "d9bf163ef784b0c2053abb0888f904400aa5082609cfcfe053d7dd6d1fce9fcc",
+      "local_log": "v7-chat-frontend-final.log",
+      "log_sha256": "a1922b034a233aab15a34340419ce230e1fcf99a312a033b8995b587d95311ea",
+      "evidence_json": null,
+      "tests": 6,
+      "passed": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "success": true
+    },
+    {
+      "suite": "chrome",
+      "command": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+        "-B",
+        "tools/v7_browser_test.py"
+      ],
+      "test_source_sha256": "cf6c9c418f4afb9916091f4d2cebc27be85371cab4ad928a0dedabbc79cf4d13",
+      "local_log": "v7-browser-build-python.log",
+      "log_sha256": "c07da7a95bbc24fa9e206131e89eeec37cd5ed734ffcd1e309de0dff3a4321bc",
+      "evidence_json": null,
+      "tests": 6,
+      "passed": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 12.559,
+      "success": true
+    },
+    {
+      "suite": "desktop_lifecycle",
+      "command": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+        "-B",
+        "tools/desktop_lifecycle_test.py"
+      ],
+      "test_source_sha256": "34b5cd5baa02de29284a4526a49472af0d36cf5232825f66ff5a2bc4c24a45b9",
+      "local_log": "desktop-lifecycle-e-build-python.log",
+      "log_sha256": "a88a7122f9b8d27ccb36913519f25a23feca8f998e022949ee611b3f6944d740",
+      "evidence_json": null,
+      "tests": 21,
+      "passed": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 11.756,
+      "success": true
+    },
+    {
+      "suite": "build_isolation",
+      "command": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+        "-B",
+        "tools/v7_build_test.py"
+      ],
+      "test_source_sha256": "5faa650ca8219cf98b5b77fe5a49f2cdbfe2dfe0cb7a2615d446e295a73f3ca8",
+      "local_log": "final-v7_build_test.log",
+      "log_sha256": "d66cdc929c3124c16d699cd78441deeda86add6c63d3079ae9efab08c5310d18",
+      "evidence_json": null,
+      "tests": 23,
+      "passed": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1.888,
+      "success": true
+    },
+    {
+      "suite": "standalone_exe",
+      "command": [
+        "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+        "-B",
+        "tools/v7_exe_test.py",
+        "--exe",
+        "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe"
+      ],
+      "test_source_sha256": "d1119a5da30ca4902cf7729b9afe98292527fdf64cb10089278fdc6c98f6b698",
+      "local_log": "final-exe-verification-delivered.log",
+      "log_sha256": "ab202e9b1cf53cd54d68934c7a0186261878a07f2b86e9783e6ab16b610fa56c",
+      "evidence_json": "exe-verification.json",
+      "tests": 8,
+      "passed": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 9.362,
+      "success": true
+    }
+  ],
+  "legacy_script_count": 13,
+  "legacy_all_returned_zero": true,
+  "legacy_results_json": "final-root-regressions.json",
+  "preflight_returncode": 0,
+  "build_returncode": 0,
+  "source_matches_staging": true,
+  "static_checks_json": "static-checks.json",
+  "dependency_closure_json": "dll-closure-build-E.json",
+  "password_policy_unchanged_json": "password-policy-unchanged.json",
+  "original_v6_git_status_clean": true,
+  "all_raw_suite_logs_gitignored": true,
+  "integration_scope": "owned offscreen profiles; no real settings, registry, startup tasks or user service control",
+  "exclusions": [
+    "password redaction or encrypted QSettings",
+    "original review section IV expansion work"
+  ],
+  "public_browser_artifacts_json": "v7-browser-artifacts.json"
+}

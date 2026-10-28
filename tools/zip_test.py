@@ -20,6 +20,9 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 FAILS = []
 
 BOOT = """
@@ -28,6 +31,9 @@ sys.path.insert(0, r'{root}')
 import lanshare as j
 s = j.FileSharer()
 ok, res = s.start(path=r'{share}', port={port}, password=None, admin_password=None)
+if not ok:
+    print("FAILED", res, flush=True)
+    raise SystemExit(2)
 print('READY' if ok else 'FAILED', flush=True)
 while True:
     time.sleep(1)
@@ -78,7 +84,7 @@ def check(label, ok, detail=""):
 
 def main():
     port = 6263
-    tmp = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-zip-"))
+    tmp = Path(TEST_ENV.temporary_dir(prefix="lan6-zip-"))
     share = tmp / "share"
     (share / "sub").mkdir(parents=True)
     (share / "a.txt").write_text("hello " * 2000, encoding="utf-8")
@@ -91,7 +97,7 @@ def main():
     # 记下测试前系统临时目录里已有的 zip，后面用来证明"没新增临时文件"
     zip_before = set(Path(tempfile.gettempdir()).glob("*.zip"))
     try:
-        if not wait(port):
+        if not TEST_ENV.wait_server(child, port, share):
             print("服务没起来：")
             child.kill()
             print(child.stdout.read().decode("utf-8", "replace"))
@@ -190,7 +196,7 @@ def main():
             child.wait(5)
         except subprocess.TimeoutExpired:
             child.kill()
-        shutil.rmtree(tmp, ignore_errors=True)
+        TEST_ENV.remove_test_dir(tmp)
 
     print("\n结果:", "全部通过 ✓" if not FAILS else "失败 %d 项" % len(FAILS))
     for f in FAILS:

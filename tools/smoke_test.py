@@ -23,6 +23,9 @@ import urllib.parse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent      # 第六版/
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 ADMIN_PW = "smoke-admin"
 COOKIE = {}
 FAILS = []
@@ -33,6 +36,9 @@ sys.path.insert(0, r'{root}')
 import lanshare as j
 s = j.FileSharer()
 ok, res = s.start(path=r'{share}', port={port}, password=None, admin_password={pw!r})
+if not ok:
+    print("FAILED", res, flush=True)
+    raise SystemExit(2)
 print('READY' if ok else 'FAILED: %s' % (res,), flush=True)
 while True:
     time.sleep(1)
@@ -224,8 +230,9 @@ def main():
     ap.add_argument("--port", type=int, default=6199)
     ap.add_argument("--keep", action="store_true", help="保留临时目录，方便排查")
     args = ap.parse_args()
+    TEST_ENV.keep = args.keep
 
-    tmp = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-smoke-"))
+    tmp = Path(TEST_ENV.temporary_dir(prefix="lan6-smoke-"))
     share = tmp / "share"
     share.mkdir()
     (share / "keep.txt").write_text("keep", encoding="utf-8")
@@ -239,7 +246,7 @@ def main():
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                              cwd=str(ROOT))
     try:
-        if not wait_port(args.port):
+        if not TEST_ENV.wait_server(child, args.port, share):
             print("服务没起来，输出如下：")
             child.kill()
             print(child.stdout.read().decode("utf-8", "replace"))
@@ -252,7 +259,7 @@ def main():
         except subprocess.TimeoutExpired:
             child.kill()
         if not args.keep:
-            shutil.rmtree(tmp, ignore_errors=True)
+            TEST_ENV.remove_test_dir(tmp)
 
     print("\n结果:", "全部通过 ✓" if not FAILS else "失败 %d 项" % len(FAILS))
     for f in FAILS:

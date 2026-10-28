@@ -26,36 +26,12 @@ class FsOpsMixin:
     """本机文件操作：打开、删除、改名、新建目录。"""
 
     def open_file(self, filename, current_path):
-        try:
-            filename = urllib.parse.unquote(filename)
-            current_path = urllib.parse.unquote(current_path)
-            file_path = (Path(current_path) / filename).resolve()
-            if not is_path_within(file_path, self.shared_path):
-                self.send_error(403, "Access denied")
-                return
-            if not file_path.exists() or not file_path.is_file():
-                self.send_error(404, "File not found")
-                return
+        self.api_open_retired()
 
-            cache_key = str(file_path)
-            current_time = time.time()
-            with type(self)._open_lock:
-                if cache_key in type(self)._open_cache:
-                    if current_time - type(self)._open_cache[cache_key] < 1.5:
-                        self.send_json_response({'success': True})
-                        return
-                type(self)._open_cache[cache_key] = current_time
-
-            system = platform.system()
-            if system == "Windows":
-                os.startfile(str(file_path))
-            elif system == "Darwin":
-                subprocess.Popen(["open", str(file_path)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            else:
-                subprocess.Popen(["xdg-open", str(file_path)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
-            self.send_json_response({'success': True})
-        except Exception:
-            self.send_json_response({'success': False}, 500)
+    def api_open_retired(self):
+        self.send_api_error(
+            "此接口已停用：浏览器不能在共享主机上启动文件，请下载或使用浏览器预览。", 410
+        )
 
     def delete_file(self, filename, current_path):
         try:
@@ -175,6 +151,36 @@ class FsOpsMixin:
                 merged.setdefault(key, []).extend(vals)
         return merged
 
+    def _copy_shared_entry(self, source, target, shared, created):
+        source = checked_shared_path(source, shared)
+        target = checked_shared_path(target, shared, allow_missing=True)
+        if source.is_dir():
+            target.mkdir()
+            created.append(target)
+            for child in source.iterdir():
+                self._copy_shared_entry(child, target / child.name, shared, created)
+        elif source.is_file():
+            with target.open('xb') as output:
+                created.append(target)
+                source = checked_shared_path(source, shared)
+                with source.open('rb') as input_file:
+                    shutil.copyfileobj(input_file, output, 1024 * 1024)
+        else:
+            raise PermissionError('Unsupported file entry')
+        checked_shared_path(source, shared)
+        shutil.copystat(source, target, follow_symlinks=False)
+
+    def _remove_partial_copy(self, created, shared):
+        for path in reversed(created):
+            try:
+                path = checked_shared_path(path, shared)
+                if path.is_dir():
+                    path.rmdir()
+                else:
+                    path.unlink()
+            except OSError:
+                pass
+
     def _relocate(self, copy=False):
         """把选中的若干项移动/复制到 dst 指定的子目录（相对当前目录或共享根）。
 
@@ -187,9 +193,11 @@ class FsOpsMixin:
             def one(key, default=''):
                 return (params.get(key) or [default])[0]
 
-            base = Path(urllib.parse.unquote(one('path', self.shared_path))).resolve()
             shared = Path(self.shared_path).resolve()
-            if not is_path_within(base, shared) or not base.is_dir():
+            base = checked_shared_path(
+                Path(urllib.parse.unquote(one('path', self.shared_path))), shared
+            )
+            if not base.is_dir():
                 self.send_error(403, "Access denied")
                 return
 
@@ -199,10 +207,9 @@ class FsOpsMixin:
                 self.send_api_error("目标路径不能包含 ..", 400)
                 return
             dst_rel = sanitize_relative_path(raw_dst)
-            dest_dir = (base / dst_rel).resolve() if dst_rel else base
-            if not is_path_within(dest_dir, shared):
-                self.send_api_error("目标目录越权", 403)
-                return
+            dest_dir = checked_shared_path(
+                base / dst_rel if dst_rel else base, shared, allow_missing=True
+            )
             # 目标不存在就建出来（界面上写的是"会自动创建"）
             if not dest_dir.exists():
                 try:
@@ -227,9 +234,13 @@ class FsOpsMixin:
                 name = sanitize_relative_path(urllib.parse.unquote(raw))
                 if not name:
                     continue
-                src = (base / name).resolve()
-                if not is_path_within(src, shared) or not src.exists():
-                    skipped.append({'name': name, 'reason': 'not found'})
+                try:
+                    src = checked_shared_path(base / name, shared)
+                    # Validate descendants before rename/copy can hide a junction.
+                    for _entry in iter_shared_tree(src, shared):
+                        pass
+                except (OSError, ValueError) as e:
+                    skipped.append({'name': name, 'reason': str(e)})
                     continue
                 if src == dest_dir or src.parent == dest_dir:
                     skipped.append({'name': name, 'reason': 'same dir'})
@@ -243,16 +254,16 @@ class FsOpsMixin:
                 if target is None:
                     skipped.append({'name': name, 'reason': 'no free name'})
                     continue
+                created = []
                 try:
                     if copy:
-                        if src.is_dir():
-                            shutil.copytree(src, target)
-                        else:
-                            shutil.copy2(src, target)
+                        self._copy_shared_entry(src, target, shared, created)
                     else:
+                        checked_shared_path(target, shared, allow_missing=True)
                         shutil.move(str(src), str(target))
                     moved.append(str(target.relative_to(shared)))
                 except (OSError, shutil.Error) as e:
+                    self._remove_partial_copy(created, shared)
                     skipped.append({'name': name, 'reason': str(e)})
 
             self.send_json_response({
@@ -262,6 +273,8 @@ class FsOpsMixin:
                 'copy': bool(copy),
             })
 
+        except PermissionError:
+            self.send_api_error("路径越权或包含链接，操作已拒绝", 403)
         except Exception as e:
             print(f"[HTTP] 移动/复制失败: {e}")
             self.send_api_error("Move/Copy failed", 500)

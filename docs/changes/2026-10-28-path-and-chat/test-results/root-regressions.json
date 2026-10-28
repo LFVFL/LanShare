@@ -1,0 +1,762 @@
+{
+  "timestamp": "2026-10-28T02:39:35.470413+00:00",
+  "root": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248",
+  "executable": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+  "expectedMethods": 57,
+  "scope": "Four independent Python processes; imported existing unittest suites; no legacy __main__ writers.",
+  "sourceHashesBefore": {
+    "lanshare.py": "224159dc0156aee3b1c7c1bc374a9f2e3df5f7c3fd1456f3b4d4a2600dc2adcb",
+    "server\\__init__.py": "0e4d945ef58b398d587c334595cb652dd24b61a353954a1f290e81e666e17f24",
+    "server\\archive.py": "d7a58ef909ed34787d0e01fd92ce005960ff56f1f269a916b09f8926f646dd30",
+    "server\\auth.py": "04d143c91c0e036917937841e1f639c81255cc0cbf5c5e995a65d9770057e221",
+    "server\\chat_api.py": "1c996470a5720c15d18bc5dbfff5085ec524589ced4b7d94868abbd3e6004dd6",
+    "server\\chat_media.py": "20c5dc216b978bd6a022f5aa65b04045d4a5f749390e0ad6493652a5375064a3",
+    "server\\chat_store.py": "1dbc86fcbb20a163b7b8167e6b922df1704710f9edd4b25fbec5fee1cf3983e5",
+    "server\\config.py": "f3829acb6b856e9789ee07b7cf0de6fcc2dfe6daefbf9d85c4d9acf38df05c2e",
+    "server\\fs_ops.py": "d432ca336da775fbce177d7a56738332a127ffd114a710d8334817d19f2f4c10",
+    "server\\handler.py": "cf429999e54cd4cd47be27ffc8ed555aa193c94e250334fe63f1d9a93a9708e6",
+    "server\\http_util.py": "e707ee3731a8944983bcbb97b2f0c67195d4b4a39473abc0ea1fb3dd473f8b6c",
+    "server\\listing.py": "8c0083078ddd7f38b79b151c91a264d4e91ceade2d6e4d621c28b8dcda8280c2",
+    "server\\netinfo.py": "db5e7c4e8f417c6c00f3168a378a25d89156bdf6ffd7381d314b8da889eab8e5",
+    "server\\pages.py": "a7d32f75bf0366b9ad4c8719fffd8f60b376d2a9618df8cbf4d382bb72ee70d4",
+    "server\\paths.py": "6ad2bdd4eab0a11e3967916656ae1a4d7a348eb5ad1aaeb98abf65012efcc838",
+    "server\\routes.py": "c8d101f994fc612c4a053c2c93298e6ea5897d1ab8fac781900e19c30f9594d3",
+    "server\\runner.py": "790a98ab831c64fef8c90a5820314665af29a0b3d36c3ba5ffe918fb16ea7e6c",
+    "server\\storage.py": "3c290859a7333b79b18f6db6d817f54d1056caf36e2206748a22a16ea7dccdc9",
+    "server\\transfer.py": "efa9bf7f6f14cebe318c593ed7942e7c11a51ad9ccfd1d79a667733391794f47",
+    "tools\\build_exe.py": "f0ac01a5df94f4a07581c2a2c46ea8ecce256f3881c50075a3b307ba605da12f",
+    "tools\\test_support.py": "3bf8fc24fdaa5e0bb43a09d9701342d634b44431082fafd03765d389224caab8",
+    "tools\\v7_assets_test.py": "451330d4db4ef5decc8b8ca5a448d5f75854cdd87537d84a36397f0ae5543bd0",
+    "tools\\v7_build_test.py": "7808b4a12a851eb5e4f513f3b61192f7a4ca99b6de6f4325777ec1558b42e47b",
+    "tools\\v7_chat_test.py": "546d8082d4e6372c622df7f3d835dd0f465835d66bc6a084c939e35ef4fb2bac",
+    "tools\\v7_files_test.py": "4b3eada960f03241a14adbd9bb13d127cd58c5f61b7236a27969e4ca5225d44a",
+    "tools\\windows_job.py": "4f7de6d1fb2ad1188c83de01fce8586b13f525d9ebe5238ffba689a370f94038",
+    "ui\\__init__.py": "92afe684d28b24e681c7b71ddcfb9bcf683917904f82a66b9f09db0bf96c8d9d",
+    "ui\\context_menu.py": "4b1e4a91a5ccfb0b464c20ae669da29da3dc14695133d688cb13559c57ac740d",
+    "ui\\icon.py": "6e7506ebbcd1d61256a1a6354a0636239f2f34fcd850c6f464a9c3848d21acd5",
+    "ui\\main_window.py": "bb0637e29f8957b1b654ab152bbefe652574d45382bab6cf6f1e273430b16bf4",
+    "ui\\qr.py": "3615eb18a0f92e45466f3e1b7edcd57462f1f05c73aac6777e375569353ed3ac",
+    "ui\\single_instance.py": "b476caff6040a0010c7d4afceadc7ca51621f19da784725b7bf8dac65501cfac",
+    "ui\\style.py": "090c4e38670a4bd903fccde70a6bac4f4b8ec0bd556c003501b78fa9529b37a4",
+    "ui\\widgets.py": "a1967a8362b2e6f86af6c9c1555d9b28bbfd5442993212bfe0821943262d063d",
+    "web\\app.css": "ea5e9c242863086205e7e0032346424aa3c33f2d2b15495bf8a5b2135dccf93d",
+    "web\\files-search.css": "624f41df022808ae35423b5b80c0a18d73f46af78f86b1645d924552890a5c20",
+    "web\\js\\00-core.js": "584ea38c9afcd79e4ef23be82586d1a0c575e0bcb3a631faba5d90dd8a1d02cd",
+    "web\\js\\10-icons.js": "d7aaef88218be7629ec5fc7a244512978c26e4b3a2ffd67b8a1aadced8fb46f8",
+    "web\\js\\20-appearance.js": "6e265f770804c056ddd06419832be4abe0a8354edd1a88ec5587a39b55046d8e",
+    "web\\js\\30-ui.js": "d206190b23985de51109a9751f9ffc3e7963b4febe5ffdf05e2377a3480feddf",
+    "web\\js\\40-api.js": "4d2354f221a4650914fc667cee486dbb6003318761b154e9720b11cd97a74ed9",
+    "web\\js\\50-files.js": "006edba49063e0154847c164a297ed85bf1776e1e69ad3dbeb7e6fb3be45eb0a",
+    "web\\js\\60-upload.js": "eb28810b0ac42829317f5cf39f147f2b14e9371309868fb59e25595ba052b869",
+    "web\\js\\70-lightbox.js": "acee4e00c07cf3c72723b783f02e2cc136cde1b581896521f11fb67b1b5432ce",
+    "web\\js\\72-files-page.js": "e89dfb7ae4afd34241ea4f4b3413a3927086596c7505657dbb37ed5284b9f1b7",
+    "web\\js\\80-chat-list.js": "564f6f96c3cbbc33a8297c3cf8e22eb811be04e60b86842e59ee7da5176a229f",
+    "web\\js\\85-chat-room.js": "10e39fd7fa39bc05dcbef8203b47affba645916d601ee4dd0ce458df9c56bb9e",
+    "web\\js\\88-login.js": "2455268268926ffb58fe4de7c6d59821e93ce605edaf45985c6aa426c7788bc4",
+    "web\\js\\90-boot.js": "fd2f3603efb7395b925a5460b8cd8da5e7942ca820a3532dc7ae567ca058faef",
+    "web\\pages\\chat_list.html": "221bd39d23b0511f893b56cc2e69f7c3a88d5a538ae3b31ff9e7efa131d890e7",
+    "web\\pages\\chat_room.html": "6288f6996e6ff038bf157c67dc4104168521bc655c00f3ba3c75d0558e6f1ae7",
+    "web\\pages\\files.html": "6225bb5d5a855f3167d4c1997d7fae725c5106ab2a3854e68f4639049b4f9d6b",
+    "web\\pages\\layout.html": "380930e14d342f9e8d2d1874e17901ebc0d9e4262baba4d7e2cafa0559b4d1ec",
+    "web\\pages\\login.html": "7b029b0dbaf3ddaa1911633d8282c2d7894845b15196f2e41846b5bf9ba1c7dc",
+    "web\\theme-boot.js": "59e15fbaa241aba69d9d4c32554c94ba7abfe0ab498a89365f1d9a771aba05eb",
+    "web\\tokens.css": "81b58a68c86a32097413a034d6afbb4020114fedb28631340769447eb930a311",
+    "webassets.py": "545f4cf7117f5feb26a3b5533ffe2cb76b2afd15cb6edeedb0d9b6201058286d"
+  },
+  "historicalEvidenceHashesBefore": {
+    "docs\\changes\\2026-10-27\\test-results\\assets.json": "f3b409a7b7b7607a2c467939ec84eae00d07407fe8e30e35200ec9ba883a0cb0",
+    "docs\\changes\\2026-10-27\\test-results\\assets.log": "ebe7fddd5272577112133b762502d95ef68076a505d57f6cade0bd917900feb8",
+    "docs\\changes\\2026-10-27\\test-results\\auth_matrix_test.log": "468f4905bb86a2c91786f6e30ac0ce70dbd346627652a63e2796625c5fded453",
+    "docs\\changes\\2026-10-27\\test-results\\backend-build-tools.json": "064b0a2f9573dfe5b3ab3ee0ffa55c3bb27c6861a239f033ff32fe505e43f034",
+    "docs\\changes\\2026-10-27\\test-results\\backend-build-tools.log": "2ad122edc74ea2d9f8fc7d54972b4eb6983be6232fd21b5e665690294c08a4ab",
+    "docs\\changes\\2026-10-27\\test-results\\build-environment.json": "711d2073e192ae057d478d1f1a1db96a08c37ca84c3feb9d3f9708afe2457958",
+    "docs\\changes\\2026-10-27\\test-results\\build-source-manifest.json": "bc17139c03f6390269d19134674ececb8c9ea7f52f51ac920f5fff89a4a69166",
+    "docs\\changes\\2026-10-27\\test-results\\console-runtime.log": "2dc4f94b624d53f9587d8844a599344f61eeefbe41bc5c3e5c4e5de7a347aa09",
+    "docs\\changes\\2026-10-27\\test-results\\desktop-lifecycle-e-build-python.log": "a88a7122f9b8d27ccb36913519f25a23feca8f998e022949ee611b3f6944d740",
+    "docs\\changes\\2026-10-27\\test-results\\desktop_test.log": "813a0f7d3f1e469e3ad7ae8981cbda24c689b5a3e3a97349c4414a508d705660",
+    "docs\\changes\\2026-10-27\\test-results\\dll-closure-build-E.json": "277c8e33a2f12ce261c1b3c9967401fb7c51e85ecd7a0af4c2b6c7e307aea525",
+    "docs\\changes\\2026-10-27\\test-results\\exe-verification-final.log": "6a2a5df9db066c97c41a5104cca63e281c9791509fd54e91cde8e4215a0fe0ab",
+    "docs\\changes\\2026-10-27\\test-results\\exe-verification.json": "ec26b4738346a96bd94cf09a52dccb54eee8688a4dc3dc99683cf8ede768877b",
+    "docs\\changes\\2026-10-27\\test-results\\exe-verification.log": "9ade227dd446929dfc7842f32f308004575d7d831e1e74ed7a49760cac455d49",
+    "docs\\changes\\2026-10-27\\test-results\\files-frontend.json": "903c6704d015d5a4c71fa321f2c5f7f14bf03db0fe9858c9545956b1aa8e4b1b",
+    "docs\\changes\\2026-10-27\\test-results\\files-frontend.log": "2fe95bded4dafbc839d43caf6bb059e6edb77ba89b2476a7dccc12c2d5a9c055",
+    "docs\\changes\\2026-10-27\\test-results\\files-http.json": "19d49884f4a3d2a8a82ba2106f34b9d2a4e9546a77841b9cebc42fdc3be139d9",
+    "docs\\changes\\2026-10-27\\test-results\\files-http.log": "b30ca6b72847c75d99bdd74c46d4ecb3829d2107a52c77373432eb8c4f1a2796",
+    "docs\\changes\\2026-10-27\\test-results\\final-auth_matrix_test.log": "b1db3b9c413c9195c05cc940f76ab2c699ede0d94e3a4ec40874d84ea99bb971",
+    "docs\\changes\\2026-10-27\\test-results\\final-build-clean.log": "2df4d405851fa0d41f39a78706525766c5296b8ef268c21bb021055b3578fdd9",
+    "docs\\changes\\2026-10-27\\test-results\\final-build-E.log": "ec07831e08f256ee607df5309bc71104e5d31f1ca249e22f030089d58f09155b",
+    "docs\\changes\\2026-10-27\\test-results\\final-build-release.log": "57a2202f8023133f2272174e378dcb6ed536dc1540f240084d150d3a9df79665",
+    "docs\\changes\\2026-10-27\\test-results\\final-build.log": "82383e6899ac007d6eef99b0279f000721fca9a4618192e6872a13f8b1cf5d50",
+    "docs\\changes\\2026-10-27\\test-results\\final-build_assets.log": "e343189222454c2c3905d228806847f53e908877817754e5261d58325fd968e5",
+    "docs\\changes\\2026-10-27\\test-results\\final-desktop_test.log": "378bbd5c483dc1c1777d882a364ed81b21f9314351a84bb7bd84dada0de60a9d",
+    "docs\\changes\\2026-10-27\\test-results\\final-exe-verification-delivered.log": "ab202e9b1cf53cd54d68934c7a0186261878a07f2b86e9783e6ab16b610fa56c",
+    "docs\\changes\\2026-10-27\\test-results\\final-exe-verification-release.log": "4042a8dbb12271259b577c52fb01766f398692dafe9ae66ef303efb8df24d165",
+    "docs\\changes\\2026-10-27\\test-results\\final-fsops_test.log": "d4ffa78602f9ba7158add5e414dcdca7652136d78204996b083604f4a8851cf4",
+    "docs\\changes\\2026-10-27\\test-results\\final-limits_test.log": "6b0ebc8a6693c8b72c3a535f877b3f925c01a39067e6980bd378c736caed8b68",
+    "docs\\changes\\2026-10-27\\test-results\\final-origin_test.log": "85edf1972a818fb5b19b5976dd60ca8b2bece61d37c3d50d7aec6c9c6e08d813",
+    "docs\\changes\\2026-10-27\\test-results\\final-paging_test.log": "6b08c586a61e8325974d0ae7ca3013d293d0611cbbc74133ea9272217af8c008",
+    "docs\\changes\\2026-10-27\\test-results\\final-preflight.log": "9706956a5ef44a6d07c78d575aed269af2fefc5218a5d4aa68231b262b24eff3",
+    "docs\\changes\\2026-10-27\\test-results\\final-protocol_test.log": "ffd01498f24fe5145ca6b9ba3e71bc2d3547adb737062567d850c0bb6b1a220a",
+    "docs\\changes\\2026-10-27\\test-results\\final-root-regressions.json": "3b4ecac148961330cbf7989af5a716e76d8c6f3aa3e81bb092df8436d61cc67c",
+    "docs\\changes\\2026-10-27\\test-results\\final-search_test.log": "f7e8409d929af8ac01ae98ce1f7b9f627282252780a14e771447a2c3a1abd13d",
+    "docs\\changes\\2026-10-27\\test-results\\final-share_switch_test.log": "7fc6bed9b5adea4bad1a4a41effbae9ce1864e1c519ae8d6f0e1da090a544dc0",
+    "docs\\changes\\2026-10-27\\test-results\\final-smoke_test.log": "d060b87a9713832ba43e6351dd68877247e98bedf154fa10742810fc6d844009",
+    "docs\\changes\\2026-10-27\\test-results\\final-sse_test.log": "8e5db3e5794860f905fa409b0fa47767f8a9c10f47489e9cd57adb5d356a5f74",
+    "docs\\changes\\2026-10-27\\test-results\\final-suite-results.json": "9b66e262bd3815cffdbfd3a616e61c3d05f75f905db171b731edb25fbc8e2028",
+    "docs\\changes\\2026-10-27\\test-results\\final-thumb_test.log": "78f1eb1507e5ed3ad44c9b45aa678d8293bf663443f35c47a6ef837639b0fb99",
+    "docs\\changes\\2026-10-27\\test-results\\final-v7_build_test.log": "d66cdc929c3124c16d699cd78441deeda86add6c63d3079ae9efab08c5310d18",
+    "docs\\changes\\2026-10-27\\test-results\\final-zip_test.log": "f29343f6c6d6768fc0aeb318ce9e62ddecc177dee43753372ca1f90bff7279e1",
+    "docs\\changes\\2026-10-27\\test-results\\fsops_test.log": "b6e9aefcad13069e5277309b7f96249c4792a79e0deee90cab0c27ac32432677",
+    "docs\\changes\\2026-10-27\\test-results\\legacy-results.json": "776065a17c96878856058347383575e8fedbd6395816bb9e9c9594b2c9c514dc",
+    "docs\\changes\\2026-10-27\\test-results\\limits_test.log": "a39f67e5f8ae6b8e9ec46776924d1e571ab8d6bf80aa52fda7ebe54ef7e43262",
+    "docs\\changes\\2026-10-27\\test-results\\origin_test.log": "511e3fa4cbd8fe73ba9fbd70d2cacf71f13319adee02ce38831af67a803b3125",
+    "docs\\changes\\2026-10-27\\test-results\\packaging-dependencies.json": "277c8e33a2f12ce261c1b3c9967401fb7c51e85ecd7a0af4c2b6c7e307aea525",
+    "docs\\changes\\2026-10-27\\test-results\\paging_test.log": "098a3a1366bd9bc6cd17da6de2e7352a3309456ce450d262378dd2ec43f4bb41",
+    "docs\\changes\\2026-10-27\\test-results\\password-policy-unchanged.json": "47c3d74a1c2fd74c936cecb72981bd29977df9b966dcfdc305bec6de4231fa2d",
+    "docs\\changes\\2026-10-27\\test-results\\protocol_test.log": "553cdbd5242e3abde69445672c2ebacf9d934c8a48b1f3e949da2c74d9690de2",
+    "docs\\changes\\2026-10-27\\test-results\\release-artifact.json": "3dee5c7ec27cfd005ceac0a0a7eac9d6b5a6d669a1a283032399f39fe8b865ef",
+    "docs\\changes\\2026-10-27\\test-results\\search_test.log": "bd2ee47fdedc89717883d217fa3d0c80145012311531a9110e8d20473d0b9545",
+    "docs\\changes\\2026-10-27\\test-results\\security-build-venv.json": "b34fb40341ca2d52ea19209882a51f6f6ee4c36e7cee0b42a3e4e4459b557365",
+    "docs\\changes\\2026-10-27\\test-results\\security-build-venv.log": "80c17ca7d36d10b0622073d2e42c582ff5147ce40776d45965672b1e3300a81a",
+    "docs\\changes\\2026-10-27\\test-results\\share_switch_test.log": "fcec5796de4c5ee4eaf95474906a494805e510e1c3f913d64b7ab81df9c68b25",
+    "docs\\changes\\2026-10-27\\test-results\\smoke_test.log": "ed6f78ed7b678d6e37de81dd46851a8c7dc731280f236d294c12552548facf91",
+    "docs\\changes\\2026-10-27\\test-results\\sse_test.log": "beba7657e618186fd96d49c907652b98185650304accbbdcfc9dc7e9ca98fc1c",
+    "docs\\changes\\2026-10-27\\test-results\\static-checks.json": "215ff59840bef40117bb8373b3781ca0f66d4d477e8b1d4a305772be6e1cda4f",
+    "docs\\changes\\2026-10-27\\test-results\\thumb_test.log": "2a2d629aa8101841884ffd6d340da7cdc4aff5590e3fc71e4785fb9fcbd12262",
+    "docs\\changes\\2026-10-27\\test-results\\v7-browser-artifacts.json": "1f83a2944793ed503abbb704d40126cdffed567e131586c9e924979d551cab2c",
+    "docs\\changes\\2026-10-27\\test-results\\v7-browser-build-python.log": "c07da7a95bbc24fa9e206131e89eeec37cd5ed734ffcd1e309de0dff3a4321bc",
+    "docs\\changes\\2026-10-27\\test-results\\v7-browser-large-image-evidence.json": "9772f131fbf894c55dbe1cab9a838597a757cc0b20dcb69b27408c24bb8e04f1",
+    "docs\\changes\\2026-10-27\\test-results\\v7-browser-test.log": "821ee0832b708d9d6caf294338e17433aaa02e8ce6557abb6ec524f082b87ecc",
+    "docs\\changes\\2026-10-27\\test-results\\v7-chat-build-python.log": "8d1c505e78ec7bbc79ea59df5031d1cdef115dbeb2c69720c09ef497879936d4",
+    "docs\\changes\\2026-10-27\\test-results\\v7-chat-frontend-final.log": "a1922b034a233aab15a34340419ce230e1fcf99a312a033b8995b587d95311ea",
+    "docs\\changes\\2026-10-27\\test-results\\v7-optional-codecs-system-python.log": "efe069b682103516b6b4be3a1393c974727fab2ba8ab691f5d2dc760e0f02f4d",
+    "docs\\changes\\2026-10-27\\test-results\\v7-pdf-browser-evidence.json": "53d1464abf2dee28d948aaf139d1fb90764bb2ed59d035f065951b280f7ee043",
+    "docs\\changes\\2026-10-27\\test-results\\v7-pdf-inspection.log": "18a7bf84cbdec3dad210f4ff20364e01e931c2b21fdf1da16c4c78d27672138d",
+    "docs\\changes\\2026-10-27\\test-results\\v7-preview-initial-oopif.json": "d5d6fcda9507fde644c6dd5cbffb9c551ffd3d83ca05933004f32df2af87cb74",
+    "docs\\changes\\2026-10-27\\test-results\\v7-preview-initial-test.log": "85661ccec0576c6fe68f5f358c00dc7f8eae84787339bef22e6d80d14d7a67c4",
+    "docs\\changes\\2026-10-27\\test-results\\zip_test.log": "8cbb71be7ae98ae823b580f5b1cc66cef18f0a654ddd0a5a1804f0a1ac8dd32f",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\build-run.log": "6c46d23ec044fc4386a74d1ce146c0ae00003f5a96d268de0efe95c904114c92",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\build-safety.json": "34340b1296fe5a71ee4ee9d512379d04f15fb608908aa16abae3d9aaafd136b5",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\build-safety.log": "161dc22d02e7360d4f2cb5672da6dac25f421322d0980ec0d66bd53dc3b52102",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\build-source-manifest.json": "4d9c870256aa8f6761b5a12946fa2469e372e8c9f975a9053ea37cde0abf3b94",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\build.json": "4ee0be0ee0835958186f9a96f7d78953fa601854b532489d38d99aa2c1a2af9f",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\diagnosis.json": "995cf80074eb0331fa8af75d9984c80ffad334424ff70655f2f8dffdcb28c75c",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\exe-verification.json": "ce0ab23243c9545465eb5654099abb196916849faf8c9e081c798db9fcc79220",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\exe-verification.log": "e391d359aa49f370ed4f0fd825fef45970c7dae2e7a0736e2b0aa66dcfb8ee29",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\final-build-run.log": "52f76bfeecf0c1c81ff04af219c8ad0d353268fc4396d958de38c6502d72442a",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\initial-candidate\\build-run.log": "6c46d23ec044fc4386a74d1ce146c0ae00003f5a96d268de0efe95c904114c92",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\initial-candidate\\build.json": "537bea166c8c91d4d0123231a52d2b32c9e8ac263e25d05d01bc4e20c8acd5b0",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\initial-candidate\\exe-verification.json": "5cd8f7c29a83626954e65e066b06fc28af0c7f880aa7aa42a16e02a55b290353",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\initial-candidate\\exe-verification.log": "61001a918e5de5530ef650749df7a26acdcf1056502bbd993638342277a8bd03",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\initial-candidate\\native-dependencies.json": "7aac3a04b9941beacb887d05d2ad20364efb29e68d2e78aa0c70c774a9e9fb04",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\initial-candidate\\preflight.log": "dcc522d44120dda89c8f5806bb51026c2477c8e58466b97fdca19caa3b16a03b",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\initial-candidate\\startup-temp.json": "8a1256b24deddaca9cfc25a458f998a522b33aafd8031a703914d082fe06a617",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\initial-candidate\\startup-temp.log": "38d8cc399051129875760eedf37f781a28bacb7c05dab09b2ce525e38922667b",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\native-dependencies.json": "4e01a12dd9df20da58274f37dd834277eeeea4455fc403b2de52a3a905bc5f30",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\preflight.log": "dcc522d44120dda89c8f5806bb51026c2477c8e58466b97fdca19caa3b16a03b",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\release-artifact.json": "f1df2bd7ce1144e348edc2edaf008cb280576476a0b73c0bf10cb53d2cfd4e3f",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\startup-temp-initial-guard-refusal.log": "96e2dc418e52432bd161b17d624a8f6ccfe52a40f78c68037ca6533566cad7ca",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\startup-temp.json": "50e2529b3a74633a9e72872b38ecd1c50b09e503983f2a212ebe5bdee4cc22e8",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\startup-temp.log": "05d567c7623c08f45932726a48c5aa24eae23ddd71a52dacffd50f4beaa5ea51",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\static-checks.json": "06738417b71b76f0e1b5532041cafdb58495122272587280b4e73d4c86f4105f",
+    "docs\\changes\\2026-10-28-startup-fix\\test-results\\verification.json": "e1230bfd4541b3404a42d84defd1c853ffe4dfea27269d7b26e5aad8254f4a8c"
+  },
+  "suites": [
+    {
+      "suite": "v7_chat_test",
+      "expectedMethods": 16,
+      "runtime": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+      "executable": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+      "virtualenv": true,
+      "timestamp": "2026-10-28T02:39:35.832209+00:00",
+      "isolationRoots": [
+        "C:\\Windows\\Temp\\lanshare-test-zgjrg783",
+        "C:\\Windows\\Temp\\lanshare-v7-chat-kgpjq5gm"
+      ],
+      "cases": [
+        {
+          "name": "v7_chat_test.ChatTest.test_01_import_has_no_data_side_effects",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_02_empty_room_live_first_message",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_03_mutations_replay_and_last_event_id",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_04_invalid_cursor_reset",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_05_default_rename_persistence_and_auth",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_06_text_whitespace_and_idempotent_retry",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_07_large_binary_original_preview_and_cancel",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_08_format_support_validation_and_session_binding",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_09_chunk_offset_and_resource_guards",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_10_twenty_mebibyte_original",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_11_prepared_images_survive_cleanup_then_cancel_removes_all",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_12_message_ownership_and_retry_lifecycle",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_13_expired_partial_upload_and_bad_path_tokens",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_14_decode_pixels_and_slots_temp_space_and_disk_guards",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_15_optional_heif_original_and_safe_preview",
+          "status": "passed"
+        },
+        {
+          "name": "v7_chat_test.ChatTest.test_16_optional_avif_original_and_safe_preview",
+          "status": "passed"
+        }
+      ],
+      "success": true,
+      "chatDataDirectory": "C:\\Windows\\TEMP\\lanshare-v7-chat-kgpjq5gm\\data",
+      "settingsProfile": "C:\\Windows\\Temp\\lanshare-test-zgjrg783",
+      "qtPlatform": "offscreen",
+      "discoveredMethods": 16,
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expectedFailures": 0,
+      "unexpectedSuccesses": 0,
+      "subtests": [],
+      "passed": 16,
+      "assetVersion": "98bfe0bd8e",
+      "cleanupVerified": true,
+      "durationSeconds": 4.359,
+      "sourceSha256": "546d8082d4e6372c622df7f3d835dd0f465835d66bc6a084c939e35ef4fb2bac",
+      "webassetsSha256": "545f4cf7117f5feb26a3b5533ffe2cb76b2afd15cb6edeedb0d9b6201058286d",
+      "exitCode": 0,
+      "log": "root-v7_chat_test.log",
+      "logSha256": "4358ed5228fbadb27d2c69bd06004683915915eecf1193494661812efdc2ec0b",
+      "report": "root-v7_chat_test.json",
+      "postExitCleanupVerified": true
+    },
+    {
+      "suite": "v7_files_test",
+      "expectedMethods": 9,
+      "runtime": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+      "executable": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+      "virtualenv": true,
+      "timestamp": "2026-10-28T02:39:40.760046+00:00",
+      "isolationRoots": [
+        "C:\\Windows\\Temp\\lanshare-test-mgh4bxp2"
+      ],
+      "cases": [
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_current_filter_finds_files_beyond_unfiltered_first_page",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_initial_page_embeds_400_with_complete_contract",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_invalid_scope_outside_root_and_old_root_do_not_leak",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_junction_is_hidden_and_never_descended",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_preview_metadata_agrees_with_file_types",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_result_scan_and_time_truncation_are_explicit",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_scopes_find_chinese_subfolders_and_skip_private_dependencies",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_url_query_first_page_and_followup_pages_use_same_filter",
+          "status": "passed"
+        }
+      ],
+      "success": true,
+      "chatDataDirectory": "C:\\Windows\\Temp\\lanshare-test-mgh4bxp2\\chat_data",
+      "settingsProfile": "C:\\Windows\\Temp\\lanshare-test-mgh4bxp2",
+      "qtPlatform": "offscreen",
+      "discoveredMethods": 9,
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expectedFailures": 0,
+      "unexpectedSuccesses": 0,
+      "subtests": [
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='name', order='asc')",
+          "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='name', order='desc')",
+          "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='size', order='asc')",
+          "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='size', order='desc')",
+          "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='mtime', order='asc')",
+          "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+          "status": "passed"
+        },
+        {
+          "name": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates (sort='mtime', order='desc')",
+          "parent": "v7_files_test.FilesHTTPTests.test_all_global_sort_pages_have_no_gaps_or_duplicates",
+          "status": "passed"
+        }
+      ],
+      "passed": 9,
+      "assetVersion": "98bfe0bd8e",
+      "cleanupVerified": true,
+      "durationSeconds": 111.437,
+      "sourceSha256": "4b3eada960f03241a14adbd9bb13d127cd58c5f61b7236a27969e4ca5225d44a",
+      "webassetsSha256": "545f4cf7117f5feb26a3b5533ffe2cb76b2afd15cb6edeedb0d9b6201058286d",
+      "exitCode": 0,
+      "log": "root-v7_files_test.log",
+      "logSha256": "33530bbbcf4b5c5897ac772863a365ac35cabf7eace249d3eb528b7a79137e0c",
+      "report": "root-v7_files_test.json",
+      "postExitCleanupVerified": true
+    },
+    {
+      "suite": "v7_assets_test",
+      "expectedMethods": 5,
+      "runtime": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+      "executable": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+      "virtualenv": true,
+      "timestamp": "2026-10-28T02:41:32.518427+00:00",
+      "isolationRoots": [
+        "C:\\Windows\\Temp\\lanshare-test-pwe60fkt"
+      ],
+      "cases": [
+        {
+          "name": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url",
+          "status": "passed"
+        },
+        {
+          "name": "v7_assets_test.AssetVersionTests.test_no_assets_uses_zero_version",
+          "status": "passed"
+        },
+        {
+          "name": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url",
+          "status": "passed"
+        },
+        {
+          "name": "v7_assets_test.AssetVersionTests.test_same_contents_and_missing_empty_attributes_are_stable",
+          "status": "passed"
+        },
+        {
+          "name": "v7_assets_test.AssetVersionTests.test_tags_and_lengths_separate_empty_bundles_and_boundaries",
+          "status": "passed"
+        }
+      ],
+      "success": true,
+      "chatDataDirectory": "C:\\Windows\\Temp\\lanshare-test-pwe60fkt\\chat_data",
+      "settingsProfile": "C:\\Windows\\Temp\\lanshare-test-pwe60fkt",
+      "qtPlatform": "offscreen",
+      "discoveredMethods": 5,
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expectedFailures": 0,
+      "unexpectedSuccesses": 0,
+      "subtests": [
+        {
+          "name": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url (bundle='CSS')",
+          "parent": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url",
+          "status": "passed"
+        },
+        {
+          "name": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url (bundle='JS')",
+          "parent": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url",
+          "status": "passed"
+        },
+        {
+          "name": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url (bundle='THEME_BOOT')",
+          "parent": "v7_assets_test.AssetVersionTests.test_core_css_and_theme_changes_still_invalidate_url",
+          "status": "passed"
+        },
+        {
+          "name": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url (bundle='JS_FILES')",
+          "parent": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url",
+          "status": "passed"
+        },
+        {
+          "name": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url (bundle='JS_CHAT')",
+          "parent": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url",
+          "status": "passed"
+        },
+        {
+          "name": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url (bundle='JS_LOGIN')",
+          "parent": "v7_assets_test.AssetVersionTests.test_optional_file_chat_login_bundle_changes_invalidate_url",
+          "status": "passed"
+        }
+      ],
+      "passed": 5,
+      "assetVersion": "98bfe0bd8e",
+      "cleanupVerified": true,
+      "durationSeconds": 0.078,
+      "sourceSha256": "451330d4db4ef5decc8b8ca5a448d5f75854cdd87537d84a36397f0ae5543bd0",
+      "webassetsSha256": "545f4cf7117f5feb26a3b5533ffe2cb76b2afd15cb6edeedb0d9b6201058286d",
+      "exitCode": 0,
+      "log": "root-v7_assets_test.log",
+      "logSha256": "5515886062c7aa22a326093226ade731aeb2248b75a804a2fa27e8f83ee6461c",
+      "report": "root-v7_assets_test.json",
+      "postExitCleanupVerified": true
+    },
+    {
+      "suite": "v7_build_test",
+      "expectedMethods": 27,
+      "runtime": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+      "executable": "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+      "virtualenv": true,
+      "timestamp": "2026-10-28T02:41:32.913642+00:00",
+      "isolationRoots": [
+        "C:\\Windows\\Temp\\lanshare-test-5vinaqob"
+      ],
+      "cases": [
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_archive_cannot_silently_omit_main_qt_dlls",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_build_environment_drops_external_python_qt_and_dll_paths",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_clean_source_regenerates_assets_before_snapshot",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_default_work_does_not_put_venv_in_windows_temp",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_delayed_qt_runtime_is_collected_from_the_selected_venv",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_environment_probe_ignores_parent_python_and_qt_vars",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_graceful_stop_uses_only_owned_profile_and_handle",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_not_a_venv_never_installs_packages",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_owned_container_creates_new_children_and_preserves_old_exe",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_packaging_command_keeps_portable_runtime_and_onefile_flags",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_preflight_reports_missing_pillow_as_required_not_optional",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_private_job_ends_only_its_owned_parent_and_child",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_runtime_directory_placeholder_is_not_expanded_while_building",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_smoke_overrides_only_child_localappdata_with_owned_profile",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_unmarked_existing_directory_refused_without_changes",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_venv_runtime_prefix_must_match_requested_directory",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_windows_directory_venv_is_rejected_before_install",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_wrong_ownership_marker_and_nonascii_refused",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_busy_port_smoke_aborts_without_touching_existing_service",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_cleanup_rejects_external_directory_and_preserves_sentinel",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_failed_child_readiness_never_contacts_any_http_server",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_gui_optional_none_cannot_fall_back_to_real_settings",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_owned_browser_profile_supplies_its_own_endpoint",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_ready_child_with_wrong_share_is_rejected",
+          "status": "passed"
+        }
+      ],
+      "success": true,
+      "chatDataDirectory": "C:\\Windows\\Temp\\lanshare-test-5vinaqob\\chat_data",
+      "settingsProfile": "C:\\Windows\\Temp\\lanshare-test-5vinaqob",
+      "qtPlatform": "offscreen",
+      "discoveredMethods": 27,
+      "tests": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expectedFailures": 0,
+      "unexpectedSuccesses": 0,
+      "subtests": [
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option (options=['pyi-runtime-tmpdir %LOCALAPPDATA%/LanShare/Temp'])",
+          "parent": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option (options=[])",
+          "parent": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option (options=['pyi-runtime-tmpdir C:/Users/builder/Temp'])",
+          "parent": "v7_build_test.BuildSafetyTests.test_archive_requires_literal_user_runtime_directory_option",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused (target='C:\\\\Windows\\\\Temp\\\\lanshare-test-5vinaqob\\\\build-test-s56_7tgw\\\\source')",
+          "parent": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused (target='C:\\\\Windows\\\\Temp\\\\lanshare-test-5vinaqob\\\\build-test-s56_7tgw')",
+          "parent": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused (target='C:\\\\Windows\\\\Temp\\\\lanshare-test-5vinaqob\\\\build-test-s56_7tgw\\\\source\\\\build')",
+          "parent": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused (target='C:\\\\')",
+          "parent": "v7_build_test.BuildSafetyTests.test_source_ancestors_children_and_volume_root_refused",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_venv_runtime_prefix_must_match_requested_directory (prefix='C:\\\\Windows\\\\Temp\\\\lanshare-test-5vinaqob\\\\build-test-865yoc5v\\\\venv')",
+          "parent": "v7_build_test.BuildSafetyTests.test_venv_runtime_prefix_must_match_requested_directory",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.BuildSafetyTests.test_venv_runtime_prefix_must_match_requested_directory (prefix='C:\\\\Windows\\\\Temp\\\\lanshare-test-5vinaqob\\\\build-test-865yoc5v\\\\elsewhere')",
+          "parent": "v7_build_test.BuildSafetyTests.test_venv_runtime_prefix_must_match_requested_directory",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='smoke_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='auth_matrix_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='protocol_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='search_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='fsops_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='zip_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='sse_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='thumb_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='origin_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='paging_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='share_switch_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='limits_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='preflight')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='desktop_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='ui_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='admin_flow_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='mobile_shot')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='screenshots')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='theme_flash_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        },
+        {
+          "name": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import (name='ui_detail_test')",
+          "parent": "v7_build_test.IsolationTests.test_legacy_tools_enable_isolation_before_app_import",
+          "status": "passed"
+        }
+      ],
+      "passed": 27,
+      "assetVersion": "98bfe0bd8e",
+      "cleanupVerified": true,
+      "durationSeconds": 2.031,
+      "sourceSha256": "7808b4a12a851eb5e4f513f3b61192f7a4ca99b6de6f4325777ec1558b42e47b",
+      "webassetsSha256": "545f4cf7117f5feb26a3b5533ffe2cb76b2afd15cb6edeedb0d9b6201058286d",
+      "exitCode": 0,
+      "log": "root-v7_build_test.log",
+      "logSha256": "967b6a773c07c9c27ba6ff4e7c6d20292d06bae937425a84aacbca6860b663a1",
+      "report": "root-v7_build_test.json",
+      "postExitCleanupVerified": true
+    }
+  ],
+  "sourcesUnchanged": true,
+  "historicalEvidenceUnchanged": true,
+  "historicalEvidenceFiles": 96,
+  "sourceFiles": 57,
+  "durationSeconds": 119.594,
+  "sourceChanges": {},
+  "historicalEvidenceChanges": {},
+  "tests": 57,
+  "passed": 57,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "expectedFailures": 0,
+  "unexpectedSuccesses": 0,
+  "success": true
+}

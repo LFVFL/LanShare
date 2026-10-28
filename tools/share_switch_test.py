@@ -14,6 +14,9 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 sys.path.insert(0, str(ROOT))
 
 import lanshare as j  # noqa: E402
@@ -39,8 +42,8 @@ def names(path="/api/list?path="):
 
 
 def main():
-    dir_a = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-sw-a-"))
-    dir_b = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-sw-b-"))
+    dir_a = Path(TEST_ENV.temporary_dir(prefix="lan6-sw-a-"))
+    dir_b = Path(TEST_ENV.temporary_dir(prefix="lan6-sw-b-"))
     (dir_a / "from-a.txt").write_text("A", encoding="utf-8")
     (dir_b / "from-b.txt").write_text("B", encoding="utf-8")
 
@@ -89,9 +92,9 @@ def main():
         st, got, _ = names()
         check("又看到 from-a.txt", "from-a.txt" in got, got)
     finally:
-        sharer.stop()
-        shutil.rmtree(dir_a, ignore_errors=True)
-        shutil.rmtree(dir_b, ignore_errors=True)
+        sharer.stop(wait=True, timeout=10)
+        TEST_ENV.remove_test_dir(dir_a)
+        TEST_ENV.remove_test_dir(dir_b)
 
     print("\n结果: 通过 %d 项" % len(PASSED))
     if FAILED:

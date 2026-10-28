@@ -1,0 +1,158 @@
+{
+  "schema": "lanshare.release-acceptance.v1",
+  "timestamp": "2026-10-28T15:00:01.780537+08:00",
+  "success": true,
+  "app_version": "7.0",
+  "asset_version": "01c9b74c9a",
+  "exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+  "sha256": "a7f64eca35d2a1257d2b2a5d4c2e5b63f0718aa3650b607f108168cabb220c25",
+  "size_bytes": 63929596,
+  "tests": 116,
+  "passed": 116,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "unique_method_suites": [
+    {
+      "report": "root-regressions.json",
+      "sha256": "b3b1ea4c26721c19541003541f81bb8111516ffc90b56ef710bcc311b7b61468",
+      "unique_methods": 57,
+      "passed": 57
+    },
+    {
+      "report": "files-frontend.json",
+      "sha256": "936e9fa32206ea9ea187f8c5620e02d339afa1939f1edc69e11e87168e238753",
+      "unique_methods": 22,
+      "passed": 22
+    },
+    {
+      "report": "chat-frontend.json",
+      "sha256": "0ad92ede0b9dc5b163bfb572b160f2bd8fb76eee0c51fbd225fe95b2d95f5c1d",
+      "unique_methods": 10,
+      "passed": 10
+    },
+    {
+      "report": "chat-layout.json",
+      "sha256": "ce4f2fa37b1a1b08113c9e122417071af2ecbeaa8dcdc7dfeb02f76a627cc422",
+      "unique_methods": 4,
+      "passed": 4
+    },
+    {
+      "report": "version.json",
+      "sha256": "0e9be531d6474d1162e1e1c48dc8388a3c37b059551fc242c18bc9b2e97602fe",
+      "unique_methods": 9,
+      "passed": 9
+    },
+    {
+      "report": "exe-verification.json",
+      "sha256": "c569f48e6a142ce2a75754ca9d3cf72fe3f8ce99c6b782a3f029e3b85fa4e0aa",
+      "unique_methods": 8,
+      "passed": 8
+    },
+    {
+      "report": "startup-temp-delivered.json",
+      "sha256": "87e81f983af18319fc0a9c6416014660fe9da10bb2e457a4bdc40569cd38a1b2",
+      "unique_methods": 6,
+      "passed": 6
+    }
+  ],
+  "count_policy": "116 unique methods from this release round. Startup candidate and delivered matrices use the same six methods and count once. Subtests, screenshots, individual checks, token launch and historical results are not extra methods.",
+  "startup": {
+    "candidate_matrix": "startup-temp-candidate.json",
+    "delivered_matrix": "startup-temp-delivered.json",
+    "launches_per_matrix": 8,
+    "original_locations_per_matrix": 1,
+    "owned_copies_per_matrix": 7,
+    "additional_delivered_token_launches": 1,
+    "exact_delivered_path_launches": 2,
+    "medium_same_user_non_elevated_at_ready": true,
+    "normal_exit_and_extraction_cleanup": true,
+    "delivery_file_and_parent_security_unchanged_after_startup": true
+  },
+  "checks": {
+    "frozen_source_files_unchanged": 90,
+    "runtime_files_match_build_snapshot": 29,
+    "native_payloads_unchanged_from_previous_audited_package": 119,
+    "python_ast_files": 64,
+    "python_ast_grammar": "3.8",
+    "javascript_syntax_files": 16,
+    "historical_raw_result_files_unchanged": 143,
+    "regression_fixture_roots_removed": 5,
+    "browser_functional_startup_and_token_fixtures_removed": true,
+    "v6_worktree_clean": true,
+    "git_diff_check": true,
+    "directory_permissions_modified": false,
+    "existing_user_processes_terminated": false,
+    "real_chat_or_settings_modified": false
+  },
+  "evidence": [
+    {
+      "file": "root-regressions.json",
+      "sha256": "b3b1ea4c26721c19541003541f81bb8111516ffc90b56ef710bcc311b7b61468"
+    },
+    {
+      "file": "files-frontend.json",
+      "sha256": "936e9fa32206ea9ea187f8c5620e02d339afa1939f1edc69e11e87168e238753"
+    },
+    {
+      "file": "chat-frontend.json",
+      "sha256": "0ad92ede0b9dc5b163bfb572b160f2bd8fb76eee0c51fbd225fe95b2d95f5c1d"
+    },
+    {
+      "file": "chat-layout.json",
+      "sha256": "ce4f2fa37b1a1b08113c9e122417071af2ecbeaa8dcdc7dfeb02f76a627cc422"
+    },
+    {
+      "file": "version.json",
+      "sha256": "0e9be531d6474d1162e1e1c48dc8388a3c37b059551fc242c18bc9b2e97602fe"
+    },
+    {
+      "file": "exe-verification.json",
+      "sha256": "c569f48e6a142ce2a75754ca9d3cf72fe3f8ce99c6b782a3f029e3b85fa4e0aa"
+    },
+    {
+      "file": "startup-temp-candidate.json",
+      "sha256": "4a7cd7d22663b636a09f955ee5311ae6a53e06eacb8513f1eda73d291301ba2e"
+    },
+    {
+      "file": "startup-temp-delivered.json",
+      "sha256": "87e81f983af18319fc0a9c6416014660fe9da10bb2e457a4bdc40569cd38a1b2"
+    },
+    {
+      "file": "delivered-token.json",
+      "sha256": "935d40bca287b9c4903a4a64c43b3a31a8c2cbc2d7bc6fbc93e2685f708682c3"
+    },
+    {
+      "file": "release-artifact.json",
+      "sha256": "96724795c090cbbffddd2b7fa211a75d9a7969ffae19a7c938b5a49a800aca23"
+    },
+    {
+      "file": "build.json",
+      "sha256": "32907ee5daf541cf074fc756fc169c9446168171af9436cb90f082493691727c"
+    },
+    {
+      "file": "build-source-manifest.json",
+      "sha256": "d0c43b177184041e91dd17501d97ff0b49d1a8a90ab5b8f01eea0dc3df99eafa"
+    },
+    {
+      "file": "native-dependencies.json",
+      "sha256": "5e055216196fc3a344bda9d86a976f0bce7c4d92bc278929b704c6fccd151560"
+    },
+    {
+      "file": "static-checks.json",
+      "sha256": "c8160bbb1a3c2512d23081f0d85586157dc32666144c232de7a9343876a1b0e9"
+    },
+    {
+      "file": "source-manifest.json",
+      "sha256": "58a4320703eb966ffbf7ba0fc71822966eda6cb0ac4cb2ef1d7532776c790ede"
+    }
+  ],
+  "publication_status": "Runtime acceptance only; actual GitHub publication is separately evidenced by github-release.json after success.",
+  "limitations": [
+    "Windows x64 / Python 3.12.1 environment. Python 3.8 AST parsing is syntax-only, not a Python 3.8 runtime test.",
+    "Browser coverage uses owned Chrome profiles and emulated desktop/mobile widths, not physical phone IMEs, Safari or every WebView/theme.",
+    "Controlled offscreen original-path launches use isolated data. No Explorer double-click acceptance with real user settings is claimed.",
+    "Unsigned executable; Windows reputation/antivirus behavior on other systems is not covered.",
+    "Password logging and plaintext settings are intentionally retained as requested."
+  ]
+}

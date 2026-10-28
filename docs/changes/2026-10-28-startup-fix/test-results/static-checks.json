@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-10-28T09:40:25.546839+08:00",
+  "python_ast_version": "3.8",
+  "python_files": 62,
+  "python_errors": [],
+  "python_note": "Syntax compatibility check only, not Python 3.8 runtime execution",
+  "node": "D:\\Program Files\\nodejs\\node.EXE",
+  "javascript_files": 16,
+  "javascript": [
+    {
+      "file": "web/js/00-core.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/10-icons.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/20-appearance.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/30-ui.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/40-api.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/50-files.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/60-upload.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/70-lightbox.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/72-files-page.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/80-chat-list.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/85-chat-room.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/88-login.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/js/90-boot.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "web/theme-boot.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "tools/v7_chat_frontend_test.js",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "file": "tools/v7_files_frontend_test.js",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "diff_check_returncode": 0,
+  "diff_check_output": "",
+  "v6_status_returncode": 0,
+  "v6_clean": true,
+  "no_staged_changes": true,
+  "success": true,
+  "final_diff_check_timestamp": "2026-10-28T09:48:27.711253+08:00",
+  "final_diff_check_returncode": 0
+}

@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-10-28T11:13:41.423179+08:00",
+  "method": "One isolated CreateProcessW CREATE_SUSPENDED launch; owned job assigned before ResumeThread; direct GetTokenInformation without injection",
+  "execution_context": "approved actual-user, Medium integrity, no administrator elevation",
+  "exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+  "exe_sha256": "023f3143d43733eeb7528be44703ee93dc5d2e185ef454dcc3ce8ed6ae0f9a24",
+  "cwd": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248",
+  "caller_integrity_rid": 8192,
+  "file_labels_before": [],
+  "fixture": "C:\\Windows\\Temp\\lanshare-token-delivered-_g0so5wp",
+  "fixture_labels": [],
+  "port": 54332,
+  "ready": true,
+  "resumed": true,
+  "scope": "Owned share, test profile, chat data, LOCALAPPDATA, TEMP/TMP, ephemeral port and hidden offscreen Qt. No existing service or real settings used.",
+  "limitations": [
+    "Controlled launch, not an Explorer double click or visible UI acceptance.",
+    "A separate startup-temp-delivered.json covers the broader final-path launch matrix."
+  ],
+  "pid": 24976,
+  "token_before_resume": {
+    "integrity_rid": 8192,
+    "integrity": "medium",
+    "same_user_as_caller": true
+  },
+  "tokens_at_ready": [
+    {
+      "pid": 24976,
+      "integrity_rid": 8192,
+      "integrity": "medium",
+      "same_user_as_caller": true
+    },
+    {
+      "pid": 26404,
+      "integrity_rid": 8192,
+      "integrity": "medium",
+      "same_user_as_caller": true
+    }
+  ],
+  "runtime_extractions_at_ready": [
+    "local\\LanShare\\Temp\\_MEI000061902"
+  ],
+  "exit_code_before_job_close": 0,
+  "force_closed_owned_job": false,
+  "final_exit_code": 0,
+  "remaining_extractions_before_fixture_cleanup": [],
+  "exe_hash_unchanged": true,
+  "file_security_unchanged": true,
+  "file_labels_after": [],
+  "listener_closed": true,
+  "fixture_removed": true,
+  "checks": {
+    "original_path_medium_before_resume": true,
+    "ready": true,
+    "all_owned_processes_medium_at_ready": true,
+    "all_owned_processes_same_user": true,
+    "normal_exit_zero": true,
+    "no_forced_job_cleanup": true,
+    "runtime_extraction_seen": true,
+    "runtime_extraction_cleaned_normally": true,
+    "listener_closed": true,
+    "exe_bytes_unchanged": true,
+    "exe_security_unchanged": true,
+    "fixture_removed": true
+  },
+  "success": true
+}

@@ -52,11 +52,9 @@ class HttpUtilMixin:
     """HTTP 基础：响应输出、页面渲染、静态资源、日志。"""
 
     def end_headers(self):
-        """所有响应统一补安全头（每个响应只补一次）"""
-        if not self._sec_headers_sent:
-            self._sec_headers_sent = True
-            for key, value in SECURITY_HEADERS:
-                self.send_header(key, value)
+        """每个响应都补安全头，不能沿用 HTTP 长连接的上一次响应状态。"""
+        for key, value in SECURITY_HEADERS:
+            self.send_header(key, value)
         super().end_headers()
 
     def version_string(self):
@@ -336,11 +334,22 @@ class HttpUtilMixin:
 
     def send_main_page(self):
         try:
-            listing = self.build_listing(self.current_path or self.shared_path)
+            listing = self.build_listing(
+                self.current_path or self.shared_path, limit=400,
+                sort=self.q('sort', 'name'), order=self.q('order', 'asc'),
+                query=self.q('q', ''),
+            )
 
             payload = {
                 'path': listing['path'],
+                'root': listing['root'],
                 'entries': listing['entries'],
+                'total': listing['total'],
+                'offset': listing['offset'],
+                'hasMore': listing['hasMore'],
+                'sort': listing['sort'],
+                'order': listing['order'],
+                'query': listing['query'],
             }
             mobile_actions = (
                 '<button class="btn btn--primary btn--icon" data-upload-pick type="button" '
@@ -349,7 +358,7 @@ class HttpUtilMixin:
             content = render_template(
                 webassets.FILES,
                 BREADCRUMB=listing['breadcrumb'],
-                FILES_JSON=json.dumps(payload, ensure_ascii=False),
+                FILES_JSON=safe_json(payload),
             )
             page = page_shell(
                 'files', '文件 · 局域网共享', self.host_header(), content,
@@ -381,7 +390,7 @@ class HttpUtilMixin:
 
         content = render_template(
             webassets.CHAT_LIST,
-            ROOMS_JSON=json.dumps({'rooms': rooms}, ensure_ascii=False),
+            ROOMS_JSON=safe_json({'rooms': rooms}),
         )
         page = page_shell(
             'chatlist', '聊天室', self.host_header(), content,
@@ -394,11 +403,11 @@ class HttpUtilMixin:
         if not room:
             self.send_error(404, "Room not found")
             return
-        room_json = json.dumps({
+        room_json = safe_json({
             'id': room_id,
             'name': room.get('name', room_id),
             'me': self.client_address[0],
-        }, ensure_ascii=False)
+        })
 
         content = render_template(
             webassets.CHAT_ROOM,

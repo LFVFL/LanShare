@@ -19,6 +19,9 @@ import zlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 FAILS = []
 
 BOOT = """
@@ -27,6 +30,9 @@ sys.path.insert(0, r'{root}')
 import lanshare as j
 s = j.FileSharer()
 ok, res = s.start(path=r'{share}', port={port}, password=None, admin_password=None)
+if not ok:
+    print("FAILED", res, flush=True)
+    raise SystemExit(2)
 print('READY' if ok else 'FAILED', flush=True)
 while True:
     time.sleep(1)
@@ -87,7 +93,7 @@ def check(label, ok, detail=""):
 
 def main():
     port = 6245
-    tmp = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-thumb-"))
+    tmp = Path(TEST_ENV.temporary_dir(prefix="lan6-thumb-"))
     share = tmp / "share"
     share.mkdir()
     boot = tmp / "b.py"
@@ -96,7 +102,7 @@ def main():
                              stderr=subprocess.STDOUT, cwd=str(ROOT))
     img = make_png()
     try:
-        if not wait(port):
+        if not TEST_ENV.wait_server(child, port, share):
             print("服务没起来：")
             child.kill()
             print(child.stdout.read().decode("utf-8", "replace"))
@@ -194,7 +200,7 @@ def main():
                 check("原图仍在", st_full == 200 and full_bytes == big_bytes, st_full)
 
         print("[8] 孤儿图片清理（/chat/cleanup）")
-        images_dir = Path(ROOT, "chat_data", "images")
+        images_dir = (TEST_ENV.data / "images")
         images_dir.mkdir(parents=True, exist_ok=True)
         import os as _os
         old = time.time() - 3600
@@ -237,13 +243,8 @@ def main():
             child.wait(5)
         except subprocess.TimeoutExpired:
             child.kill()
-        shutil.rmtree(tmp, ignore_errors=True)
-        # 聊天图片存在项目目录下，测试产生的文件要清掉
-        for f in Path(ROOT, "chat_data", "images").glob("*"):
-            try:
-                f.unlink()
-            except OSError:
-                pass
+        TEST_ENV.remove_test_dir(tmp)
+        # Chat data belongs to TEST_ENV, which checks ownership before cleanup.
 
     print("\n结果:", "全部通过 ✓" if not FAILS else "失败 %d 项" % len(FAILS))
     for f in FAILS:

@@ -11,6 +11,8 @@ import time
 import urllib.parse
 import zipfile
 from datetime import datetime
+from email import policy
+from email.parser import BytesParser
 from pathlib import Path
 
 from .config import *
@@ -20,6 +22,95 @@ from .chat_store import *
 from .pages import *
 from .paths import _password_ok
 from .storage import _upload_key
+
+
+class _MultipartReader:
+    """Length-bounded multipart reader with a sliding delimiter window."""
+
+    def __init__(self, stream, length):
+        self.stream = stream
+        self.remaining = length
+        self.buffer = bytearray()
+
+    def read_more(self):
+        if self.remaining <= 0:
+            raise ValueError('Truncated multipart body')
+        data = self.stream.read(min(65536, self.remaining))
+        if not data:
+            raise ValueError('Truncated multipart body')
+        self.remaining -= len(data)
+        self.buffer.extend(data)
+
+    def readline(self, limit=8192):
+        while True:
+            index = self.buffer.find(b'\r\n')
+            if index >= 0:
+                if index + 2 > limit:
+                    raise ValueError('Multipart header is too long')
+                line = bytes(self.buffer[:index + 2])
+                del self.buffer[:index + 2]
+                return line
+            if len(self.buffer) > limit:
+                raise ValueError('Multipart header is too long')
+            self.read_more()
+
+    def headers(self):
+        lines = []
+        length = 0
+        while True:
+            line = self.readline()
+            length += len(line)
+            if length > 65536:
+                raise ValueError('Multipart headers are too large')
+            if line == b'\r\n':
+                return BytesParser(policy=policy.default).parsebytes(b''.join(lines))
+            lines.append(line)
+
+    def copy_part(self, output, boundary):
+        marker = b'\r\n--' + boundary
+        keep = len(marker) + 2
+        while True:
+            index = self.buffer.find(marker)
+            if index >= 0:
+                end = index + len(marker)
+                while len(self.buffer) < end + 2:
+                    self.read_more()
+                suffix = bytes(self.buffer[end:end + 2])
+                consumed = end + 2
+                is_boundary = suffix == b'\r\n'
+                if suffix == b'--':
+                    while len(self.buffer) < end + 4 and self.remaining:
+                        self.read_more()
+                    if len(self.buffer) == end + 2 and not self.remaining:
+                        is_boundary = True
+                    elif bytes(self.buffer[end + 2:end + 4]) == b'\r\n':
+                        is_boundary = True
+                        consumed = end + 4
+                if is_boundary:
+                    if output is not None:
+                        output.write(self.buffer[:index])
+                    del self.buffer[:consumed]
+                    return suffix == b'--'
+                # A delimiter-like byte sequence inside the file is still data.
+                safe = index + 2
+                if output is not None:
+                    output.write(self.buffer[:safe])
+                del self.buffer[:safe]
+                continue
+            else:
+                safe = max(0, len(self.buffer) - keep)
+            if safe:
+                if output is not None:
+                    output.write(self.buffer[:safe])
+                del self.buffer[:safe]
+            self.read_more()
+
+    def finish(self):
+        # Consume the declared epilogue so the next keep-alive request is clean.
+        self.buffer.clear()
+        while self.remaining:
+            self.read_more()
+            self.buffer.clear()
 
 
 class TransferMixin:
@@ -40,10 +131,15 @@ class TransferMixin:
                 return
 
             file_size = file_path.stat().st_size
+            qp = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            is_preview = qp.get('preview', ['0'])[0] == '1'
+            preview_type = preview_mime_type(file_path) if is_preview else None
             # 第二项（原文件自身编码，如 .gz → gzip）这里用不到：
             # 我们要发的是原样字节，绝不能拿它当 Content-Encoding 响应头。
             content_type, _file_encoding = mimetypes.guess_type(str(file_path))
-            if not content_type:
+            if preview_type:
+                content_type = preview_type
+            elif not content_type:
                 content_type = 'application/octet-stream'
 
             range_header = self.headers.get('Range')
@@ -79,16 +175,8 @@ class TransferMixin:
 
             self.send_header('Content-Length', str(length))
 
-            qp = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
-            is_preview = qp.get('preview', ['0'])[0] == '1'
-
-            # 只有白名单里的类型才允许 inline；.html/.svg/.js 之类一律强制下载，
-            # 否则上传一个 .html 再点预览，就是在同源执行任意脚本
-            suffix = file_path.suffix.lower()
-            if is_preview and suffix in INLINE_PREVIEW_EXTS:
-                disp = 'inline'
-            else:
-                disp = 'attachment'
+            # Unknown/active document types remain downloads, not false previews.
+            disp = 'inline' if preview_type else 'attachment'
 
             encoded_filename = urllib.parse.quote(filename)
             self.send_header(
@@ -96,8 +184,8 @@ class TransferMixin:
                 f'{disp}; filename="download"; filename*=UTF-8\'\'{encoded_filename}'
             )
 
-            # 预览响应禁止执行脚本（inline SVG/HTML 也在内），但不加 sandbox，
-            # 否则 Chrome 内置 PDF 预览会被一起禁掉
+            # No sandbox: it also disables Chrome's built-in PDF viewer.
+            # Active formats such as HTML/SVG are never inline in the first place.
             self.send_header(
                 'Content-Security-Policy',
                 "default-src 'none'; img-src 'self' data:; media-src 'self'; "
@@ -203,90 +291,74 @@ class TransferMixin:
     def handle_upload(self, current_path):
         save_path = None
         try:
-            current_path = Path(urllib.parse.unquote(current_path)).resolve()
             shared_path = Path(self.shared_path).resolve()
-            if not is_path_within(current_path, shared_path):
-                current_path = shared_path
-
-            content_type = self.headers.get('Content-Type', '')
-            if 'boundary=' not in content_type:
-                self.send_error(400)
-                return
-
+            current_path = checked_shared_path(
+                Path(urllib.parse.unquote(current_path)), shared_path
+            )
+            content_type = BytesParser(policy=policy.default).parsebytes(
+                ('Content-Type: ' + self.headers.get('Content-Type', '')
+                 + '\r\n\r\n').encode('utf-8')
+            )
+            if content_type.get_content_type() != 'multipart/form-data':
+                raise ValueError('Expected multipart/form-data')
+            boundary = (content_type.get_boundary() or '').encode('ascii')
+            if (not boundary or len(boundary) > 70
+                    or any(byte < 32 or byte > 126 for byte in boundary)):
+                raise ValueError('Invalid multipart boundary')
             content_length = int(self.headers.get('Content-Length', 0))
-            if content_length == 0:
-                self.send_error(400)
-                return
-
-            boundary = content_type.split('boundary=')[1].strip().strip('"')
-            boundary_bytes = b'--' + boundary.encode('utf-8')
-
-            bytes_read = 0
-            filename = None
-            while True:
-                line = self.rfile.readline()
-                bytes_read += len(line)
-                if not line:
+            if content_length <= 0:
+                raise ValueError('Empty multipart body')
+            reader = _MultipartReader(self.rfile, content_length)
+            if reader.readline() != b'--' + boundary + b'\r\n':
+                raise ValueError('Invalid initial multipart boundary')
+            final = False
+            for _part in range(64):
+                headers = reader.headers()
+                filename = headers.get_filename()
+                if filename is None:
+                    final = reader.copy_part(None, boundary)
+                else:
+                    if save_path is not None:
+                        raise ValueError('Only one file is accepted per request')
+                    filename = sanitize_relative_path(filename)
+                    if not filename:
+                        raise ValueError('Invalid filename')
+                    original = checked_shared_path(
+                        current_path / filename, shared_path, allow_missing=True
+                    )
+                    original.parent.mkdir(parents=True, exist_ok=True)
+                    counter = 0
+                    while True:
+                        candidate = original if counter == 0 else original.with_name(
+                            '{}_{}{}'.format(original.stem, counter, original.suffix)
+                        )
+                        checked_shared_path(candidate, shared_path, allow_missing=True)
+                        try:
+                            output = candidate.open('xb')
+                            break
+                        except FileExistsError:
+                            counter += 1
+                    save_path = candidate
+                    with output:
+                        final = reader.copy_part(output, boundary)
+                if final:
                     break
-                if b'filename="' in line:
-                    line_str = line.decode('utf-8', errors='ignore')
-                    filename = line_str.split('filename="')[1].split('"')[0]
-                if line == b'\r\n':
-                    break
-
-            if not filename:
-                self.send_error(400)
-                return
-
-            filename = sanitize_relative_path(filename)
-            if not filename:
-                self.send_error(400, "Invalid filename")
-                return
-            save_path = (current_path / filename).resolve()
-            if not is_path_within(save_path, self.shared_path):
-                self.send_error(403)
-                return
-            save_path.parent.mkdir(parents=True, exist_ok=True)
-
-            counter = 1
-            orig = save_path
-            while save_path.exists():
-                save_path = orig.parent / "{}_{}{}".format(orig.stem, counter, orig.suffix)
-                counter += 1
-
-            remain = content_length - bytes_read
-            with open(save_path, 'wb') as f:
-                prev = self.rfile.read(min(65536, remain))
-                remain -= len(prev)
-                while True:
-                    if remain <= 0:
-                        if boundary_bytes in prev:
-                            real = prev[:prev.find(boundary_bytes)]
-                            if real.endswith(b'\r\n'):
-                                real = real[:-2]
-                                f.write(real)
-                            else:
-                                f.write(prev)
-                        break
-                    chunk = self.rfile.read(min(65536, remain))
-                    remain -= len(chunk)
-                    if not chunk:
-                        f.write(prev)
-                        break
-                    if boundary_bytes in chunk:
-                        combined = prev + chunk
-                        pos = combined.find(boundary_bytes)
-                        real = combined[:pos]
-                        if real.endswith(b'\r\n'):
-                            real = real[:-2]
-                        f.write(real)
-                        break
-                    f.write(prev)
-                    prev = chunk
-
+            if not final or save_path is None:
+                raise ValueError('Missing file or final multipart boundary')
+            reader.finish()
             self.send_json_response({'success': True})
+        except PermissionError:
+            if save_path is not None:
+                save_path.unlink(missing_ok=True)
+            self.close_connection = True
+            self.send_api_error('路径越权或包含链接，上传已拒绝', 403)
+        except (ValueError, UnicodeError, TimeoutError, ConnectionError) as e:
+            if save_path is not None:
+                save_path.unlink(missing_ok=True)
+            self.close_connection = True
+            self.send_api_error('上传内容不完整或格式错误: ' + str(e), 400)
         except Exception as e:
-            if save_path and save_path.exists():
+            if save_path is not None and save_path.exists():
                 try:
                     os.remove(save_path)
                 except Exception:

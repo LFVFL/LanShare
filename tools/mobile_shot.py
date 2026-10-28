@@ -16,6 +16,9 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
 
@@ -65,7 +68,7 @@ SELBAR = """(function(){
 
 
 def main():
-    share = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-m-"))
+    share = Path(TEST_ENV.temporary_dir(prefix="lan6-m-"))
     (share / "docs").mkdir()
     (share / "docs" / "报告.md").write_text("hi", encoding="utf-8")
     (share / "照片.jpg").write_bytes(b"\xff\xd8\xff\xd9")
@@ -75,17 +78,18 @@ def main():
     ok, result = sharer.start(path=str(share), port=PORT)
     if not ok:
         print("服务起不来:", result)
-        shutil.rmtree(share, ignore_errors=True)
+        TEST_ENV.remove_test_dir(share)
         return 1
 
+    chrome_profile = str(TEST_ENV.root / "chrome-m-profile")
     chrome = subprocess.Popen([
         CHROME, "--headless=new", "--disable-gpu", "--no-sandbox", "--hide-scrollbars",
-        "--remote-debugging-port=%d" % CDP_PORT,
-        "--user-data-dir=%s" % r"C:\Windows\TEMP\lan6\m-profile", "about:blank",
+        "--remote-debugging-port=0",
+        "--user-data-dir=%s" % chrome_profile, "about:blank",
     ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     bad = 0
     try:
-        wait_port(CDP_PORT, 25)
+        CDP_PORT = TEST_ENV.wait_browser(chrome, chrome_profile)
         cdp = CDP(page_ws(CDP_PORT))
         cdp.call("Page.enable")
         cdp.call("Emulation.setDeviceMetricsOverride", {
@@ -118,9 +122,9 @@ def main():
         shot = cdp.call("Page.captureScreenshot", {"format": "png"})
         (ROOT / "截图" / "手机端-多选条.png").write_bytes(base64.b64decode(shot["data"]))
     finally:
-        chrome.terminate()
-        sharer.stop()
-        shutil.rmtree(share, ignore_errors=True)
+        TEST_ENV.stop_process(chrome)
+        sharer.stop(wait=True, timeout=10)
+        TEST_ENV.remove_test_dir(share)
 
     print("截图已更新：截图/手机端-文件页.png、截图/手机端-多选条.png")
     return 1 if bad else 0

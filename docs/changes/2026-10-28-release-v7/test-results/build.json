@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-10-28T14:51:42.407155+08:00",
+  "success": true,
+  "exe": "E:\\LanShare-builds\\build-hw18u5xf\\dist\\lanshare.exe",
+  "sha256": "a7f64eca35d2a1257d2b2a5d4c2e5b63f0718aa3650b607f108168cabb220c25",
+  "size_bytes": 63929596,
+  "staging": "E:\\LanShare-builds\\build-hw18u5xf",
+  "build_returncode": 0,
+  "smoke_success": true,
+  "runtime_archive_check_success": true,
+  "qt_archive_check_success": true,
+  "asset_version": "01c9b74c9a",
+  "app_version": "7.0",
+  "versions": {
+    "pyinstaller": "6.22.3",
+    "pyinstaller-hooks-contrib": "2026.9",
+    "PyQt5": "5.15.11",
+    "PyQt5-Qt5": "5.15.2",
+    "Pillow": "13.0.0",
+    "pillow-heif": "1.8.1",
+    "pillow-avif-plugin": "1.6.0",
+    "brotli": "1.2.1",
+    "segno": "1.6.6"
+  },
+  "executed_build_command": [
+    "E:\\LanShare-builds\\build-22jznups\\env\\Scripts\\python.exe",
+    "-B",
+    "tools\\build_exe.py",
+    "--work",
+    "E:\\LanShare-builds",
+    "--venv",
+    "E:\\LanShare-builds\\build-22jznups\\env",
+    "--extra-images"
+  ],
+  "build_cwd": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248",
+  "build_log": "E:\\LanShare-builds\\build-hw18u5xf\\build.log",
+  "build_log_sha256": "fd9df44af0a25fcc84a3e25b6fad0686c8ee3fe4b6609ea877ea6c6c9ba99624",
+  "build_run_log": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\docs\\changes\\2026-10-28-release-v7\\test-results\\build-run.log",
+  "build_run_log_sha256": "4d5fe22094b11021bcb428321d8b4ac90f35e11c19f965e742388ad41190918a",
+  "packaging_options": [
+    "pyi-contents-directory _internal",
+    "pyi-runtime-tmpdir %LOCALAPPDATA%/LanShare/Temp"
+  ],
+  "build_execution": "Approved actual-user execution, reused existing venv, standard build_exe.py including its isolated smoke test; no dependency installations",
+  "execution_provenance": {
+    "exit_code": 0,
+    "exec_session": 6828,
+    "observer": "Parent build runner confirmed the completed exec session and exact argv/cwd; this audit independently checks retained logs, source hashes and archive contents."
+  },
+  "dependency_installations": 0,
+  "no_install_branch_in_complete_build_log": true,
+  "dependency_versions_match_previous_build": true,
+  "smoke_extractions_remaining": [],
+  "candidate_unchanged_during_audit": true,
+  "warnings": [
+    "collect_data_files - skipping data collection for module 'webassets' as it is not a package.",
+    "Hidden import \"sip\" not found!"
+  ],
+  "manifest": "build-source-manifest.json",
+  "native_audit": "native-dependencies.json",
+  "version_acceptance": "version.json",
+  "version_acceptance_sha256": "0e9be531d6474d1162e1e1c48dc8388a3c37b059551fc242c18bc9b2e97602fe",
+  "delivery_acceptance": "Not asserted by build audit; see separate final-path publication and startup evidence."
+}

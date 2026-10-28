@@ -32,11 +32,12 @@ from server.storage import *
 from server.chat_store import *
 from server.pages import *
 from server.runner import FileSharer
-from server import netinfo
+from server import APP_VERSION, netinfo
 
 from . import qr, style
 from .icon import build_app_icon, get_app_icon
 from .widgets import ClickableLabel
+from .context_menu import ContextMenuIntegration
 
 if platform.system() == 'Windows':
     try:
@@ -49,21 +50,31 @@ else:
 
 class FileShareGUI(QMainWindow):
     status_updated = pyqtSignal(str, bool)
-    start_completed = pyqtSignal(bool, object)
+    start_completed = pyqtSignal(int, bool, object)
     system_checks_ready = pyqtSignal(bool, bool)   # (开机自启, 右键菜单)
 
-    def __init__(self, initial_path=None, initial_port=None, auto_start=True):
+    def __init__(self, initial_path=None, initial_port=None, auto_start=True,
+                 settings=None, context_menu=None, system_integration_enabled=True):
         super().__init__()
 
-        self.setWindowTitle("局域网云盘 v6.1")
+        self.setWindowTitle("局域网云盘 v%s" % APP_VERSION)
         self.set_window_icon()
-        self.settings = QSettings("FileShareTool", "App")
+        self.settings = settings if settings is not None else QSettings("FileShareTool", "App")
         self.sharer = FileSharer()
         self.start_result = None
         self.initial_path = initial_path
         self.initial_port = initial_port
         self.auto_start = auto_start
         self.reg_key_name = "FileShareTool"
+        self._system_integration_enabled = system_integration_enabled
+        self._context_menu = (context_menu if context_menu is not None
+                              else ContextMenuIntegration(self.reg_key_name,
+                                                          enabled=system_integration_enabled))
+        self._start_epoch = 0
+        self._start_cancel = None
+        self._starting_in_ui = False
+        self._stop_requested_in_ui = False
+        self._quitting = False
         self.startup_reg_key_name = "FileShareToolStartup"
         self.startup_task_name = "FileShareToolStartup"
         self.log_queue = None
@@ -153,6 +164,7 @@ class FileShareGUI(QMainWindow):
 
         toggle_action = QAction("启动/停止", self)
         toggle_action.triggered.connect(self.toggle_share)
+        self.tray_toggle_action = toggle_action
         tray_menu.addAction(toggle_action)
 
         tray_menu.addSeparator()
@@ -179,17 +191,34 @@ class FileShareGUI(QMainWindow):
             self.show_window()
 
     def quit_application(self):
+        if self._quitting:
+            return
         self.save_settings()
-        if self.sharer.is_running:
-            self.sharer.stop()
-            time.sleep(0.2)
+        self._quitting = True
+        self._start_epoch += 1
+        if self._start_cancel is not None:
+            self._start_cancel.set()
+        self._starting_in_ui = False
+        self._set_transition_state(self.sharer.STOPPING)
+        self.sharer.stop()
+        # Keep the Qt loop alive until shutdown confirms that the listener is closed.
+        self._quit_timer = QTimer(self)
+        self._quit_timer.timeout.connect(self._finish_quit)
+        self._quit_timer.start(50)
+        self._finish_quit()
+
+    def _finish_quit(self):
+        if not self.sharer.wait_stopped(0):
+            return
+        self._quit_timer.stop()
         chat_room_saver.flush()
+        self._sync_context_menu(False)
         self.tray_icon.hide()
         QApplication.quit()
 
     def closeEvent(self, event):
         self.save_settings()
-        if self.sharer.is_running and self._tray_available:
+        if (self.sharer.is_running or self.sharer.is_busy or self._starting_in_ui) and self._tray_available:
             event.ignore()
             self.hide()
             self.tray_icon.showMessage(
@@ -197,9 +226,14 @@ class FileShareGUI(QMainWindow):
                 QSystemTrayIcon.Information, 2500
             )
         else:
-            chat_room_saver.flush()
-            self.tray_icon.hide()
-            event.accept()
+            if self.sharer.is_busy or self.sharer.is_running or self._starting_in_ui:
+                event.ignore()
+                self.quit_application()
+            else:
+                chat_room_saver.flush()
+                self._sync_context_menu(False)
+                self.tray_icon.hide()
+                event.accept()
 
     # ── 界面小工具 ────────────────────────────────────────────────
 
@@ -284,7 +318,7 @@ class FileShareGUI(QMainWindow):
         brand.setObjectName("brand")
         bar.addWidget(brand)
 
-        ver = QLabel("v6.1")
+        ver = QLabel("v%s" % APP_VERSION)
         ver.setObjectName("ver")
         bar.addWidget(ver)
         bar.addSpacing(6)
@@ -513,7 +547,7 @@ class FileShareGUI(QMainWindow):
         self.startup_btn.clicked.connect(self.toggle_startup)
         self.sharer.set_status_callback(self.update_status)
         self.status_updated.connect(self.on_status_updated)
-        self.start_completed.connect(self.on_start_completed)
+        self.start_completed.connect(self._on_start_worker_completed)
         self.system_checks_ready.connect(self.on_system_checks_ready)
         self.log_timer.timeout.connect(self.update_log)
 
@@ -657,6 +691,11 @@ class FileShareGUI(QMainWindow):
                 QMessageBox.warning(self, "路径无效", "这个路径不存在或不是文件夹：\n%s" % path_text)
             return False
 
+        if self.sharer.is_busy or self._starting_in_ui:
+            if not quiet:
+                QMessageBox.warning(self, "请稍候", "服务正在启动或停止，请稍后切换目录")
+            return False
+
         self.path_entry.setText(str(target))
         if not self.sharer.is_running:
             self._flash("共享目录：%s（启动服务后生效）" % target)
@@ -688,32 +727,51 @@ class FileShareGUI(QMainWindow):
                 self.apply_share_path(path)
 
     def toggle_share(self):
+        if self.sharer.is_busy or self._starting_in_ui or self._quitting:
+            return
         if self.sharer.is_running:
             self.stop_share()
         else:
             self.start_share()
 
     def start_share(self):
+        if self.sharer.state != self.sharer.STOPPED or self._starting_in_ui or self._quitting:
+            return False
         path = self.path_entry.text().strip()
-        if not path or not Path(path).exists():
+        if not path or not Path(path).is_dir():
             QMessageBox.warning(self, "错误", "请选择有效的共享路径")
-            return
+            return False
 
         port = self.port_entry.value()
 
         password = self.password_entry.text().strip() or None
         admin_password = self.admin_password_entry.text().strip() or None
 
-        self.toggle_share_btn.setEnabled(False)
-        self.toggle_share_btn.setText("启动中...")
+        self._start_epoch += 1
+        epoch = self._start_epoch
+        self._start_cancel = threading.Event()
+        cancel_event = self._start_cancel
+        self._starting_in_ui = True
+        self._set_transition_state(self.sharer.STARTING)
 
         def start_worker():
-            success, result = self.sharer.start(path, port, password, admin_password)
-            self.start_completed.emit(success, result)
+            success, result = self.sharer.start(path, port, password, admin_password,
+                                                cancel_event=cancel_event)
+            self.start_completed.emit(epoch, success, result)
 
         threading.Thread(target=start_worker, daemon=True).start()
+        return True
+
+    def _on_start_worker_completed(self, epoch, success, result):
+        if epoch != self._start_epoch or self._quitting:
+            return
+        self._starting_in_ui = False
+        self.on_start_completed(success, result)
 
     def on_start_completed(self, success, result):
+        if success and not self.sharer.is_running:
+            return
+        self._starting_in_ui = False
         self.toggle_share_btn.setEnabled(True)
         if success:
             self.start_result = result
@@ -727,10 +785,24 @@ class FileShareGUI(QMainWindow):
             self._apply_running_state(False)
             QMessageBox.critical(self, "启动失败", str(result))
 
+    def _set_transition_state(self, state):
+        self.toggle_share_btn.setEnabled(False)
+        self.tray_toggle_action.setEnabled(False)
+        self.toggle_share_btn.setText("启动中..." if state == self.sharer.STARTING else "停止中...")
+        self.path_entry.setReadOnly(True)
+        self.select_path_btn.setEnabled(False)
+        self.port_entry.setReadOnly(True)
+        self.password_entry.setReadOnly(True)
+        self.admin_password_entry.setReadOnly(True)
+        self.browser_btn.setEnabled(False)
+        self.set_pill("● 正在启动..." if state == self.sharer.STARTING else "● 正在停止...", "muted")
+
     def _apply_running_state(self, running, result=None):
         """服务起停时统一改按钮、胶囊、输入框可编辑性、地址与二维码。"""
         # 共享目录允许运行中直接改（handler 每次请求都读全局值，立刻生效）
         self.path_entry.setReadOnly(False)
+        self.toggle_share_btn.setEnabled(True)
+        self.tray_toggle_action.setEnabled(True)
         self.select_path_btn.setEnabled(True)
         self.port_entry.setReadOnly(running)
         self.password_entry.setReadOnly(running)
@@ -757,15 +829,50 @@ class FileShareGUI(QMainWindow):
             self._qr_placeholder()
             self.qr_hint.setText("启动服务后自动生成")
             self.stat_label.setText("服务未启动")
+        self._sync_context_menu(running)
 
     def stop_share(self):
+        self._start_epoch += 1
+        if self._start_cancel is not None:
+            self._start_cancel.set()
+        self._starting_in_ui = False
+        self._stop_requested_in_ui = True
         self.log_timer.stop()
+        self._set_transition_state(self.sharer.STOPPING)
         self.sharer.stop()
+        if self.sharer.wait_stopped(0):
+            self._finish_stop_ui()
+
+    def _finish_stop_ui(self):
+        notify = self._stop_requested_in_ui
+        self._stop_requested_in_ui = False
         self.start_result = None
         self.log_queue = None
         self._apply_running_state(False)
-        if self._tray_available:
+        if notify and self._tray_available:
             self.tray_icon.showMessage("局域网云盘", "服务已停止", QSystemTrayIcon.Information, 2000)
+
+    def handle_instance_request(self, request):
+        action = request['action']
+        if action == 'status':
+            return {'ok': True, 'state': self.sharer.state}
+        if self._quitting:
+            return {'ok': False, 'error': '软件正在退出，请稍后重试'}
+        if action == 'activate':
+            self.show_window()
+            return {'ok': True}
+        if action != 'open_here':
+            return {'ok': False, 'error': '不支持的本地命令'}
+        if self.sharer.is_busy or self._starting_in_ui:
+            return {'ok': False, 'error': '服务正在启动或停止，请稍后重试'}
+        if not self.apply_share_path(request['path'], quiet=True):
+            return {'ok': False, 'error': '目录不存在或无法切换'}
+        self.show_window()
+        if self.sharer.is_running:
+            return {'ok': True, 'state': self.sharer.RUNNING}
+        if not self.start_share():
+            return {'ok': False, 'error': '无法启动共享'}
+        return {'ok': True, 'state': self.sharer.STARTING}
 
     def display_server_info(self, result):
         """服务信息不再单独占一块；地址在「访问方式」卡片里，
@@ -876,12 +983,26 @@ class FileShareGUI(QMainWindow):
         self.status_updated.emit(message, is_running)
 
     def on_status_updated(self, message, is_running):
-        if is_running:
+        state = self.sharer.state
+        if self._quitting:
+            return
+        if state in (self.sharer.STARTING, self.sharer.STOPPING):
+            self._set_transition_state(state)
+        elif state == self.sharer.RUNNING:
             port = getattr(self.sharer, 'port', None)
             suffix = " · 端口 %s" % port if port else ""
-            self.set_pill("● %s%s" % (message, suffix), "ok")
+            self.set_pill("● 运行中%s" % suffix, "ok")
+            self._sync_context_menu(True)
         else:
-            self.set_pill("● %s" % message, "muted")
+            self._finish_stop_ui()
+
+    def _sync_context_menu(self, running):
+        if not self._menu_installed:
+            return
+        try:
+            self._context_menu.update_caption(running)
+        except OSError as exc:
+            print('[ContextMenu] 更新文案失败:', exc)
 
     def toggle_context_menu_integration(self):
         if self.is_context_menu_installed():
@@ -892,43 +1013,31 @@ class FileShareGUI(QMainWindow):
         self.update_menu_btn_text()
 
     def is_context_menu_installed(self):
-        if platform.system() != "Windows" or not winreg:
+        if not self._system_integration_enabled:
             return False
-        try:
-            winreg.OpenKey(winreg.HKEY_CLASSES_ROOT,
-                           r"Directory\Background\shell\{}".format(self.reg_key_name),
-                           0, winreg.KEY_READ)
-            return True
-        except FileNotFoundError:
-            return False
-        except Exception:
-            return False
+        return self._context_menu.is_installed()
 
     def add_context_menu(self):
+        if not self._system_integration_enabled:
+            return
         if platform.system() != "Windows":
             QMessageBox.information(self, "提示", "此功能仅支持 Windows 系统")
             return
         try:
-            exe_path = str(Path(sys.executable if IS_FROZEN else sys.argv[0]).resolve())
-            key_path = r"Directory\Background\shell\{}".format(self.reg_key_name)
-            with winreg.CreateKey(winreg.HKEY_CLASSES_ROOT, key_path) as key:
-                winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "📂 在此处启动云盘")
-                winreg.SetValueEx(key, "Icon", 0, winreg.REG_SZ, exe_path)
-            with winreg.CreateKey(winreg.HKEY_CLASSES_ROOT, key_path + r"\command") as key:
-                winreg.SetValueEx(key, "", 0, winreg.REG_SZ, '"{}" "%V"'.format(exe_path))
-                QMessageBox.information(self, "成功", "已添加右键菜单")
+            self._context_menu.install(self.sharer.is_running)
+            QMessageBox.information(self, "成功", "已为当前用户添加右键菜单")
         except PermissionError:
             QMessageBox.warning(self, "权限不足", "请以管理员身份运行程序")
         except Exception as e:
             QMessageBox.critical(self, "失败", "添加右键菜单失败: {}".format(str(e)))
 
     def remove_context_menu(self):
+        if not self._system_integration_enabled:
+            return
         if platform.system() != "Windows":
             return
         try:
-            key_path = r"Directory\Background\shell\{}".format(self.reg_key_name)
-            winreg.DeleteKey(winreg.HKEY_CLASSES_ROOT, key_path + r"\command")
-            winreg.DeleteKey(winreg.HKEY_CLASSES_ROOT, key_path)
+            self._context_menu.remove()
             QMessageBox.information(self, "成功", "已移除右键菜单")
         except FileNotFoundError:
             pass
@@ -959,6 +1068,9 @@ class FileShareGUI(QMainWindow):
 
     def refresh_system_checks(self):
         """后台查「右键菜单 / 开机自启」两个开关的真实状态，不阻塞窗口显示。"""
+        if not self._system_integration_enabled:
+            self.system_checks_ready.emit(False, False)
+            return
         def worker():
             startup = False
             menu = False
@@ -982,6 +1094,10 @@ class FileShareGUI(QMainWindow):
         self.menu_btn.setToolTip("在文件夹空白处右键即可把该文件夹设为共享目录"
                                  if menu else "在资源管理器里加一条右键菜单")
         self._set_toggle_state(self.menu_btn, menu)
+        self._sync_context_menu(self.sharer.is_running)
+        if not self._system_integration_enabled:
+            self.menu_btn.setEnabled(False)
+            self.startup_btn.setEnabled(False)
 
     def update_menu_btn_text(self):
         menu = self._menu_installed
@@ -1023,6 +1139,8 @@ class FileShareGUI(QMainWindow):
         """
         运行 schtasks，隐藏黑窗口。
         """
+        if not self._system_integration_enabled:
+            raise OSError('隔离测试模式禁用计划任务')
         creationflags = 0
         if platform.system() == "Windows":
             creationflags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
@@ -1064,6 +1182,8 @@ class FileShareGUI(QMainWindow):
         """
         检查计划任务是否存在。
         """
+        if not self._system_integration_enabled:
+            return False
         print("\n=== is_startup_enabled called, 使用计划任务检测 ===")
 
         if platform.system() != "Windows":
@@ -1099,6 +1219,8 @@ class FileShareGUI(QMainWindow):
         """
         创建登录时启动的计划任务。
         """
+        if not self._system_integration_enabled:
+            return
         print("\n=== enable_startup called, 使用计划任务 ===")
 
         if platform.system() != "Windows":
@@ -1143,6 +1265,8 @@ class FileShareGUI(QMainWindow):
         """
         删除计划任务。
         """
+        if not self._system_integration_enabled:
+            return
         print("\n=== disable_startup called, 删除计划任务 ===")
 
         if platform.system() != "Windows":

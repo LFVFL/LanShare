@@ -15,6 +15,9 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+from test_support import isolate_test_environment
+
+TEST_ENV = isolate_test_environment()
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
 
@@ -34,7 +37,7 @@ def check(label, ok, detail=""):
 
 
 def main():
-    share = Path(tempfile.mkdtemp(dir=str(ROOT), prefix="lan6-uid-"))
+    share = Path(TEST_ENV.temporary_dir(prefix="lan6-uid-"))
     deep = share / "文档" / "子目录"
     deep.mkdir(parents=True)
     (deep / "x.txt").write_text("x", encoding="utf-8")
@@ -54,15 +57,16 @@ def main():
     with urllib.request.urlopen(req, timeout=10) as r:
         room = json.loads(r.read().decode())["room_id"]
 
+    chrome_profile = str(TEST_ENV.root / "chrome-uid-profile")
     chrome = subprocess.Popen([
         r"C:\Program Files\Google\Chrome\Application\chrome.exe", "--headless=new",
         "--disable-gpu", "--no-sandbox", "--hide-scrollbars",
-        "--remote-debugging-port=%d" % CDP_PORT,
-        "--user-data-dir=C:\\Windows\\TEMP\\lan6\\uid-profile",
+        "--remote-debugging-port=0",
+        "--user-data-dir=%s" % chrome_profile,
         "about:blank"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     cdp = None
     try:
-        wait_port(CDP_PORT, 30)
+        CDP_PORT = TEST_ENV.wait_browser(chrome, chrome_profile)
         cdp = CDP(page_ws(CDP_PORT))
         cdp.call("Page.enable")
 
@@ -200,9 +204,9 @@ def main():
                 cdp.call("Page.navigate", {"url": "about:blank"})
             except Exception:
                 pass
-        chrome.terminate()
-        sharer.stop()
-        shutil.rmtree(share, ignore_errors=True)
+        TEST_ENV.stop_process(chrome)
+        sharer.stop(wait=True, timeout=10)
+        TEST_ENV.remove_test_dir(share)
 
     print("\n结果: 通过 %d 项" % len(PASSED))
     if FAILED:
