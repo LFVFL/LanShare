@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-10-28T16:19:40.917669+08:00",
+  "success": true,
+  "tests": 28,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 2.641,
+  "scope": "Build safety and test isolation; no released or candidate EXE launched",
+  "source_sha256": {
+    "tools/build_exe.py": "cbb33435158eb81a91236ed21d4af20c7d23d0e98349a51c8f11b33d60639b17",
+    "tools/v7_build_test.py": "3f425c5f55f834a07843509a2ac0cdad91ec0d216c7e1b9db7b8192283f4b10a"
+  },
+  "private_log_sha256": "5e9dd8d2922d365fc30cd7ccf458ddf261427b93fdd8b4a177a4ed968214a1d1"
+}

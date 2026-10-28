@@ -5,7 +5,7 @@
   (function (Lan) {
     'use strict';
 
-    Lan.version = '7.0';
+    Lan.version = '7.0.1';
 
     /* 根节点统一由 core 建，其余分片只往里挂成员 */
     Lan.util = Lan.util || {};

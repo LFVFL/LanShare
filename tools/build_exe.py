@@ -27,7 +27,6 @@ IMAGE_DEPS = ["pillow-heif>=0.18", "pillow-avif-plugin>=1.4"]
 COPY = ("lanshare.py", "webassets.py", "icon.ico", "server", "ui")
 OWNER_FILE = ".lanshare-build-container.json"
 OWNER = {"tool": "LanShare/tools/build_exe.py", "version": 1}
-WINDOWS_RUNTIME_TMPDIR = r"%LOCALAPPDATA%\LanShare\Temp"
 
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -121,7 +120,8 @@ def venv_python(venv):
 
 
 def clean_python_environment():
-    environment = dict(os.environ)
+    environment = {name: value for name, value in os.environ.items()
+                   if not name.upper().startswith(('_PYI_', 'PYINSTALLER_'))}
     for name in ('PYTHONHOME', 'PYTHONPATH', 'QT_PLUGIN_PATH', 'QT_QPA_PLATFORM_PLUGIN_PATH', 'QTDIR'):
         environment.pop(name, None)
     environment['QT_QPA_PLATFORM'] = 'offscreen'
@@ -225,27 +225,28 @@ def verify_qt_archive(python, exe, environment):
     ok('EXE 已包含 Qt 主 DLL、平台插件与 VC 运行时')
 
 
-def runtime_tmpdir_flags():
-    # Windows expands the placeholder before Python starts; never bake in the builder's profile.
-    return ['--runtime-tmpdir', WINDOWS_RUNTIME_TMPDIR] if os.name == 'nt' else []
-
-
-def verify_runtime_tmpdir_archive(python, exe, environment):
+def verify_default_runtime_archive(python, exe, environment):
     if os.name != 'nt':
         return
     probe = subprocess.run(
         [str(python), '-c', 'import json,sys; from PyInstaller.archive.readers import CArchiveReader; '
-         'print(json.dumps(CArchiveReader(sys.argv[1]).options))', str(exe)],
+         'reader=CArchiveReader(sys.argv[1]); '
+         'options=getattr(reader,"options",None); '
+         'options=options if options is not None else '
+         '[name for name,entry in reader.toc.items() if entry[-1]=="OPTION"]; '
+         'print(json.dumps(options))', str(exe)],
         capture_output=True, text=True, timeout=30, env=environment,
     )
     try:
         options = json.loads(probe.stdout)
-        expected = 'pyi-runtime-tmpdir ' + WINDOWS_RUNTIME_TMPDIR.replace('\\', '/')
-        if probe.returncode or not isinstance(options, list) or expected not in options:
-            raise ValueError('Missing portable runtime directory option')
+        if (probe.returncode or not isinstance(options, list)
+                or not all(isinstance(option, str) for option in options)):
+            raise ValueError('Archive reader failed')
+        if any(option.startswith('pyi-runtime-tmpdir') for option in options):
+            raise ValueError('Custom runtime directory reintroduces a startup dependency')
     except (TypeError, ValueError) as exc:
-        raise RuntimeError('EXE 缺少当前用户临时解包配置，或配置已被展开为构建者路径') from exc
-    ok('EXE 使用当前用户的独立临时解包目录，不依赖 TMP/TEMP')
+        raise RuntimeError('EXE 临时解包配置异常：必须保留 PyInstaller 默认机制，不能强制自定义路径') from exc
+    ok('EXE 未覆盖 PyInstaller 默认临时目录机制')
 
 
 def snapshot_source(source, staging, python, environment=None):
@@ -297,10 +298,13 @@ def unused_port(requested=0):
 
 def smoke_environment(environment, profile):
     profile = Path(profile)
-    result = dict(environment, QT_QPA_PLATFORM='offscreen',
-                  LANSHARE_DATA_DIR=str(profile / 'chat_data'))
+    result = {name: value for name, value in environment.items()
+              if not name.upper().startswith(('_PYI_', 'PYINSTALLER_'))}
+    result.update(QT_QPA_PLATFORM='offscreen', LANSHARE_DATA_DIR=str(profile / 'chat_data'),
+                  PYINSTALLER_RESET_ENVIRONMENT='1')
     if os.name == 'nt':
         result['LOCALAPPDATA'] = str(profile / 'local-app-data')
+        result['TEMP'] = result['TMP'] = str(profile / 'temp')
     return result
 
 
@@ -309,7 +313,10 @@ def smoke_exe(exe, staging, environment, requested_port):
     profile.mkdir()
     share = profile / "share"
     share.mkdir()
+    (profile / 'temp').mkdir()
     run_environment = smoke_environment(environment, profile)
+    if (profile / 'local-app-data').exists():
+        raise RuntimeError('冒烟测试必须从不存在的独立 LOCALAPPDATA 开始')
     extraction = None
     port = unused_port(requested_port)
     command = [str(exe), str(share), "-p", str(port), "--startup", "--test-profile", str(profile)]
@@ -338,10 +345,10 @@ def smoke_exe(exe, staging, environment, requested_port):
         if not ready:
             raise RuntimeError("测试 EXE 未能启动 HTTP 服务")
         if os.name == 'nt':
-            runtime_base = Path(run_environment['LOCALAPPDATA']) / 'LanShare' / 'Temp'
+            runtime_base = Path(run_environment['TMP'])
             extracted = list(runtime_base.glob('_MEI*'))
             if len(extracted) != 1 or not extracted[0].is_dir():
-                raise RuntimeError('EXE 未使用本次测试的独立临时解包目录')
+                raise RuntimeError('EXE 未使用本次测试的 Windows 默认临时目录')
             extraction = extracted[0]
         ok("EXE 独立测试实例 /api/list 200")
         for path, minimum in (("/static/app.css", 1000), ("/favicon.ico", 1000)):
@@ -399,7 +406,7 @@ def pyinstaller_command(python, staging, environment):
     command = [str(python), '-m', 'PyInstaller', '--noconfirm', '--onefile', '--windowed',
                '--name', 'lanshare', '--icon', str(icon), '--hidden-import', 'webassets',
                '--hidden-import', 'segno', '--add-data', '%s%s.' % (icon, os.pathsep)]
-    command.extend(runtime_tmpdir_flags())
+    # Keep the bootloader's default temp selection; a forced path has no fallback.
     command.extend(qt_runtime_flags(python, environment))
     command.extend(image_plugin_flags(python, environment))
     command.append('lanshare.py')
@@ -449,7 +456,7 @@ def main():
             raise RuntimeError("PyInstaller 失败；完整日志：%s" % log)
         ok("生成 %s (%.1f MB)" % (exe, exe.stat().st_size / 1024 ** 2))
         verify_qt_archive(python, exe, environment)
-        verify_runtime_tmpdir_archive(python, exe, environment)
+        verify_default_runtime_archive(python, exe, environment)
         if not args.skip_test:
             step("独立 offscreen EXE 冒烟测试（不控制正式实例或系统集成）")
             smoke_exe(exe, staging, environment, args.port)

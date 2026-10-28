@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-10-28T17:27:14.6362910+08:00",
+  "success": true,
+  "method": "Same-volume Medium staging File.Move; final security compared with the known-runnable lanshare.exe",
+  "sha256": "BFF338DB03A2E8E8D2A43C95DD7AD22F41888B38AADCBE32765413DB2F665E0E",
+  "size_bytes": 61342385,
+  "low_integrity_label_absent": true,
+  "default_medium_security": true,
+  "final_acl_matches_known_runnable_exe": true,
+  "parent_acl_unchanged": true,
+  "parent_acl_sha256": "acf0d50e83c88c7091a47f40297d7250df81681c87fec37d994d420aaea0d1da",
+  "directory_permissions_modified": false,
+  "explicit_medium_label_required": false,
+  "note": "Windows represents the default Medium integrity level by the absence of an explicit mandatory Low label, matching the existing runnable EXE."
+}

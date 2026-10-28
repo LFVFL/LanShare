@@ -1,0 +1,148 @@
+{
+  "timestamp": "2026-10-28T16:54:47+08:00",
+  "success": true,
+  "scope": "Separate 64-bit Windows 7 compatibility candidate built and exercised on a Windows 10 host; not a real Windows 7 machine test",
+  "win7_real_machine_confirmed": false,
+  "app_version": "7.0.1",
+  "build": {
+    "entrypoint": "tools/build_win7_exe.py",
+    "staging": "E:\\LanShare-builds\\build-mq0l0bro",
+    "source": "E:\\code\\局域网\\第七版",
+    "python_executable": "E:\\LanShare-builds\\win7-runtime-20261028\\env\\Scripts\\python.exe",
+    "base_python": "C:\\Users\\高育舒\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "python_installer_sha256": "7628244cb53408b50639d2c1287c659f4e29d3dfdb9084b11aed5870c0c6a48a",
+    "build_log_sha256": "b379a4d58a3947369c9609026dc09f200fc75f7878bc8af8ee2d8ca2eea266f5",
+    "warnings_sha256": "dcc2f8bb2262f7753c1ee1fea01ca59cc0bd11c8d6382b4586c4c26c605925e5",
+    "spec_sha256": "7f0a147953efbbd4362f2724272adf59f34c531b328ff838bcd1b75dc822f052",
+    "archive_options": [],
+    "runtime_directory_policy": "pyinstaller-default-windows-temp",
+    "custom_runtime_tmpdir": false
+  },
+  "runtime": {
+    "python": "3.8.10",
+    "architecture": "64-bit AMD64",
+    "PyInstaller": "5.13.2",
+    "pyinstaller-hooks-contrib": "2023.8",
+    "PyQt5": "5.15.9",
+    "PyQt5-Qt5": "5.15.2",
+    "Pillow": "10.4.0",
+    "pillow-heif": "0.18.0",
+    "pillow-avif-plugin": "1.4.6",
+    "brotli": "1.1.0",
+    "segno": "1.6.1"
+  },
+  "artifact": {
+    "candidate": "E:\\LanShare-builds\\build-mq0l0bro\\dist\\lanshare.exe",
+    "delivered": "E:\\code\\局域网\\第七版\\lanshare-win7.exe",
+    "name": "lanshare-win7.exe",
+    "sha256": "bff338db03a2e8e8d2a43c95dd7ad22f41888b38aadcbe32765413db2f665e0e",
+    "size_bytes": 61342385,
+    "signed": false,
+    "type": "PyInstaller onefile windowed executable"
+  },
+  "source_snapshot": {
+    "staging_owner_file_sha256": "174438c0f1e26293e2ca7b22e842f2a806854b9d46e5be0bd4aa9f0be255b9ec",
+    "lanshare.py": "cd3276078b733bd0dd5b70546820642853b7a0227eebb854e851fb999e8585e5",
+    "server/__init__.py": "493a44db1832a5b861c3c709811abe953e7213ca0e6538de266f8091c8ed9665",
+    "ui/main_window.py": "42377774050cfc35db38f0679258cedc56f3665f89c2a96bb47c169a0a2e540d",
+    "webassets.py": "730ff9507c1cd5999c2a967f4f79b8f1e5dc70fd305b034fae1a8271fdbc0e9e",
+    "icon.ico": "d3730fdf7a4f1dcb4599fae4e9c9a47f25144ebb37b29ba10407515f97489842",
+    "server_and_ui_python_files_compared": 26,
+    "server_and_ui_mismatches": 0
+  },
+  "build_tools": {
+    "requirements-win7.txt": "fca1280c8439feb0f02be123595b7ef699e3b9c1ea7552eedf3c387fc773480c",
+    "tools/build_win7_exe.py": "981b44d1758c89d7e5224f20e28f1a01f8c1439125c07795a9d2c7a83427dfdb",
+    "tools/build_exe.py": "6022ae91c9789c421ac92011feb3d5a903452da638e1325799e188b1d9403c14",
+    "tools/v7_win7_pe_test.py": "641a030618df0b1cd23e8f555786a786aa5c61828fb5fcbd283b2ba086589aa7"
+  },
+  "pe_audit": {
+    "report": "pe-imports-final.json",
+    "report_sha256": "8816fb525d1146577906f7e3f35d4fca769e84542bdd9dde7dd0c5e28bf278c5",
+    "archive_pe_members_scanned": 118,
+    "bootloader_imports": [
+      "advapi32.dll",
+      "comctl32.dll",
+      "gdi32.dll",
+      "kernel32.dll",
+      "user32.dll"
+    ],
+    "bootloader_imports_win7_safe": true,
+    "forbidden_win7_imports": [],
+    "required_ucrt_api_set_libraries": 38,
+    "missing_ucrt_api_set_libraries": 0,
+    "ucrtbase_bundled": true,
+    "success": true
+  },
+  "verification": {
+    "source_startup": {
+      "report": "startup-temp.json",
+      "sha256": "d0d809b116b946b28fac1d6f093e4e355f595159538645c72aa610217b2ad78c",
+      "tests": 10,
+      "successful_launches": 12,
+      "success": true
+    },
+    "executable_features": {
+      "report": "exe-verification.json",
+      "sha256": "a1815705afa0125751513ed60ff45ca9a73b96384e3147cbf0113e9aebbea55c",
+      "tests": 8,
+      "formats": [
+        "PNG",
+        "JPEG",
+        "GIF",
+        "WEBP",
+        "BMP",
+        "TIFF",
+        "ICO",
+        "HEIF",
+        "AVIF"
+      ],
+      "large_image_bytes": 21870054,
+      "success": true
+    },
+    "final_version": {
+      "report": "version-final.json",
+      "sha256": "4cc938f82feb3d45ccc8094ec331c9a9dcd207f73a91d5285f9de6865f609582",
+      "log_sha256": "c6949788868aa0df7d58bc9e0a66977b6e7ad657c5ea9adbaa8b9b7b2b9040f9",
+      "tests": 9,
+      "success": true
+    },
+    "final_startup": {
+      "report": "startup-final.json",
+      "sha256": "b8418d8888cd6ada1ad767c55db530c4f3ad70d7d894b36a1fb62262d6a09aa8",
+      "tests": 10,
+      "successful_launches": 12,
+      "original_path_passed": true,
+      "success": true
+    },
+    "low_integrity_failure_preserved": {
+      "report": "startup-final-low-integrity.json",
+      "sha256": "b1cb719dd063fd425200d93ddfc542c5bd61d59f72e25294aad199a8852e1cd4",
+      "successful_launches": 11,
+      "errors": 1,
+      "exit_code": 3221225794,
+      "cause": "The sandbox-managed parent directory assigned Low integrity to the newly copied EXE.",
+      "success": false
+    }
+  },
+  "delivery": {
+    "byte_copy_report": "delivery-win7.json",
+    "byte_copy_report_sha256": "7035745d7a29c4c8b56e2e827397074a0453a31ce43f696021bb38ce7a4e5cc4",
+    "security_report": "delivery-security-final.json",
+    "security_report_sha256": "2523cc05ef56983746316ba195654807a162aa2974390194eba82132a66b3e7e",
+    "final_sha256_matches_candidate": true,
+    "final_security_matches_known_runnable_exe": true,
+    "low_integrity_label_absent": true,
+    "zone_identifier_absent": true,
+    "parent_acl_unchanged": true,
+    "directory_permissions_modified": false,
+    "candidate_preserved": true
+  },
+  "known_limitations": [
+    "The package is x64 only; 32-bit Windows 7 requires a separate x86 build.",
+    "It has not been launched on a real Windows 7 machine.",
+    "The executable is unsigned and can trigger SmartScreen or antivirus review.",
+    "Static PE inspection cannot cover every dynamic LoadLibrary path, policy restriction, or patched-system difference.",
+    "Python 3.8 is end-of-life and no longer receives security updates."
+  ]
+}

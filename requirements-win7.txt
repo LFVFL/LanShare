@@ -1,0 +1,13 @@
+# Dedicated 64-bit Windows 7 build. Keep this separate from requirements.txt:
+# newer Python/PyInstaller packages no longer provide the Win7 bootloader runtime.
+PyQt5==5.15.9
+Pillow==10.4.0
+pillow-heif==0.18.0
+pillow-avif-plugin==1.4.6
+pyinstaller==5.13.2
+pyinstaller-hooks-contrib==2023.8
+brotli==1.1.0
+segno==1.6.1
+altgraph==0.17.4
+pefile==2023.2.7
+pywin32-ctypes==0.2.2

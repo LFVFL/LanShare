@@ -160,46 +160,65 @@ class BuildSafetyTests(unittest.TestCase):
         self.assertEqual(environment['PYINSTALLER_CONFIG_DIR'], str(self.work / '_pyinstaller-cache'))
 
     @unittest.skipUnless(os.name == 'nt', 'Windows runtime temp directory')
-    def test_runtime_directory_placeholder_is_not_expanded_while_building(self):
-        with mock.patch.dict(os.environ, {'LOCALAPPDATA': str(self.work / 'builder-profile')}):
-            flags = build_exe.runtime_tmpdir_flags()
-        self.assertEqual(flags, ['--runtime-tmpdir', r'%LOCALAPPDATA%\LanShare\Temp'])
-        self.assertNotIn('builder-profile', ' '.join(flags))
+    def test_build_environment_drops_inherited_bootloader_state(self):
+        foreign = {'_PYI_APPLICATION_HOME_DIR': 'foreign-extraction',
+                   '_PYI_PARENT_PROCESS_LEVEL': '1', 'PYINSTALLER_RESET_ENVIRONMENT': '0',
+                   'PYINSTALLER_CONFIG_DIR': 'foreign-cache'}
+        with mock.patch.dict(os.environ, foreign):
+            environment = build_exe.clean_python_environment()
+        for name in foreign:
+            self.assertNotIn(name, environment)
 
     @unittest.skipUnless(os.name == 'nt', 'Windows runtime temp directory')
-    def test_archive_requires_literal_user_runtime_directory_option(self):
-        expected = 'pyi-runtime-tmpdir %LOCALAPPDATA%/LanShare/Temp'
-        for options in ([expected], [], ['pyi-runtime-tmpdir C:/Users/builder/Temp']):
+    def test_build_does_not_depend_on_localappdata(self):
+        with mock.patch.dict(os.environ, {'LOCALAPPDATA': str(self.work / 'builder-profile')}):
+            with mock.patch.object(build_exe, 'qt_runtime_flags', return_value=[]), \
+                    mock.patch.object(build_exe, 'image_plugin_flags', return_value=[]):
+                command = build_exe.pyinstaller_command(sys.executable, self.work, {})
+        self.assertNotIn('--runtime-tmpdir', command)
+        self.assertNotIn('builder-profile', ' '.join(command))
+
+    @unittest.skipUnless(os.name == 'nt', 'Windows runtime temp directory')
+    def test_archive_rejects_any_custom_runtime_directory_option(self):
+        for options in ([], ['pyi-contents-directory _internal'],
+                        ['pyi-runtime-tmpdir %LOCALAPPDATA%/LanShare/Temp'],
+                        ['pyi-runtime-tmpdir C:/Users/builder/Temp'], None, [42]):
             probe = subprocess.CompletedProcess([], 0, json.dumps(options), '')
             with self.subTest(options=options), \
                     mock.patch.object(build_exe.subprocess, 'run', return_value=probe):
-                if options == [expected]:
-                    build_exe.verify_runtime_tmpdir_archive(sys.executable, self.work / 'fixture.exe', {})
+                if options in ([], ['pyi-contents-directory _internal']):
+                    build_exe.verify_default_runtime_archive(sys.executable, self.work / 'fixture.exe', {})
                 else:
                     with self.assertRaises(RuntimeError):
-                        build_exe.verify_runtime_tmpdir_archive(sys.executable, self.work / 'fixture.exe', {})
+                        build_exe.verify_default_runtime_archive(sys.executable, self.work / 'fixture.exe', {})
 
     @unittest.skipUnless(os.name == 'nt', 'Windows runtime temp directory')
-    def test_smoke_overrides_only_child_localappdata_with_owned_profile(self):
-        original = {'LOCALAPPDATA': 'real-user-profile', 'TEMP': 'inherited-temp', 'TMP': 'inherited-tmp'}
+    def test_smoke_owns_temp_and_resets_child_bootloader_state(self):
+        original = {'LOCALAPPDATA': 'real-user-profile', 'TEMP': 'inherited-temp', 'TMP': 'inherited-tmp',
+                    '_PYI_ARCHIVE_FILE': 'foreign.exe', 'PYINSTALLER_CONFIG_DIR': 'build-cache',
+                    'PYINSTALLER_RESET_ENVIRONMENT': '0'}
         profile = self.work / 'owned-profile'
         result = build_exe.smoke_environment(original, profile)
         self.assertEqual(original['LOCALAPPDATA'], 'real-user-profile')
         self.assertEqual(result['LOCALAPPDATA'], str(profile / 'local-app-data'))
         self.assertEqual(result['LANSHARE_DATA_DIR'], str(profile / 'chat_data'))
         self.assertEqual(result['QT_QPA_PLATFORM'], 'offscreen')
-        self.assertEqual(result['TEMP'], original['TEMP'])
-        self.assertEqual(result['TMP'], original['TMP'])
+        self.assertEqual(result['TEMP'], str(profile / 'temp'))
+        self.assertEqual(result['TMP'], result['TEMP'])
+        self.assertNotIn('_PYI_ARCHIVE_FILE', result)
+        self.assertNotIn('PYINSTALLER_CONFIG_DIR', result)
+        self.assertEqual(result['PYINSTALLER_RESET_ENVIRONMENT'], '1')
+        self.assertFalse(profile.exists(), 'Environment construction must not precreate fixtures')
+        self.assertEqual(original['PYINSTALLER_RESET_ENVIRONMENT'], '0')
 
     @unittest.skipUnless(os.name == 'nt', 'Windows runtime temp directory')
-    def test_packaging_command_keeps_portable_runtime_and_onefile_flags(self):
+    def test_packaging_command_keeps_default_temp_and_onefile_flags(self):
         with mock.patch.object(build_exe, 'qt_runtime_flags', return_value=[]), \
                 mock.patch.object(build_exe, 'image_plugin_flags', return_value=[]):
             command = build_exe.pyinstaller_command(sys.executable, self.work, {})
         self.assertIn('--onefile', command)
         self.assertIn('--windowed', command)
-        self.assertEqual(command[command.index('--runtime-tmpdir') + 1],
-                         r'%LOCALAPPDATA%\LanShare\Temp')
+        self.assertNotIn('--runtime-tmpdir', command)
         self.assertEqual(command[-1], 'lanshare.py')
 
     @unittest.skipUnless(os.name == 'nt', 'Windows dependency filtering')

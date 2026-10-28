@@ -1,0 +1,81 @@
+{
+  "timestamp": "2026-10-28T16:28:19.369584+08:00",
+  "attempt_id": "1173e09ca2ac4464b23e459a8794aadf",
+  "success": true,
+  "exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+  "app_version": "7.0.1",
+  "candidate": "E:\\LanShare-builds\\build-zs8zfrwf\\dist\\lanshare.exe",
+  "previous_backup": "E:\\code\\\u5c40\u57df\u7f51\\_diag\\lan7-hotfix-20261028\\previous\\lanshare.exe",
+  "previous_sha256": "a7f64eca35d2a1257d2b2a5d4c2e5b63f0718aa3650b607f108168cabb220c25",
+  "replace_attempted": true,
+  "replace_completed": true,
+  "checks": {
+    "final_sha256_matches": true,
+    "final_size_matches": true,
+    "source_consumed": true,
+    "source_file_id_preserved": true,
+    "old_file_id_replaced": true,
+    "source_security_preserved": true,
+    "final_default_medium_label": true,
+    "parent_security_unchanged": true,
+    "previous_backup_preserved": true,
+    "backup_default_medium_label": true,
+    "candidate_preserved": true,
+    "acceptance_evidence_unchanged": true
+  },
+  "method": "Same-volume Medium staging os.replace/MoveFileExW(REPLACE_EXISTING); no COPY_ALLOWED",
+  "directory_permissions_modified": false,
+  "files_relabelled": false,
+  "real_settings_or_chat_data_modified": false,
+  "processes_terminated": false,
+  "attempt_report": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\docs\\changes\\2026-10-28-startup-hotfix-v7.0.1\\test-results\\delivery-attempt-1173e09ca2ac4464b23e459a8794aadf.json",
+  "delivery_report": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\docs\\changes\\2026-10-28-startup-hotfix-v7.0.1\\test-results\\local-delivery.json",
+  "startup_acceptance": "Separate delivered-path startup and token records are required",
+  "limitations": [
+    "Read-only process snapshots are not a global launch lock; a concurrent launch can cause replacement to fail.",
+    "Failure preserves owned staging and backup evidence; no automatic rollback or retry."
+  ],
+  "caller_integrity_rid": 8192,
+  "caller_elevated": false,
+  "helper_sha256": "ba85847b251f19d81384f278e46a44261324293eda7d0a9ff6e09354f052368b",
+  "acceptance_report_sha256": {
+    "build.json": "a875aac261c2773cfb42555221995162a31cbb91b37cd5901a6248448f136bdc",
+    "exe-verification.json": "0031edec350f2035ddb615e870458d2eee8de9c9aa03fca6a210755630975cd3",
+    "version.json": "dfabac40833e2ad3d83aa75ad340f4c00c27b56cb5bcc9229b83a75cf1a1d281",
+    "startup-temp-candidate.json": "c1b6816695b07aab737e36fe74cf8ef533cf508b045cd2553a8b9cd989525685"
+  },
+  "build_report_sha256": "a875aac261c2773cfb42555221995162a31cbb91b37cd5901a6248448f136bdc",
+  "sha256": "ace121b3504d83c566b1c5b20be69e65e9de97a1b21d7be8b0bf8975df7d3c6b",
+  "size_bytes": 63929453,
+  "asset_version": "65a583ef46",
+  "process_checks": [
+    {
+      "timestamp": "2026-10-28T16:28:19.494843+08:00",
+      "matching_pids": [],
+      "unverifiable_same_name_pids": []
+    },
+    {
+      "timestamp": "2026-10-28T16:28:20.128608+08:00",
+      "matching_pids": [],
+      "unverifiable_same_name_pids": []
+    }
+  ],
+  "parent_security_before": {
+    "E:\\code\\\u5c40\u57df\u7f51": "dd7d111b768e65688f727d2dcf9d53bfc921b87c22f1f92bfe9ae8fb7a97c1f1",
+    "E:\\code\\\u5c40\u57df\u7f51\\_diag": "acf0d50e83c88c7091a47f40297d7250df81681c87fec37d994d420aaea0d1da",
+    "E:\\code\\\u5c40\u57df\u7f51\\_diag\\lan7-hotfix-20261028": "ee110887952a0676005218b03b8b399c01adda84d0cacfa7e0631fdbc7c18843",
+    "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248": "95718a633b4b4d5bf3ed281321455b229fcb582c18bfdfa75d5c67c69836e2c5",
+    "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\docs\\changes\\2026-10-28-startup-hotfix-v7.0.1\\test-results": "693af964a62c132454d27c2119c682a402e01f756fccbf35d176efa69ab8dcdb",
+    "E:\\LanShare-builds": "e69d58f35f46954939d6765d533e5f5d2903adc3df81715a89cb9ce08439d146",
+    "E:\\LanShare-builds\\build-zs8zfrwf": "e69d58f35f46954939d6765d533e5f5d2903adc3df81715a89cb9ce08439d146",
+    "E:\\LanShare-builds\\build-zs8zfrwf\\dist": "e69d58f35f46954939d6765d533e5f5d2903adc3df81715a89cb9ce08439d146"
+  },
+  "old_file_security_sha256": "ad574ae97eef226362593aab9306bdeb7899ea1e42c5b9a3494adf37ffd90d7b",
+  "owned_staging": "E:\\LanShare-builds\\build-zs8zfrwf\\_deliver-hotfix-t8et1qmg",
+  "previous_backup_reused": false,
+  "previous_backup_verified": true,
+  "final_security_sha256": "ad574ae97eef226362593aab9306bdeb7899ea1e42c5b9a3494adf37ffd90d7b",
+  "final_labels": [],
+  "staging_retained_for_audit": true,
+  "owned_claim_removed": true
+}

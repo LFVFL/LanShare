@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-10-28T17:22:12.1109899+08:00",
+  "success": true,
+  "method": "Same-volume staging, SHA256/size check, File.Move to a new target path",
+  "candidate": "E:\\LanShare-builds\\build-mq0l0bro\\dist\\lanshare.exe",
+  "target": "E:\\code\\局域网\\第七版\\lanshare-win7.exe",
+  "staging_consumed": true,
+  "sha256": "BFF338DB03A2E8E8D2A43C95DD7AD22F41888B38AADCBE32765413DB2F665E0E",
+  "size_bytes": 61342385,
+  "source_sha256": "BFF338DB03A2E8E8D2A43C95DD7AD22F41888B38AADCBE32765413DB2F665E0E",
+  "source_size_bytes": 61342385,
+  "parent_acl_unchanged": true,
+  "parent_acl_sha256": "acf0d50e83c88c7091a47f40297d7250df81681c87fec37d994d420aaea0d1da",
+  "staged_streams": [
+    ":$DATA"
+  ],
+  "final_streams": [
+    ":$DATA"
+  ],
+  "zone_identifier_absent": true,
+  "directory_permissions_modified": false,
+  "candidate_preserved": true
+}

@@ -1,6 +1,6 @@
 # 局域网云盘共享（LanShare）
 
-当前版本：**v7.0**（Windows 单文件 EXE）。
+当前源码及本地修复候选：**v7.0.1**（Windows 单文件 EXE，待故障电脑复测）。GitHub 已发布版本仍为 v7.0。
 
 一个**不联网也能用**的局域网文件共享工具：Windows 上双击运行，同一个 Wi-Fi / 交换机下的
 手机、平板、别的电脑打开浏览器就能传文件、建群聊。不经过任何第三方服务器。
@@ -57,13 +57,24 @@ Web 端（浅色 / 深色，默认翠绿配色）：
 本次发布：[v7.0 更新说明](https://github.com/LFVFL/LanShare/releases/tag/v7.0) ·
 [直接下载 EXE](https://github.com/LFVFL/LanShare/releases/download/v7.0/lanshare.exe)。
 
+Windows 7 64 位 SP1 不能加载当前 Python 3.12 包中的 `python312.dll` 和
+`api-ms-win-core-path-l1-1-0.dll`。为此额外生成了独立的 `lanshare-win7.exe`
+（Python 3.8 / PyInstaller 5.13 构建，功能版本同为 7.0.1）；它不替换
+Windows 10/11 使用的 `lanshare.exe`。当前是 64 位 Win7 候选，尚未在 Win7 实机确认；
+32 位 Win7 不能运行此文件。构建范围、哈希和测试边界见
+[Win7 x64 兼容包记录](docs/changes/2026-10-28-win7-compat-v7.0.1/README.md)。
+
 v7.0 的窗口标题和窗口内版本号保持一致；手机聊天室的改群名按钮位于顶部，输入区不再
 显示改名入口。更新、验证与交付信息见 [v7.0 发布记录](docs/changes/2026-10-28-release-v7/README.md)。
 
-第七版启动修复包使用 `%LOCALAPPDATA%\LanShare\Temp` 作为单文件临时解包位置，
-不再依赖 `TMP/TEMP` 选择解包目录。正常退出后删除本次 `_MEI*` 解包目录；这不迁移
-设置或聊天数据，也不修改系统环境变量。首次修复见 [临时解包记录](docs/changes/2026-10-28-startup-fix/README.md)，
-原目录仍报错的完整性标记排查及界面调整见 [原路径启动与界面修正](docs/changes/2026-10-28-path-and-chat/README.md)。
+注意：v7.0 强制使用 `%LOCALAPPDATA%\LanShare\Temp` 解包，已收到其他电脑创建该路径
+失败、程序无法启动的反馈。v7.0.1 本地候选撤销这项覆盖，恢复 PyInstaller / Windows 的
+默认临时目录选择；正常退出后仍由 bootloader 清理本次 `_MEI*`。此修复不迁移设置或聊天
+数据，不修改系统环境变量或目录权限。故障、验证范围和待确认事项见
+[v7.0.1 启动修复记录](docs/changes/2026-10-28-startup-hotfix-v7.0.1/README.md)。
+此前的 [临时解包记录](docs/changes/2026-10-28-startup-fix/README.md) 和
+[原路径启动与界面修正](docs/changes/2026-10-28-path-and-chat/README.md) 保留为历史证据，
+不代表最新候选的打包策略。
 
 ### 2. 直接运行（源码）
 
@@ -94,8 +105,9 @@ python tools\build_exe.py --extra-images
 脚本先重新生成前端资源，在新建的专属 ASCII 目录与虚拟环境中自检，再使用
 PyInstaller 打包；检查 Qt DLL 是否完整，并以隔离设置和聊天数据启动 EXE 做冒烟验证。
 产物是脚本最终打印的 `...\build-随机标识\dist\lanshare.exe`，无需旁边放 Python 或源码。
-Windows 构建还核验临时解包参数保留 `%LOCALAPPDATA%` 字面量，不能固化为构建者的
-用户路径；冒烟测试使用自有 `LOCALAPPDATA`，并检查退出后的解包回收。
+Windows 构建还核验归档中没有 `pyi-runtime-tmpdir` 覆盖，避免额外的用户目录依赖；
+冒烟测试使用自有 `TMP/TEMP`、不存在的 `LOCALAPPDATA` 和全新 bootloader 环境，
+并检查退出后的解包回收。这是受控环境验证，不能代替其他电脑首次双击实测。
 
 默认使用非 Windows 系统目录内的临时位置；不足时改用其他盘，例如
 `python tools\build_exe.py --work E:\LanShare-builds --extra-images`。`--work` 必须是新目录
@@ -148,6 +160,7 @@ docs/                文档（变更记录 / 架构 / 重构 / 桌面端改版�
 ## 文档
 
 - [v7.0 发布记录](docs/changes/2026-10-28-release-v7/README.md) —— 版本号统一、手机改群名入口、源码整理及 EXE 发布
+- [v7.0.1 Win7 x64 兼容包](docs/changes/2026-10-28-win7-compat-v7.0.1/README.md) —— Python 3.8 独立构建、PE 依赖扫描、最终路径启动验收及实机边界
 - [第七版修改与验证记录](docs/changes/2026-10-27/README.md) —— 本轮范围、审查映射、测试、独立 EXE 和 GitHub 推送准备
 - [第七版原路径启动与界面修正](docs/changes/2026-10-28-path-and-chat/README.md) —— Windows 完整性标记、搜索范围、群聊表头与输入区
 - [第七版首次启动修复记录](docs/changes/2026-10-28-startup-fix/README.md) —— 临时解包路径、当时的 EXE 和隔离回归，后续以原路径修正记录为准

@@ -1,0 +1,115 @@
+{
+  "timestamp": "2026-10-28T17:13:55.481359+08:00",
+  "runtime": "3.8.10",
+  "source": "E:\\LanShare-builds\\build-mq0l0bro",
+  "expected_version": "7.0.1",
+  "tests": 9,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "name": "__main__.VersionTests.test_both_gui_surfaces_read_the_shared_constant",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.VersionTests.test_browser_bundle_and_available_source_version",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.VersionTests.test_entrypoint_sets_qt_application_version",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.VersionTests.test_requested_source_tree_is_actually_imported",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.VersionTests.test_shared_python_version_is_expected",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.VersionTests.test_window_title_and_header_show_v7",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.ArchiveVersionTests.test_packaged_browser_version_and_bundle_match_source",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.ArchiveVersionTests.test_packaged_desktop_code_matches_the_gui_tested_snapshot",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.ArchiveVersionTests.test_packaged_server_version_is_expected",
+      "status": "passed"
+    }
+  ],
+  "success": true,
+  "evidence": {
+    "browser": {
+      "bundle_version": "7.0.1",
+      "core_source_version": null,
+      "source_note": "Build snapshots intentionally omit the original web tree; generated webassets.JS is always checked."
+    },
+    "qt_application_version": "7.0.1",
+    "python_version": "7.0.1",
+    "gui": {
+      "title": "\u5c40\u57df\u7f51\u4e91\u76d8 v7.0.1",
+      "header": "v7.0.1",
+      "settings": "<test-root>/version.ini",
+      "auto_start": false,
+      "system_integration_enabled": false,
+      "service_running": false
+    },
+    "archive": {
+      "exe_started": false,
+      "extracted_to_disk": false,
+      "method": "Read-only CArchive/PYZ parsing and unmarshalling; no packaged code is executed",
+      "pyz_member": "PYZ-00.pyz",
+      "modules": [
+        "lanshare",
+        "server",
+        "ui.main_window",
+        "webassets"
+      ],
+      "browser_version": [
+        "7.0.1"
+      ],
+      "source_correspondence": {
+        "server": {
+          "source_semantic_sha256": "072de7190dc46c7aa8ce0c9fa174813a3afad72ab5f5fc09098a626a186969f5",
+          "packaged_semantic_sha256": "072de7190dc46c7aa8ce0c9fa174813a3afad72ab5f5fc09098a626a186969f5",
+          "match": true
+        },
+        "ui.main_window": {
+          "source_semantic_sha256": "e6db38a8d65926500ddbfe7a8d9c69d3dbf01e652f09c8b2744fa53b3518a5fd",
+          "packaged_semantic_sha256": "e6db38a8d65926500ddbfe7a8d9c69d3dbf01e652f09c8b2744fa53b3518a5fd",
+          "match": true
+        },
+        "lanshare": {
+          "source_semantic_sha256": "d8d35dde1176056611bb0c68f2d5ad7c6d6455ccd366556665dda7c2c8f40c7e",
+          "packaged_semantic_sha256": "d8d35dde1176056611bb0c68f2d5ad7c6d6455ccd366556665dda7c2c8f40c7e",
+          "match": true
+        }
+      },
+      "python_version": "7.0.1"
+    }
+  },
+  "source_sha256": {
+    "server/__init__.py": "493a44db1832a5b861c3c709811abe953e7213ca0e6538de266f8091c8ed9665",
+    "ui/main_window.py": "42377774050cfc35db38f0679258cedc56f3665f89c2a96bb47c169a0a2e540d",
+    "lanshare.py": "cd3276078b733bd0dd5b70546820642853b7a0227eebb854e851fb999e8585e5",
+    "webassets.py": "730ff9507c1cd5999c2a967f4f79b8f1e5dc70fd305b034fae1a8271fdbc0e9e"
+  },
+  "source_unchanged": true,
+  "exe": "E:\\LanShare-builds\\build-mq0l0bro\\dist\\lanshare.exe",
+  "exe_sha256": "bff338db03a2e8e8d2a43c95dd7ad22f41888b38aadcbe32765413db2f665e0e",
+  "exe_unchanged": true,
+  "fixture_removed": true,
+  "scope": "Offscreen Qt, independent INI and synthetic chat data. GUI auto-start/system integration disabled. Entry-point IPC, cleanup worker and event loop are mocked.",
+  "limitations": [
+    "The optional onefile inspection is static correspondence, not an EXE launch or Explorer interaction.",
+    "Windows PE file properties are outside this title/header version check."
+  ]
+}

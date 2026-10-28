@@ -1,4 +1,4 @@
-"""Verify a copied onefile EXE in an empty, owned directory and test profile."""
+"""Verify a copied onefile EXE with default extraction in an owned Windows temp."""
 import argparse
 import hashlib
 import io
@@ -25,8 +25,6 @@ from PyInstaller.archive.readers import CArchiveReader  # noqa: E402
 import pillow_heif  # noqa: E402
 import pillow_avif  # noqa: E402,F401
 
-RUNTIME_TMPDIR = r'%LOCALAPPDATA%\LanShare\Temp'
-
 pillow_heif.register_heif_opener()
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
@@ -52,6 +50,7 @@ class ExeTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        cls.evidence['launches'] = 0
         cls.workspace = TEST_ENV.temporary_dir(prefix='portable-exe-')
         cls.portable = cls.workspace / 'portable'
         cls.portable.mkdir()
@@ -61,7 +60,11 @@ class ExeTests(unittest.TestCase):
         cls.profile.mkdir()
         cls.local_app_data = cls.workspace / 'local-\u7528\u6237 \u914d\u7f6e'
         cls.local_app_data.mkdir()
-        cls.runtime_base = cls.local_app_data / 'LanShare' / 'Temp'
+        cls.legacy_runtime_base = cls.local_app_data / 'LanShare' / 'Temp'
+        cls.runtime_base = cls.workspace / 'temp-\u4e34\u65f6 \u7a7a\u95f4'
+        cls.runtime_base.mkdir()
+        if (cls.local_app_data / 'LanShare').exists() or list(cls.runtime_base.iterdir()):
+            raise RuntimeError('First-run LOCALAPPDATA and temporary-directory fixtures are not clean')
         cls.runtime_dir = None
         cls.share = cls.workspace / 'share'
         cls.share.mkdir()
@@ -74,9 +77,13 @@ class ExeTests(unittest.TestCase):
         (cls.share / 'preview.png').write_bytes(cls.png)
         cls.port = unused_port()
         environment = dict(os.environ)
-        for key in ('PYTHONHOME', 'PYTHONPATH', 'VIRTUAL_ENV', 'CONDA_PREFIX',
-                    'QT_PLUGIN_PATH', 'QT_QPA_PLATFORM_PLUGIN_PATH', 'QTDIR'):
-            environment.pop(key, None)
+        for key in tuple(environment):
+            name = key.upper()
+            if (name in ('PYTHONHOME', 'PYTHONPATH', 'VIRTUAL_ENV', 'CONDA_PREFIX',
+                         'QT_PLUGIN_PATH', 'QT_QPA_PLATFORM_PLUGIN_PATH', 'QTDIR',
+                         'LOCALAPPDATA', 'TEMP', 'TMP') or
+                    name.startswith(('_PYI_', 'PYINSTALLER_'))):
+                environment.pop(key)
         windows = Path(os.environ.get('SystemRoot', r'C:\Windows'))
         environment.update(
             QT_QPA_PLATFORM='offscreen',
@@ -84,9 +91,18 @@ class ExeTests(unittest.TestCase):
             LANSHARE_CHAT_IMAGE_MAX_MB='0',
             LANSHARE_CHAT_MIN_FREE_MB='0',
             LOCALAPPDATA=str(cls.local_app_data),
+            PYINSTALLER_RESET_ENVIRONMENT='1',
             PATH=os.pathsep.join((str(windows / 'System32'), str(windows))),
-            TEMP=str(cls.workspace), TMP=str(cls.workspace),
+            TEMP=str(cls.runtime_base), TMP=str(cls.runtime_base),
         )
+        cls.evidence.update(local_app_data=str(cls.local_app_data),
+                            local_app_data_exists_before_launch=cls.local_app_data.is_dir(),
+                            lanshare_parent_exists_before_launch=(cls.local_app_data / 'LanShare').exists(),
+                            legacy_runtime_base_exists_before_launch=cls.legacy_runtime_base.exists(),
+                            runtime_base=str(cls.runtime_base),
+                            runtime_base_empty_before_launch=not list(cls.runtime_base.iterdir()),
+                            temp=environment['TEMP'], tmp=environment['TMP'],
+                            bootloader_environment_reset=True)
         cls.job = OwnedProcessJob()
         try:
             cls.process = subprocess.Popen(
@@ -94,6 +110,7 @@ class ExeTests(unittest.TestCase):
                  '--startup', '--test-profile', str(cls.profile)],
                 cwd=cls.portable, env=environment,
             )
+            cls.evidence['launches'] = 1
             cls.job.assign(cls.process)
             deadline = time.monotonic() + 45
             while time.monotonic() < deadline:
@@ -114,11 +131,13 @@ class ExeTests(unittest.TestCase):
                 raise RuntimeError('Owned EXE did not start its HTTP listener')
             directories = sorted(cls.runtime_base.glob('_MEI*'))
             if len(directories) != 1:
-                raise RuntimeError('Expected one extraction directory in the owned Unicode LOCALAPPDATA')
+                raise RuntimeError('Expected one extraction directory in the owned Unicode TEMP/TMP')
             cls.runtime_dir = directories[0]
             if (not cls.runtime_dir.is_dir() or cls.runtime_dir.is_symlink() or
                     cls.runtime_dir.resolve().parent != cls.runtime_base.resolve()):
                 raise RuntimeError('Extraction directory is outside its owned runtime base')
+            if (cls.local_app_data / 'LanShare').exists():
+                raise RuntimeError('Default extraction unexpectedly created the legacy LOCALAPPDATA directory')
             python_dlls = sorted(path for path in cls.runtime_dir.glob('python*.dll')
                                  if re.fullmatch(r'python\d{2,3}\.dll', path.name, re.IGNORECASE))
             if not python_dlls:
@@ -131,7 +150,7 @@ class ExeTests(unittest.TestCase):
                 exe=str(cls.exe), copied_exe=str(cls.copied_exe),
                 size_bytes=cls.exe.stat().st_size,
                 sha256=hashlib.sha256(cls.exe.read_bytes()).hexdigest(),
-                environment='offscreen; isolated Unicode LOCALAPPDATA/profile; Windows-only PATH; no source beside EXE',
+                environment='offscreen; owned Unicode TEMP/TMP and LOCALAPPDATA/profile; reset bootloader environment; Windows-only PATH; no source beside EXE',
                 local_app_data=str(cls.local_app_data), runtime_base=str(cls.runtime_base),
                 runtime_extraction_directory=str(cls.runtime_dir),
                 runtime_payload_files=[{'file': path.relative_to(cls.runtime_dir).as_posix(),
@@ -142,9 +161,15 @@ class ExeTests(unittest.TestCase):
             raise
 
     @classmethod
-    def close_process(cls):
+    def close_process(cls, require_running=False):
         try:
-            if cls.process is not None and cls.process.poll() is None:
+            if cls.process is not None:
+                existing_code = cls.process.poll()
+                cls.evidence['exit_code_before_shutdown'] = existing_code
+                if existing_code is not None:
+                    if require_running:
+                        raise RuntimeError('Owned EXE exited before controlled shutdown: %s' % existing_code)
+                    return
                 (cls.profile / 'stop.request').write_text('stop\n', encoding='ascii')
                 try:
                     code = cls.process.wait(timeout=20)
@@ -160,7 +185,7 @@ class ExeTests(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        cls.close_process()
+        cls.close_process(require_running=True)
         deadline = time.monotonic() + 5
         while cls.runtime_dir.exists() and time.monotonic() < deadline:
             time.sleep(0.1)
@@ -170,6 +195,9 @@ class ExeTests(unittest.TestCase):
         if (not cls.evidence['runtime_directory_removed_before_fixture_cleanup'] or
                 cls.evidence['runtime_base_remaining_entries']):
             raise AssertionError('Owned bootloader extraction files remain before fixture cleanup')
+        cls.evidence['legacy_runtime_base_exists_after_exit'] = cls.legacy_runtime_base.exists()
+        if (cls.local_app_data / 'LanShare').exists():
+            raise AssertionError('Default extraction changed the legacy LOCALAPPDATA directory state')
         try:
             cls.request('GET', '/api/list?limit=1')
         except OSError:
@@ -324,34 +352,44 @@ class ExeTests(unittest.TestCase):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--exe', required=True, type=Path)
-    parser.add_argument('--results', type=Path,
-                        default=ROOT / 'docs/changes/2026-10-27/test-results/exe-verification.json')
+    parser.add_argument('--results', required=True, type=Path,
+                        help='New JSON evidence file; existing files are never overwritten')
     args = parser.parse_args()
+    if os.name != 'nt':
+        parser.error('This regression requires Windows')
     ExeTests.exe = args.exe.resolve(strict=True)
     if not ExeTests.exe.is_file() or ExeTests.exe.suffix.lower() != '.exe':
         parser.error('--exe must be a standalone Windows EXE')
     try:
-        options = CArchiveReader(str(ExeTests.exe)).options
-        runtime_options = [option.replace('\\', '/') for option in options
-                           if option.startswith('pyi-runtime-tmpdir ')]
-        if runtime_options != ['pyi-runtime-tmpdir ' + RUNTIME_TMPDIR.replace('\\', '/')]:
-            raise ValueError('EXE must contain the literal per-user runtime directory option')
+        reader = CArchiveReader(str(ExeTests.exe))
+        options = getattr(reader, 'options', None)
+        if options is None:
+            options = [name for name, entry in reader.toc.items() if entry[-1] == 'OPTION']
+        runtime_options = [option for option in options if option.startswith('pyi-runtime-tmpdir')]
+        if runtime_options:
+            raise ValueError('Custom runtime temp options are forbidden; expected the Windows default')
     except Exception as exc:
         parser.error('Refusing to launch an unverified runtime-temp EXE: %s' % exc)
-    ExeTests.evidence['runtime_tmpdir_option'] = RUNTIME_TMPDIR
-    ExeTests.evidence['runtime_tmpdir_archive_option'] = runtime_options[0]
-    started = time.monotonic()
-    suite = unittest.defaultTestLoader.loadTestsFromTestCase(ExeTests)
-    result = unittest.TextTestRunner(verbosity=2).run(suite)
-    evidence = dict(ExeTests.evidence, success=result.wasSuccessful(), tests=result.testsRun,
-                    failures=len(result.failures), errors=len(result.errors),
-                    seconds=round(time.monotonic() - started, 2),
-                    timestamp=time.strftime('%Y-%m-%dT%H:%M:%S%z'))
-    if not result.wasSuccessful():
-        TEST_ENV.keep = True
-        evidence['retained_owned_test_workspace'] = str(TEST_ENV.root)
-    args.results.parent.mkdir(parents=True, exist_ok=True)
-    args.results.write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    ExeTests.evidence['runtime_directory_policy'] = 'pyinstaller-default-windows-temp'
+    ExeTests.evidence['runtime_tmpdir_archive_options'] = runtime_options
+    try:
+        args.results.parent.mkdir(parents=True, exist_ok=True)
+        output = args.results.open('x', encoding='utf-8')
+    except OSError as exc:
+        parser.error('Cannot reserve new --results file; no EXE was launched: %s' % exc)
+    with output:
+        started = time.monotonic()
+        suite = unittest.defaultTestLoader.loadTestsFromTestCase(ExeTests)
+        result = unittest.TextTestRunner(verbosity=2).run(suite)
+        evidence = dict(ExeTests.evidence, success=result.wasSuccessful(), tests=result.testsRun,
+                        failures=len(result.failures), errors=len(result.errors), skipped=len(result.skipped),
+                        planned_launches=1,
+                        seconds=round(time.monotonic() - started, 2),
+                        timestamp=time.strftime('%Y-%m-%dT%H:%M:%S%z'))
+        if not result.wasSuccessful():
+            TEST_ENV.keep = True
+            evidence['retained_owned_test_workspace'] = str(TEST_ENV.root)
+        output.write(json.dumps(evidence, ensure_ascii=False, indent=2) + '\n')
     print('EXE evidence: %s' % args.results)
     return 0 if result.wasSuccessful() else 1
 

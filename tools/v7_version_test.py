@@ -32,15 +32,22 @@ VERSION_PATTERN = re.compile(r"\bLan\.version\s*=\s*(['\"])([^'\"]+)\1")
 
 def digest(path):
     with Path(path).open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest()
+        value = hashlib.sha256()
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            value.update(chunk)
+        return value.hexdigest()
 
 
 def code_value(value):
     if isinstance(value, types.CodeType):
-        fields = ('co_name', 'co_qualname', 'co_argcount', 'co_posonlyargcount',
+        fields = ('co_name', 'co_argcount', 'co_posonlyargcount',
                   'co_kwonlyargcount', 'co_nlocals', 'co_stacksize', 'co_flags',
                   'co_code', 'co_consts', 'co_names', 'co_varnames',
-                  'co_freevars', 'co_cellvars', 'co_exceptiontable')
+                  'co_freevars', 'co_cellvars')
+        fields = tuple(name for name in fields if hasattr(value, name))
+        for optional in ('co_qualname', 'co_exceptiontable'):
+            if hasattr(value, optional):
+                fields += (optional,)
         return {'code': {name: code_value(getattr(value, name)) for name in fields}}
     if isinstance(value, bytes):
         return {'bytes': value.hex()}
@@ -254,7 +261,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', type=Path, default=ROOT)
     parser.add_argument('--exe', type=Path, help='Optional onefile for read-only version inspection')
-    parser.add_argument('--expected-version', default='7.0')
+    parser.add_argument('--expected-version', default='7.0.1')
     parser.add_argument('--results', type=Path, default=ROOT / 'docs/changes/2026-10-28-release-v7/test-results/version.json')
     args = parser.parse_args()
     source = args.source.resolve(strict=True)

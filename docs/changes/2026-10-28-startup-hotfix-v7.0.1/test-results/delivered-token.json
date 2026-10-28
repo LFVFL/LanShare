@@ -1,0 +1,193 @@
+{
+  "timestamp": "2026-10-28T16:28:20.608418+08:00",
+  "success": true,
+  "status": "completed",
+  "exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+  "cwd": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248",
+  "environment": "isolated",
+  "app_version": "7.0.1",
+  "method": "One original-path CREATE_SUSPENDED launch; assign owned job before ResumeThread; direct token and owned-module inspection",
+  "execution_context": "Approved actual-user, non-elevated Medium integrity",
+  "helper_sha256": "ba85847b251f19d81384f278e46a44261324293eda7d0a9ff6e09354f052368b",
+  "owned_job_helper_sha256": "4f7de6d1fb2ad1188c83de01fce8586b13f525d9ebe5238ffba689a370f94038",
+  "launched": true,
+  "ready": true,
+  "resumed": true,
+  "terminated_unassigned_owned_child": false,
+  "force_closed_owned_job": false,
+  "scope": "Owned share, test profile, INI settings, chat data and port; offscreen Qt and disabled system integration. No ACL or global environment changes. Never remove inherited TEMP contents.",
+  "limitations": [
+    "Controlled launch, not an Explorer double click or visible UI acceptance.",
+    "The inherited mode preserves TEMP/TMP/LOCALAPPDATA, not all Python/Qt bootloader environment state.",
+    "A separate startup matrix tests broader first-run and redirected-profile cases."
+  ],
+  "exe_sha256": "ace121b3504d83c566b1c5b20be69e65e9de97a1b21d7be8b0bf8975df7d3c6b",
+  "size_bytes": 63929453,
+  "candidate": "E:\\LanShare-builds\\build-zs8zfrwf\\dist\\lanshare.exe",
+  "build_report_sha256": "a875aac261c2773cfb42555221995162a31cbb91b37cd5901a6248448f136bdc",
+  "local_delivery_report_sha256": "952957f42c14aca77478a020a4ad2b0a6f89bfd0cbc2347699dc0ce7feb3a3a2",
+  "caller_integrity_rid": 8192,
+  "caller_elevated": false,
+  "file_security_before": {
+    "labels": [],
+    "security_sha256": "ad574ae97eef226362593aab9306bdeb7899ea1e42c5b9a3494adf37ffd90d7b"
+  },
+  "parent_security_before": {
+    "E:\\code\\\u5c40\u57df\u7f51": {
+      "labels": [
+        {
+          "integrity": "low",
+          "rid": 4096,
+          "flags": 3,
+          "policy_mask": 1
+        }
+      ],
+      "security_sha256": "dd7d111b768e65688f727d2dcf9d53bfc921b87c22f1f92bfe9ae8fb7a97c1f1"
+    },
+    "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248": {
+      "labels": [
+        {
+          "integrity": "low",
+          "rid": 4096,
+          "flags": 19,
+          "policy_mask": 1
+        }
+      ],
+      "security_sha256": "95718a633b4b4d5bf3ed281321455b229fcb582c18bfdfa75d5c67c69836e2c5"
+    }
+  },
+  "fixture": "E:\\LanShare-builds\\build-zs8zfrwf\\_hotfix-token-8w7xit42",
+  "fixture_security": {
+    "labels": [],
+    "security_sha256": "e69d58f35f46954939d6765d533e5f5d2903adc3df81715a89cb9ce08439d146"
+  },
+  "port": 56839,
+  "bootloader_environment_reset": true,
+  "inherited_temp_variables_preserved": false,
+  "windows_environment": {
+    "LOCALAPPDATA": [
+      {
+        "key": "LOCALAPPDATA",
+        "value_sha256": "e40a2a7055b53c111207edebeefa8a209e152f3ae2d228188038e0905d3f569a",
+        "empty": false
+      }
+    ],
+    "TEMP": [
+      {
+        "key": "TEMP",
+        "value_sha256": "909b871e590424cfee531ef9eb2ca2a1be07b1908f446175d66fdc4effef3087",
+        "empty": false
+      }
+    ],
+    "TMP": [
+      {
+        "key": "TMP",
+        "value_sha256": "909b871e590424cfee531ef9eb2ca2a1be07b1908f446175d66fdc4effef3087",
+        "empty": false
+      }
+    ]
+  },
+  "get_temp_path": "E:\\LanShare-builds\\build-zs8zfrwf\\_hotfix-token-8w7xit42\\temp\\",
+  "resolved_runtime_base": "E:\\LanShare-builds\\build-zs8zfrwf\\_hotfix-token-8w7xit42\\temp",
+  "runtime_base_security": {
+    "labels": [],
+    "security_sha256": "e69d58f35f46954939d6765d533e5f5d2903adc3df81715a89cb9ce08439d146"
+  },
+  "temp_probe": "Same child environment, Python -I -S -B, read-only GetTempPathW",
+  "pid": 32920,
+  "job_assigned_before_resume": true,
+  "token_before_resume": {
+    "integrity_rid": 8192,
+    "integrity": "medium",
+    "same_user_as_caller": true,
+    "elevated": false
+  },
+  "tokens_at_ready": [
+    {
+      "pid": 32920,
+      "integrity_rid": 8192,
+      "integrity": "medium",
+      "same_user_as_caller": true,
+      "elevated": false
+    },
+    {
+      "pid": 27456,
+      "integrity_rid": 8192,
+      "integrity": "medium",
+      "same_user_as_caller": true,
+      "elevated": false
+    }
+  ],
+  "runtime_extractions_at_ready": [
+    {
+      "pid": 27456,
+      "directory": "E:\\LanShare-builds\\build-zs8zfrwf\\_hotfix-token-8w7xit42\\temp\\_MEI000080982",
+      "mapped_module": "E:\\LanShare-builds\\build-zs8zfrwf\\_hotfix-token-8w7xit42\\temp\\_MEI000080982\\python312.dll"
+    }
+  ],
+  "exit_code_before_job_close": 0,
+  "extractions_removed_before_job_close": true,
+  "settings_ini_isolated": true,
+  "owned_job_processes_before_close": [],
+  "final_exit_code": 0,
+  "exe_bytes_unchanged": true,
+  "file_security_unchanged": true,
+  "file_security_after": {
+    "labels": [],
+    "security_sha256": "ad574ae97eef226362593aab9306bdeb7899ea1e42c5b9a3494adf37ffd90d7b"
+  },
+  "file_id_unchanged": true,
+  "parent_security_after": {
+    "E:\\code\\\u5c40\u57df\u7f51": {
+      "labels": [
+        {
+          "integrity": "low",
+          "rid": 4096,
+          "flags": 3,
+          "policy_mask": 1
+        }
+      ],
+      "security_sha256": "dd7d111b768e65688f727d2dcf9d53bfc921b87c22f1f92bfe9ae8fb7a97c1f1"
+    },
+    "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248": {
+      "labels": [
+        {
+          "integrity": "low",
+          "rid": 4096,
+          "flags": 19,
+          "policy_mask": 1
+        }
+      ],
+      "security_sha256": "95718a633b4b4d5bf3ed281321455b229fcb582c18bfdfa75d5c67c69836e2c5"
+    }
+  },
+  "parent_security_unchanged": true,
+  "listener_closed": true,
+  "remaining_attributed_extractions": [],
+  "fixture_removed": true,
+  "checks": {
+    "original_path_launched": true,
+    "job_assigned_before_resume": true,
+    "original_path_medium_before_resume": true,
+    "original_path_same_user_before_resume": true,
+    "original_path_non_elevated_before_resume": true,
+    "ready": true,
+    "all_owned_processes_medium_at_ready": true,
+    "all_owned_processes_same_user": true,
+    "all_owned_processes_non_elevated": true,
+    "normal_exit_zero": true,
+    "no_forced_job_cleanup": true,
+    "no_unassigned_child_cleanup": true,
+    "runtime_extraction_attributed_to_owned_job": true,
+    "runtime_extraction_cleaned_normally": true,
+    "bootloader_environment_reset": true,
+    "inherited_environment_preserved_when_requested": true,
+    "settings_ini_isolated": true,
+    "listener_closed": true,
+    "exe_bytes_unchanged": true,
+    "exe_security_unchanged": true,
+    "exe_file_id_unchanged": true,
+    "parent_security_unchanged": true,
+    "fixture_removed": true
+  }
+}
