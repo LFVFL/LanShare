@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-10-28T15:13:42.458892+08:00",
+  "success": true,
+  "repository": "LFVFL/LanShare",
+  "tag": "v7.0",
+  "commit": "a2b109876f3f2654df2b2d59b85948ee051e0c45",
+  "release_url": "https://github.com/LFVFL/LanShare/releases/tag/v7.0",
+  "release_id": 426357449,
+  "asset_url": "https://github.com/LFVFL/LanShare/releases/download/v7.0/lanshare.exe",
+  "asset_id": 684163909,
+  "sha256": "a7f64eca35d2a1257d2b2a5d4c2e5b63f0718aa3650b607f108168cabb220c25",
+  "github_digest": "sha256:a7f64eca35d2a1257d2b2a5d4c2e5b63f0718aa3650b607f108168cabb220c25",
+  "size_bytes": 63929596,
+  "draft": false,
+  "prerelease": false,
+  "remote_tag_matches_source_commit": true,
+  "asset_digest_matches_local": true,
+  "committed_source_files_verified": 89,
+  "git_lf_normalized_sources": [
+    "server/chat_media.py"
+  ],
+  "generated_webassets_verified_locally": true,
+  "latest_release_verified": true,
+  "automatic_redirects_disabled": true,
+  "credentials_printed_or_saved": false
+}

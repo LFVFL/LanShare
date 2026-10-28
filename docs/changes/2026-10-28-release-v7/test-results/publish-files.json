@@ -1,7 +1,7 @@
 {
   "schema": "lanshare.release-file-whitelist.v1",
-  "status": "reviewed-ready-for-source-commit",
-  "generatedUtc": "2026-10-28T07:08:01.781920+00:00",
+  "status": "published-and-verified",
+  "generatedUtc": "2026-10-28T07:15:12.980183+00:00",
   "targetVersion": "7.0",
   "repository": "https://github.com/LFVFL/LanShare",
   "gitHeadAtAudit": "131c39c8e3133c458b316df39faacd9b275bce27",
@@ -12,7 +12,7 @@
     "exactUniqueFileCount": 151,
     "method": "Parse quoted PowerShell array entries as data; no document commands executed."
   },
-  "candidateFileCount": 192,
+  "candidateFileCount": 194,
   "paths": [
     "README.md",
     "lanshare.py",
@@ -205,7 +205,9 @@
     "docs/changes/2026-10-28-release-v7/test-results/startup-temp-delivered.json",
     "docs/changes/2026-10-28-release-v7/test-results/delivered-token.json",
     "docs/changes/2026-10-28-release-v7/test-results/verification.json",
-    ".gitattributes"
+    ".gitattributes",
+    "docs/changes/2026-10-28-release-v7/test-results/github-source-push.json",
+    "docs/changes/2026-10-28-release-v7/test-results/github-release.json"
   ],
   "groups": [
     {
@@ -307,6 +309,11 @@
       "name": "byteExactEvidenceAttributes",
       "count": 1,
       "base": "."
+    },
+    {
+      "name": "actualGitHubPublicationReceipts",
+      "count": 2,
+      "base": "docs/changes/2026-10-28-release-v7/test-results"
     }
   ],
   "auditedAdditions": [
@@ -455,11 +462,11 @@
       "reason": "Completed frozen-source, static or candidate-only startup evidence; identity/privacy review."
     }
   ],
-  "snapshotMeaning": "Reviewed pre-source-commit selection. Final local v7.0 delivery and isolated original-path acceptance completed; GitHub publication has not yet been asserted. Historical result bytes remain unchanged. The manifest includes itself by path, not by a circular self-hash.",
+  "snapshotMeaning": "Published source/runtime release plus actual GitHub receipts, maintained in a following documentation-only commit. Frozen product source, executable and historical result bytes are unchanged. The manifest includes itself by path without a circular self-hash.",
   "candidateSnapshots": {
     "README.md": {
-      "bytes": 11317,
-      "sha256": "e66e0eefa2b6c70e16123983597fdafb4676424c899051302a42947f1958951b"
+      "bytes": 11502,
+      "sha256": "74077d257725d1d99caeac8af493bd73570be6a7a9d3d0d6b3e3767531d0fac9"
     },
     "lanshare.py": {
       "bytes": 5817,
@@ -1078,8 +1085,8 @@
       "sha256": "86db8bc8f7b688648065d63ac890f255781b9afe0a976eabdc4051492b320492"
     },
     "docs/changes/2026-10-28-release-v7/README.md": {
-      "bytes": 4867,
-      "sha256": "bed9cf84235849533ca1d2321edfbf5369fdbf004f98d213ee897476cd8f5826"
+      "bytes": 5660,
+      "sha256": "403f86d5da4c1a0e8b3e91577e86d067a162fb454755c610d92f98b7f45baa74"
     },
     "docs/changes/2026-10-28-release-v7/mobile-chat.md": {
       "bytes": 5469,
@@ -1220,6 +1227,14 @@
     ".gitattributes": {
       "bytes": 479,
       "sha256": "e616cfec2f4190ac68a1f5633109c94b7dc33c5d6ca8d94db0c471fa3d7387db"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/github-source-push.json": {
+      "bytes": 825,
+      "sha256": "8afa66e13a76c77e4125b3392670666e94a11a857515c7feefd331ed200c257a"
+    },
+    "docs/changes/2026-10-28-release-v7/test-results/github-release.json": {
+      "bytes": 1011,
+      "sha256": "1df7d17ffc271a99e733c3cf5610c90796a5128b487f7b8cde9d9e8f8e904893"
     }
   },
   "checks": {
@@ -1249,9 +1264,9 @@
     },
     "gitOperationsDuringThisExtension": "None; final ignore/index/status preflight remains with root.",
     "newPathsIgnoreCheck": {
-      "fileCount": 192,
+      "fileCount": 194,
       "ignoredPaths": [],
-      "timestamp": "2026-10-28T07:08:01.781920+00:00"
+      "timestamp": "2026-10-28T07:15:12.980183+00:00"
     },
     "frozenSourceHashesMatchReports": true,
     "completedDistinctTestMethods": 116,
@@ -1274,7 +1289,7 @@
     },
     "completeFrozenSourceManifestMatches": 90,
     "finalJsonPrivacyAudit": {
-      "files": 71,
+      "files": 73,
       "signatureFindings": 0,
       "patterns": [
         "accountSid",
@@ -1299,6 +1314,14 @@
       "text": "unset",
       "jsonBytesPreservedInGit": true,
       "whitespace": "blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol"
+    },
+    "actualGitHubPublication": {
+      "source_and_lightweight_tag_atomic_nonforce_push": true,
+      "tag_points_to_tested_source": true,
+      "draft_uploaded_before_publication": true,
+      "asset_size_and_digest_match_local": true,
+      "latest_stable_release_verified": true,
+      "credentials_printed_or_saved": false
     }
   },
   "localOnlyHistoricalFiles": [
@@ -1322,29 +1345,21 @@
   "pendingRootReviewPathsAtAudit": [
     "docs/changes/2026-10-28-release-v7/test-results/release-artifact.json"
   ],
-  "finalizationRequired": [
-    "Stage exactly these reviewed paths and compare the complete index before committing.",
-    "Non-force push the source commit and v7.0 lightweight tag; publish only after remote tag and local frozen-source verification.",
-    "Append actual GitHub publication metadata and update status in a separate documentation commit after upload/digest/latest verification."
-  ],
+  "finalizationRequired": [],
   "previousCandidate": {
     "generatedUtc": "2026-10-28T06:53:40.021503+00:00",
     "fileCount": 184,
     "sha256": "e580158d22e7495e4dab2cc5f52d765f808b98f7704f25ccc18dc8f1345da030"
   },
-  "revision": 6,
+  "revision": 7,
   "candidateArtifact": {
     "path": "E:\\LanShare-builds\\build-hw18u5xf\\dist\\lanshare.exe",
     "bytes": 63929596,
     "sha256": "a7f64eca35d2a1257d2b2a5d4c2e5b63f0718aa3650b607f108168cabb220c25",
     "assetVersion": "01c9b74c9a",
-    "state": "Delivered to exact user path and passed startup matrix plus Medium/non-elevated token acceptance."
+    "state": "Published as the v7.0 latest stable Release attachment; GitHub asset size and SHA-256 digest match the locally accepted executable."
   },
-  "pendingCompletionGates": [
-    "Stage exactly these reviewed paths and compare the complete index before committing.",
-    "Non-force push the source commit and v7.0 lightweight tag; publish only after remote tag and local frozen-source verification.",
-    "Append actual GitHub publication metadata and update status in a separate documentation commit after upload/digest/latest verification."
-  ],
+  "pendingCompletionGates": [],
   "candidateRevisions": [
     {
       "generatedUtc": "2026-10-28T06:41:23.313760+00:00",
@@ -1391,6 +1406,19 @@
         "docs/changes/2026-10-28-release-v7/README.md"
       ],
       "reason": "Preserve original evidence JSON bytes rather than normalize CRLF during Git staging; clarify public metadata and historical status."
+    },
+    {
+      "timestamp": "2026-10-28T07:15:12.980183+00:00",
+      "previous_sha256": "eadd1f683da9f02fae970ea39ca081955c5c792d7f44f592f13d96dead4ae8fa",
+      "addedPaths": [
+        "docs/changes/2026-10-28-release-v7/test-results/github-source-push.json",
+        "docs/changes/2026-10-28-release-v7/test-results/github-release.json"
+      ],
+      "refreshedDocuments": [
+        "README.md",
+        "docs/changes/2026-10-28-release-v7/README.md"
+      ],
+      "reason": "Actual non-force main/tag push and public latest Release upload/digest verification completed. Records are committed separately without changing the v7.0 tag."
     }
   ],
   "resolvedRootReviewPaths": [
@@ -1398,5 +1426,17 @@
     "docs/changes/2026-10-28-release-v7/test-results/startup-temp-delivered.json",
     "docs/changes/2026-10-28-release-v7/test-results/delivered-token.json",
     "docs/changes/2026-10-28-release-v7/test-results/verification.json"
-  ]
+  ],
+  "publication": {
+    "source_commit": "a2b109876f3f2654df2b2d59b85948ee051e0c45",
+    "tag": "v7.0",
+    "release_url": "https://github.com/LFVFL/LanShare/releases/tag/v7.0",
+    "asset_url": "https://github.com/LFVFL/LanShare/releases/download/v7.0/lanshare.exe",
+    "sha256": "a7f64eca35d2a1257d2b2a5d4c2e5b63f0718aa3650b607f108168cabb220c25",
+    "size_bytes": 63929596,
+    "latest_release_verified": true,
+    "source_push_receipt": "docs/changes/2026-10-28-release-v7/test-results/github-source-push.json",
+    "release_receipt": "docs/changes/2026-10-28-release-v7/test-results/github-release.json",
+    "record_commit_policy": "Actual receipts are added by a subsequent docs-only commit, whose ID is discoverable through Git history rather than self-referenced."
+  }
 }

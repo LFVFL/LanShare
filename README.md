@@ -54,6 +54,9 @@ Web 端（浅色 / 深色，默认翠绿配色）：
 去 [Releases](https://github.com/LFVFL/LanShare/releases/latest) 下载最新的 `lanshare.exe`，
 双击运行即可，不需要安装 Python。
 
+本次发布：[v7.0 更新说明](https://github.com/LFVFL/LanShare/releases/tag/v7.0) ·
+[直接下载 EXE](https://github.com/LFVFL/LanShare/releases/download/v7.0/lanshare.exe)。
+
 v7.0 的窗口标题和窗口内版本号保持一致；手机聊天室的改群名按钮位于顶部，输入区不再
 显示改名入口。更新、验证与交付信息见 [v7.0 发布记录](docs/changes/2026-10-28-release-v7/README.md)。
 

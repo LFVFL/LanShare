@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-10-28T15:12:15.159510+08:00",
+  "success": true,
+  "repository": "https://github.com/LFVFL/LanShare",
+  "source_commit": "a2b109876f3f2654df2b2d59b85948ee051e0c45",
+  "base_commit": "131c39c8e3133c458b316df39faacd9b275bce27",
+  "branch": "main",
+  "tag": "v7.0",
+  "tag_type": "lightweight",
+  "atomic_push": true,
+  "force_push": false,
+  "remote_refs_before": {
+    "refs/heads/main": "131c39c8e3133c458b316df39faacd9b275bce27"
+  },
+  "remote_refs_after": {
+    "refs/heads/main": "a2b109876f3f2654df2b2d59b85948ee051e0c45",
+    "refs/tags/v7.0": "a2b109876f3f2654df2b2d59b85948ee051e0c45"
+  },
+  "commit_url": "https://github.com/LFVFL/LanShare/commit/a2b109876f3f2654df2b2d59b85948ee051e0c45",
+  "exe_added_to_source_history": false,
+  "credentials_printed_or_saved": false
+}

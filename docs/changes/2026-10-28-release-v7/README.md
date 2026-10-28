@@ -1,7 +1,7 @@
 # v7.0 发布整理
 
 日期：2026-10-28（Asia/Shanghai）。本轮按用户要求更新桌面两处版本号、把手机聊天室的
-改群名按钮移到顶部，并整理源码与公开记录，准备推送 GitHub 和发布单文件 EXE。
+改群名按钮移到顶部，并整理源码与公开记录。源码已推送 GitHub，单文件 EXE 已发布为 v7.0。
 
 ## 修改范围
 
@@ -55,11 +55,20 @@ DLL/PYD 的路径和内容与前轮已审核包一致。143 份旧 JSON/日志�
 `test-results/*.json` 在 `.gitattributes` 中禁用换行转换，避免提交时把 Windows CRLF 改为 LF
 而破坏报告互相引用的原始字节哈希；该例外只作用于验收记录。源码仍按既有规则统一 LF。
 
-发布步骤及最终地址在完成推送、附件上传和校验后补齐；此时不把准备工作描述为已发布。
+源码和标签已于 2026-10-28 15:12（Asia/Shanghai）通过非强制原子推送发布；Release 于
+15:13 完成附件上传、GitHub SHA-256 digest 校验并公开，且已确认是 latest 稳定版。
+
+- 源码：[LFVFL/LanShare main](https://github.com/LFVFL/LanShare/tree/main)。
+- 发布源码提交：[`a2b1098`](https://github.com/LFVFL/LanShare/commit/a2b109876f3f2654df2b2d59b85948ee051e0c45)。
+- Release：[LanShare v7.0](https://github.com/LFVFL/LanShare/releases/tag/v7.0)。
+- 独立 EXE：[lanshare.exe](https://github.com/LFVFL/LanShare/releases/download/v7.0/lanshare.exe)。
+- 回执：[源码与标签推送](test-results/github-source-push.json)、[Release 与附件校验](test-results/github-release.json)。
 
 精确暂存清单见 [publish-files.json](test-results/publish-files.json)；不使用目录级 `git add`。
-预期版本标签为 `v7.0`，源代码推送到原仓库 `main`，EXE 只上传 Release。发布时先建草稿，
-上传后核对 GitHub 的 SHA-256 digest 和大小，再转为公开；使用既有 Git 凭据，凭据不写入记录。
+版本标签 `v7.0` 指向上述受测源码提交，EXE 未加入源码历史。发布时先建草稿，上传后
+核对 GitHub 的 SHA-256 digest 和大小，再转为公开；使用既有 Git 凭据，凭据不写入记录。
+实际发布回执和当前状态说明由随后一个仅文档提交补录，不移动或重打版本标签，不修改
+已受测的产品源码、EXE 或历史验收结果。
 
 ## 验证边界
 
