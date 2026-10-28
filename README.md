@@ -1,6 +1,6 @@
 # 局域网云盘共享（LanShare）
 
-当前源码及本地修复候选：**v7.0.1**（Windows 单文件 EXE，待故障电脑复测）。GitHub 已发布版本仍为 v7.0。
+当前正式版本：**v7.0.1**（Windows 单文件 EXE，已发布到 GitHub Releases）。
 
 一个**不联网也能用**的局域网文件共享工具：Windows 上双击运行，同一个 Wi-Fi / 交换机下的
 手机、平板、别的电脑打开浏览器就能传文件、建群聊。不经过任何第三方服务器。
@@ -54,8 +54,9 @@ Web 端（浅色 / 深色，默认翠绿配色）：
 去 [Releases](https://github.com/LFVFL/LanShare/releases/latest) 下载最新的 `lanshare.exe`，
 双击运行即可，不需要安装 Python。
 
-本次发布：[v7.0 更新说明](https://github.com/LFVFL/LanShare/releases/tag/v7.0) ·
-[直接下载 EXE](https://github.com/LFVFL/LanShare/releases/download/v7.0/lanshare.exe)。
+本次发布：[v7.0.1 更新说明](https://github.com/LFVFL/LanShare/releases/tag/v7.0.1) ·
+[Windows 10/11 下载](https://github.com/LFVFL/LanShare/releases/download/v7.0.1/lanshare.exe) ·
+[Windows 7 x64 候选包](https://github.com/LFVFL/LanShare/releases/download/v7.0.1/lanshare-win7.exe)。
 
 Windows 7 64 位 SP1 不能加载当前 Python 3.12 包中的 `python312.dll` 和
 `api-ms-win-core-path-l1-1-0.dll`。为此额外生成了独立的 `lanshare-win7.exe`
@@ -64,11 +65,13 @@ Windows 10/11 使用的 `lanshare.exe`。当前是 64 位 Win7 候选，尚未�
 32 位 Win7 不能运行此文件。构建范围、哈希和测试边界见
 [Win7 x64 兼容包记录](docs/changes/2026-10-28-win7-compat-v7.0.1/README.md)。
 
-v7.0 的窗口标题和窗口内版本号保持一致；手机聊天室的改群名按钮位于顶部，输入区不再
-显示改名入口。更新、验证与交付信息见 [v7.0 发布记录](docs/changes/2026-10-28-release-v7/README.md)。
+v7.0.1 的窗口标题和窗口内版本号保持一致；手机聊天室的改群名按钮位于顶部，输入区不再
+显示改名入口。更新、验证与交付信息见
+[v7.0.1 发布记录](docs/changes/2026-10-28-release-v7.0.1/README.md) 和
+[v7.0 发布记录](docs/changes/2026-10-28-release-v7/README.md)。
 
 注意：v7.0 强制使用 `%LOCALAPPDATA%\LanShare\Temp` 解包，已收到其他电脑创建该路径
-失败、程序无法启动的反馈。v7.0.1 本地候选撤销这项覆盖，恢复 PyInstaller / Windows 的
+失败、程序无法启动的反馈。v7.0.1 撤销这项覆盖，恢复 PyInstaller / Windows 的
 默认临时目录选择；正常退出后仍由 bootloader 清理本次 `_MEI*`。此修复不迁移设置或聊天
 数据，不修改系统环境变量或目录权限。故障、验证范围和待确认事项见
 [v7.0.1 启动修复记录](docs/changes/2026-10-28-startup-hotfix-v7.0.1/README.md)。
@@ -159,6 +162,7 @@ docs/                文档（变更记录 / 架构 / 重构 / 桌面端改版�
 
 ## 文档
 
+- [v7.0.1 发布记录](docs/changes/2026-10-28-release-v7.0.1/README.md) —— 启动兼容修复、Win10/11 与 Win7 x64 双附件、校验和及发布边界
 - [v7.0 发布记录](docs/changes/2026-10-28-release-v7/README.md) —— 版本号统一、手机改群名入口、源码整理及 EXE 发布
 - [v7.0.1 Win7 x64 兼容包](docs/changes/2026-10-28-win7-compat-v7.0.1/README.md) —— Python 3.8 独立构建、PE 依赖扫描、最终路径启动验收及实机边界
 - [第七版修改与验证记录](docs/changes/2026-10-27/README.md) —— 本轮范围、审查映射、测试、独立 EXE 和 GitHub 推送准备
