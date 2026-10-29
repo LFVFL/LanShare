@@ -1,6 +1,7 @@
 # 局域网云盘共享（LanShare）
 
-当前正式版本：**v7.0.1**（Windows 单文件 EXE，已发布到 GitHub Releases）。
+当前版本：**v7.0.2**（Windows 单文件 EXE，网格卡片修复，正在发布）。
+GitHub 已发布版本仍为 v7.0.1。
 
 一个**不联网也能用**的局域网文件共享工具：Windows 上双击运行，同一个 Wi-Fi / 交换机下的
 手机、平板、别的电脑打开浏览器就能传文件、建群聊。不经过任何第三方服务器。
@@ -162,6 +163,7 @@ docs/                文档（变更记录 / 架构 / 重构 / 桌面端改版�
 
 ## 文档
 
+- [v7.0.2 网格卡片修复](docs/changes/2026-10-29-grid-cards/README.md) —— 文件夹整卡进入、底部操作栏对齐、320/390px 响应式回归及最终 EXE
 - [v7.0.1 发布记录](docs/changes/2026-10-28-release-v7.0.1/README.md) —— 启动兼容修复、Win10/11 与 Win7 x64 双附件、校验和及发布边界
 - [v7.0 发布记录](docs/changes/2026-10-28-release-v7/README.md) —— 版本号统一、手机改群名入口、源码整理及 EXE 发布
 - [v7.0.1 Win7 x64 兼容包](docs/changes/2026-10-28-win7-compat-v7.0.1/README.md) —— Python 3.8 独立构建、PE 依赖扫描、最终路径启动验收及实机边界

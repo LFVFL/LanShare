@@ -261,7 +261,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', type=Path, default=ROOT)
     parser.add_argument('--exe', type=Path, help='Optional onefile for read-only version inspection')
-    parser.add_argument('--expected-version', default='7.0.1')
+    parser.add_argument('--expected-version', default='7.0.2')
     parser.add_argument('--results', type=Path, default=ROOT / 'docs/changes/2026-10-28-release-v7/test-results/version.json')
     args = parser.parse_args()
     source = args.source.resolve(strict=True)

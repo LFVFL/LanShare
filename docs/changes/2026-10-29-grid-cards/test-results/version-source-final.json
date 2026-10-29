@@ -1,0 +1,73 @@
+{
+  "timestamp": "2026-10-29T17:29:55.065841+08:00",
+  "runtime": "3.12.1",
+  "source": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248",
+  "expected_version": "7.0.2",
+  "tests": 6,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "name": "__main__.VersionTests.test_both_gui_surfaces_read_the_shared_constant",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.VersionTests.test_browser_bundle_and_available_source_version",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.VersionTests.test_entrypoint_sets_qt_application_version",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.VersionTests.test_requested_source_tree_is_actually_imported",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.VersionTests.test_shared_python_version_is_expected",
+      "status": "passed"
+    },
+    {
+      "name": "__main__.VersionTests.test_window_title_and_header_show_v7",
+      "status": "passed"
+    }
+  ],
+  "success": true,
+  "evidence": {
+    "browser": {
+      "bundle_version": "7.0.2",
+      "core_source_version": [
+        "7.0.2"
+      ],
+      "source_note": "Build snapshots intentionally omit the original web tree; generated webassets.JS is always checked."
+    },
+    "qt_application_version": "7.0.2",
+    "python_version": "7.0.2",
+    "gui": {
+      "title": "\u5c40\u57df\u7f51\u4e91\u76d8 v7.0.2",
+      "header": "v7.0.2",
+      "settings": "<test-root>/version.ini",
+      "auto_start": false,
+      "system_integration_enabled": false,
+      "service_running": false
+    }
+  },
+  "source_sha256": {
+    "server/__init__.py": "964a1eaff6a6f8c889e93aa823a68c5a35fb65ac629085a626e1a87d86bee8aa",
+    "ui/main_window.py": "42377774050cfc35db38f0679258cedc56f3665f89c2a96bb47c169a0a2e540d",
+    "lanshare.py": "cd3276078b733bd0dd5b70546820642853b7a0227eebb854e851fb999e8585e5",
+    "webassets.py": "dc8b268c905cea223806f806f1871163088a9d20f1526fe0e96729e54abc2664",
+    "web/js/00-core.js": "f69ffd3184ea7496080aec8e6dcac0c24ceb6e2cd8def4fe871a9c408892bf91"
+  },
+  "source_unchanged": true,
+  "exe": null,
+  "exe_sha256": null,
+  "exe_unchanged": true,
+  "fixture_removed": true,
+  "scope": "Offscreen Qt, independent INI and synthetic chat data. GUI auto-start/system integration disabled. Entry-point IPC, cleanup worker and event loop are mocked.",
+  "limitations": [
+    "The optional onefile inspection is static correspondence, not an EXE launch or Explorer interaction.",
+    "Windows PE file properties are outside this title/header version check."
+  ]
+}

@@ -77,12 +77,18 @@
     function tileHtml(e) {
       var tone = TONE[e.kind] || 'other';
       var sel = fsState.sel.has(e.enc) ? ' data-selected="true"' : '';
+      var hit = e.kind === 'folder'
+        ? '<a class="tile-hit" href="' + esc(e.href) + '" aria-label="打开文件夹 ' + esc(e.name) + '"></a>'
+        : '';
       return '<div class="tile" data-name="' + esc(e.name) + '" data-enc="' + esc(e.enc) +
         '" data-kind="' + e.kind + '" data-tone="' + tone + '"' + sel + '>' +
-        '<input type="checkbox" class="cbx"' + (sel ? ' checked' : '') + '>' +
+        '<input type="checkbox" class="cbx" aria-label="选择 ' + esc(e.name) + '"' +
+          (sel ? ' checked' : '') + '>' +
+        hit +
         '<div class="tile-thumb">' + icon(TONE[tone] || 'file') + '</div>' +
-        '<div class="tile-name">' + esc(e.name) + '</div>' +
-        '<div class="tile-sub">' + esc(e.sizeText) + '</div>' +
+        '<div class="tile-name" title="' + esc(e.name) + '">' + esc(e.name) + '</div>' +
+        '<div class="tile-sub"><span>' + esc(e.kind === 'folder' ? '文件夹' : e.sizeText) +
+          '</span><span class="tile-time">' + esc(e.timeText) + '</span></div>' +
         '<div class="tile-actions">' + fileActionsHtml(e, fsState.path) +
           '<button class="row-more" data-menu-trigger aria-label="更多操作" aria-expanded="false">' +
           icon('more') + '</button></div>' +
@@ -563,7 +569,8 @@
 
       list.addEventListener('keydown', function (e) {
         if (e.key !== 'Enter') return;
-        var host = e.target.closest('[data-enc]');
+        // Grid folder cards use a native link above; this fallback is for list rows.
+        var host = e.target.closest('.row[data-enc]');
         if (!host) return;
         var entry = entryByEnc(host.getAttribute('data-enc'));
         if (entry && entry.kind === 'folder') location.href = entry.href;

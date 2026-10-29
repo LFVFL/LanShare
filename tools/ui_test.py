@@ -345,10 +345,10 @@ def main():
             return true;
         })()""")
         check("出现搜索结果条", cdp.wait_js("!!document.querySelector('.search-note')"))
-        hits = cdp.js("document.querySelectorAll('a.row--hit').length")
+        hits = cdp.js("document.querySelectorAll('a.row-hit-main').length")
         check("找到 1 个 report.md", hits == 1, hits)
-        href = cdp.js("(document.querySelector('a.row--hit')||{}).getAttribute "
-                      "&& document.querySelector('a.row--hit').getAttribute('href')")
+        href = cdp.js("(document.querySelector('a.row-hit-main')||{}).getAttribute "
+                      "&& document.querySelector('a.row-hit-main').getAttribute('href')")
         check("结果指向所在目录", "/dir?path=" in (href or ""), href)
 
         print("\n[5] 行内下载按钮")
@@ -369,7 +369,7 @@ def main():
         check("文件夹行是占位（不可点）", n_folder_ph == n_folder,
               "%s 文件夹 / %s 占位" % (n_folder, n_folder_ph))
         check("表头也留了同样宽度", cdp.js(
-            "getComputedStyle(document.querySelector('.col-more')).width") == "76px",
+            "getComputedStyle(document.querySelector('.col-more')).width") == "112px",
             cdp.js("getComputedStyle(document.querySelector('.col-more')).width"))
         # 真的按这个 href 取一次，确认能下到内容
         href = cdp.js("(document.querySelector('a.row-dl')||{}).href || ''")
@@ -381,13 +381,51 @@ def main():
         except Exception as e:
             check("按按钮的链接能拿到文件", False, repr(e))
 
-        print("\n[6] 窄屏（390px）不出现横向滚动")
+        print("\n[5b] 网格模式：文件夹整卡可进入且布局稳定")
+        cdp.js("document.querySelector('[data-view=\"grid\"]').click()")
+        check("切换到网格", cdp.wait_js("!!document.querySelector('.grid .tile')"))
+        n_folder_tiles = cdp.js("document.querySelectorAll('.tile[data-kind=\"folder\"]').length")
+        n_folder_hits = cdp.js("document.querySelectorAll('.tile[data-kind=\"folder\"] > a.tile-hit').length")
+        check("每个文件夹卡片都有整卡链接", n_folder_hits == n_folder_tiles,
+              "%s 文件夹 / %s 链接" % (n_folder_tiles, n_folder_hits))
+        check("文件夹链接指向 /dir", cdp.js(
+            "((document.querySelector('.tile-hit')||{}).href||'').indexOf('/dir?path=') >= 0"))
+        check("卡片标题预留两行高度", cdp.js(
+            "parseFloat(getComputedStyle(document.querySelector('.tile-name')).minHeight) > 0"))
+        check("卡片操作栏贴底对齐", cdp.js(
+            "[].every.call(document.querySelectorAll('.tile'), function(tile){"
+            "var actions=tile.querySelector('.tile-actions');"
+            "return Math.abs((tile.getBoundingClientRect().bottom-actions.getBoundingClientRect().bottom)-12)<=1;"
+            "})"))
+        cdp.js("document.querySelector('.tile[data-kind=\"folder\"] > .cbx').click()")
+        time.sleep(0.2)
+        check("选择框不会误进目录", cdp.wait_js("location.pathname === '/'"))
+        cdp.js("document.querySelector('.tile[data-kind=\"folder\"] > .cbx').click()")
+        cdp.js("document.querySelector('.tile[data-kind=\"folder\"] > .tile-hit').click()")
+        check("点击文件夹卡片进入子目录", cdp.wait_js(
+            "location.pathname === '/dir' && !!document.querySelector('.row[data-kind]')"))
+
+        print("\n[6] 窄屏（390px）网格不出现横向滚动")
+        cdp.call("Page.navigate", {"url": "http://127.0.0.1:%d/" % port})
+        check("回到文件列表", cdp.wait_js(
+            "document.readyState === 'complete' && document.querySelectorAll('.row[data-kind]').length > 0"))
+        cdp.js("document.querySelector('[data-view=\"grid\"]').click()")
+        check("重新进入网格", cdp.wait_js("!!document.querySelector('.grid .tile')"))
         cdp.call("Emulation.setDeviceMetricsOverride",
                  {"width": 390, "height": 844, "deviceScaleFactor": 2, "mobile": True})
         time.sleep(0.4)
         overflow = cdp.js("document.documentElement.scrollWidth - window.innerWidth")
-        check("没有横向溢出", (overflow or 0) <= 1, "溢出 %s px" % overflow)
-        check("下载按钮仍在", cdp.js("document.querySelectorAll('a.row-dl').length") > 0)
+        check("网格没有横向溢出", (overflow or 0) <= 1, "溢出 %s px" % overflow)
+        check("手机网格为两列", len((cdp.js(
+            "getComputedStyle(document.querySelector('.grid')).gridTemplateColumns") or "").split()) == 2)
+        cdp.call("Emulation.setDeviceMetricsOverride",
+                 {"width": 320, "height": 720, "deviceScaleFactor": 2, "mobile": True})
+        time.sleep(0.3)
+        overflow = cdp.js("document.documentElement.scrollWidth - window.innerWidth")
+        check("320px 网格没有横向溢出", (overflow or 0) <= 1, "溢出 %s px" % overflow)
+        check("320px 卡片内容不溢出", cdp.js(
+            "[].every.call(document.querySelectorAll('.tile'), function(tile){"
+            "return tile.scrollWidth <= tile.clientWidth + 1;})"))
         cdp.call("Emulation.clearDeviceMetricsOverride")
 
         print("\n[7] 对外命名空间 window.Lan（按页拆包后，分包里的东西只在本页有）")

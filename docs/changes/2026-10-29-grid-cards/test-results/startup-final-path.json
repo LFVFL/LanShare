@@ -1,0 +1,761 @@
+{
+  "exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+  "copied_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable\\lanshare.exe",
+  "sha256": "38a6dcdb1091299f1956e1435f51a648317957a395f4ade110b1cd08c5bcf60e",
+  "size_bytes": 63929414,
+  "runtime_directory_policy": "pyinstaller-default-windows-temp",
+  "runtime_tmpdir_archive_options": [],
+  "runs": [
+    {
+      "case": "first-launch",
+      "local_app_data": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-z5uaakbp\\local",
+      "local_app_data_state_before_launch": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-z5uaakbp\\temp-first-launch",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-z5uaakbp\\tmp-first-launch"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-z5uaakbp\\tmp-first-launch",
+      "executed_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable\\lanshare.exe",
+      "working_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable",
+      "original_executable_location": false,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-z5uaakbp\\temp-first-launch",
+      "tmp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-z5uaakbp\\tmp-first-launch",
+      "tmp_environment_unset": false,
+      "expected_temp_source": "TMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-z5uaakbp\\tmp-first-launch\\_MEI000039902",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-z5uaakbp\\profile-first-launch\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-z5uaakbp\\temp-first-launch": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-z5uaakbp\\tmp-first-launch": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 4.734
+    },
+    {
+      "case": "missing-legacy-temp",
+      "local_app_data": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-n3dfouoy\\local",
+      "local_app_data_state_before_launch": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "directory",
+        "legacy_temp": "missing"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-n3dfouoy\\temp-missing-legacy-temp",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-n3dfouoy\\tmp-missing-legacy-temp"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-n3dfouoy\\tmp-missing-legacy-temp",
+      "executed_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable\\lanshare.exe",
+      "working_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable",
+      "original_executable_location": false,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-n3dfouoy\\temp-missing-legacy-temp",
+      "tmp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-n3dfouoy\\tmp-missing-legacy-temp",
+      "tmp_environment_unset": false,
+      "expected_temp_source": "TMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-n3dfouoy\\tmp-missing-legacy-temp\\_MEI000064d42",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-n3dfouoy\\profile-missing-legacy-temp\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-n3dfouoy\\temp-missing-legacy-temp": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-n3dfouoy\\tmp-missing-legacy-temp": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "directory",
+        "legacy_temp": "missing"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 4.782
+    },
+    {
+      "case": "local-unset",
+      "local_app_data": null,
+      "local_app_data_state_before_launch": {
+        "environment": "unset"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\temp-local-unset",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\tmp-local-unset"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\tmp-local-unset",
+      "executed_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable\\lanshare.exe",
+      "working_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable",
+      "original_executable_location": false,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\temp-local-unset",
+      "tmp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\tmp-local-unset",
+      "tmp_environment_unset": false,
+      "expected_temp_source": "TMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\tmp-local-unset\\_MEI0000427c2",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\profile-local-unset\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\temp-local-unset": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\tmp-local-unset": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "unset"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 4.719
+    },
+    {
+      "case": "local-empty",
+      "local_app_data": "",
+      "local_app_data_state_before_launch": {
+        "environment": "empty"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\temp-local-empty",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\tmp-local-empty"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\tmp-local-empty",
+      "executed_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable\\lanshare.exe",
+      "working_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable",
+      "original_executable_location": false,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\temp-local-empty",
+      "tmp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\tmp-local-empty",
+      "tmp_environment_unset": false,
+      "expected_temp_source": "TMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\tmp-local-empty\\_MEI0000673c2",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\profile-local-empty\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\temp-local-empty": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-4vp73h1c\\tmp-local-empty": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "empty"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 5.187
+    },
+    {
+      "case": "nonexistent-local",
+      "local_app_data": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-ej8ih6w0\\missing-profile\\AppData\\Local",
+      "local_app_data_state_before_launch": {
+        "environment": "set",
+        "local_app_data": "missing",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-ej8ih6w0\\temp-nonexistent-local",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-ej8ih6w0\\tmp-nonexistent-local"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-ej8ih6w0\\tmp-nonexistent-local",
+      "executed_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable\\lanshare.exe",
+      "working_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable",
+      "original_executable_location": false,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-ej8ih6w0\\temp-nonexistent-local",
+      "tmp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-ej8ih6w0\\tmp-nonexistent-local",
+      "tmp_environment_unset": false,
+      "expected_temp_source": "TMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-ej8ih6w0\\tmp-nonexistent-local\\_MEI000064ec2",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-ej8ih6w0\\profile-nonexistent-local\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-ej8ih6w0\\temp-nonexistent-local": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-ej8ih6w0\\tmp-nonexistent-local": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "set",
+        "local_app_data": "missing",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 5.172
+    },
+    {
+      "case": "file-ancestor-local",
+      "local_app_data": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-m1pfp6u7\\profile-blocker\\Local",
+      "local_app_data_state_before_launch": {
+        "environment": "set",
+        "local_app_data": "missing",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-m1pfp6u7\\temp-file-ancestor-local",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-m1pfp6u7\\tmp-file-ancestor-local"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-m1pfp6u7\\tmp-file-ancestor-local",
+      "executed_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable\\lanshare.exe",
+      "working_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable",
+      "original_executable_location": false,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-m1pfp6u7\\temp-file-ancestor-local",
+      "tmp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-m1pfp6u7\\tmp-file-ancestor-local",
+      "tmp_environment_unset": false,
+      "expected_temp_source": "TMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-m1pfp6u7\\tmp-file-ancestor-local\\_MEI00005c702",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-m1pfp6u7\\profile-file-ancestor-local\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-m1pfp6u7\\temp-file-ancestor-local": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-m1pfp6u7\\tmp-file-ancestor-local": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "set",
+        "local_app_data": "missing",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 4.672,
+      "local_app_data_file_ancestor": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-m1pfp6u7\\profile-blocker",
+      "local_app_data_file_ancestor_unchanged": true
+    },
+    {
+      "case": "unicode",
+      "local_app_data": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-j7l938ej\\\u7528\u6237 \u914d\u7f6e\\Local AppData",
+      "local_app_data_state_before_launch": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-j7l938ej\\temp-\u4e34\u65f6 \u7a7a\u95f4",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-j7l938ej\\tmp-\u4e34\u65f6 \u7a7a\u95f4"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-j7l938ej\\tmp-\u4e34\u65f6 \u7a7a\u95f4",
+      "executed_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable\\lanshare.exe",
+      "working_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable",
+      "original_executable_location": false,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-j7l938ej\\temp-\u4e34\u65f6 \u7a7a\u95f4",
+      "tmp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-j7l938ej\\tmp-\u4e34\u65f6 \u7a7a\u95f4",
+      "tmp_environment_unset": false,
+      "expected_temp_source": "TMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-j7l938ej\\tmp-\u4e34\u65f6 \u7a7a\u95f4\\_MEI00003c882",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-j7l938ej\\profile-unicode\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-j7l938ej\\temp-\u4e34\u65f6 \u7a7a\u95f4": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-j7l938ej\\tmp-\u4e34\u65f6 \u7a7a\u95f4": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 4.625
+    },
+    {
+      "case": "unset-tmp",
+      "local_app_data": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-1svaibie\\local",
+      "local_app_data_state_before_launch": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-1svaibie\\temp-unset-tmp",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-1svaibie\\tmp-unset-tmp"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-1svaibie\\temp-unset-tmp",
+      "executed_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable\\lanshare.exe",
+      "working_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable",
+      "original_executable_location": false,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-1svaibie\\temp-unset-tmp",
+      "tmp": null,
+      "tmp_environment_unset": true,
+      "expected_temp_source": "TEMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-1svaibie\\temp-unset-tmp\\_MEI000041b82",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-1svaibie\\profile-unset-tmp\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-1svaibie\\temp-unset-tmp": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-1svaibie\\tmp-unset-tmp": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 4.672
+    },
+    {
+      "case": "repeat-one",
+      "local_app_data": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\repeated-\u7528\u6237 \u914d\u7f6e",
+      "local_app_data_state_before_launch": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\temp-repeated",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\tmp-repeated"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\tmp-repeated",
+      "executed_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable\\lanshare.exe",
+      "working_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable",
+      "original_executable_location": false,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\temp-repeated",
+      "tmp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\tmp-repeated",
+      "tmp_environment_unset": false,
+      "expected_temp_source": "TMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\tmp-repeated\\_MEI000048b82",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\profile-repeat-one\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\temp-repeated": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\tmp-repeated": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 4.172
+    },
+    {
+      "case": "repeat-two",
+      "local_app_data": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\repeated-\u7528\u6237 \u914d\u7f6e",
+      "local_app_data_state_before_launch": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\temp-repeated",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\tmp-repeated"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\tmp-repeated",
+      "executed_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable\\lanshare.exe",
+      "working_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-temp-0cxhtxwx\\portable",
+      "original_executable_location": false,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\temp-repeated",
+      "tmp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\tmp-repeated",
+      "tmp_environment_unset": false,
+      "expected_temp_source": "TMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\tmp-repeated\\_MEI00001d2c2",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\profile-repeat-two\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\temp-repeated": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-sig_o6so\\tmp-repeated": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 4.641
+    },
+    {
+      "case": "original-location",
+      "local_app_data": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-xke008rf\\original-local-\u7528\u6237 \u914d\u7f6e",
+      "local_app_data_state_before_launch": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-xke008rf\\temp-original-location",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-xke008rf\\tmp-original-location"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-xke008rf\\tmp-original-location",
+      "executed_exe": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248\\lanshare.exe",
+      "working_directory": "E:\\code\\\u5c40\u57df\u7f51\\\u7b2c\u4e03\u7248",
+      "original_executable_location": true,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-xke008rf\\temp-original-location",
+      "tmp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-xke008rf\\tmp-original-location",
+      "tmp_environment_unset": false,
+      "expected_temp_source": "TMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-xke008rf\\tmp-original-location\\_MEI000002902",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-xke008rf\\profile-original-location\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-xke008rf\\temp-original-location": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-xke008rf\\tmp-original-location": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 4.688
+    },
+    {
+      "case": "unicode-executable",
+      "local_app_data": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\unicode-exe-local-\u7528\u6237",
+      "local_app_data_state_before_launch": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "owned_temp_directories": [
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\temp-unicode-executable",
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\tmp-unicode-executable"
+      ],
+      "owned_temp_directories_empty_before_launch": true,
+      "runtime_base": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\tmp-unicode-executable",
+      "executed_exe": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\\u6d4b\u8bd5 \u76ee\u5f55\\\u7b2c\u4e03\u7248\\lanshare.exe",
+      "working_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\\u6d4b\u8bd5 \u76ee\u5f55\\\u7b2c\u4e03\u7248",
+      "original_executable_location": false,
+      "temp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\temp-unicode-executable",
+      "tmp": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\tmp-unicode-executable",
+      "tmp_environment_unset": false,
+      "expected_temp_source": "TMP",
+      "bootloader_environment_reset": true,
+      "launched": true,
+      "success": true,
+      "extraction_directory": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\tmp-unicode-executable\\_MEI00001db02",
+      "extracted_payload_files": [
+        {
+          "file": "python312.dll",
+          "bytes": 7003928
+        },
+        {
+          "file": "PyQt5/QtCore.pyd",
+          "bytes": 2483712
+        },
+        {
+          "file": "PyQt5/Qt5/bin/Qt5Core.dll",
+          "bytes": 6023664
+        }
+      ],
+      "observed_share": "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\profile-unicode-executable\\share",
+      "ready": true,
+      "graceful_exit_code": 0,
+      "extraction_removed_before_fixture_cleanup": true,
+      "remaining_runtime_entries": [],
+      "remaining_owned_temp_entries": {
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\temp-unicode-executable": [],
+        "C:\\Windows\\Temp\\lanshare-test-scvth7tr\\startup-case-_fmhaz2w\\tmp-unicode-executable": []
+      },
+      "local_app_data_state_after_exit": {
+        "environment": "set",
+        "local_app_data": "directory",
+        "lanshare": "missing",
+        "legacy_temp": "missing"
+      },
+      "listener_closed": true,
+      "settings_ini_isolated": true,
+      "portable_directory_files": [
+        "lanshare.exe"
+      ],
+      "seconds": 4.703
+    }
+  ],
+  "local_app_data_fixture_policy": "owned-paths-or-unset-or-empty",
+  "success": true,
+  "tests": 10,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "planned_launches": 12,
+  "attempted_launches": 12,
+  "launches": 12,
+  "successful_launches": 12,
+  "seconds": 58.062,
+  "timestamp": "2026-10-29T17:36:33+0800",
+  "scope": "Original and copied executable paths; owned TEMP/TMP and simulated LOCALAPPDATA states; offscreen profiles, not a fresh Windows user or Explorer double-click",
+  "count_policy": "Ten unittest methods; a complete successful matrix has twelve launches, with subtests and repeated launches not counted as extra methods",
+  "limitations": [
+    "An invalid or unwritable TMP/TEMP is not guaranteed to fall back; such cases are not launched by this matrix."
+  ]
+}
