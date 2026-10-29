@@ -20,7 +20,7 @@ Windows 单文件版本，不需要安装 Python。这个版本修复文件页�
 
 | 文件 | 适用系统 | 大小 | SHA-256 |
 |---|---|---:|---|
-| `lanshare.exe` | Windows 10/11 x64 | 63,929,414 字节 | `38a6dcdb1091299f1956e1435f51a648317957a395f4ade110b1cd08c5bc60e` |
+| `lanshare.exe` | Windows 10/11 x64 | 63,929,414 字节 | `38a6dcdb1091299f1956e1435f51a648317957a395f4ade110b1cd08c5bcf60e` |
 | `lanshare-win7.exe` | 64 位 Windows 7 SP1 候选 | 61,342,749 字节 | `5e34a6664cf127bf7581e665db065e1396079485ba1fb774f9c59b1ee75c2f1f` |
 
 `lanshare-win7.exe` 使用 Python 3.8.10 / PyInstaller 5.13.2 独立构建，不替换
@@ -39,3 +39,9 @@ Windows 10/11 常规包。它只面向 **64 位 Windows 7 SP1**，32 位 Windows
 
 Win7 候选包另完成 118 个 DLL/PYD/EXE 的导入扫描及 38 个 UCRT API Set 完整性检查。
 详细范围、证据和限制见仓库 `docs/changes/2026-10-29-grid-cards/`。
+
+## 发布信息
+
+- Release：<https://github.com/LFVFL/LanShare/releases/tag/v7.0.2>
+- Release ID：`427685615`
+- 标签：`v7.0.2`

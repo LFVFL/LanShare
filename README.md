@@ -1,7 +1,6 @@
 # 局域网云盘共享（LanShare）
 
-当前版本：**v7.0.2**（Windows 单文件 EXE，网格卡片修复，正在发布）。
-GitHub 已发布版本仍为 v7.0.1。
+当前正式版本：**v7.0.2**（Windows 单文件 EXE，网格卡片修复，已发布到 GitHub Releases）。
 
 一个**不联网也能用**的局域网文件共享工具：Windows 上双击运行，同一个 Wi-Fi / 交换机下的
 手机、平板、别的电脑打开浏览器就能传文件、建群聊。不经过任何第三方服务器。
@@ -55,19 +54,20 @@ Web 端（浅色 / 深色，默认翠绿配色）：
 去 [Releases](https://github.com/LFVFL/LanShare/releases/latest) 下载最新的 `lanshare.exe`，
 双击运行即可，不需要安装 Python。
 
-本次发布：[v7.0.1 更新说明](https://github.com/LFVFL/LanShare/releases/tag/v7.0.1) ·
-[Windows 10/11 下载](https://github.com/LFVFL/LanShare/releases/download/v7.0.1/lanshare.exe) ·
-[Windows 7 x64 候选包](https://github.com/LFVFL/LanShare/releases/download/v7.0.1/lanshare-win7.exe)。
+本次发布：[v7.0.2 更新说明](https://github.com/LFVFL/LanShare/releases/tag/v7.0.2) ·
+[Windows 10/11 下载](https://github.com/LFVFL/LanShare/releases/download/v7.0.2/lanshare.exe) ·
+[Windows 7 x64 候选包](https://github.com/LFVFL/LanShare/releases/download/v7.0.2/lanshare-win7.exe)。
 
 Windows 7 64 位 SP1 不能加载当前 Python 3.12 包中的 `python312.dll` 和
 `api-ms-win-core-path-l1-1-0.dll`。为此额外生成了独立的 `lanshare-win7.exe`
-（Python 3.8 / PyInstaller 5.13 构建，功能版本同为 7.0.1）；它不替换
+（Python 3.8 / PyInstaller 5.13 构建，功能版本同为 7.0.2）；它不替换
 Windows 10/11 使用的 `lanshare.exe`。当前是 64 位 Win7 候选，尚未在 Win7 实机确认；
 32 位 Win7 不能运行此文件。构建范围、哈希和测试边界见
-[Win7 x64 兼容包记录](docs/changes/2026-10-28-win7-compat-v7.0.1/README.md)。
+[v7.0.2 网格卡片修复记录](docs/changes/2026-10-29-grid-cards/README.md)。
 
-v7.0.1 的窗口标题和窗口内版本号保持一致；手机聊天室的改群名按钮位于顶部，输入区不再
-显示改名入口。更新、验证与交付信息见
+v7.0.2 修复文件页网格模式下文件夹无法进入，并统一卡片布局；v7.0.1 的窗口标题和
+窗口内版本号保持一致，手机聊天室的改群名按钮位于顶部。更新、验证与交付信息见
+[v7.0.2 发布记录](docs/changes/2026-10-29-grid-cards/README.md)、
 [v7.0.1 发布记录](docs/changes/2026-10-28-release-v7.0.1/README.md) 和
 [v7.0 发布记录](docs/changes/2026-10-28-release-v7/README.md)。
 

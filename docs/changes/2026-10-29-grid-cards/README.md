@@ -58,7 +58,7 @@
 
 | 文件 | 目标系统 | 版本 | 大小 | SHA-256 |
 |---|---|---:|---:|---|
-| `lanshare.exe` | Windows 10/11 x64 | 7.0.2 | 63,929,414 | `38a6dcdb1091299f1956e1435f51a648317957a395f4ade110b1cd08c5bc60e` |
+| `lanshare.exe` | Windows 10/11 x64 | 7.0.2 | 63,929,414 | `38a6dcdb1091299f1956e1435f51a648317957a395f4ade110b1cd08c5bcf60e` |
 | `lanshare-win7.exe` | 64 位 Windows 7 SP1 候选 | 7.0.2 | 61,342,749 | `5e34a6664cf127bf7581e665db065e1396079485ba1fb774f9c59b1ee75c2f1f` |
 
 常规包构建目录为 `E:\LanShare-builds\build-btq5hybu`，使用 Python 3.12.1 和
@@ -69,5 +69,10 @@ Python 3.8.10 和 PyInstaller 5.13.2。
 候选包仅支持 64 位 Windows 7 SP1，32 位系统不支持；结论来自 PE 扫描和 Windows 10
 主机上的隔离回归，尚未在真实 Win7 实机完成首次双击确认。
 
-当前修改和 EXE 已进入 `v7.0.2` 发布流程，源码、标签、Release 状态以仓库远端和
-GitHub 公开页面为准。
+## 发布状态
+
+- GitHub Release：<https://github.com/LFVFL/LanShare/releases/tag/v7.0.2>
+- Release ID：`427685615`
+- 标签：`v7.0.2`（源码提交 `94f60ea`）
+- 公开校验回执：[github-release.json](test-results/github-release.json)
+- 发布状态：已发布并设为 Latest，非预发布；两个附件均为 `uploaded`
